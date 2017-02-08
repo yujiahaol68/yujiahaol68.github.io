@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="A Refactor&#39;s Blog">
+    <title>TP常用函数总结 - A Refactor&#39;s Blog</title>
+    <meta name="author" content="Tecker.Yu">
+    
+        <meta name="keywords" content="hexo,Tecker.Yu,blog,web development,tech and code sharing,">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/cover.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="I函数用途：获取输入数据，例如表单的接收，API的GET接收参数
+定义: I(&amp;#39;接收的数据&amp;#39;，&amp;#39;默认值&amp;#39;,&amp;#39;接收数据的类型&amp;#39;)
+用法：I(&amp;#39;get.id&amp;#39;,1,&amp;#39;int&amp;#39;)
+好处：自动过滤输入，增加安全性，官方推荐">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="TP常用函数总结">
+<meta property="og:url" content="http://yoursite.com/2016/11/04/TP常用函数总结/index.html">
+<meta property="og:site_name" content="A Refactor's Blog">
+<meta property="og:description" content="I函数用途：获取输入数据，例如表单的接收，API的GET接收参数
+定义: I(&amp;#39;接收的数据&amp;#39;，&amp;#39;默认值&amp;#39;,&amp;#39;接收数据的类型&amp;#39;)
+用法：I(&amp;#39;get.id&amp;#39;,1,&amp;#39;int&amp;#39;)
+好处：自动过滤输入，增加安全性，官方推荐">
+<meta property="og:updated_time" content="2016-11-12T10:42:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TP常用函数总结">
+<meta name="twitter:description" content="I函数用途：获取输入数据，例如表单的接收，API的GET接收参数
+定义: I(&amp;#39;接收的数据&amp;#39;，&amp;#39;默认值&amp;#39;,&amp;#39;接收数据的类型&amp;#39;)
+用法：I(&amp;#39;get.id&amp;#39;,1,&amp;#39;int&amp;#39;)
+好处：自动过滤输入，增加安全性，官方推荐">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/me.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">A Refactor&#39;s Blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">Tecker.Yu</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About me</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yujiahaol68" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">Github</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:767954505@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            TP常用函数总结
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-11-04T14:45:08+08:00">
+	
+		    Nov 04, 2016
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/php/">php</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h3 id="I函数"><a href="#I函数" class="headerlink" title="I函数"></a>I函数</h3><p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
+<p>定义: <code>I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;)</code></p>
+<p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code></p>
+<p>好处：自动过滤输入，增加安全性，官方推荐</p>
+<a id="more"></a>
+<h3 id="D函数"><a href="#D函数" class="headerlink" title="D函数"></a>D函数</h3><p>用途：new出Model对象进行数据的增删改查，而且可以调用Model中的业务逻辑</p>
+<p>定义：<code>D(&#39;Model名&#39;)</code></p>
+<h3 id="M函数"><a href="#M函数" class="headerlink" title="M函数"></a>M函数</h3><p>用途：可对Model对应的表进行基本的CURD操作，而且节约资源</p>
+<p>定义: <code>M(&#39;Model名&#39;)</code></p>
+<p>缺点：不能调用Model中的自定义业务逻辑</p>
+<h3 id="U函数"><a href="#U函数" class="headerlink" title="U函数"></a>U函数</h3><p>用途：动态生成URL，是官方推荐的URL生成方式</p>
+<p>定义：<code>U(&#39;模块/控制器/操作&#39;)</code></p>
+<h3 id="E函数"><a href="#E函数" class="headerlink" title="E函数"></a>E函数</h3><p>用途：用于错误调试，可以输出错误信息并中断操作</p>
+<p>用法：<code>E($msg)</code></p>
+<h3 id="F函数"><a href="#F函数" class="headerlink" title="F函数"></a>F函数</h3><p>用途：建立快速缓存，为存储的数据带来更快的操作</p>
+<p>缓存Data：<code>F(&#39;data&#39;,$Data,保存目录(可选))</code></p>
+<p>获取：<code>F(&#39;data&#39;)</code></p>
+<p>删除: <code>F(&#39;data&#39;, NULL)</code></p>
+<p>查询缓存: <code>$Model-&gt;cache(&#39;data&#39;)-&gt;select()</code></p>
+<h3 id="S函数"><a href="#S函数" class="headerlink" title="S函数"></a>S函数</h3><p>外部获取缓存内容：<code>$value = S(&#39;cache_name&#39;)</code></p>
+<h3 id="T函数"><a href="#T函数" class="headerlink" title="T函数"></a>T函数</h3><p>专门用于获取模板的地址，用于display()中</p>
+<p>定义: <code>T(模块/主题/控制器/操作,视图分层)</code></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/ThinkPHP-Learning/">ThinkPHP Learning</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/05/UNIX时间戳与time-算时间差/"  data-tooltip="UNIX时间戳与time()算时间差">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/04/夹杂数字字母大小写的字符串排序方法/" data-tooltip="夹杂数字字母大小写的字符串按字典排序方法">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Tecker.Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/05/UNIX时间戳与time-算时间差/"  data-tooltip="UNIX时间戳与time()算时间差">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/04/夹杂数字字母大小写的字符串排序方法/" data-tooltip="夹杂数字字母大小写的字符串按字典排序方法">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/04/TP常用函数总结/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.jpeg"/>
+        
+            <h4 id="about-card-name">Tecker.Yu</h4>
+        
+            <h5 id="about-card-bio"><p>A South China Agricultural University student in China who appreciate the art of the WEB technology</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Dream of Full Stack Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Shenzhen,China
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/default-cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

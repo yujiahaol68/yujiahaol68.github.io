@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="A Refactor&#39;s Blog">
+    <title>gulp.js简易入门指南 - A Refactor&#39;s Blog</title>
+    <meta name="author" content="Tecker.Yu">
+    
+        <meta name="keywords" content="hexo,Tecker.Yu,blog,web development,tech and code sharing,">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/cover.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="gulp.js简易入门指南">
+<meta property="og:url" content="http://yoursite.com/2016/11/20/gulp-js简易入门指南/index.html">
+<meta property="og:site_name" content="A Refactor's Blog">
+<meta property="og:description" content="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件">
+<meta property="og:updated_time" content="2016-12-14T12:20:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gulp.js简易入门指南">
+<meta name="twitter:description" content="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/me.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">A Refactor&#39;s Blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">Tecker.Yu</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About me</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yujiahaol68" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">Github</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:767954505@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            gulp.js简易入门指南
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-11-20T14:39:33+08:00">
+	
+		    Nov 20, 2016
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/BuildingTools/">BuildingTools</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h4 id="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"><a href="#gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件" class="headerlink" title="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"></a>gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件</h4><a id="more"></a>
+<p>为什么需要gulp?</p>
+<ul>
+<li>模块化我们的html,css,js文件，使得项目的结构更加的清晰</li>
+<li>转译我们的模块文件（例如：js es6-&gt;es5 , panini-&gt;html ,Sass-&gt;css,）</li>
+<li>图片及css文件的压缩处理极大的提高网页性能</li>
+<li>解决各种浏览器兼容性问题</li>
+<li>基于管道思想的pipe多重处理，你可以自定义你想要的处理任务，一切交给gulp自动完成</li>
+</ul>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>必备：npm包管理器</p>
+<p>流程：</p>
+<ol>
+<li><p>在项目目录下进行 npm init -y</p>
+</li>
+<li><p>npm install gulp –save-dev 作为项目依赖安装</p>
+</li>
+<li><p>项目根目录下新建文件gulpfile.js</p>
+</li>
+<li><p>在gulpfile.js中写入你要gulp为你自动化处理的任务</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)     <span class="comment">//请求gulp模块</span></div><div class="line"></div><div class="line">gulp.task(<span class="string">'name'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;   <span class="comment">//给gulp的任务，任务名+任务会执行的函数</span></div><div class="line">    <span class="comment">//执行的任务</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>命令行中执行gulp name的时候，gulp就会自动找到你自己定义的那个任务</p>
+<h3 id="gulp能做得更多"><a href="#gulp能做得更多" class="headerlink" title="gulp能做得更多"></a>gulp能做得更多</h3><h4 id="管道理念"><a href="#管道理念" class="headerlink" title="管道理念"></a>管道理念</h4><p>简单来讲，你的任务一定会有源文件，管道相当于处理方法，管道可以接多条，管道的尽头就是输出文件</p>
+<p>我们有专门的文件夹来存放我们的源文件和输出文件，它们的目录分别为src和dist</p>
+<p>gulp本身也给我们提供了很多现成的管道，官网有许多的plugin可以用，上面都有示例代码</p>
+<p>我们可以用npm像安装模块一样把它们一一安装，在node中一切皆模块，npm可以快速的帮助我们运用这些已经写好的模块作为我们的一个个管道</p>
+<h4 id="gulp管道的使用方法"><a href="#gulp管道的使用方法" class="headerlink" title="gulp管道的使用方法"></a>gulp管道的使用方法</h4><p>这里以sass编译任务为例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)</div><div class="line"><span class="keyword">var</span> sass = <span class="built_in">require</span>(<span class="string">'gulp-sass'</span>) <span class="comment">//完整的模块名,请求模块</span></div><div class="line"></div><div class="line">gulp.task(<span class="string">'sass'</span>, () =&gt; &#123;   <span class="comment">//注意node支持es6的语法</span></div><div class="line">    gulp.src(<span class="string">'./src/源文件目录.sass'</span>)    <span class="comment">//告诉gulp我们想要处理的文件</span></div><div class="line">        .pipe(sass())   <span class="comment">//将sass处理方法封装成管道</span></div><div class="line">        <span class="comment">//.pipe 处理1</span></div><div class="line">        <span class="comment">//.pipe 处理2</span></div><div class="line">        .pipe(gulp.dest(<span class="string">'./dist/css/'</span>))     <span class="comment">//最后将管道导向输出，也就是输出目录当中生成输出文件</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="添加gulp观察者以便对源文件的更改进行实时处理"><a href="#添加gulp观察者以便对源文件的更改进行实时处理" class="headerlink" title="添加gulp观察者以便对源文件的更改进行实时处理"></a>添加gulp观察者以便对源文件的更改进行实时处理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'watch'</span>,() =&gt; &#123;</div><div class="line">    gulp.watch(<span class="string">'追踪更改的文件目录'</span>,[<span class="string">'每次更改保存就执行的task'</span>])</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h4><ul>
+<li>任务名若为default命令行中直接输入gulp就会立即执行</li>
+<li>gulp.task(‘default’, [‘styles’, ‘jshint’, ‘watch’])</li>
+</ul>
+<p>gulp可以进行多任务,让一个任务同时调用多个任务</p>
+<ul>
+<li>在指定目录中可以用*号和后缀匹配目录下的全部同类型文件 </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gulp.src(<span class="string">'js/**/*.js'</span>)</div></pre></td></tr></table></figure>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/cli/">cli</a> <a class="tag tag--primary tag--small t-link" href="/tags/front-end-dev/">front end dev</a> <a class="tag tag--primary tag--small t-link" href="/tags/node/">node</a> <a class="tag tag--primary tag--small t-link" href="/tags/npm/">npm</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/27/php数组常用方法详解/"  data-tooltip="php数组常用方法详解">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/12/php处理html字符串/" data-tooltip="php处理html字符串">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Tecker.Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/27/php数组常用方法详解/"  data-tooltip="php数组常用方法详解">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/12/php处理html字符串/" data-tooltip="php处理html字符串">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/20/gulp-js简易入门指南/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.jpeg"/>
+        
+            <h4 id="about-card-name">Tecker.Yu</h4>
+        
+            <h5 id="about-card-bio"><p>A South China Agricultural University student in China who appreciate the art of the WEB technology</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Dream of Full Stack Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Shenzhen,China
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/default-cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="A Refactor&#39;s Blog">
+    <title>夹杂数字字母大小写的字符串按字典排序方法 - A Refactor&#39;s Blog</title>
+    <meta name="author" content="Tecker.Yu">
+    
+        <meta name="keywords" content="hexo,Tecker.Yu,blog,web development,tech and code sharing,">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/cover.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="核心步骤概要过滤过滤数字等特殊符号，只剩下字母
+这里要用到String类自带的replaceAll方法以及表达式进行过滤
+分割将字符串进行单字符分割">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="夹杂数字字母大小写的字符串按字典排序方法">
+<meta property="og:url" content="http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/index.html">
+<meta property="og:site_name" content="A Refactor's Blog">
+<meta property="og:description" content="核心步骤概要过滤过滤数字等特殊符号，只剩下字母
+这里要用到String类自带的replaceAll方法以及表达式进行过滤
+分割将字符串进行单字符分割">
+<meta property="og:updated_time" content="2016-11-12T10:46:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="夹杂数字字母大小写的字符串按字典排序方法">
+<meta name="twitter:description" content="核心步骤概要过滤过滤数字等特殊符号，只剩下字母
+这里要用到String类自带的replaceAll方法以及表达式进行过滤
+分割将字符串进行单字符分割">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/me.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">A Refactor&#39;s Blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">Tecker.Yu</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About me</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yujiahaol68" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">Github</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:767954505@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            夹杂数字字母大小写的字符串按字典排序方法
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-11-04T13:30:43+08:00">
+	
+		    Nov 04, 2016
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h2 id="核心步骤概要"><a href="#核心步骤概要" class="headerlink" title="核心步骤概要"></a>核心步骤概要</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>过滤数字等特殊符号，只剩下字母</p>
+<p>这里要用到String类自带的replaceAll方法以及表达式进行过滤</p>
+<h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将字符串进行单字符分割<br><a id="more"></a><br>这里要用到String类自带的substring方法</p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>将分割得到的单字符String数组进行忽略大小写的排序</p>
+<p>这里要用到Arrays类中的sort方法</p>
+<h2 id="关键代码演示"><a href="#关键代码演示" class="headerlink" title="关键代码演示"></a>关键代码演示</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>因为输入的行数和字符串内容任意，所以将每行的字符串直接add入Java的ArrayList动态数组中，接着再装入用length初始化的String字符串数组newArray中，从而避免了从Object类型进行强制转换String[]的风险</p>
+<hr>
+<h3 id="字符串过滤演示"><a href="#字符串过滤演示" class="headerlink" title="字符串过滤演示"></a>字符串过滤演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i &lt;elementIndex;i++)</div><div class="line">newArray[i] = newArray[i].replaceAll(<span class="string">"\\d+"</span>,<span class="string">""</span>);</div><div class="line"><span class="comment">//这里演示的是去除数字</span></div></pre></td></tr></table></figure>
+<p><strong>拓展：</strong></p>
+<p>.replaceAll(“转义符+正则表达式”,”要替换成的字符”);</p>
+<h3 id="字符串分割演示"><a href="#字符串分割演示" class="headerlink" title="字符串分割演示"></a>字符串分割演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;newArray[number].length();k++)</div><div class="line">sortArray[k] = newArray[number].substring(k,k+<span class="number">1</span>);</div><div class="line"><span class="comment">//用一个for循环一次切割一个字符并添加入sortArray中</span></div></pre></td></tr></table></figure>
+<p><strong>拓展：</strong></p>
+<h4 id="String类常用方法"><a href="#String类常用方法" class="headerlink" title="String类常用方法"></a>String类常用方法</h4><table>
+<thead>
+<tr>
+<th>方法用途</th>
+<th>定义 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>起止字符分割字符串</td>
+<td>substring(int beginIndex,int endIndex)</td>
+</tr>
+<tr>
+<td>将某字符用作分隔符</td>
+<td>split(String regex) return String[]</td>
+</tr>
+<tr>
+<td>转成大写字母</td>
+<td>toUpperCase()</td>
+</tr>
+<tr>
+<td>转成小写字母</td>
+<td>toLowerCase()</td>
+</tr>
+<tr>
+<td>去掉开始和末尾的空格</td>
+<td>trim() return a string </td>
+</tr>
+<tr>
+<td>比较字符串</td>
+<td>boolean equals(Object anObject)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="单字符String数组排序演示"><a href="#单字符String数组排序演示" class="headerlink" title="单字符String数组排序演示"></a>单字符String数组排序演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Arrays.sort(sortArray,String.CASE_INSENSITIVE_ORDER);</div><div class="line"><span class="comment">//不分大小写进行排序</span></div></pre></td></tr></table></figure>
+<p><strong>拓展：</strong></p>
+<h4 id="Arrays类常用方法"><a href="#Arrays类常用方法" class="headerlink" title="Arrays类常用方法"></a>Arrays类常用方法</h4><table>
+<thead>
+<tr>
+<th>方法用途</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>将数组排序</td>
+<td>sort()</td>
+</tr>
+<tr>
+<td>查找数组中的值</td>
+<td>binarySearch(object[ ], object key) *先用sort()排序后用</td>
+</tr>
+<tr>
+<td>复制数组</td>
+<td>int[] copyOf(int[] original,int newLength)</td>
+</tr>
+<tr>
+<td>数组中值的替换</td>
+<td>fill(int[] a,int val)</td>
+</tr>
+<tr>
+<td>待续….</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="完整代码demo演示"><a href="#完整代码demo演示" class="headerlink" title="完整代码demo演示"></a>完整代码demo演示</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by Tecker on 2016/6/21.</div><div class="line"> */</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UsingArrayList</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> elementIndex = <span class="number">1</span>;</div><div class="line">        Scanner inputElement = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        ArrayList elementlist = <span class="keyword">new</span> ArrayList();</div><div class="line">        <span class="keyword">boolean</span> inputOver = <span class="keyword">false</span>;</div><div class="line">        System.out.printf(<span class="string">"请任意输入N行N个字符串\n"</span>);</div><div class="line">        System.out.printf(<span class="string">"当输入inputOver时结束\n"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            System.out.printf(<span class="string">"输入第"</span> + elementIndex + <span class="string">"个字符串\n"</span>);</div><div class="line">            System.out.printf(<span class="string">"&gt;&gt;"</span>);</div><div class="line">            String input = inputElement.nextLine();</div><div class="line">            <span class="keyword">if</span> (input.equals(<span class="string">"inputOver"</span>))&#123;</div><div class="line">                inputOver = <span class="keyword">true</span>;</div><div class="line">                System.out.println(<span class="string">"输入完毕！"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                elementlist.add(input);</div><div class="line">                elementIndex++;</div><div class="line">            &#125;</div><div class="line">        &#125;<span class="keyword">while</span> (inputOver == <span class="keyword">false</span>);      <span class="comment">//用do-while语句加上if判断来控制输入N行夹杂数字大小写的字符串</span></div><div class="line">        elementIndex = elementIndex - <span class="number">1</span>;</div><div class="line">        System.out.printf(<span class="string">"排序前:\n"</span>);</div><div class="line">        String[] newArray = <span class="keyword">new</span> String[elementIndex];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">0</span>;k &lt;elementIndex;k++)</div><div class="line">            System.out.printf(<span class="string">"&gt;&gt; "</span> + elementlist.get(k) + <span class="string">"\n"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index=<span class="number">0</span>;index &lt;elementIndex;index++)</div><div class="line">            newArray[index] = elementlist.get(index).toString();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i &lt;elementIndex;i++)</div><div class="line">            newArray[i] = newArray[i].replaceAll(<span class="string">"\\d+"</span>,<span class="string">""</span>);</div><div class="line">        <span class="keyword">for</span> (String element : newArray)</div><div class="line">            System.out.printf(element +<span class="string">"\n"</span>);</div><div class="line">        System.out.println(<span class="string">"排序后\n"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> listIndex=<span class="number">0</span>;listIndex &lt;newArray.length;listIndex++)&#123;</div><div class="line">            sortArrays(listIndex,newArray);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sortArrays</span><span class="params">(<span class="keyword">int</span> number,String[] newArray)</span></span>&#123;</div><div class="line">        String[] sortArray = <span class="keyword">new</span> String[newArray[number].length()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;newArray[number].length();k++)&#123;</div><div class="line">            sortArray[k] = newArray[number].substring(k,k+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        Arrays.sort(sortArray,String.CASE_INSENSITIVE_ORDER);</div><div class="line">        String finalString = <span class="string">"&gt;&gt;"</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;sortArray.length;j++)&#123;</div><div class="line">            finalString = finalString.concat(sortArray[j]);</div><div class="line">        &#125;</div><div class="line">        System.out.println(finalString);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Java-Basic/">Java Basic</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/04/TP常用函数总结/"  data-tooltip="TP常用函数总结">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Tecker.Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/04/TP常用函数总结/"  data-tooltip="TP常用函数总结">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.jpeg"/>
+        
+            <h4 id="about-card-name">Tecker.Yu</h4>
+        
+            <h5 id="about-card-bio"><p>A South China Agricultural University student in China who appreciate the art of the WEB technology</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Dream of Full Stack Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Shenzhen,China
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/default-cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

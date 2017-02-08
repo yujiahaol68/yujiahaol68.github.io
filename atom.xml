@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>A Refactor&#39;s Blog</title>
+  <subtitle>Major in full stack and share knowledge with everyone</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-02-08T02:04:46.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Tecker.Yu</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vuex快速入门</title>
+    <link href="http://yoursite.com/2017/02/08/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
+    <id>http://yoursite.com/2017/02/08/vuex快速入门/</id>
+    <published>2017-02-08T00:26:19.000Z</published>
+    <updated>2017-02-08T02:04:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="基本用途："><a href="#基本用途：" class="headerlink" title="基本用途："></a>基本用途：</h3><ul>
+<li><p>将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了<code>props</code>传值的链式响应的代码冗余</p>
+</li>
+<li><p>给状态配以公用方法，将状态的变更及时响应并处理</p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="基本用法："><a href="#基本用法：" class="headerlink" title="基本用法："></a>基本用法：</h3><p>/store/store.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</div><div class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</div><div class="line"></div><div class="line">Vue.use(Vuex);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">    <span class="attr">state</span>: &#123;</div><div class="line">        <span class="attr">sideBarOpened</span>: <span class="literal">false</span></div><div class="line">        <span class="comment">//放置公用状态</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">getters</span>: &#123;</div><div class="line">    	<span class="attr">changeState</span>: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</div><div class="line">    		<span class="comment">//相当于vue实例中的methods,用于处理公用data</span></div><div class="line">    		<span class="comment">//自vuex 面向组件的数据处理</span></div><div class="line">    	&#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">mutations</span>: &#123;</div><div class="line">    	<span class="comment">//写法与getters相类似</span></div><div class="line">    	<span class="comment">//组件想要对于vuex 中的数据进行的处理</span></div><div class="line">    	<span class="comment">//组件中采用this.$store.commit('方法名') 的方式调用，实现充分解耦</span></div><div class="line">    	<span class="comment">//内部操作必须在此刻完成(同步)</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">actions</span>: &#123;</div><div class="line">    	<span class="comment">//使得mutations能够实现异步调用，实现例如延迟调用</span></div><div class="line">    	increment (&#123; commit &#125;, payload) &#123;</div><div class="line">    		commit(<span class="string">'突变方法名'</span>)</div><div class="line">    		<span class="comment">//payload应该是一个对象，可通过模板方法调用传入对象的方式将数据从组件传入vuex</span></div><div class="line">  		&#125;,</div><div class="line">  		asyncIncrement(&#123;commit&#125;) =&gt; &#123;</div><div class="line">  			setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  				commit(<span class="string">'increment'</span>)</div><div class="line">  			&#125;, <span class="number">1000</span>)</div><div class="line">  		&#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">modules</span>: &#123;</div><div class="line">    	<span class="comment">//引入某一个state的以上集合的模块，会自动分别填充到上面，使得结构更加清晰</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="string">``</span><span class="string">` </span></div><div class="line"></div><div class="line">main.js</div><div class="line"></div><div class="line">`<span class="string">``</span>javascript</div><div class="line"><span class="keyword">import</span> &#123; store &#125; <span class="keyword">from</span> <span class="string">'./store/store'</span></div><div class="line">*</div><div class="line">*</div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  store,	<span class="comment">//注入根组件</span></div><div class="line">  ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="访问vuex中的数据和方法"><a href="#访问vuex中的数据和方法" class="headerlink" title="访问vuex中的数据和方法"></a>访问vuex中的数据和方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$store.state.数据名</div><div class="line"><span class="keyword">this</span>.$store.getters.方法名</div></pre></td></tr></table></figure>
+<p>受影响组件局部定义计算属性响应变化数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">computed: &#123;</div><div class="line">     open () &#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.$store.state.sideBarOpened</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将 store 中的 getters/mutations 映射到局部(计算属性/方法)使用<code>mapGetters/mapMutations</code>辅助函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></div><div class="line"></div><div class="line">computed: &#123;</div><div class="line">  <span class="comment">// 使用对象展开运算符将 getters 混入 computed 对象中</span></div><div class="line">    ...mapGetters([</div><div class="line">    	<span class="comment">//映射 this.doneTodosCount 为 store.getters.doneTodosCount</span></div><div class="line">      <span class="string">'doneTodosCount'</span>,</div><div class="line">      <span class="comment">//'getter名称',</span></div><div class="line">      </div><div class="line">      <span class="comment">// 映射 this.doneCount 为 store.getters.doneTodosCount</span></div><div class="line">  		doneCount: <span class="string">'doneTodosCount'</span></div><div class="line">      <span class="comment">// 三个点表示将内部拿出生成键值对，这样使得组件本身的计算属性不受影响</span></div><div class="line">      <span class="comment">// 此语法依赖babel-preset-stage-2</span></div><div class="line">    ])</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><p>mutation 必须是同步函数 — devtool要保存快照，方便追踪状态变化</p>
+<p>使用 v-model 绑定 vuex 计算属性的时候要设置get 和 set 才能双向绑定</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">computed: &#123;</div><div class="line">	<span class="attr">value</span>: &#123;</div><div class="line">		get () &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.$store.getters.value;</div><div class="line">		&#125;,</div><div class="line">		set (event) &#123;</div><div class="line">			<span class="keyword">this</span>.$store.dispatch(<span class="string">'updateValue'</span>, event.target.value);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;基本用途：&quot;&gt;&lt;a href=&quot;#基本用途：&quot; class=&quot;headerlink&quot; title=&quot;基本用途：&quot;&gt;&lt;/a&gt;基本用途：&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了&lt;code&gt;props&lt;/code&gt;传值的链式响应的代码冗余&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;给状态配以公用方法，将状态的变更及时响应并处理&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="Vue" scheme="http://yoursite.com/categories/Vue/"/>
+    
+    
+      <category term="Vuex" scheme="http://yoursite.com/tags/Vuex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>php数组常用方法详解</title>
+    <link href="http://yoursite.com/2016/11/27/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://yoursite.com/2016/11/27/php数组常用方法详解/</id>
+    <published>2016-11-27T14:20:35.000Z</published>
+    <updated>2016-12-30T08:22:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"><a href="#众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法" class="headerlink" title="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"></a>众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法</h4><h4 id="我们先建立一个对象post以便于演示"><a href="#我们先建立一个对象post以便于演示" class="headerlink" title="我们先建立一个对象post以便于演示"></a>我们先建立一个对象post以便于演示</h4><a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">public</span> $title;</div><div class="line">	<span class="keyword">public</span> $published;</div><div class="line">	<span class="keyword">public</span> $auth;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($title,$auth,$published)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">$this</span>-&gt;title = $title;</div><div class="line">		<span class="keyword">$this</span>-&gt;published = $published;</div><div class="line">		<span class="keyword">$this</span>-&gt;auth = $auth;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$posts = [</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'first'</span>,<span class="string">'jm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'second'</span>,<span class="string">'vm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'third'</span>,<span class="string">'cm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'fourth'</span>,<span class="string">'em'</span>,<span class="keyword">false</span>)</div><div class="line"></div><div class="line">];</div></pre></td></tr></table></figure>
+<ol>
+<li><code>array_filter</code> 数组过滤器</li>
+</ol>
+<p>可以写成闭包的形式，那样当数组被遍历的时候每一个元素就会执行该方法，将符合条件的元素return回来，然后就组成了新的数组,如果键的值为空，那么这个键将不会被保存在<br>新的数组里</p>
+<p>例如我们想筛选出还没有发布的post对象，并用var_dump()输出结果，我们可以</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$unpublished = array_filter($posts,<span class="function"><span class="keyword">function</span><span class="params">($post)</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> !$post-&gt;published;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>输出的结果为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array(1) &#123;</div><div class="line">  [3]=&gt;</div><div class="line">  object(Post)#4 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;fourth&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;em&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><code>array_map</code> 数组元素批处理器</li>
+</ol>
+<p>这个方法可就相当好用了，尤其适用于要同时改变多个对象中的属性时</p>
+<p>假设我们要把post对象的published属性全部设置成false，可以这样做</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$modified = array_map(<span class="function"><span class="keyword">function</span><span class="params">($post)</span></span>&#123;</div><div class="line">	$post-&gt;published = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">return</span> $post;</div><div class="line">&#125;,$posts);      <span class="comment">//与普通的闭包函数的位置有些许不同，闭包函数在前，要处理的数组在后</span></div></pre></td></tr></table></figure>
+<p>再次用var_dump输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  object(Post)#1 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(5) &quot;first&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;jm&quot;</div><div class="line">  &#125;</div><div class="line">  [1]=&gt;</div><div class="line">  object(Post)#2 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;second&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;vm&quot;</div><div class="line">  &#125;</div><div class="line">  [2]=&gt;</div><div class="line">  object(Post)#3 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(5) &quot;third&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;cm&quot;</div><div class="line">  &#125;</div><div class="line">  [3]=&gt;</div><div class="line">  object(Post)#4 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;fourth&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;em&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>神奇得发现published属性全都变成了false!</p>
+<ol>
+<li>array_column 返回此键名的值所构成的新数组</li>
+</ol>
+<p>假设我们要返回全部的作者名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$allAuth = array_column($posts,<span class="string">'auth'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  string(2) &quot;jm&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  string(2) &quot;vm&quot;</div><div class="line">  [2]=&gt;</div><div class="line">  string(2) &quot;cm&quot;</div><div class="line">  [3]=&gt;</div><div class="line">  string(2) &quot;em&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上就是三个非常实用的PHP数组的方法</p>
+<p>附：</p>
+<ul>
+<li><p>array_key_exists 判断在一个数组中是否存在这个键名</p>
+</li>
+<li><p>array_merge 合并两个数组,返回合并后的新数组</p>
+</li>
+<li><p>array_pop 将最后一个元素去除</p>
+</li>
+<li><p>array_push 在尾部追加新的元素</p>
+</li>
+<li><p>shuffle 打乱一个数组</p>
+</li>
+<li><p>array_rand 在数组中随机挑选几个元素，返回这些元素的键名</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法&quot;&gt;&lt;a href=&quot;#众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法&quot; class=&quot;headerlink&quot; title=&quot;众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法&quot;&gt;&lt;/a&gt;众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法&lt;/h4&gt;&lt;h4 id=&quot;我们先建立一个对象post以便于演示&quot;&gt;&lt;a href=&quot;#我们先建立一个对象post以便于演示&quot; class=&quot;headerlink&quot; title=&quot;我们先建立一个对象post以便于演示&quot;&gt;&lt;/a&gt;我们先建立一个对象post以便于演示&lt;/h4&gt;
+    
+    </summary>
+    
+      <category term="php" scheme="http://yoursite.com/categories/php/"/>
+    
+    
+      <category term="useful function" scheme="http://yoursite.com/tags/useful-function/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>gulp.js简易入门指南</title>
+    <link href="http://yoursite.com/2016/11/20/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2016/11/20/gulp-js简易入门指南/</id>
+    <published>2016-11-20T06:39:33.000Z</published>
+    <updated>2016-12-14T12:20:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"><a href="#gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件" class="headerlink" title="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"></a>gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件</h4><a id="more"></a>
+<p>为什么需要gulp?</p>
+<ul>
+<li>模块化我们的html,css,js文件，使得项目的结构更加的清晰</li>
+<li>转译我们的模块文件（例如：js es6-&gt;es5 , panini-&gt;html ,Sass-&gt;css,）</li>
+<li>图片及css文件的压缩处理极大的提高网页性能</li>
+<li>解决各种浏览器兼容性问题</li>
+<li>基于管道思想的pipe多重处理，你可以自定义你想要的处理任务，一切交给gulp自动完成</li>
+</ul>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>必备：npm包管理器</p>
+<p>流程：</p>
+<ol>
+<li><p>在项目目录下进行 npm init -y</p>
+</li>
+<li><p>npm install gulp –save-dev 作为项目依赖安装</p>
+</li>
+<li><p>项目根目录下新建文件gulpfile.js</p>
+</li>
+<li><p>在gulpfile.js中写入你要gulp为你自动化处理的任务</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)     <span class="comment">//请求gulp模块</span></div><div class="line"></div><div class="line">gulp.task(<span class="string">'name'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;   <span class="comment">//给gulp的任务，任务名+任务会执行的函数</span></div><div class="line">    <span class="comment">//执行的任务</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>命令行中执行gulp name的时候，gulp就会自动找到你自己定义的那个任务</p>
+<h3 id="gulp能做得更多"><a href="#gulp能做得更多" class="headerlink" title="gulp能做得更多"></a>gulp能做得更多</h3><h4 id="管道理念"><a href="#管道理念" class="headerlink" title="管道理念"></a>管道理念</h4><p>简单来讲，你的任务一定会有源文件，管道相当于处理方法，管道可以接多条，管道的尽头就是输出文件</p>
+<p>我们有专门的文件夹来存放我们的源文件和输出文件，它们的目录分别为src和dist</p>
+<p>gulp本身也给我们提供了很多现成的管道，官网有许多的plugin可以用，上面都有示例代码</p>
+<p>我们可以用npm像安装模块一样把它们一一安装，在node中一切皆模块，npm可以快速的帮助我们运用这些已经写好的模块作为我们的一个个管道</p>
+<h4 id="gulp管道的使用方法"><a href="#gulp管道的使用方法" class="headerlink" title="gulp管道的使用方法"></a>gulp管道的使用方法</h4><p>这里以sass编译任务为例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)</div><div class="line"><span class="keyword">var</span> sass = <span class="built_in">require</span>(<span class="string">'gulp-sass'</span>) <span class="comment">//完整的模块名,请求模块</span></div><div class="line"></div><div class="line">gulp.task(<span class="string">'sass'</span>, () =&gt; &#123;   <span class="comment">//注意node支持es6的语法</span></div><div class="line">    gulp.src(<span class="string">'./src/源文件目录.sass'</span>)    <span class="comment">//告诉gulp我们想要处理的文件</span></div><div class="line">        .pipe(sass())   <span class="comment">//将sass处理方法封装成管道</span></div><div class="line">        <span class="comment">//.pipe 处理1</span></div><div class="line">        <span class="comment">//.pipe 处理2</span></div><div class="line">        .pipe(gulp.dest(<span class="string">'./dist/css/'</span>))     <span class="comment">//最后将管道导向输出，也就是输出目录当中生成输出文件</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="添加gulp观察者以便对源文件的更改进行实时处理"><a href="#添加gulp观察者以便对源文件的更改进行实时处理" class="headerlink" title="添加gulp观察者以便对源文件的更改进行实时处理"></a>添加gulp观察者以便对源文件的更改进行实时处理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'watch'</span>,() =&gt; &#123;</div><div class="line">    gulp.watch(<span class="string">'追踪更改的文件目录'</span>,[<span class="string">'每次更改保存就执行的task'</span>])</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h4><ul>
+<li>任务名若为default命令行中直接输入gulp就会立即执行</li>
+<li>gulp.task(‘default’, [‘styles’, ‘jshint’, ‘watch’])</li>
+</ul>
+<p>gulp可以进行多任务,让一个任务同时调用多个任务</p>
+<ul>
+<li>在指定目录中可以用*号和后缀匹配目录下的全部同类型文件 </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gulp.src(<span class="string">'js/**/*.js'</span>)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件&quot;&gt;&lt;a href=&quot;#gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件&quot; class=&quot;headerlink&quot; title=&quot;gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件&quot;&gt;&lt;/a&gt;gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件&lt;/h4&gt;
+    
+    </summary>
+    
+      <category term="BuildingTools" scheme="http://yoursite.com/categories/BuildingTools/"/>
+    
+    
+      <category term="npm" scheme="http://yoursite.com/tags/npm/"/>
+    
+      <category term="cli" scheme="http://yoursite.com/tags/cli/"/>
+    
+      <category term="node" scheme="http://yoursite.com/tags/node/"/>
+    
+      <category term="front end dev" scheme="http://yoursite.com/tags/front-end-dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>php处理html字符串</title>
+    <link href="http://yoursite.com/2016/11/12/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>http://yoursite.com/2016/11/12/php处理html字符串/</id>
+    <published>2016-11-12T03:19:10.000Z</published>
+    <updated>2016-11-12T13:48:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"><a href="#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用" class="headerlink" title="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"></a>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4><a id="more"></a>
+<h3 id="需要用到的函数："><a href="#需要用到的函数：" class="headerlink" title="需要用到的函数："></a>需要用到的函数：</h3><ul>
+<li>str_replace() 字符串替换</li>
+<li>html_entity_decode() html字符串转html标签 </li>
+<li>strip_tags() 除去所有html标签</li>
+<li>preg_match_all() 全局正则匹配字符串</li>
+<li>array_unique() 去除数组中重复的元素(用于解决全局正则匹配带来的元素重复的问题)</li>
+<li>array_flip() 将键值交换，因为键名不能重复，所以重复元素会被去掉，两次flip下来就能够得到不重复的键值数组</li>
+<li>array_values() 返回只有键值无键名的数组</li>
+</ul>
+<h3 id="快速去除html字符"><a href="#快速去除html字符" class="headerlink" title="快速去除html字符"></a>快速去除html字符</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$bewrite = strip_tags(html_entity_decode($htmlStr),<span class="string">'&lt;br&gt;'</span>);</div></pre></td></tr></table></figure>
+<p>先转HTML标签再去除标签，但是注意保留换行标签，在APP中的文字依然需要简单地排版。<br>接着我们再把br标签再转成本地APP的\n</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$bewrite = str_replace(<span class="string">'&lt;br/&gt;'</span>,<span class="string">'\n'</span>,$bewrite);</div></pre></td></tr></table></figure>
+<p>但似乎字符串还是没有除干净，因为会残余一些html本身的换行字符&amp;和空格,再替换一次</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$bewrite = str_replace(<span class="string">'&amp;nbsp;'</span>,<span class="string">' '</span>,$bewrite);</div><div class="line">$bewrite = str_replace(<span class="string">'&amp;amp;'</span>,<span class="string">''</span>,$bewrite);</div></pre></td></tr></table></figure>
+<p>但通常情况下，我们的HTML字符串中不仅有文本，还有图片，img中的src属性也必须要挑出来</p>
+<h3 id="正则匹配标签属性"><a href="#正则匹配标签属性" class="headerlink" title="正则匹配标签属性"></a>正则匹配标签属性</h3><p>下面我以img中匹配src图片地址为例子</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$unmatchedstr = html_entity_decode($data[<span class="string">'secondgoods_bewrite'</span>]); <span class="comment">//转html字符串</span></div><div class="line">preg_match_all(<span class="string">'/\&lt;img.*?src\=\"(.*?)\"[^&gt;]*&gt;/i'</span>,$unmatchedstr,$match);<span class="comment">//正则匹配图片src地址</span></div></pre></td></tr></table></figure>
+<p>但这还没完，我们发现正则出来的链接有许多的重复的链接，我们必须要去除变量$match[1]中重复的值</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$matches = array_unique($match[<span class="number">1</span>]);</div><div class="line"><span class="comment">//来两次array_flip()或许比unique更加高效一些</span></div><div class="line">$matchresult = array_values($matches);<span class="comment">//取键值数组的值，去掉键名就完成了</span></div></pre></td></tr></table></figure>
+<p>附文：</p>
+<p>对于远程的src地址，有一种特殊的正则匹配可以排除掉本地的图片<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">preg_match_all(<span class="string">'/((http|https):\/\/)+(\w+\.)+(\w+)[\w\/\.\-]*(jpg|gif|png)/'</span>,$unmatchedstr,$matches);</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;a href=&quot;#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot; class=&quot;headerlink&quot; title=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;/a&gt;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&lt;/h4&gt;
+    
+    </summary>
+    
+      <category term="php" scheme="http://yoursite.com/categories/php/"/>
+    
+    
+      <category term="useful function" scheme="http://yoursite.com/tags/useful-function/"/>
+    
+      <category term="app interface dev" scheme="http://yoursite.com/tags/app-interface-dev/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UNIX时间戳与time()算时间差</title>
+    <link href="http://yoursite.com/2016/11/05/UNIX%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/"/>
+    <id>http://yoursite.com/2016/11/05/UNIX时间戳与time-算时间差/</id>
+    <published>2016-11-05T08:35:24.000Z</published>
+    <updated>2016-11-12T10:47:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案</p>
+<h3 id="需要用到的函数"><a href="#需要用到的函数" class="headerlink" title="需要用到的函数"></a>需要用到的函数</h3><h4 id="getdate-unix数字时间戳"><a href="#getdate-unix数字时间戳" class="headerlink" title="getdate(unix数字时间戳)"></a>getdate(unix数字时间戳)</h4><p>将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间<br><a id="more"></a></p>
+<h3 id="time"><a href="#time" class="headerlink" title="time()"></a>time()</h3><p>方便获取现在的时间</p>
+<h4 id="现假设从mysql中获取到时间戳为-result"><a href="#现假设从mysql中获取到时间戳为-result" class="headerlink" title="现假设从mysql中获取到时间戳为$result"></a>现假设从mysql中获取到时间戳为$result</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">   		$date_time_array = getdate($result);</div><div class="line"> 	$hour = $date_time_array[<span class="string">'hours'</span>];</div><div class="line">$min = $date_time_array[<span class="string">'minutes'</span>];</div><div class="line">$second = $date_time_array[<span class="string">'seconds'</span>];</div><div class="line">$month = $date_time_array[<span class="string">'mon'</span>];</div><div class="line">$day = $date_time_array[<span class="string">'mday'</span>];</div><div class="line">$year = $date_time_array[<span class="string">'year'</span>];</div><div class="line">$now_time_array = getdate(time());</div><div class="line"><span class="keyword">if</span>($year&lt;$now_time_array[<span class="string">'year'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'year'</span>]-$year;</div><div class="line">	$timediff = $diff.<span class="string">'年前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($month&lt;$now_time_array[<span class="string">'mon'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'mon'</span>]-$month;</div><div class="line">	$timediff = $diff.<span class="string">'月前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($day&lt;$now_time_array[<span class="string">'mday'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'mday'</span>]-$day;</div><div class="line">	$timediff = $diff.<span class="string">'天前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($hour&lt;$now_time_array[<span class="string">'hours'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'hours'</span>]-$hour;</div><div class="line">	$timediff = $diff.<span class="string">'小时前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($min&lt;$now_time_array[<span class="string">'minutes'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'minutes'</span>]-$min;</div><div class="line">	$timediff = $diff.<span class="string">'分钟前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($second&lt;$now_time_array[<span class="string">'seconds'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'seconds'</span>]-$second;</div><div class="line">	$timediff = $diff.<span class="string">'秒前'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>循环嵌套顺序判断年月日时分秒，找到第一个不同项相减，就能够计算出数据的距今时间</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案&lt;/p&gt;
+&lt;h3 id=&quot;需要用到的函数&quot;&gt;&lt;a href=&quot;#需要用到的函数&quot; class=&quot;headerlink&quot; title=&quot;需要用到的函数&quot;&gt;&lt;/a&gt;需要用到的函数&lt;/h3&gt;&lt;h4 id=&quot;getdate-unix数字时间戳&quot;&gt;&lt;a href=&quot;#getdate-unix数字时间戳&quot; class=&quot;headerlink&quot; title=&quot;getdate(unix数字时间戳)&quot;&gt;&lt;/a&gt;getdate(unix数字时间戳)&lt;/h4&gt;&lt;p&gt;将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间&lt;br&gt;
+    
+    </summary>
+    
+      <category term="php" scheme="http://yoursite.com/categories/php/"/>
+    
+    
+      <category term="php useful algorithms" scheme="http://yoursite.com/tags/php-useful-algorithms/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TP常用函数总结</title>
+    <link href="http://yoursite.com/2016/11/04/TP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2016/11/04/TP常用函数总结/</id>
+    <published>2016-11-04T06:45:08.000Z</published>
+    <updated>2016-11-12T10:42:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="I函数"><a href="#I函数" class="headerlink" title="I函数"></a>I函数</h3><p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
+<p>定义: <code>I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;)</code></p>
+<p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code></p>
+<p>好处：自动过滤输入，增加安全性，官方推荐</p>
+<a id="more"></a>
+<h3 id="D函数"><a href="#D函数" class="headerlink" title="D函数"></a>D函数</h3><p>用途：new出Model对象进行数据的增删改查，而且可以调用Model中的业务逻辑</p>
+<p>定义：<code>D(&#39;Model名&#39;)</code></p>
+<h3 id="M函数"><a href="#M函数" class="headerlink" title="M函数"></a>M函数</h3><p>用途：可对Model对应的表进行基本的CURD操作，而且节约资源</p>
+<p>定义: <code>M(&#39;Model名&#39;)</code></p>
+<p>缺点：不能调用Model中的自定义业务逻辑</p>
+<h3 id="U函数"><a href="#U函数" class="headerlink" title="U函数"></a>U函数</h3><p>用途：动态生成URL，是官方推荐的URL生成方式</p>
+<p>定义：<code>U(&#39;模块/控制器/操作&#39;)</code></p>
+<h3 id="E函数"><a href="#E函数" class="headerlink" title="E函数"></a>E函数</h3><p>用途：用于错误调试，可以输出错误信息并中断操作</p>
+<p>用法：<code>E($msg)</code></p>
+<h3 id="F函数"><a href="#F函数" class="headerlink" title="F函数"></a>F函数</h3><p>用途：建立快速缓存，为存储的数据带来更快的操作</p>
+<p>缓存Data：<code>F(&#39;data&#39;,$Data,保存目录(可选))</code></p>
+<p>获取：<code>F(&#39;data&#39;)</code></p>
+<p>删除: <code>F(&#39;data&#39;, NULL)</code></p>
+<p>查询缓存: <code>$Model-&gt;cache(&#39;data&#39;)-&gt;select()</code></p>
+<h3 id="S函数"><a href="#S函数" class="headerlink" title="S函数"></a>S函数</h3><p>外部获取缓存内容：<code>$value = S(&#39;cache_name&#39;)</code></p>
+<h3 id="T函数"><a href="#T函数" class="headerlink" title="T函数"></a>T函数</h3><p>专门用于获取模板的地址，用于display()中</p>
+<p>定义: <code>T(模块/主题/控制器/操作,视图分层)</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;I函数&quot;&gt;&lt;a href=&quot;#I函数&quot; class=&quot;headerlink&quot; title=&quot;I函数&quot;&gt;&lt;/a&gt;I函数&lt;/h3&gt;&lt;p&gt;用途：获取输入数据，例如表单的接收，API的GET接收参数&lt;/p&gt;
+&lt;p&gt;定义: &lt;code&gt;I(&amp;#39;接收的数据&amp;#39;，&amp;#39;默认值&amp;#39;,&amp;#39;接收数据的类型&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;用法：&lt;code&gt;I(&amp;#39;get.id&amp;#39;,1,&amp;#39;int&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;好处：自动过滤输入，增加安全性，官方推荐&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="php" scheme="http://yoursite.com/categories/php/"/>
+    
+    
+      <category term="ThinkPHP Learning" scheme="http://yoursite.com/tags/ThinkPHP-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>夹杂数字字母大小写的字符串按字典排序方法</title>
+    <link href="http://yoursite.com/2016/11/04/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/"/>
+    <id>http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/</id>
+    <published>2016-11-04T05:30:43.000Z</published>
+    <updated>2016-11-12T10:46:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="核心步骤概要"><a href="#核心步骤概要" class="headerlink" title="核心步骤概要"></a>核心步骤概要</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>过滤数字等特殊符号，只剩下字母</p>
+<p>这里要用到String类自带的replaceAll方法以及表达式进行过滤</p>
+<h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将字符串进行单字符分割<br><a id="more"></a><br>这里要用到String类自带的substring方法</p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>将分割得到的单字符String数组进行忽略大小写的排序</p>
+<p>这里要用到Arrays类中的sort方法</p>
+<h2 id="关键代码演示"><a href="#关键代码演示" class="headerlink" title="关键代码演示"></a>关键代码演示</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>因为输入的行数和字符串内容任意，所以将每行的字符串直接add入Java的ArrayList动态数组中，接着再装入用length初始化的String字符串数组newArray中，从而避免了从Object类型进行强制转换String[]的风险</p>
+<hr>
+<h3 id="字符串过滤演示"><a href="#字符串过滤演示" class="headerlink" title="字符串过滤演示"></a>字符串过滤演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i &lt;elementIndex;i++)</div><div class="line">newArray[i] = newArray[i].replaceAll(<span class="string">"\\d+"</span>,<span class="string">""</span>);</div><div class="line"><span class="comment">//这里演示的是去除数字</span></div></pre></td></tr></table></figure>
+<p><strong>拓展：</strong></p>
+<p>.replaceAll(“转义符+正则表达式”,”要替换成的字符”);</p>
+<h3 id="字符串分割演示"><a href="#字符串分割演示" class="headerlink" title="字符串分割演示"></a>字符串分割演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;newArray[number].length();k++)</div><div class="line">sortArray[k] = newArray[number].substring(k,k+<span class="number">1</span>);</div><div class="line"><span class="comment">//用一个for循环一次切割一个字符并添加入sortArray中</span></div></pre></td></tr></table></figure>
+<p><strong>拓展：</strong></p>
+<h4 id="String类常用方法"><a href="#String类常用方法" class="headerlink" title="String类常用方法"></a>String类常用方法</h4><table>
+<thead>
+<tr>
+<th>方法用途</th>
+<th>定义 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>起止字符分割字符串</td>
+<td>substring(int beginIndex,int endIndex)</td>
+</tr>
+<tr>
+<td>将某字符用作分隔符</td>
+<td>split(String regex) return String[]</td>
+</tr>
+<tr>
+<td>转成大写字母</td>
+<td>toUpperCase()</td>
+</tr>
+<tr>
+<td>转成小写字母</td>
+<td>toLowerCase()</td>
+</tr>
+<tr>
+<td>去掉开始和末尾的空格</td>
+<td>trim() return a string </td>
+</tr>
+<tr>
+<td>比较字符串</td>
+<td>boolean equals(Object anObject)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="单字符String数组排序演示"><a href="#单字符String数组排序演示" class="headerlink" title="单字符String数组排序演示"></a>单字符String数组排序演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Arrays.sort(sortArray,String.CASE_INSENSITIVE_ORDER);</div><div class="line"><span class="comment">//不分大小写进行排序</span></div></pre></td></tr></table></figure>
+<p><strong>拓展：</strong></p>
+<h4 id="Arrays类常用方法"><a href="#Arrays类常用方法" class="headerlink" title="Arrays类常用方法"></a>Arrays类常用方法</h4><table>
+<thead>
+<tr>
+<th>方法用途</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>将数组排序</td>
+<td>sort()</td>
+</tr>
+<tr>
+<td>查找数组中的值</td>
+<td>binarySearch(object[ ], object key) *先用sort()排序后用</td>
+</tr>
+<tr>
+<td>复制数组</td>
+<td>int[] copyOf(int[] original,int newLength)</td>
+</tr>
+<tr>
+<td>数组中值的替换</td>
+<td>fill(int[] a,int val)</td>
+</tr>
+<tr>
+<td>待续….</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="完整代码demo演示"><a href="#完整代码demo演示" class="headerlink" title="完整代码demo演示"></a>完整代码demo演示</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by Tecker on 2016/6/21.</div><div class="line"> */</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UsingArrayList</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> elementIndex = <span class="number">1</span>;</div><div class="line">        Scanner inputElement = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        ArrayList elementlist = <span class="keyword">new</span> ArrayList();</div><div class="line">        <span class="keyword">boolean</span> inputOver = <span class="keyword">false</span>;</div><div class="line">        System.out.printf(<span class="string">"请任意输入N行N个字符串\n"</span>);</div><div class="line">        System.out.printf(<span class="string">"当输入inputOver时结束\n"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            System.out.printf(<span class="string">"输入第"</span> + elementIndex + <span class="string">"个字符串\n"</span>);</div><div class="line">            System.out.printf(<span class="string">"&gt;&gt;"</span>);</div><div class="line">            String input = inputElement.nextLine();</div><div class="line">            <span class="keyword">if</span> (input.equals(<span class="string">"inputOver"</span>))&#123;</div><div class="line">                inputOver = <span class="keyword">true</span>;</div><div class="line">                System.out.println(<span class="string">"输入完毕！"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                elementlist.add(input);</div><div class="line">                elementIndex++;</div><div class="line">            &#125;</div><div class="line">        &#125;<span class="keyword">while</span> (inputOver == <span class="keyword">false</span>);      <span class="comment">//用do-while语句加上if判断来控制输入N行夹杂数字大小写的字符串</span></div><div class="line">        elementIndex = elementIndex - <span class="number">1</span>;</div><div class="line">        System.out.printf(<span class="string">"排序前:\n"</span>);</div><div class="line">        String[] newArray = <span class="keyword">new</span> String[elementIndex];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">0</span>;k &lt;elementIndex;k++)</div><div class="line">            System.out.printf(<span class="string">"&gt;&gt; "</span> + elementlist.get(k) + <span class="string">"\n"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index=<span class="number">0</span>;index &lt;elementIndex;index++)</div><div class="line">            newArray[index] = elementlist.get(index).toString();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i &lt;elementIndex;i++)</div><div class="line">            newArray[i] = newArray[i].replaceAll(<span class="string">"\\d+"</span>,<span class="string">""</span>);</div><div class="line">        <span class="keyword">for</span> (String element : newArray)</div><div class="line">            System.out.printf(element +<span class="string">"\n"</span>);</div><div class="line">        System.out.println(<span class="string">"排序后\n"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> listIndex=<span class="number">0</span>;listIndex &lt;newArray.length;listIndex++)&#123;</div><div class="line">            sortArrays(listIndex,newArray);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sortArrays</span><span class="params">(<span class="keyword">int</span> number,String[] newArray)</span></span>&#123;</div><div class="line">        String[] sortArray = <span class="keyword">new</span> String[newArray[number].length()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;newArray[number].length();k++)&#123;</div><div class="line">            sortArray[k] = newArray[number].substring(k,k+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        Arrays.sort(sortArray,String.CASE_INSENSITIVE_ORDER);</div><div class="line">        String finalString = <span class="string">"&gt;&gt;"</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;sortArray.length;j++)&#123;</div><div class="line">            finalString = finalString.concat(sortArray[j]);</div><div class="line">        &#125;</div><div class="line">        System.out.println(finalString);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;核心步骤概要&quot;&gt;&lt;a href=&quot;#核心步骤概要&quot; class=&quot;headerlink&quot; title=&quot;核心步骤概要&quot;&gt;&lt;/a&gt;核心步骤概要&lt;/h2&gt;&lt;h3 id=&quot;过滤&quot;&gt;&lt;a href=&quot;#过滤&quot; class=&quot;headerlink&quot; title=&quot;过滤&quot;&gt;&lt;/a&gt;过滤&lt;/h3&gt;&lt;p&gt;过滤数字等特殊符号，只剩下字母&lt;/p&gt;
+&lt;p&gt;这里要用到String类自带的replaceAll方法以及表达式进行过滤&lt;/p&gt;
+&lt;h3 id=&quot;分割&quot;&gt;&lt;a href=&quot;#分割&quot; class=&quot;headerlink&quot; title=&quot;分割&quot;&gt;&lt;/a&gt;分割&lt;/h3&gt;&lt;p&gt;将字符串进行单字符分割&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java Basic" scheme="http://yoursite.com/tags/Java-Basic/"/>
+    
+  </entry>
+  
+</feed>

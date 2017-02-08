@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="A Refactor&#39;s Blog">
+    <title>php数组常用方法详解 - A Refactor&#39;s Blog</title>
+    <meta name="author" content="Tecker.Yu">
+    
+        <meta name="keywords" content="hexo,Tecker.Yu,blog,web development,tech and code sharing,">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/cover.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法我们先建立一个对象post以便于演示">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="php数组常用方法详解">
+<meta property="og:url" content="http://yoursite.com/2016/11/27/php数组常用方法详解/index.html">
+<meta property="og:site_name" content="A Refactor's Blog">
+<meta property="og:description" content="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法我们先建立一个对象post以便于演示">
+<meta property="og:updated_time" content="2016-12-30T08:22:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php数组常用方法详解">
+<meta name="twitter:description" content="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法我们先建立一个对象post以便于演示">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/me.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">A Refactor&#39;s Blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">Tecker.Yu</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About me</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yujiahaol68" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">Github</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:767954505@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            php数组常用方法详解
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-11-27T22:20:35+08:00">
+	
+		    Nov 27, 2016
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/php/">php</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h4 id="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"><a href="#众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法" class="headerlink" title="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"></a>众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法</h4><h4 id="我们先建立一个对象post以便于演示"><a href="#我们先建立一个对象post以便于演示" class="headerlink" title="我们先建立一个对象post以便于演示"></a>我们先建立一个对象post以便于演示</h4><a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">public</span> $title;</div><div class="line">	<span class="keyword">public</span> $published;</div><div class="line">	<span class="keyword">public</span> $auth;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($title,$auth,$published)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">$this</span>-&gt;title = $title;</div><div class="line">		<span class="keyword">$this</span>-&gt;published = $published;</div><div class="line">		<span class="keyword">$this</span>-&gt;auth = $auth;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$posts = [</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'first'</span>,<span class="string">'jm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'second'</span>,<span class="string">'vm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'third'</span>,<span class="string">'cm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'fourth'</span>,<span class="string">'em'</span>,<span class="keyword">false</span>)</div><div class="line"></div><div class="line">];</div></pre></td></tr></table></figure>
+<ol>
+<li><code>array_filter</code> 数组过滤器</li>
+</ol>
+<p>可以写成闭包的形式，那样当数组被遍历的时候每一个元素就会执行该方法，将符合条件的元素return回来，然后就组成了新的数组,如果键的值为空，那么这个键将不会被保存在<br>新的数组里</p>
+<p>例如我们想筛选出还没有发布的post对象，并用var_dump()输出结果，我们可以</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$unpublished = array_filter($posts,<span class="function"><span class="keyword">function</span><span class="params">($post)</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> !$post-&gt;published;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>输出的结果为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array(1) &#123;</div><div class="line">  [3]=&gt;</div><div class="line">  object(Post)#4 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;fourth&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;em&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><code>array_map</code> 数组元素批处理器</li>
+</ol>
+<p>这个方法可就相当好用了，尤其适用于要同时改变多个对象中的属性时</p>
+<p>假设我们要把post对象的published属性全部设置成false，可以这样做</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$modified = array_map(<span class="function"><span class="keyword">function</span><span class="params">($post)</span></span>&#123;</div><div class="line">	$post-&gt;published = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">return</span> $post;</div><div class="line">&#125;,$posts);      <span class="comment">//与普通的闭包函数的位置有些许不同，闭包函数在前，要处理的数组在后</span></div></pre></td></tr></table></figure>
+<p>再次用var_dump输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  object(Post)#1 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(5) &quot;first&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;jm&quot;</div><div class="line">  &#125;</div><div class="line">  [1]=&gt;</div><div class="line">  object(Post)#2 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;second&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;vm&quot;</div><div class="line">  &#125;</div><div class="line">  [2]=&gt;</div><div class="line">  object(Post)#3 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(5) &quot;third&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;cm&quot;</div><div class="line">  &#125;</div><div class="line">  [3]=&gt;</div><div class="line">  object(Post)#4 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;fourth&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;em&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>神奇得发现published属性全都变成了false!</p>
+<ol>
+<li>array_column 返回此键名的值所构成的新数组</li>
+</ol>
+<p>假设我们要返回全部的作者名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$allAuth = array_column($posts,<span class="string">'auth'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  string(2) &quot;jm&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  string(2) &quot;vm&quot;</div><div class="line">  [2]=&gt;</div><div class="line">  string(2) &quot;cm&quot;</div><div class="line">  [3]=&gt;</div><div class="line">  string(2) &quot;em&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上就是三个非常实用的PHP数组的方法</p>
+<p>附：</p>
+<ul>
+<li><p>array_key_exists 判断在一个数组中是否存在这个键名</p>
+</li>
+<li><p>array_merge 合并两个数组,返回合并后的新数组</p>
+</li>
+<li><p>array_pop 将最后一个元素去除</p>
+</li>
+<li><p>array_push 在尾部追加新的元素</p>
+</li>
+<li><p>shuffle 打乱一个数组</p>
+</li>
+<li><p>array_rand 在数组中随机挑选几个元素，返回这些元素的键名</p>
+</li>
+</ul>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/useful-function/">useful function</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/08/vuex快速入门/"  data-tooltip="vuex快速入门">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/20/gulp-js简易入门指南/" data-tooltip="gulp.js简易入门指南">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Tecker.Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/08/vuex快速入门/"  data-tooltip="vuex快速入门">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/20/gulp-js简易入门指南/" data-tooltip="gulp.js简易入门指南">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/27/php数组常用方法详解/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.jpeg"/>
+        
+            <h4 id="about-card-name">Tecker.Yu</h4>
+        
+            <h5 id="about-card-bio"><p>A South China Agricultural University student in China who appreciate the art of the WEB technology</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Dream of Full Stack Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Shenzhen,China
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/default-cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

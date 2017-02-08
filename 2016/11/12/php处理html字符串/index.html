@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="A Refactor&#39;s Blog">
+    <title>php处理html字符串 - A Refactor&#39;s Blog</title>
+    <meta name="author" content="Tecker.Yu">
+    
+        <meta name="keywords" content="hexo,Tecker.Yu,blog,web development,tech and code sharing,">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/cover.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="php处理html字符串">
+<meta property="og:url" content="http://yoursite.com/2016/11/12/php处理html字符串/index.html">
+<meta property="og:site_name" content="A Refactor's Blog">
+<meta property="og:description" content="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用">
+<meta property="og:updated_time" content="2016-11-12T13:48:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php处理html字符串">
+<meta name="twitter:description" content="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/me.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">A Refactor&#39;s Blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">Tecker.Yu</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">Search</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About me</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yujiahaol68" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">Github</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:767954505@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">Mail</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            php处理html字符串
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-11-12T11:19:10+08:00">
+	
+		    Nov 12, 2016
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/php/">php</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h4 id="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"><a href="#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用" class="headerlink" title="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"></a>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4><a id="more"></a>
+<h3 id="需要用到的函数："><a href="#需要用到的函数：" class="headerlink" title="需要用到的函数："></a>需要用到的函数：</h3><ul>
+<li>str_replace() 字符串替换</li>
+<li>html_entity_decode() html字符串转html标签 </li>
+<li>strip_tags() 除去所有html标签</li>
+<li>preg_match_all() 全局正则匹配字符串</li>
+<li>array_unique() 去除数组中重复的元素(用于解决全局正则匹配带来的元素重复的问题)</li>
+<li>array_flip() 将键值交换，因为键名不能重复，所以重复元素会被去掉，两次flip下来就能够得到不重复的键值数组</li>
+<li>array_values() 返回只有键值无键名的数组</li>
+</ul>
+<h3 id="快速去除html字符"><a href="#快速去除html字符" class="headerlink" title="快速去除html字符"></a>快速去除html字符</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$bewrite = strip_tags(html_entity_decode($htmlStr),<span class="string">'&lt;br&gt;'</span>);</div></pre></td></tr></table></figure>
+<p>先转HTML标签再去除标签，但是注意保留换行标签，在APP中的文字依然需要简单地排版。<br>接着我们再把br标签再转成本地APP的\n</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$bewrite = str_replace(<span class="string">'&lt;br/&gt;'</span>,<span class="string">'\n'</span>,$bewrite);</div></pre></td></tr></table></figure>
+<p>但似乎字符串还是没有除干净，因为会残余一些html本身的换行字符&amp;和空格,再替换一次</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$bewrite = str_replace(<span class="string">'&amp;nbsp;'</span>,<span class="string">' '</span>,$bewrite);</div><div class="line">$bewrite = str_replace(<span class="string">'&amp;amp;'</span>,<span class="string">''</span>,$bewrite);</div></pre></td></tr></table></figure>
+<p>但通常情况下，我们的HTML字符串中不仅有文本，还有图片，img中的src属性也必须要挑出来</p>
+<h3 id="正则匹配标签属性"><a href="#正则匹配标签属性" class="headerlink" title="正则匹配标签属性"></a>正则匹配标签属性</h3><p>下面我以img中匹配src图片地址为例子</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$unmatchedstr = html_entity_decode($data[<span class="string">'secondgoods_bewrite'</span>]); <span class="comment">//转html字符串</span></div><div class="line">preg_match_all(<span class="string">'/\&lt;img.*?src\=\"(.*?)\"[^&gt;]*&gt;/i'</span>,$unmatchedstr,$match);<span class="comment">//正则匹配图片src地址</span></div></pre></td></tr></table></figure>
+<p>但这还没完，我们发现正则出来的链接有许多的重复的链接，我们必须要去除变量$match[1]中重复的值</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$matches = array_unique($match[<span class="number">1</span>]);</div><div class="line"><span class="comment">//来两次array_flip()或许比unique更加高效一些</span></div><div class="line">$matchresult = array_values($matches);<span class="comment">//取键值数组的值，去掉键名就完成了</span></div></pre></td></tr></table></figure>
+<p>附文：</p>
+<p>对于远程的src地址，有一种特殊的正则匹配可以排除掉本地的图片<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">preg_match_all(<span class="string">'/((http|https):\/\/)+(\w+\.)+(\w+)[\w\/\.\-]*(jpg|gif|png)/'</span>,$unmatchedstr,$matches);</div></pre></td></tr></table></figure></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/app-interface-dev/">app interface dev</a> <a class="tag tag--primary tag--small t-link" href="/tags/useful-function/">useful function</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/20/gulp-js简易入门指南/"  data-tooltip="gulp.js简易入门指南">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/05/UNIX时间戳与time-算时间差/" data-tooltip="UNIX时间戳与time()算时间差">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Tecker.Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/20/gulp-js简易入门指南/"  data-tooltip="gulp.js简易入门指南">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/05/UNIX时间戳与time-算时间差/" data-tooltip="UNIX时间戳与time()算时间差">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2016/11/12/php处理html字符串/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.jpeg"/>
+        
+            <h4 id="about-card-name">Tecker.Yu</h4>
+        
+            <h5 id="about-card-bio"><p>A South China Agricultural University student in China who appreciate the art of the WEB technology</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Dream of Full Stack Engineer</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Shenzhen,China
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/default-cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>
