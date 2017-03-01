@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="A Refactor&#39;s Blog">
-    <title>Tag: vue - A Refactor&#39;s Blog</title>
+    <title>vue-router 快速入门 - A Refactor&#39;s Blog</title>
     <meta name="author" content="Tecker.Yu">
     
         <meta name="keywords" content="hexo,Tecker.Yu,blog,web development,tech and code sharing,">
@@ -17,15 +17,22 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="This is a coding technique sharing blog">
+    <meta name="description" content="vue-router 快速入门配置路由1$ npm install vue-router --save
+routes.js
+123456789101112import Home from &apos;./pages/Home.vue&apos;import Gifs from &apos;./pages/Gifs.vue&apos;import User from &apos;./pages/User.vue&apos;export const route">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="A Refactor's Blog">
-<meta property="og:url" content="http://yoursite.com/tags/vue/index.html">
+<meta property="og:title" content="vue-router 快速入门">
+<meta property="og:url" content="http://yoursite.com/2017/03/01/vue-router-快速入门/index.html">
 <meta property="og:site_name" content="A Refactor's Blog">
-<meta property="og:description" content="This is a coding technique sharing blog">
+<meta property="og:description" content="vue-router 快速入门配置路由1$ npm install vue-router --save
+routes.js
+123456789101112import Home from &apos;./pages/Home.vue&apos;import Gifs from &apos;./pages/Gifs.vue&apos;import User from &apos;./pages/User.vue&apos;export const route">
+<meta property="og:updated_time" content="2017-03-01T10:02:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Refactor's Blog">
-<meta name="twitter:description" content="This is a coding technique sharing blog">
+<meta name="twitter:title" content="vue-router 快速入门">
+<meta name="twitter:description" content="vue-router 快速入门配置路由1$ npm install vue-router --save
+routes.js
+123456789101112import Home from &apos;./pages/Home.vue&apos;import Gifs from &apos;./pages/Gifs.vue&apos;import User from &apos;./pages/User.vue&apos;export const route">
     
     
         
@@ -54,7 +61,7 @@
         
     
 
-<header id="header" data-behavior="1">
+<header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <h1 class="header-title">
         <a class="header-title-link" href="/ ">A Refactor&#39;s Blog</a>
@@ -78,7 +85,7 @@
         
     
 
-<nav id="sidebar" data-behavior="1">
+<nav id="sidebar" data-behavior="3">
     
         <div class="sidebar-profile">
             <a href="/#about">
@@ -205,28 +212,21 @@
 </nav>
 
             
-            <div id="main" data-behavior="1"
+            <div id="main" data-behavior="3"
                  class="
                         hasCoverMetaIn
                         ">
                 
-    
-
-<section class="postShorten-group main-content-wrap">
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2017/03/01/vue-router-快速入门/">
-                            vue-router 快速入门
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            vue-router 快速入门
+        </h1>
+    
+    <div class="post-meta">
     <time itemprop="datePublished" datetime="2017-03-01T18:00:37+08:00">
 	
 		    Mar 01, 2017
@@ -235,10 +235,11 @@
     
 </div>
 
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <h1 id="vue-router-快速入门"><a href="#vue-router-快速入门" class="headerlink" title="vue-router 快速入门"></a>vue-router 快速入门</h1><h3 id="配置路由"><a href="#配置路由" class="headerlink" title="配置路由"></a>配置路由</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install vue-router --save</div></pre></td></tr></table></figure>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h1 id="vue-router-快速入门"><a href="#vue-router-快速入门" class="headerlink" title="vue-router 快速入门"></a>vue-router 快速入门</h1><h3 id="配置路由"><a href="#配置路由" class="headerlink" title="配置路由"></a>配置路由</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install vue-router --save</div></pre></td></tr></table></figure>
 <p>routes.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./pages/Home.vue'</span></div><div class="line"><span class="keyword">import</span> Gifs <span class="keyword">from</span> <span class="string">'./pages/Gifs.vue'</span></div><div class="line"><span class="keyword">import</span> User <span class="keyword">from</span> <span class="string">'./pages/User.vue'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes = [</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">''</span>, <span class="attr">component</span>: Home &#125;,</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">'/gifs'</span>, <span class="attr">component</span>: Gifs &#125;,</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">'/user/:id'</span>, <span class="attr">component</span>: User &#125;</div><div class="line">    <span class="comment">//指定路由和对应要渲染的组件</span></div><div class="line">    <span class="comment">//404的path应该是'*',要放在最末尾，当前面的都匹配不到时才匹配到404页面</span></div><div class="line">    <span class="comment">//this.$route.params.id 可以从路由中拿到id数据</span></div><div class="line">]</div></pre></td></tr></table></figure>
 <p>main.js</p>
@@ -256,31 +257,78 @@
 <p>routes.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> User = <span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</div><div class="line">	<span class="built_in">require</span>.ensure([<span class="string">'./components/user/User.vue'</span>], () =&gt; &#123;</div><div class="line">		resolve(<span class="built_in">require</span>(<span class="string">'./components/user/User.vue'</span>))</div><div class="line">	&#125;, <span class="string">'GroupName'</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">//webpack 异步加载，通过组名，将要同时一起加载的组件打包加载</span></div></pre></td></tr></table></figure>
 
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2017/03/01/vue-router-快速入门/#post-footer" class="postShorten-excerpt_link link">
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
         </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-    </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/vue/">vue</a>
+
+            </div>
         
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/08/vuex快速入门/" data-tooltip="vuex快速入门">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
         
-        <li class="pagination-number">page 1 of 1</li>
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+            
+        
+    </div>
+</article>
+
 
 
                 <footer id="footer" class="main-content-wrap">
@@ -290,6 +338,83 @@
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/08/vuex快速入门/" data-tooltip="vuex快速入门">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/01/vue-router-快速入门/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
             
         </div>
         
@@ -336,6 +461,8 @@
     <!--SCRIPTS-->
 <script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
 <!--SCRIPTS END-->
+
+    
 
 
 
