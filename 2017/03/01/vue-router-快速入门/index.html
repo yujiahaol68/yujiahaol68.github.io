@@ -17,22 +17,16 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="vue-router 快速入门配置路由1$ npm install vue-router --save
-routes.js
-123456789101112import Home from &apos;./pages/Home.vue&apos;import Gifs from &apos;./pages/Gifs.vue&apos;import User from &apos;./pages/User.vue&apos;export const route">
+    <meta name="description" content="vue-router 快速入门配置路由1$ npm install vue-router --save">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="vue-router 快速入门">
 <meta property="og:url" content="http://yoursite.com/2017/03/01/vue-router-快速入门/index.html">
 <meta property="og:site_name" content="A Refactor's Blog">
-<meta property="og:description" content="vue-router 快速入门配置路由1$ npm install vue-router --save
-routes.js
-123456789101112import Home from &apos;./pages/Home.vue&apos;import Gifs from &apos;./pages/Gifs.vue&apos;import User from &apos;./pages/User.vue&apos;export const route">
-<meta property="og:updated_time" content="2017-03-01T10:02:04.000Z">
+<meta property="og:description" content="vue-router 快速入门配置路由1$ npm install vue-router --save">
+<meta property="og:updated_time" content="2017-03-01T10:04:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue-router 快速入门">
-<meta name="twitter:description" content="vue-router 快速入门配置路由1$ npm install vue-router --save
-routes.js
-123456789101112import Home from &apos;./pages/Home.vue&apos;import Gifs from &apos;./pages/Gifs.vue&apos;import User from &apos;./pages/User.vue&apos;export const route">
+<meta name="twitter:description" content="vue-router 快速入门配置路由1$ npm install vue-router --save">
     
     
         
@@ -240,6 +234,7 @@ routes.js
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
             <h1 id="vue-router-快速入门"><a href="#vue-router-快速入门" class="headerlink" title="vue-router 快速入门"></a>vue-router 快速入门</h1><h3 id="配置路由"><a href="#配置路由" class="headerlink" title="配置路由"></a>配置路由</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install vue-router --save</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>routes.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./pages/Home.vue'</span></div><div class="line"><span class="keyword">import</span> Gifs <span class="keyword">from</span> <span class="string">'./pages/Gifs.vue'</span></div><div class="line"><span class="keyword">import</span> User <span class="keyword">from</span> <span class="string">'./pages/User.vue'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes = [</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">''</span>, <span class="attr">component</span>: Home &#125;,</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">'/gifs'</span>, <span class="attr">component</span>: Gifs &#125;,</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">'/user/:id'</span>, <span class="attr">component</span>: User &#125;</div><div class="line">    <span class="comment">//指定路由和对应要渲染的组件</span></div><div class="line">    <span class="comment">//404的path应该是'*',要放在最末尾，当前面的都匹配不到时才匹配到404页面</span></div><div class="line">    <span class="comment">//this.$route.params.id 可以从路由中拿到id数据</span></div><div class="line">]</div></pre></td></tr></table></figure>
 <p>main.js</p>
