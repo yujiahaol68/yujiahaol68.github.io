@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>A Refactor&#39;s Blog</title>
-  <subtitle>Major in full stack and share knowledge with everyone</subtitle>
+  <subtitle>Major in full stack especially node.js backend and share knowledge with everyone</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-01T10:07:26.000Z</updated>
+  <updated>2017-03-22T12:30:07.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,31 +20,79 @@
     <link href="http://yoursite.com/2017/03/01/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     <id>http://yoursite.com/2017/03/01/vue-router-快速入门/</id>
     <published>2017-03-01T10:00:37.000Z</published>
-    <updated>2017-03-01T10:07:26.000Z</updated>
+    <updated>2017-03-22T12:30:07.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="配置路由"><a href="#配置路由" class="headerlink" title="配置路由"></a>配置路由</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install vue-router --save</div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<h3 id="配置路由"><a href="#配置路由" class="headerlink" title="配置路由"></a>配置路由</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> vue-router --save
+</code></pre>
 <a id="more"></a>
 <p>routes.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./pages/Home.vue'</span></div><div class="line"><span class="keyword">import</span> Gifs <span class="keyword">from</span> <span class="string">'./pages/Gifs.vue'</span></div><div class="line"><span class="keyword">import</span> User <span class="keyword">from</span> <span class="string">'./pages/User.vue'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes = [</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">''</span>, <span class="attr">component</span>: Home &#125;,</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">'/gifs'</span>, <span class="attr">component</span>: Gifs &#125;,</div><div class="line">    &#123; <span class="attr">path</span>: <span class="string">'/user/:id'</span>, <span class="attr">component</span>: User &#125;</div><div class="line">    <span class="comment">//指定路由和对应要渲染的组件</span></div><div class="line">    <span class="comment">//404的path应该是'*',要放在最末尾，当前面的都匹配不到时才匹配到404页面</span></div><div class="line">    <span class="comment">//this.$route.params.id 可以从路由中拿到id数据</span></div><div class="line">]</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">import</span> Home <span class="token keyword">from</span> <span class="token string">'./pages/Home.vue'</span>
+<span class="token keyword">import</span> Gifs <span class="token keyword">from</span> <span class="token string">'./pages/Gifs.vue'</span>
+<span class="token keyword">import</span> User <span class="token keyword">from</span> <span class="token string">'./pages/User.vue'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> path<span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">,</span> component<span class="token punctuation">:</span> Home <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> path<span class="token punctuation">:</span> <span class="token string">'/gifs'</span><span class="token punctuation">,</span> component<span class="token punctuation">:</span> Gifs <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> path<span class="token punctuation">:</span> <span class="token string">'/user/:id'</span><span class="token punctuation">,</span> component<span class="token punctuation">:</span> User <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//指定路由和对应要渲染的组件</span>
+    <span class="token comment" spellcheck="true">//404的path应该是'*',要放在最末尾，当前面的都匹配不到时才匹配到404页面</span>
+    <span class="token comment" spellcheck="true">//this.$route.params.id 可以从路由中拿到id数据</span>
+<span class="token punctuation">]</span>
+</code></pre>
 <p>main.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span></div><div class="line"><span class="keyword">import</span> &#123; routes &#125; <span class="keyword">from</span> <span class="string">'./routes'</span></div><div class="line"></div><div class="line">Vue.use(VueRouter)</div><div class="line"><span class="comment">//路由初始化</span></div><div class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</div><div class="line">  routes</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">//将路由注入根组件</span></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  ...</div><div class="line">  router,</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">import</span> VueRouter <span class="token keyword">from</span> <span class="token string">'vue-router'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> routes <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./routes'</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>VueRouter<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">//路由初始化</span>
+<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VueRouter</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  routes
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">//将路由注入根组件</span>
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  <span class="token operator">...</span>
+  router<span class="token punctuation">,</span>
+  render<span class="token punctuation">:</span> h <span class="token operator">=</span><span class="token operator">></span> <span class="token function">h</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
 <p>App.vue</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"app"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>router-view</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>router-view</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">></span></span>
+</code></pre>
 <p>在模板中标注出组件渲染的位置</p>
 <h3 id="号的含义"><a href="#号的含义" class="headerlink" title="#号的含义"></a>#号的含义</h3><p>#号前表示的是发送给服务端的请求，要求返回html文件，而#号后表示的是发送给本地js的请求以寻求解决</p>
 <h3 id="路由参数动态绑定"><a href="#路由参数动态绑定" class="headerlink" title="路由参数动态绑定"></a>路由参数动态绑定</h3><p>使用watch</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">watch: &#123;</div><div class="line">	<span class="string">'$route'</span>(to,<span class="keyword">from</span>) &#123;</div><div class="line">		<span class="comment">//to当前路由，from上一个路由</span></div><div class="line">		<span class="keyword">this</span>.id = to.params.id</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="路由的数据传递"><a href="#路由的数据传递" class="headerlink" title="路由的数据传递"></a>路由的数据传递</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">:to</span>=<span class="string">"&#123; name: 'userEdit', params: &#123; id: $route.params.id &#125;, query: &#123; locale: 'en', list: 2 &#125; &#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript">watch<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token string">'$route'</span><span class="token punctuation">(</span>to<span class="token punctuation">,</span><span class="token keyword">from</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//to当前路由，from上一个路由</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> to<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="路由的数据传递"><a href="#路由的数据传递" class="headerlink" title="路由的数据传递"></a>路由的数据传递</h3><pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>router-link</span> <span class="token attr-name">:to</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{ name: <span class="token punctuation">'</span>userEdit<span class="token punctuation">'</span>, params: { id: $route.params.id }, query: { locale: <span class="token punctuation">'</span>en<span class="token punctuation">'</span>, list: 2 } }<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>router-link</span><span class="token punctuation">></span></span>
+</code></pre>
 <p>传<code>query</code>参数可以达到地址栏出现<code>/?locale=en&amp;list=2</code><br>通过 <code>$route.query.键名</code> 来访问</p>
 <h3 id="命名视图"><a href="#命名视图" class="headerlink" title="命名视图"></a>命名视图</h3><p><code>router-view</code> 可以通过配置名字 <code>name</code> 来指定组件渲染的位置，增加了组件的复用性，比如分成 <code>header</code> <code>main</code> <code>hero</code> <code>footer</code> 来分别在一个视图中的不同位置上加载不同的组件 </p>
 <h3 id="组件懒加载"><a href="#组件懒加载" class="headerlink" title="组件懒加载"></a>组件懒加载</h3><p>我们只需要加载我们需要的组件呈现给用户，而其他不需要第一时间加载的组件，可以使用 <code>webpack</code> 实现异步加载，只在需要的时候才会发出请求，请求加载另一个组件</p>
 <p>routes.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> User = <span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</div><div class="line">	<span class="built_in">require</span>.ensure([<span class="string">'./components/user/User.vue'</span>], () =&gt; &#123;</div><div class="line">		resolve(<span class="built_in">require</span>(<span class="string">'./components/user/User.vue'</span>))</div><div class="line">	&#125;, <span class="string">'GroupName'</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">//webpack 异步加载，通过组名，将要同时一起加载的组件打包加载</span></div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">const</span> User <span class="token operator">=</span> resolve <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    require<span class="token punctuation">.</span><span class="token function">ensure</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'./components/user/User.vue'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./components/user/User.vue'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">'GroupName'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//webpack 异步加载，通过组名，将要同时一起加载的组件打包加载</span>
+</code></pre>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h3 id=&quot;配置路由&quot;&gt;&lt;a href=&quot;#配置路由&quot; class=&quot;headerlink&quot; title=&quot;配置路由&quot;&gt;&lt;/a&gt;配置路由&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ npm install vue-router --save&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+      &lt;h3 id=&quot;配置路由&quot;&gt;&lt;a href=&quot;#配置路由&quot; class=&quot;headerlink&quot; title=&quot;配置路由&quot;&gt;&lt;/a&gt;配置路由&lt;/h3&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;$ npm install vue-router --save
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     
@@ -53,6 +101,8 @@
     
       <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
     
+      <category term="router" scheme="http://yoursite.com/tags/router/"/>
+    
   </entry>
   
   <entry>
@@ -60,7 +110,7 @@
     <link href="http://yoursite.com/2017/02/08/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     <id>http://yoursite.com/2017/02/08/vuex快速入门/</id>
     <published>2017-02-08T00:26:19.000Z</published>
-    <updated>2017-02-08T02:32:12.000Z</updated>
+    <updated>2017-03-22T12:30:13.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="基本用途："><a href="#基本用途：" class="headerlink" title="基本用途："></a>基本用途：</h3><ul>
 <li><p>将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了<code>props</code>传值的链式响应的代码冗余</p>
@@ -68,17 +118,97 @@
 <li><p>给状态配以公用方法，将状态的变更及时响应并处理</p>
 </li>
 </ul>
-<a id="more"></a>
-<h3 id="基本用法："><a href="#基本用法：" class="headerlink" title="基本用法："></a>基本用法：</h3><p>/store/store.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</div><div class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span>;</div><div class="line"></div><div class="line">Vue.use(Vuex);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">    <span class="attr">state</span>: &#123;</div><div class="line">        <span class="attr">sideBarOpened</span>: <span class="literal">false</span></div><div class="line">        <span class="comment">//放置公用状态</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">getters</span>: &#123;</div><div class="line">    	<span class="attr">changeState</span>: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</div><div class="line">    		<span class="comment">//相当于vue实例中的methods,用于处理公用data</span></div><div class="line">    		<span class="comment">//自vuex 面向组件的数据处理</span></div><div class="line">    	&#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">mutations</span>: &#123;</div><div class="line">    	<span class="comment">//写法与getters相类似</span></div><div class="line">    	<span class="comment">//组件想要对于vuex 中的数据进行的处理</span></div><div class="line">    	<span class="comment">//组件中采用this.$store.commit('方法名') 的方式调用，实现充分解耦</span></div><div class="line">    	<span class="comment">//内部操作必须在此刻完成(同步)</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">actions</span>: &#123;</div><div class="line">    	<span class="comment">//使得mutations能够实现异步调用，实现例如延迟调用</span></div><div class="line">    	increment (&#123; commit &#125;, payload) &#123;</div><div class="line">    		commit(<span class="string">'突变方法名'</span>)</div><div class="line">    		<span class="comment">//payload应该是一个对象，可通过模板方法调用传入对象的方式将数据从组件传入vuex</span></div><div class="line">  		&#125;,</div><div class="line">  		asyncIncrement(&#123;commit&#125;) =&gt; &#123;</div><div class="line">  			setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  				commit(<span class="string">'increment'</span>)</div><div class="line">  			&#125;, <span class="number">1000</span>)</div><div class="line">  		&#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">modules</span>: &#123;</div><div class="line">    	<span class="comment">//引入某一个state的以上集合的模块，会自动分别填充到上面，使得结构更加清晰</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="string">``</span><span class="string">` </span></div><div class="line"></div><div class="line">main.js</div><div class="line"></div><div class="line">`<span class="string">``</span>javascript</div><div class="line"><span class="keyword">import</span> &#123; store &#125; <span class="keyword">from</span> <span class="string">'./store/store'</span></div><div class="line">*</div><div class="line">*</div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  store,	<span class="comment">//注入根组件</span></div><div class="line">  ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h4 id="访问vuex中的数据和方法"><a href="#访问vuex中的数据和方法" class="headerlink" title="访问vuex中的数据和方法"></a>访问vuex中的数据和方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$store.state.数据名</div><div class="line"><span class="keyword">this</span>.$store.getters.方法名</div></pre></td></tr></table></figure>
+<h3 id="基本用法："><a href="#基本用法：" class="headerlink" title="基本用法："></a>基本用法：</h3><a id="more"></a>
+<p>/store/store.js</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> Vuex <span class="token keyword">from</span> <span class="token string">'vuex'</span><span class="token punctuation">;</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Vuex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    state<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        sideBarOpened<span class="token punctuation">:</span> <span class="token boolean">false</span>
+        <span class="token comment" spellcheck="true">//放置公用状态</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    getters<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        changeState<span class="token punctuation">:</span> state <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//相当于vue实例中的methods,用于处理公用data</span>
+            <span class="token comment" spellcheck="true">//自vuex 面向组件的数据处理</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    mutations<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//写法与getters相类似</span>
+        <span class="token comment" spellcheck="true">//组件想要对于vuex 中的数据进行的处理</span>
+        <span class="token comment" spellcheck="true">//组件中采用this.$store.commit('方法名') 的方式调用，实现充分解耦</span>
+        <span class="token comment" spellcheck="true">//内部操作必须在此刻完成(同步)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    actions<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//使得mutations能够实现异步调用，实现例如延迟调用</span>
+        increment <span class="token punctuation">(</span><span class="token punctuation">{</span> commit <span class="token punctuation">}</span><span class="token punctuation">,</span> payload<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'突变方法名'</span><span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true">//payload应该是一个对象，可通过模板方法调用传入对象的方式将数据从组件传入vuex</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token function">asyncIncrement</span><span class="token punctuation">(</span><span class="token punctuation">{</span>commit<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+              <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                  <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'increment'</span><span class="token punctuation">)</span>
+              <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    modules<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//引入某一个state的以上集合的模块，会自动分别填充到上面，使得结构更加清晰</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>main.js</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token punctuation">{</span> store <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./store/store'</span>
+<span class="token operator">*</span>
+<span class="token operator">*</span>
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  store<span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">//注入根组件</span>
+  <span class="token operator">...</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="访问vuex中的数据和方法"><a href="#访问vuex中的数据和方法" class="headerlink" title="访问vuex中的数据和方法"></a>访问vuex中的数据和方法</h4><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>数据名
+<span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>方法名
+</code></pre>
 <p>受影响组件局部定义计算属性响应变化数据</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">computed: &#123;</div><div class="line">     open () &#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.$store.state.sideBarOpened</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript">computed<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+     open <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>sideBarOpened
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
 <p>将 store 中的 getters/mutations 映射到局部(计算属性/方法)使用<code>mapGetters/mapMutations</code>辅助函数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></div><div class="line"></div><div class="line">computed: &#123;</div><div class="line">  <span class="comment">// 使用对象展开运算符将 getters 混入 computed 对象中</span></div><div class="line">    ...mapGetters([</div><div class="line">    	<span class="comment">//映射 this.doneTodosCount 为 store.getters.doneTodosCount</span></div><div class="line">      <span class="string">'doneTodosCount'</span>,</div><div class="line">      <span class="comment">//'getter名称',</span></div><div class="line">      </div><div class="line">      <span class="comment">// 映射 this.doneCount 为 store.getters.doneTodosCount</span></div><div class="line">  		doneCount: <span class="string">'doneTodosCount'</span></div><div class="line">      <span class="comment">// 三个点表示将内部拿出生成键值对，这样使得组件本身的计算属性不受影响</span></div><div class="line">      <span class="comment">// 此语法依赖babel-preset-stage-2</span></div><div class="line">    ])</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token punctuation">{</span> mapGetters <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+
+computed<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 使用对象展开运算符将 getters 混入 computed 对象中</span>
+    <span class="token operator">...</span><span class="token function">mapGetters</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        <span class="token comment" spellcheck="true">//映射 this.doneTodosCount 为 store.getters.doneTodosCount</span>
+      <span class="token string">'doneTodosCount'</span><span class="token punctuation">,</span>
+      <span class="token comment" spellcheck="true">//'getter名称',</span>
+
+      <span class="token comment" spellcheck="true">// 映射 this.doneCount 为 store.getters.doneTodosCount</span>
+          doneCount<span class="token punctuation">:</span> <span class="token string">'doneTodosCount'</span>
+      <span class="token comment" spellcheck="true">// 三个点表示将内部拿出生成键值对，这样使得组件本身的计算属性不受影响</span>
+      <span class="token comment" spellcheck="true">// 此语法依赖babel-preset-stage-2</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+</code></pre>
 <h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><p>mutation 必须是同步函数 — devtool要保存快照，方便追踪状态变化</p>
 <p>使用 v-model 绑定 vuex 计算属性的时候要设置get 和 set 才能双向绑定</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">computed: &#123;</div><div class="line">	<span class="attr">value</span>: &#123;</div><div class="line">		get () &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.$store.getters.value;</div><div class="line">		&#125;,</div><div class="line">		set (event) &#123;</div><div class="line">			<span class="keyword">this</span>.$store.dispatch(<span class="string">'updateValue'</span>, event.target.value);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript">computed<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    value<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token keyword">get</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token keyword">set</span> <span class="token punctuation">(</span>event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token string">'updateValue'</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
 ]]></content>
     
     <summary type="html">
@@ -89,15 +219,646 @@
 &lt;li&gt;&lt;p&gt;给状态配以公用方法，将状态的变更及时响应并处理&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3 id=&quot;基本用法：&quot;&gt;&lt;a href=&quot;#基本用法：&quot; class=&quot;headerlink&quot; title=&quot;基本用法：&quot;&gt;&lt;/a&gt;基本用法：&lt;/h3&gt;
     
     </summary>
     
       <category term="Vue" scheme="http://yoursite.com/categories/Vue/"/>
     
     
+      <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
+    
       <category term="Vuex" scheme="http://yoursite.com/tags/Vuex/"/>
     
+  </entry>
+  
+  <entry>
+    <title>Laravel 5 常用帮助函数</title>
+    <link href="http://yoursite.com/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/"/>
+    <id>http://yoursite.com/2017/02/03/Laravel 5 常用帮助函数/</id>
+    <published>2017-02-03T05:26:19.000Z</published>
+    <updated>2017-03-22T14:44:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
+</code></pre>
+<h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成10位随机密码</span>
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-app-用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;a href=&quot;#1-app-用于快速生成对应命名空间下的类的实例&quot; class=&quot;headerlink&quot; title=&quot;1.app() 用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;/a&gt;1.app() 用于快速
+    
+    </summary>
+    
+      <category term="php" scheme="http://yoursite.com/categories/php/"/>
+    
+    
+      <category term="php" scheme="http://yoursite.com/tags/php/"/>
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Laravel学习笔记</title>
+    <link href="http://yoursite.com/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2017/02/03/Laravel 学习笔记/</id>
+    <published>2017-02-03T05:26:19.000Z</published>
+    <updated>2017-03-22T14:36:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="常用函数："><a href="#常用函数：" class="headerlink" title="常用函数："></a>常用函数：</h3><ul>
+<li>compact(‘变量1’,’变量2’)    </li>
+</ul>
+<p>类似于es6 的简写，会生成类似于<code>[&#39;name&#39; =&gt; $name]</code>的键值对</p>
+<ul>
+<li>dd(变量)</li>
+</ul>
+<p>程序运行到此处终止并输出变量的值</p>
+<ul>
+<li>Tinker 助手</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">php artisan tinker
+</code></pre>
+<pre class=" language-bash"><code class="language-bash"><span class="token operator">>></span><span class="token operator">></span> App\Model::pluck<span class="token punctuation">(</span><span class="token string">'body'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+//只取出此字段
+<span class="token operator">>></span><span class="token operator">></span> App\Model::where<span class="token punctuation">(</span><span class="token string">'id'</span>, <span class="token string">'>='</span>, 2<span class="token punctuation">)</span>-<span class="token operator">></span>get<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">>></span><span class="token operator">></span> App\Model::all<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">>></span><span class="token operator">></span> App\Model::first<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><code>request()-&gt;all()</code></li>
+<li><code>request([&#39;title&#39;, &#39;body&#39;])</code></li>
+</ul>
+<p>获取所有的post数据</p>
+<p>只获取title和body</p>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
+<li>删除文件<br>删除完<code>migration</code>文件之后都要清除Composer中自动加载的记录，刷新自动加载记录</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ composer dump-autoload
+</code></pre>
+<h3 id="技巧提点"><a href="#技巧提点" class="headerlink" title="技巧提点"></a>技巧提点</h3><ul>
+<li>进一步封装查询语句</li>
+</ul>
+<p>Model.php</p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">scopeIncompleted</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">,</span> <span class="token variable">$val</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token variable">$query</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">'completed'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//将查询语句进行封装，调用时相当于静态方法</span>
+    <span class="token comment" spellcheck="true">//Model::incompleted();</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>Model与路由的绑定</li>
+</ul>
+<pre class=" language-php"><code class="language-php">    Route<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/tasks/{thetask}'</span><span class="token punctuation">,</span> <span class="token string">'TasksController@show'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">show</span><span class="token punctuation">(</span>Task <span class="token variable">$thetask</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'tasks.show'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'thetask'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//路由中括号内的参数名必须与Controller中的接收参数的变量名字一致，类型是Model对象</span>
+</code></pre>
+<ul>
+<li>命名规则</li>
+</ul>
+<p>controller =&gt; PostsController<br>Model =&gt; Post<br>migration =&gt; create_posts_table</p>
+<ul>
+<li>RESTFul</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ php artisan make:Controller TasksController -r
+</code></pre>
+<p>创建一个resourceful controller</p>
+<ul>
+<li>文件路径更改</li>
+</ul>
+<p>与其相关的命名空间，包括文件本身的命名空间都需要进行修改！</p>
+<ul>
+<li>快速查看所有的路由</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ php artisan route:list
+</code></pre>
+<ul>
+<li>重定向返回至上一次请求尝试访问的页面</li>
+</ul>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">redirect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">intended</span><span class="token punctuation">(</span><span class="token function">route</span><span class="token punctuation">(</span><span class="token string">'users.show'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>Auth<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">user</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="关于Blade"><a href="#关于Blade" class="headerlink" title="关于Blade"></a>关于Blade</h3><p><code>@yield(&#39;title&#39;, &#39;Sample&#39;)</code></p>
+<p>声明title变量及其默认值</p>
+<pre><code>@yield(&#39;content&#39;)
+// content区域
+
+@extends(&#39;layouts.default&#39;)
+@section(&#39;content&#39;)
+// 内容将会被插入布局模板中
+@stop
+</code></pre><p><code>@yield</code> 用于定义</p>
+<p><code>@section</code> 用于插入值</p>
+<p><code>@include(&#39;shared.user_info&#39;, [&#39;user&#39; =&gt; $user])</code></p>
+<p>给局部视图传参数</p>
+<p><code>old(&#39;name名称&#39;)</code></p>
+<p>辅助函数显示旧的输入数据</p>
+<h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><ul>
+<li>每一个Model内部都有三个属性</li>
+</ul>
+<p><code>$table</code> <code>$fillable</code> <code>$hidden</code></p>
+<p>指明交互的数据表名称，能进行更新的字段，JSON形式显示时隐藏的字段</p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><ul>
+<li>每一个controller中都有一个<code>validator</code>，可以用来验证字段</li>
+</ul>
+<h3 id="Session-会话"><a href="#Session-会话" class="headerlink" title="Session 会话"></a>Session 会话</h3><ol>
+<li>创建会话实例</li>
+</ol>
+<p><code>session()-&gt;flash(&#39;success&#39;, &#39;欢迎，您将在这里开启一段新的旅程~&#39;);</code></p>
+<p>flash方法使得会话缓存只在下一次请求中有效，第一个参数是键名，第二个参数是键值</p>
+<ol>
+<li>访问会话实例</li>
+</ol>
+<p><code>session()-&gt;get(&#39;success&#39;)</code></p>
+<h3 id="Auth-认证系统"><a href="#Auth-认证系统" class="headerlink" title="Auth 认证系统"></a>Auth 认证系统</h3><p><code>Auth::attempt()</code>尝试登陆</p>
+<p><code>Auth::user()</code>当前登录实例</p>
+<p><code>Auth::check()</code> 是否已经登录</p>
+<p>API:</p>
+<p><code>bool attempt(array $credentials = array(), bool $remember = false)</code></p>
+<p>第二个参数用来开发记住密码</p>
+<h3 id="中间件的使用"><a href="#中间件的使用" class="headerlink" title="中间件的使用"></a>中间件的使用</h3><ul>
+<li>在用户控制器构造方法中应用中间件</li>
+</ul>
+<pre class=" language-php"><code class="language-php">    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">middleware</span><span class="token punctuation">(</span><span class="token string">'auth'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>            
+            <span class="token string">'only'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token string">'edit'</span><span class="token punctuation">,</span> <span class="token string">'update'</span><span class="token punctuation">]</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><code>Authenticate.php</code>中进行重定向</li>
+</ul>
+<pre class=" language-php"><code class="language-php">    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">,</span> Closure <span class="token variable">$next</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">auth</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">guest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$request</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token function">response</span><span class="token punctuation">(</span><span class="token string">'Unauthorized.'</span><span class="token punctuation">,</span> <span class="token number">401</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token function">redirect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">guest</span><span class="token punctuation">(</span><span class="token string">'login'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> <span class="token variable">$next</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<h3 id="授权策略"><a href="#授权策略" class="headerlink" title="授权策略"></a>授权策略</h3><p>已登录的用户之间的权限控制</p>
+<ul>
+<li>创建Policy文件并创建用户比对方法</li>
+</ul>
+<pre class=" language-php"><code class="language-php">    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">update</span><span class="token punctuation">(</span>User <span class="token variable">$currentUser</span><span class="token punctuation">,</span> User <span class="token variable">$user</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$currentUser</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">id</span> <span class="token operator">===</span> <span class="token variable">$user</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">id</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>在<code>AuthServiceProvider</code>中进行授权策略的配置，将用户模型指定授权策略</li>
+</ul>
+<pre class=" language-php"><code class="language-php">    <span class="token keyword">protected</span> <span class="token variable">$policies</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+        <span class="token string">'App\Model'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'App\Policies\ModelPolicy'</span><span class="token punctuation">,</span>
+        User<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span> <span class="token operator">=</span><span class="token operator">></span> UserPolicy<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span>
+        <span class="token comment" spellcheck="true">//全路径匹配</span>
+    <span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>将查询时返回的User实例发送给授权策略进行比较</li>
+</ul>
+<pre class=" language-php"><code class="language-php">   <span class="token variable">$user</span> <span class="token operator">=</span> User<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">findOrFail</span><span class="token punctuation">(</span><span class="token variable">$id</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">authorize</span><span class="token punctuation">(</span><span class="token string">'update'</span><span class="token punctuation">,</span> <span class="token variable">$user</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;常用函数：&quot;&gt;&lt;a href=&quot;#常用函数：&quot; class=&quot;headerlink&quot; title=&quot;常用函数：&quot;&gt;&lt;/a&gt;常用函数：&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;compact(‘变量1’,’变量2’)    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;类似于es6 的简写，会生
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="php" scheme="http://yoursite.com/tags/php/"/>
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Laravel5 新手填坑指南</title>
+    <link href="http://yoursite.com/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2017/02/03/Laravel 新手填坑指南/</id>
+    <published>2017-02-03T05:26:19.000Z</published>
+    <updated>2017-03-22T14:51:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
+<p>注意事项：</p>
+<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
+<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
+<p>Mac/Linux (少很多麻烦)</p>
+<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
+<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
+<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
+<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
+</li>
+<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
+</li>
+<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
+</li>
+</ol>
+<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
+<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
+</ol>
+<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
+<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
+</ol>
+<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
+<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
+</ol>
+<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
+<li><p>引用的时候必须写成 </p>
+<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
+</li>
+</ol>
+<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
+<li>用户的退出登录可以看成是提交一个DELETE表单</li>
+<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
+<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
+</ol>
+<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
+</code></pre>
+<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;浏览器篇&quot;&gt;&lt;a href=&quot;#浏览器篇&quot; class=&quot;headerlink&quot; title=&quot;浏览器篇&quot;&gt;&lt;/a&gt;浏览器篇&lt;/h3&gt;&lt;p&gt;开发浏览器: Chorme（不用解释）&lt;/p&gt;
+&lt;p&gt;注意事项：&lt;/p&gt;
+&lt;p&gt;一定要先清缓存！清缓存！清缓存！ 重要的说三
+    
+    </summary>
+    
+      <category term="php" scheme="http://yoursite.com/categories/php/"/>
+    
+    
+      <category term="php" scheme="http://yoursite.com/tags/php/"/>
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue 学习总结</title>
+    <link href="http://yoursite.com/2017/01/25/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2017/01/25/Vue学习笔记/</id>
+    <published>2017-01-25T07:50:32.000Z</published>
+    <updated>2017-03-22T14:57:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>##将数据渲染进DOM元素</p>
+<ol>
+<li>&#123;&#123;message&#125;&#125;</li>
+<li>v-bind:属性= (也可写作 :属性=)</li>
+</ol>
+<p>##常用语句<br>判断  <code>v-if</code></p>
+<p>循环  <code>v-for=&quot;todo in todos&quot;</code></p>
+<p>按钮 <code>v-on:click=&quot;函数名&quot;</code> (也可写作 @click=)</p>
+<p>表单数据和应用数据双向绑定 <code>v-model=&quot;数据名&quot;</code></p>
+<p>##组件</p>
+<pre class=" language-javascript"><code class="language-javascript">Vue<span class="token punctuation">.</span><span class="token function">component</span><span class="token punctuation">(</span><span class="token string">'todo-item'</span><span class="token punctuation">,</span>
+  <span class="token comment" spellcheck="true">// The todo-item component now accepts a</span>
+  <span class="token comment" spellcheck="true">// "prop", which is like a custom attribute. </span>
+  <span class="token comment" spellcheck="true">// This prop is called todo. </span>
+  props<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'todo'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>  
+  template<span class="token punctuation">:</span> <span class="token string">'&lt;li>{{ todo.text }}&lt;/li>'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li><p>props作为子组件的接口，接收父类的数据，同时解耦</p>
+</li>
+<li><p>组件可以作为自定义标签在HTML中使用</p>
+</li>
+<li><p>所有的 Vue.js 组件其实都是被扩展的 Vue 实例</p>
+</li>
+</ul>
+<p>实质上是一个预定义的Vue实例，在实例app中，app相当于父类，而组件相当于是app中的子类，父类的数据可以通过<code>v-bind:字段名</code><br>的方式将父类作用域中的数据传入子类组件中</p>
+<p>####用Vue创建的应用的大致结构</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-nav</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-nav</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-view</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-sidebar</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-sidebar</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app-content</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-content</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app-view</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>###创建实例</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> vm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 选项</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>传入的选项对象包括：</p>
+<ul>
+<li><p>数据</p>
+</li>
+<li><p>模板</p>
+</li>
+<li><p>挂载元素</p>
+</li>
+<li><p>方法</p>
+</li>
+<li><p>生命周期钩子</p>
+</li>
+</ul>
+<p>###属性和方法</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span> a<span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span>
+<span class="token keyword">var</span> vm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#example'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span> data
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">//vm.a === data.a</span>
+vm<span class="token punctuation">.</span>$data <span class="token operator">===</span> data <span class="token comment" spellcheck="true">// -> true</span>
+vm<span class="token punctuation">.</span>$el <span class="token operator">===</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'example'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// -> true</span>
+<span class="token comment" spellcheck="true">// $watch 是一个实例方法</span>
+vm<span class="token punctuation">.</span><span class="token function">$watch</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>newVal<span class="token punctuation">,</span> oldVal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 这个回调将在 vm.a  改变后调用</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>#####注意：</p>
+<ul>
+<li><p>所有代理的属性都是响应的，添加新的属性时不会触发视图的更新</p>
+</li>
+<li><p>钩子的<code>this</code>代表着调用它的实例</p>
+</li>
+</ul>
+<p>###插值</p>
+<p>####文本</p>
+<ol>
+<li><p>用双大括号<code>&amp;#123;&amp;#123;数据对象 &amp;#124; 过滤器&amp;#125;&amp;#125;</code></p>
+<p> 注意：</p>
+<p> 双大括号中也可以是JS表达式可对数据进行运算</p>
+<p> 渲染结果解释为纯文本</p>
+<p> 若要输出HTML，需要在div中设置</p>
+<p> <code>&lt;div v-html=&quot;rawHtml&quot;&gt;&lt;/div&gt;</code></p>
+</li>
+</ol>
+<p>##计算属性<br>用于将复杂的数据运算包含于实例的初始化中</p>
+<p>作为其中一个选项对象：</p>
+<pre class=" language-javascript"><code class="language-javascript">computed<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// a computed getter</span>
+    reversedMessage<span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">// this points to the vm instance</span>
+      <span class="token keyword">return</span>            
+      <span class="token keyword">this</span><span class="token punctuation">.</span>message<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>reversedMessage作为计算过后的新属性，直接用双大括号进行解释即可得到计算的最终结果</p>
+<p>####计算缓存与Method的区别<br>好处：当数据的值不改变的时候，依然会使用计算缓存而无需像调用Method那样重新计算<br>前提：计算缓存的使用必须要基于相关依赖，像Date.now()就不行</p>
+<p>####计算缓存与$watch</p>
+<p>在数据变动时，可以优先考虑用计算缓存，而并非watch回调</p>
+<p>注意:计算属性默认为getter，也可设置为setter,setter在内部赋值的时候会被调用</p>
+<hr>
+<p>##观察者 Watchers</p>
+<p>当数据值变动时，相对于计算属性，更加的通用，执行异步操作(ajax访问API)或需要响应不断变化昂贵的数据操作时这很有用,例如限制访问API的频率</p>
+<p>##Class 与 Style绑定</p>
+<p>###绑定HTML Class<br>语法：<code>v-bind:class={class1:布尔变量,class2...}</code></p>
+<p>class还可以是数据对象,甚至是计算属性！</p>
+<p>#####通过控制布尔变量可以使元素的class动态切换</p>
+<p><code>&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p>
+<p>###绑定内联样式</p>
+<p><code>v-bind:style=&quot;{ color: mycolor}&quot;</code> mycolor在data中定义</p>
+<p>复杂内联样式推荐绑定styleObject对象</p>
+<pre class=" language-javascript"><code class="language-javascript">data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+  styleObject<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    color<span class="token punctuation">:</span> <span class="token string">'red'</span><span class="token punctuation">,</span>
+    fontSize<span class="token punctuation">:</span> <span class="token string">'13px'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>##条件渲染<br>判断一个标签的输出 <code>v-if=&quot;ok&quot;</code> ok值决定是否显示</p>
+<p>判断一块标签的显示 用template元素作为包装元素，下面为根据需要显示的标签块</p>
+<p><code>v-else</code>可以和<code>v-if</code>和<code>v-show</code>一起使用</p>
+<p><code>v-show</code>专门用于对渲染元素的CSS属性，且不支持<code>&lt;template&gt;</code>标签</p>
+<p>####v-if 和 v-show比较</p>
+<p>频繁切换使用的用v-show,条件不大可能改变的v-if</p>
+<p>##列表渲染</p>
+<p><code>&lt;template v-for=&quot;&quot;&gt;</code></p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(value, key, index) in object<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  {{ index }}. {{ key }} : {{ value }}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>index索引，key键，value值</p>
+<p>##key(未完)</p>
+<p>作用：让Vue标识出节点的身份，检测数组元素的突变<br>用法：v-bind:key=”item.id”</p>
+<p>##数组更新检测</p>
+<p>变异方法：一组用来观察数组的方法，可以触发视图更新</p>
+<ul>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>splice()</li>
+<li>sort()</li>
+<li>reverse()</li>
+</ul>
+<p>非变异方法：不会改变原始数组的数据，但是会返回新的数组，适用于不想改变原值的情况</p>
+<ul>
+<li>filter()</li>
+<li>concat()</li>
+<li>slice()</li>
+</ul>
+<p>##事件处理器</p>
+<p>###监听事件</p>
+<p><code>v-on:</code>指令，例如点击<code>v-on:click=&quot;触发方法名&quot;</code></p>
+<p>###内联事件处理<br><code>&lt;button v-on:click=&quot;say(&#39;hi&#39;)&quot;&gt;Say hi&lt;/button&gt;</code><br>say方法名(传入的参数)</p>
+<p>如果要访问DOM原生对象,传入的参数要有 特殊符号美元+event</p>
+<p>###事件修饰符<br>添加在click和submit后</p>
+<ul>
+<li>.stop</li>
+<li>.prevent</li>
+<li>.capture</li>
+<li>.self</li>
+</ul>
+<p>###按键修饰符<br><code>&lt;input v-on:keyup.13=&quot;submit&quot;&gt;</code><br>13表示键值，该按键按下后会触发submit</p>
+<p><code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code></p>
+<p>达到直接在HTML中监听事件的效果</p>
+<p>##表单控件绑定<br>略</p>
+<p>##组件</p>
+<p>###注册全局组件</p>
+<p><code>Vue.component(&#39;my-component&#39;, {
+  选项
+})</code>  父组件<br>``</p>
+<p>必须先注册组件，然后再初始化父实例，才能在父实例中使用组件自定义标签</p>
+<p>###注册局部组件</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> Child <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token punctuation">:</span> <span class="token string">'&lt;div>A custom component!&lt;/div>'</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// ...</span>
+  components<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// &lt;my-component> 将只在父模板可用</span>
+    <span class="token string">'my-component'</span><span class="token punctuation">:</span> Child
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>子组件</p>
+<p>###data</p>
+<p>注意：组件的data必须是函数！通过return的方式将data传入组件绑定的元素中</p>
+<p>意义：类似接口解耦，使得同一个data在不同的组件中都能有自己不同的状态！</p>
+<p>###传递数据<br>父–&gt;子 props:[‘字段名’]</p>
+<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code><br><code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></p>
+<p>###props验证</p>
+<pre class=" language-javascript"><code class="language-javascript">propB<span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">,</span> Number<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true">// 必须且是字符串</span>
+    propC<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      type<span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+      required<span class="token punctuation">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true">// 数字，有默认值</span>
+    propD<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      type<span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+      <span class="token keyword">default</span><span class="token punctuation">:</span> <span class="token number">100</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true">// 数组／对象的默认值应当由一个工厂函数返回</span>
+</code></pre>
+<p>###组件v-model数据双向绑定<br>表单自定义绑定：</p>
+<p>1.绑定value</p>
+<p>2.有新的value时触发input事件</p>
+<p>###非父子组件的通信<br>须使用一个空vue实例来当中央</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> bus <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 触发组件 A 中的事件</span>
+bus<span class="token punctuation">.</span><span class="token function">美元emit</span><span class="token punctuation">(</span><span class="token string">'id-selected'</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 在组件 B 创建的钩子中监听事件</span>
+bus<span class="token punctuation">.</span><span class="token function">美on</span><span class="token punctuation">(</span><span class="token string">'id-selected'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>###内容分发</p>
+<p>绑定子组件内的指令到一个组件的根节点，必须在子组件的内部定义模板时进行绑定</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>my-component</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>This is some original content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>This is some more original content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>my-component</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>在父模板中放入子组件的标签，其中的内容将会被安插到子组件的<code>&lt;slot&gt;&lt;/slot&gt;</code>标签中</p>
+<p>slot=”名称”  可以定义名字以标识父插入子的何处</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;##将数据渲染进DOM元素&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&amp;#123;&amp;#123;message&amp;#125;&amp;#125;&lt;/li&gt;
+&lt;li&gt;v-bind:属性= (也可写作 :属性=)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;##常用语句&lt;br&gt;判断  &lt;code&gt;v-if&lt;/code&gt;&lt;
+    
+    </summary>
+    
+      <category term="Vue" scheme="http://yoursite.com/categories/Vue/"/>
+    
+    
       <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sass语法点总结</title>
+    <link href="http://yoursite.com/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2016/12/03/Sass语法点总结/</id>
+    <published>2016-12-03T11:43:37.000Z</published>
+    <updated>2017-03-22T14:33:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
+    
+    </summary>
+    
+      <category term="css" scheme="http://yoursite.com/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://yoursite.com/tags/css/"/>
+    
+      <category term="Sass" scheme="http://yoursite.com/tags/Sass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sass之CSS模块化</title>
+    <link href="http://yoursite.com/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/"/>
+    <id>http://yoursite.com/2016/12/03/Sass之CSS模块化/</id>
+    <published>2016-12-03T11:43:37.000Z</published>
+    <updated>2017-03-22T14:33:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import</p>
+<p><code>@import &#39;partials/temp;&#39;</code></p>
+<p>partials文件夹中的模块scss文件最前面必须加上下划线 _</p>
+<p>使得sass在监听并编译成css的时候能够将模块编译到一起而不是生成多个css文件</p>
+<h2 id="CSS模块常用目录结构"><a href="#CSS模块常用目录结构" class="headerlink" title="CSS模块常用目录结构"></a>CSS模块常用目录结构</h2><h4 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h4><ol>
+<li>base    基本样式<ul>
+<li>variable 变量</li>
+<li>typography</li>
+<li>base 例如:wrapper居中CSS</li>
+</ul>
+</li>
+<li>layout        布局<ul>
+<li>nav    </li>
+<li>hero        </li>
+<li>footer    </li>
+<li>layout</li>
+</ul>
+</li>
+<li>component    组件<ul>
+<li>button </li>
+<li>schedule</li>
+</ul>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@import &amp;#39;partials/temp;&amp;#39
+    
+    </summary>
+    
+      <category term="css" scheme="http://yoursite.com/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://yoursite.com/tags/css/"/>
+    
+      <category term="Sass" scheme="http://yoursite.com/tags/Sass/"/>
     
   </entry>
   
@@ -106,33 +867,122 @@
     <link href="http://yoursite.com/2016/11/27/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/"/>
     <id>http://yoursite.com/2016/11/27/php数组常用方法详解/</id>
     <published>2016-11-27T14:20:35.000Z</published>
-    <updated>2016-12-30T08:22:26.000Z</updated>
+    <updated>2017-03-22T12:29:48.000Z</updated>
     
     <content type="html"><![CDATA[<h4 id="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"><a href="#众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法" class="headerlink" title="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"></a>众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法</h4><h4 id="我们先建立一个对象post以便于演示"><a href="#我们先建立一个对象post以便于演示" class="headerlink" title="我们先建立一个对象post以便于演示"></a>我们先建立一个对象post以便于演示</h4><a id="more"></a>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">public</span> $title;</div><div class="line">	<span class="keyword">public</span> $published;</div><div class="line">	<span class="keyword">public</span> $auth;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($title,$auth,$published)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">$this</span>-&gt;title = $title;</div><div class="line">		<span class="keyword">$this</span>-&gt;published = $published;</div><div class="line">		<span class="keyword">$this</span>-&gt;auth = $auth;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$posts = [</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'first'</span>,<span class="string">'jm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'second'</span>,<span class="string">'vm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'third'</span>,<span class="string">'cm'</span>,<span class="keyword">true</span>),</div><div class="line">	<span class="keyword">new</span> Post(<span class="string">'fourth'</span>,<span class="string">'em'</span>,<span class="keyword">false</span>)</div><div class="line"></div><div class="line">];</div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">class</span> <span class="token class-name">Post</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token variable">$title</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$published</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$auth</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$title</span><span class="token punctuation">,</span><span class="token variable">$auth</span><span class="token punctuation">,</span><span class="token variable">$published</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">title</span> <span class="token operator">=</span> <span class="token variable">$title</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">published</span> <span class="token operator">=</span> <span class="token variable">$published</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">auth</span> <span class="token operator">=</span> <span class="token variable">$auth</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$posts</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token keyword">new</span> <span class="token class-name">Post</span><span class="token punctuation">(</span><span class="token string">'first'</span><span class="token punctuation">,</span><span class="token string">'jm'</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">new</span> <span class="token class-name">Post</span><span class="token punctuation">(</span><span class="token string">'second'</span><span class="token punctuation">,</span><span class="token string">'vm'</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">new</span> <span class="token class-name">Post</span><span class="token punctuation">(</span><span class="token string">'third'</span><span class="token punctuation">,</span><span class="token string">'cm'</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">new</span> <span class="token class-name">Post</span><span class="token punctuation">(</span><span class="token string">'fourth'</span><span class="token punctuation">,</span><span class="token string">'em'</span><span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
 <ol>
 <li><code>array_filter</code> 数组过滤器</li>
 </ol>
 <p>可以写成闭包的形式，那样当数组被遍历的时候每一个元素就会执行该方法，将符合条件的元素return回来，然后就组成了新的数组,如果键的值为空，那么这个键将不会被保存在<br>新的数组里</p>
 <p>例如我们想筛选出还没有发布的post对象，并用var_dump()输出结果，我们可以</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$unpublished = array_filter($posts,<span class="function"><span class="keyword">function</span><span class="params">($post)</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> !$post-&gt;published;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$unpublished</span> <span class="token operator">=</span> <span class="token function">array_filter</span><span class="token punctuation">(</span><span class="token variable">$posts</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">$post</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">return</span> <span class="token operator">!</span><span class="token variable">$post</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">published</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <p>输出的结果为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array(1) &#123;</div><div class="line">  [3]=&gt;</div><div class="line">  object(Post)#4 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;fourth&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;em&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">array(1) {
+  [3]=>
+  object(Post)#4 (3) {
+    ["title"]=>
+    string(6) "fourth"
+    ["published"]=>
+    bool(false)
+    ["auth"]=>
+    string(2) "em"
+  }
+}
+</code></pre>
 <ol>
 <li><code>array_map</code> 数组元素批处理器</li>
 </ol>
 <p>这个方法可就相当好用了，尤其适用于要同时改变多个对象中的属性时</p>
 <p>假设我们要把post对象的published属性全部设置成false，可以这样做</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$modified = array_map(<span class="function"><span class="keyword">function</span><span class="params">($post)</span></span>&#123;</div><div class="line">	$post-&gt;published = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">return</span> $post;</div><div class="line">&#125;,$posts);      <span class="comment">//与普通的闭包函数的位置有些许不同，闭包函数在前，要处理的数组在后</span></div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$modified</span> <span class="token operator">=</span> <span class="token function">array_map</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">$post</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$post</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">published</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token variable">$post</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token variable">$posts</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//与普通的闭包函数的位置有些许不同，闭包函数在前，要处理的数组在后</span>
+</code></pre>
 <p>再次用var_dump输出结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  object(Post)#1 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(5) &quot;first&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;jm&quot;</div><div class="line">  &#125;</div><div class="line">  [1]=&gt;</div><div class="line">  object(Post)#2 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;second&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;vm&quot;</div><div class="line">  &#125;</div><div class="line">  [2]=&gt;</div><div class="line">  object(Post)#3 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(5) &quot;third&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;cm&quot;</div><div class="line">  &#125;</div><div class="line">  [3]=&gt;</div><div class="line">  object(Post)#4 (3) &#123;</div><div class="line">    [&quot;title&quot;]=&gt;</div><div class="line">    string(6) &quot;fourth&quot;</div><div class="line">    [&quot;published&quot;]=&gt;</div><div class="line">    bool(false)</div><div class="line">    [&quot;auth&quot;]=&gt;</div><div class="line">    string(2) &quot;em&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">array(4) {
+  [0]=>
+  object(Post)#1 (3) {
+    ["title"]=>
+    string(5) "first"
+    ["published"]=>
+    bool(false)
+    ["auth"]=>
+    string(2) "jm"
+  }
+  [1]=>
+  object(Post)#2 (3) {
+    ["title"]=>
+    string(6) "second"
+    ["published"]=>
+    bool(false)
+    ["auth"]=>
+    string(2) "vm"
+  }
+  [2]=>
+  object(Post)#3 (3) {
+    ["title"]=>
+    string(5) "third"
+    ["published"]=>
+    bool(false)
+    ["auth"]=>
+    string(2) "cm"
+  }
+  [3]=>
+  object(Post)#4 (3) {
+    ["title"]=>
+    string(6) "fourth"
+    ["published"]=>
+    bool(false)
+    ["auth"]=>
+    string(2) "em"
+  }
+}
+</code></pre>
 <p>神奇得发现published属性全都变成了false!</p>
 <ol>
 <li>array_column 返回此键名的值所构成的新数组</li>
 </ol>
 <p>假设我们要返回全部的作者名</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$allAuth = array_column($posts,<span class="string">'auth'</span>);</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  string(2) &quot;jm&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  string(2) &quot;vm&quot;</div><div class="line">  [2]=&gt;</div><div class="line">  string(2) &quot;cm&quot;</div><div class="line">  [3]=&gt;</div><div class="line">  string(2) &quot;em&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$allAuth</span> <span class="token operator">=</span> <span class="token function">array_column</span><span class="token punctuation">(</span><span class="token variable">$posts</span><span class="token punctuation">,</span><span class="token string">'auth'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class=" language-shell"><code class="language-shell">array(4) {
+  [0]=>
+  string(2) "jm"
+  [1]=>
+  string(2) "vm"
+  [2]=>
+  string(2) "cm"
+  [3]=>
+  string(2) "em"
+}
+</code></pre>
 <p>以上就是三个非常实用的PHP数组的方法</p>
 <p>附：</p>
 <ul>
@@ -160,7 +1010,7 @@
       <category term="php" scheme="http://yoursite.com/categories/php/"/>
     
     
-      <category term="useful function" scheme="http://yoursite.com/tags/useful-function/"/>
+      <category term="function" scheme="http://yoursite.com/tags/function/"/>
     
   </entry>
   
@@ -192,15 +1042,33 @@
 <li><p>在gulpfile.js中写入你要gulp为你自动化处理的任务</p>
 </li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)     <span class="comment">//请求gulp模块</span></div><div class="line"></div><div class="line">gulp.task(<span class="string">'name'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;   <span class="comment">//给gulp的任务，任务名+任务会执行的函数</span></div><div class="line">    <span class="comment">//执行的任务</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> gulp <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp'</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">//请求gulp模块</span>
+
+gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//给gulp的任务，任务名+任务会执行的函数</span>
+    <span class="token comment" spellcheck="true">//执行的任务</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
 <p>命令行中执行gulp name的时候，gulp就会自动找到你自己定义的那个任务</p>
 <h3 id="gulp能做得更多"><a href="#gulp能做得更多" class="headerlink" title="gulp能做得更多"></a>gulp能做得更多</h3><h4 id="管道理念"><a href="#管道理念" class="headerlink" title="管道理念"></a>管道理念</h4><p>简单来讲，你的任务一定会有源文件，管道相当于处理方法，管道可以接多条，管道的尽头就是输出文件</p>
 <p>我们有专门的文件夹来存放我们的源文件和输出文件，它们的目录分别为src和dist</p>
 <p>gulp本身也给我们提供了很多现成的管道，官网有许多的plugin可以用，上面都有示例代码</p>
 <p>我们可以用npm像安装模块一样把它们一一安装，在node中一切皆模块，npm可以快速的帮助我们运用这些已经写好的模块作为我们的一个个管道</p>
 <h4 id="gulp管道的使用方法"><a href="#gulp管道的使用方法" class="headerlink" title="gulp管道的使用方法"></a>gulp管道的使用方法</h4><p>这里以sass编译任务为例：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)</div><div class="line"><span class="keyword">var</span> sass = <span class="built_in">require</span>(<span class="string">'gulp-sass'</span>) <span class="comment">//完整的模块名,请求模块</span></div><div class="line"></div><div class="line">gulp.task(<span class="string">'sass'</span>, () =&gt; &#123;   <span class="comment">//注意node支持es6的语法</span></div><div class="line">    gulp.src(<span class="string">'./src/源文件目录.sass'</span>)    <span class="comment">//告诉gulp我们想要处理的文件</span></div><div class="line">        .pipe(sass())   <span class="comment">//将sass处理方法封装成管道</span></div><div class="line">        <span class="comment">//.pipe 处理1</span></div><div class="line">        <span class="comment">//.pipe 处理2</span></div><div class="line">        .pipe(gulp.dest(<span class="string">'./dist/css/'</span>))     <span class="comment">//最后将管道导向输出，也就是输出目录当中生成输出文件</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h4 id="添加gulp观察者以便对源文件的更改进行实时处理"><a href="#添加gulp观察者以便对源文件的更改进行实时处理" class="headerlink" title="添加gulp观察者以便对源文件的更改进行实时处理"></a>添加gulp观察者以便对源文件的更改进行实时处理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'watch'</span>,() =&gt; &#123;</div><div class="line">    gulp.watch(<span class="string">'追踪更改的文件目录'</span>,[<span class="string">'每次更改保存就执行的task'</span>])</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> gulp <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp'</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> sass <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-sass'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//完整的模块名,请求模块</span>
+
+gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'sass'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//注意node支持es6的语法</span>
+    gulp<span class="token punctuation">.</span><span class="token function">src</span><span class="token punctuation">(</span><span class="token string">'./src/源文件目录.sass'</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//告诉gulp我们想要处理的文件</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">sass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//将sass处理方法封装成管道</span>
+        <span class="token comment" spellcheck="true">//.pipe 处理1</span>
+        <span class="token comment" spellcheck="true">//.pipe 处理2</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>gulp<span class="token punctuation">.</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'./dist/css/'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">//最后将管道导向输出，也就是输出目录当中生成输出文件</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="添加gulp观察者以便对源文件的更改进行实时处理"><a href="#添加gulp观察者以便对源文件的更改进行实时处理" class="headerlink" title="添加gulp观察者以便对源文件的更改进行实时处理"></a>添加gulp观察者以便对源文件的更改进行实时处理</h4><pre class=" language-javascript"><code class="language-javascript">gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">'watch'</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    gulp<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">'追踪更改的文件目录'</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">'每次更改保存就执行的task'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
 <h4 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h4><ul>
 <li>任务名若为default命令行中直接输入gulp就会立即执行</li>
 <li>gulp.task(‘default’, [‘styles’, ‘jshint’, ‘watch’])</li>
@@ -209,7 +1077,8 @@
 <ul>
 <li>在指定目录中可以用*号和后缀匹配目录下的全部同类型文件 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gulp.src(<span class="string">'js/**/*.js'</span>)</div></pre></td></tr></table></figure>
+<pre class=" language-javascript"><code class="language-javascript">gulp<span class="token punctuation">.</span><span class="token function">src</span><span class="token punctuation">(</span><span class="token string">'js/**/*.js'</span><span class="token punctuation">)</span>
+</code></pre>
 ]]></content>
     
     <summary type="html">
@@ -236,44 +1105,62 @@
     <link href="http://yoursite.com/2016/11/12/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     <id>http://yoursite.com/2016/11/12/php处理html字符串/</id>
     <published>2016-11-12T03:19:10.000Z</published>
-    <updated>2016-11-12T13:48:12.000Z</updated>
+    <updated>2017-03-22T12:29:40.000Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"><a href="#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用" class="headerlink" title="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"></a>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4><a id="more"></a>
-<h3 id="需要用到的函数："><a href="#需要用到的函数：" class="headerlink" title="需要用到的函数："></a>需要用到的函数：</h3><ul>
+    <content type="html"><![CDATA[<h4 id="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"><a href="#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用" class="headerlink" title="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"></a>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4><h3 id="需要用到的函数："><a href="#需要用到的函数：" class="headerlink" title="需要用到的函数："></a>需要用到的函数：</h3><ul>
 <li>str_replace() 字符串替换</li>
 <li>html_entity_decode() html字符串转html标签 </li>
 <li>strip_tags() 除去所有html标签</li>
 <li>preg_match_all() 全局正则匹配字符串</li>
 <li>array_unique() 去除数组中重复的元素(用于解决全局正则匹配带来的元素重复的问题)</li>
 <li>array_flip() 将键值交换，因为键名不能重复，所以重复元素会被去掉，两次flip下来就能够得到不重复的键值数组</li>
-<li>array_values() 返回只有键值无键名的数组</li>
+<li>array_values() 返回只有键值无键名的数组<a id="more"></a>
+<h3 id="快速去除html字符"><a href="#快速去除html字符" class="headerlink" title="快速去除html字符"></a>快速去除html字符</h3></li>
 </ul>
-<h3 id="快速去除html字符"><a href="#快速去除html字符" class="headerlink" title="快速去除html字符"></a>快速去除html字符</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$bewrite = strip_tags(html_entity_decode($htmlStr),<span class="string">'&lt;br&gt;'</span>);</div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">strip_tags</span><span class="token punctuation">(</span><span class="token function">html_entity_decode</span><span class="token punctuation">(</span><span class="token variable">$htmlStr</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'&lt;br>'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <p>先转HTML标签再去除标签，但是注意保留换行标签，在APP中的文字依然需要简单地排版。<br>接着我们再把br标签再转成本地APP的\n</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$bewrite = str_replace(<span class="string">'&lt;br/&gt;'</span>,<span class="string">'\n'</span>,$bewrite);</div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string">'&lt;br/>'</span><span class="token punctuation">,</span><span class="token string">'\n'</span><span class="token punctuation">,</span><span class="token variable">$bewrite</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <p>但似乎字符串还是没有除干净，因为会残余一些html本身的换行字符&amp;和空格,再替换一次</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$bewrite = str_replace(<span class="string">'&amp;nbsp;'</span>,<span class="string">' '</span>,$bewrite);</div><div class="line">$bewrite = str_replace(<span class="string">'&amp;amp;'</span>,<span class="string">''</span>,$bewrite);</div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string">'&amp;nbsp;'</span><span class="token punctuation">,</span><span class="token string">' '</span><span class="token punctuation">,</span><span class="token variable">$bewrite</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string">'&amp;amp;'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">,</span><span class="token variable">$bewrite</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <p>但通常情况下，我们的HTML字符串中不仅有文本，还有图片，img中的src属性也必须要挑出来</p>
 <h3 id="正则匹配标签属性"><a href="#正则匹配标签属性" class="headerlink" title="正则匹配标签属性"></a>正则匹配标签属性</h3><p>下面我以img中匹配src图片地址为例子</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$unmatchedstr = html_entity_decode($data[<span class="string">'secondgoods_bewrite'</span>]); <span class="comment">//转html字符串</span></div><div class="line">preg_match_all(<span class="string">'/\&lt;img.*?src\=\"(.*?)\"[^&gt;]*&gt;/i'</span>,$unmatchedstr,$match);<span class="comment">//正则匹配图片src地址</span></div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$unmatchedstr</span> <span class="token operator">=</span> <span class="token function">html_entity_decode</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'secondgoods_bewrite'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//转html字符串</span>
+<span class="token function">preg_match_all</span><span class="token punctuation">(</span><span class="token string">'/\&lt;img.*?src\=\"(.*?)\"[^>]*>/i'</span><span class="token punctuation">,</span><span class="token variable">$unmatchedstr</span><span class="token punctuation">,</span><span class="token variable">$match</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//正则匹配图片src地址</span>
+</code></pre>
 <p>但这还没完，我们发现正则出来的链接有许多的重复的链接，我们必须要去除变量$match[1]中重复的值</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$matches = array_unique($match[<span class="number">1</span>]);</div><div class="line"><span class="comment">//来两次array_flip()或许比unique更加高效一些</span></div><div class="line">$matchresult = array_values($matches);<span class="comment">//取键值数组的值，去掉键名就完成了</span></div></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token variable">$matches</span> <span class="token operator">=</span> <span class="token function">array_unique</span><span class="token punctuation">(</span><span class="token variable">$match</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//来两次array_flip()或许比unique更加高效一些</span>
+<span class="token variable">$matchresult</span> <span class="token operator">=</span> <span class="token function">array_values</span><span class="token punctuation">(</span><span class="token variable">$matches</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取键值数组的值，去掉键名就完成了</span>
+</code></pre>
 <p>附文：</p>
-<p>对于远程的src地址，有一种特殊的正则匹配可以排除掉本地的图片<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">preg_match_all(<span class="string">'/((http|https):\/\/)+(\w+\.)+(\w+)[\w\/\.\-]*(jpg|gif|png)/'</span>,$unmatchedstr,$matches);</div></pre></td></tr></table></figure></p>
+<p>对于远程的src地址，有一种特殊的正则匹配可以排除掉本地的图片</p>
+<pre class=" language-php"><code class="language-php"><span class="token function">preg_match_all</span><span class="token punctuation">(</span><span class="token string">'/((http|https):\/\/)+(\w+\.)+(\w+)[\w\/\.\-]*(jpg|gif|png)/'</span><span class="token punctuation">,</span><span class="token variable">$unmatchedstr</span><span class="token punctuation">,</span><span class="token variable">$matches</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h4 id=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;a href=&quot;#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot; class=&quot;headerlink&quot; title=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;/a&gt;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&lt;/h4&gt;
+      &lt;h4 id=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;a href=&quot;#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot; class=&quot;headerlink&quot; title=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;/a&gt;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&lt;/h4&gt;&lt;h3 id=&quot;需要用到的函数：&quot;&gt;&lt;a href=&quot;#需要用到的函数：&quot; class=&quot;headerlink&quot; title=&quot;需要用到的函数：&quot;&gt;&lt;/a&gt;需要用到的函数：&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;str_replace() 字符串替换&lt;/li&gt;
+&lt;li&gt;html_entity_decode() html字符串转html标签 &lt;/li&gt;
+&lt;li&gt;strip_tags() 除去所有html标签&lt;/li&gt;
+&lt;li&gt;preg_match_all() 全局正则匹配字符串&lt;/li&gt;
+&lt;li&gt;array_unique() 去除数组中重复的元素(用于解决全局正则匹配带来的元素重复的问题)&lt;/li&gt;
+&lt;li&gt;array_flip() 将键值交换，因为键名不能重复，所以重复元素会被去掉，两次flip下来就能够得到不重复的键值数组&lt;/li&gt;
+&lt;li&gt;array_values() 返回只有键值无键名的数组
     
     </summary>
     
       <category term="php" scheme="http://yoursite.com/categories/php/"/>
     
     
-      <category term="useful function" scheme="http://yoursite.com/tags/useful-function/"/>
+      <category term="function" scheme="http://yoursite.com/tags/function/"/>
     
-      <category term="app interface dev" scheme="http://yoursite.com/tags/app-interface-dev/"/>
+      <category term="php" scheme="http://yoursite.com/tags/php/"/>
     
   </entry>
   
@@ -282,12 +1169,50 @@
     <link href="http://yoursite.com/2016/11/05/UNIX%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/"/>
     <id>http://yoursite.com/2016/11/05/UNIX时间戳与time-算时间差/</id>
     <published>2016-11-05T08:35:24.000Z</published>
-    <updated>2016-11-12T10:47:41.000Z</updated>
+    <updated>2017-03-22T12:30:00.000Z</updated>
     
     <content type="html"><![CDATA[<p>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案</p>
 <h3 id="需要用到的函数"><a href="#需要用到的函数" class="headerlink" title="需要用到的函数"></a>需要用到的函数</h3><h4 id="getdate-unix数字时间戳"><a href="#getdate-unix数字时间戳" class="headerlink" title="getdate(unix数字时间戳)"></a>getdate(unix数字时间戳)</h4><p>将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间<br><a id="more"></a></p>
 <h3 id="time"><a href="#time" class="headerlink" title="time()"></a>time()</h3><p>方便获取现在的时间</p>
-<h4 id="现假设从mysql中获取到时间戳为-result"><a href="#现假设从mysql中获取到时间戳为-result" class="headerlink" title="现假设从mysql中获取到时间戳为$result"></a>现假设从mysql中获取到时间戳为$result</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">   		$date_time_array = getdate($result);</div><div class="line"> 	$hour = $date_time_array[<span class="string">'hours'</span>];</div><div class="line">$min = $date_time_array[<span class="string">'minutes'</span>];</div><div class="line">$second = $date_time_array[<span class="string">'seconds'</span>];</div><div class="line">$month = $date_time_array[<span class="string">'mon'</span>];</div><div class="line">$day = $date_time_array[<span class="string">'mday'</span>];</div><div class="line">$year = $date_time_array[<span class="string">'year'</span>];</div><div class="line">$now_time_array = getdate(time());</div><div class="line"><span class="keyword">if</span>($year&lt;$now_time_array[<span class="string">'year'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'year'</span>]-$year;</div><div class="line">	$timediff = $diff.<span class="string">'年前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($month&lt;$now_time_array[<span class="string">'mon'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'mon'</span>]-$month;</div><div class="line">	$timediff = $diff.<span class="string">'月前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($day&lt;$now_time_array[<span class="string">'mday'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'mday'</span>]-$day;</div><div class="line">	$timediff = $diff.<span class="string">'天前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($hour&lt;$now_time_array[<span class="string">'hours'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'hours'</span>]-$hour;</div><div class="line">	$timediff = $diff.<span class="string">'小时前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($min&lt;$now_time_array[<span class="string">'minutes'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'minutes'</span>]-$min;</div><div class="line">	$timediff = $diff.<span class="string">'分钟前'</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span>($second&lt;$now_time_array[<span class="string">'seconds'</span>])</div><div class="line">&#123;</div><div class="line">	$diff = $now_time_array[<span class="string">'seconds'</span>]-$second;</div><div class="line">	$timediff = $diff.<span class="string">'秒前'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="现假设从mysql中获取到时间戳为-result"><a href="#现假设从mysql中获取到时间戳为-result" class="headerlink" title="现假设从mysql中获取到时间戳为$result"></a>现假设从mysql中获取到时间戳为$result</h4><pre class=" language-php"><code class="language-php">              <span class="token variable">$date_time_array</span> <span class="token operator">=</span> <span class="token function">getdate</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token variable">$hour</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'hours'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token variable">$min</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'minutes'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token variable">$second</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'seconds'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token variable">$month</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'mon'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token variable">$day</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'mday'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token variable">$year</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'year'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token variable">$now_time_array</span> <span class="token operator">=</span> <span class="token function">getdate</span><span class="token punctuation">(</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$year</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'year'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'year'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$year</span><span class="token punctuation">;</span>
+                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'年前'</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$month</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mon'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mon'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$month</span><span class="token punctuation">;</span>
+                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'月前'</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$day</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mday'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mday'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$day</span><span class="token punctuation">;</span>
+                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'天前'</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$hour</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'hours'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'hours'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$hour</span><span class="token punctuation">;</span>
+                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'小时前'</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$min</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'minutes'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'minutes'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$min</span><span class="token punctuation">;</span>
+                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'分钟前'</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$second</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'seconds'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'seconds'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$second</span><span class="token punctuation">;</span>
+                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'秒前'</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+</code></pre>
 <p>循环嵌套顺序判断年月日时分秒，找到第一个不同项相减，就能够计算出数据的距今时间</p>
 ]]></content>
     
@@ -301,7 +1226,7 @@
       <category term="php" scheme="http://yoursite.com/categories/php/"/>
     
     
-      <category term="php useful algorithms" scheme="http://yoursite.com/tags/php-useful-algorithms/"/>
+      <category term="algorithms" scheme="http://yoursite.com/tags/algorithms/"/>
     
   </entry>
   
@@ -310,13 +1235,11 @@
     <link href="http://yoursite.com/2016/11/04/TP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2016/11/04/TP常用函数总结/</id>
     <published>2016-11-04T06:45:08.000Z</published>
-    <updated>2016-11-12T10:42:59.000Z</updated>
+    <updated>2017-03-22T12:29:55.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="I函数"><a href="#I函数" class="headerlink" title="I函数"></a>I函数</h3><p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
 <p>定义: <code>I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;)</code></p>
-<p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code></p>
-<p>好处：自动过滤输入，增加安全性，官方推荐</p>
-<a id="more"></a>
+<p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code><br><a id="more"></a><br>好处：自动过滤输入，增加安全性，官方推荐</p>
 <h3 id="D函数"><a href="#D函数" class="headerlink" title="D函数"></a>D函数</h3><p>用途：new出Model对象进行数据的增删改查，而且可以调用Model中的业务逻辑</p>
 <p>定义：<code>D(&#39;Model名&#39;)</code></p>
 <h3 id="M函数"><a href="#M函数" class="headerlink" title="M函数"></a>M函数</h3><p>用途：可对Model对应的表进行基本的CURD操作，而且节约资源</p>
@@ -340,15 +1263,14 @@
     
       &lt;h3 id=&quot;I函数&quot;&gt;&lt;a href=&quot;#I函数&quot; class=&quot;headerlink&quot; title=&quot;I函数&quot;&gt;&lt;/a&gt;I函数&lt;/h3&gt;&lt;p&gt;用途：获取输入数据，例如表单的接收，API的GET接收参数&lt;/p&gt;
 &lt;p&gt;定义: &lt;code&gt;I(&amp;#39;接收的数据&amp;#39;，&amp;#39;默认值&amp;#39;,&amp;#39;接收数据的类型&amp;#39;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;用法：&lt;code&gt;I(&amp;#39;get.id&amp;#39;,1,&amp;#39;int&amp;#39;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;好处：自动过滤输入，增加安全性，官方推荐&lt;/p&gt;
+&lt;p&gt;用法：&lt;code&gt;I(&amp;#39;get.id&amp;#39;,1,&amp;#39;int&amp;#39;)&lt;/code&gt;&lt;br&gt;
     
     </summary>
     
       <category term="php" scheme="http://yoursite.com/categories/php/"/>
     
     
-      <category term="ThinkPHP Learning" scheme="http://yoursite.com/tags/ThinkPHP-Learning/"/>
+      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
     
   </entry>
   
@@ -357,7 +1279,7 @@
     <link href="http://yoursite.com/2016/11/04/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/"/>
     <id>http://yoursite.com/2016/11/04/夹杂数字字母大小写的字符串排序方法/</id>
     <published>2016-11-04T05:30:43.000Z</published>
-    <updated>2016-11-12T10:46:07.000Z</updated>
+    <updated>2017-03-22T12:29:01.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="核心步骤概要"><a href="#核心步骤概要" class="headerlink" title="核心步骤概要"></a>核心步骤概要</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>过滤数字等特殊符号，只剩下字母</p>
 <p>这里要用到String类自带的replaceAll方法以及表达式进行过滤</p>
@@ -366,10 +1288,16 @@
 <p>这里要用到Arrays类中的sort方法</p>
 <h2 id="关键代码演示"><a href="#关键代码演示" class="headerlink" title="关键代码演示"></a>关键代码演示</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>因为输入的行数和字符串内容任意，所以将每行的字符串直接add入Java的ArrayList动态数组中，接着再装入用length初始化的String字符串数组newArray中，从而避免了从Object类型进行强制转换String[]的风险</p>
 <hr>
-<h3 id="字符串过滤演示"><a href="#字符串过滤演示" class="headerlink" title="字符串过滤演示"></a>字符串过滤演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i &lt;elementIndex;i++)</div><div class="line">newArray[i] = newArray[i].replaceAll(<span class="string">"\\d+"</span>,<span class="string">""</span>);</div><div class="line"><span class="comment">//这里演示的是去除数字</span></div></pre></td></tr></table></figure>
+<h3 id="字符串过滤演示"><a href="#字符串过滤演示" class="headerlink" title="字符串过滤演示"></a>字符串过滤演示</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"\\d+"</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//这里演示的是去除数字</span>
+</code></pre>
 <p><strong>拓展：</strong></p>
 <p>.replaceAll(“转义符+正则表达式”,”要替换成的字符”);</p>
-<h3 id="字符串分割演示"><a href="#字符串分割演示" class="headerlink" title="字符串分割演示"></a>字符串分割演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;newArray[number].length();k++)</div><div class="line">sortArray[k] = newArray[number].substring(k,k+<span class="number">1</span>);</div><div class="line"><span class="comment">//用一个for循环一次切割一个字符并添加入sortArray中</span></div></pre></td></tr></table></figure>
+<h3 id="字符串分割演示"><a href="#字符串分割演示" class="headerlink" title="字符串分割演示"></a>字符串分割演示</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>k<span class="token operator">&lt;</span>newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span>
+sortArray<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用一个for循环一次切割一个字符并添加入sortArray中</span>
+</code></pre>
 <p><strong>拓展：</strong></p>
 <h4 id="String类常用方法"><a href="#String类常用方法" class="headerlink" title="String类常用方法"></a>String类常用方法</h4><table>
 <thead>
@@ -405,7 +1333,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="单字符String数组排序演示"><a href="#单字符String数组排序演示" class="headerlink" title="单字符String数组排序演示"></a>单字符String数组排序演示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Arrays.sort(sortArray,String.CASE_INSENSITIVE_ORDER);</div><div class="line"><span class="comment">//不分大小写进行排序</span></div></pre></td></tr></table></figure>
+<h3 id="单字符String数组排序演示"><a href="#单字符String数组排序演示" class="headerlink" title="单字符String数组排序演示"></a>单字符String数组排序演示</h3><pre class=" language-java"><code class="language-java">Arrays<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>sortArray<span class="token punctuation">,</span>String<span class="token punctuation">.</span>CASE_INSENSITIVE_ORDER<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//不分大小写进行排序</span>
+</code></pre>
 <p><strong>拓展：</strong></p>
 <h4 id="Arrays类常用方法"><a href="#Arrays类常用方法" class="headerlink" title="Arrays类常用方法"></a>Arrays类常用方法</h4><table>
 <thead>
@@ -437,7 +1367,66 @@
 </tr>
 </tbody>
 </table>
-<h2 id="完整代码demo演示"><a href="#完整代码demo演示" class="headerlink" title="完整代码demo演示"></a>完整代码demo演示</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by Tecker on 2016/6/21.</div><div class="line"> */</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UsingArrayList</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> elementIndex = <span class="number">1</span>;</div><div class="line">        Scanner inputElement = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        ArrayList elementlist = <span class="keyword">new</span> ArrayList();</div><div class="line">        <span class="keyword">boolean</span> inputOver = <span class="keyword">false</span>;</div><div class="line">        System.out.printf(<span class="string">"请任意输入N行N个字符串\n"</span>);</div><div class="line">        System.out.printf(<span class="string">"当输入inputOver时结束\n"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            System.out.printf(<span class="string">"输入第"</span> + elementIndex + <span class="string">"个字符串\n"</span>);</div><div class="line">            System.out.printf(<span class="string">"&gt;&gt;"</span>);</div><div class="line">            String input = inputElement.nextLine();</div><div class="line">            <span class="keyword">if</span> (input.equals(<span class="string">"inputOver"</span>))&#123;</div><div class="line">                inputOver = <span class="keyword">true</span>;</div><div class="line">                System.out.println(<span class="string">"输入完毕！"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                elementlist.add(input);</div><div class="line">                elementIndex++;</div><div class="line">            &#125;</div><div class="line">        &#125;<span class="keyword">while</span> (inputOver == <span class="keyword">false</span>);      <span class="comment">//用do-while语句加上if判断来控制输入N行夹杂数字大小写的字符串</span></div><div class="line">        elementIndex = elementIndex - <span class="number">1</span>;</div><div class="line">        System.out.printf(<span class="string">"排序前:\n"</span>);</div><div class="line">        String[] newArray = <span class="keyword">new</span> String[elementIndex];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">0</span>;k &lt;elementIndex;k++)</div><div class="line">            System.out.printf(<span class="string">"&gt;&gt; "</span> + elementlist.get(k) + <span class="string">"\n"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index=<span class="number">0</span>;index &lt;elementIndex;index++)</div><div class="line">            newArray[index] = elementlist.get(index).toString();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i &lt;elementIndex;i++)</div><div class="line">            newArray[i] = newArray[i].replaceAll(<span class="string">"\\d+"</span>,<span class="string">""</span>);</div><div class="line">        <span class="keyword">for</span> (String element : newArray)</div><div class="line">            System.out.printf(element +<span class="string">"\n"</span>);</div><div class="line">        System.out.println(<span class="string">"排序后\n"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> listIndex=<span class="number">0</span>;listIndex &lt;newArray.length;listIndex++)&#123;</div><div class="line">            sortArrays(listIndex,newArray);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sortArrays</span><span class="params">(<span class="keyword">int</span> number,String[] newArray)</span></span>&#123;</div><div class="line">        String[] sortArray = <span class="keyword">new</span> String[newArray[number].length()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;newArray[number].length();k++)&#123;</div><div class="line">            sortArray[k] = newArray[number].substring(k,k+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        Arrays.sort(sortArray,String.CASE_INSENSITIVE_ORDER);</div><div class="line">        String finalString = <span class="string">"&gt;&gt;"</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;sortArray.length;j++)&#123;</div><div class="line">            finalString = finalString.concat(sortArray[j]);</div><div class="line">        &#125;</div><div class="line">        System.out.println(finalString);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="完整代码demo演示"><a href="#完整代码demo演示" class="headerlink" title="完整代码demo演示"></a>完整代码demo演示</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * Created by Tecker on 2016/6/21.
+ */</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UsingArrayList</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> elementIndex <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        Scanner inputElement <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Scanner</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ArrayList elementlist <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">boolean</span> inputOver <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请任意输入N行N个字符串\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"当输入inputOver时结束\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">do</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"输入第"</span> <span class="token operator">+</span> elementIndex <span class="token operator">+</span> <span class="token string">"个字符串\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            String input <span class="token operator">=</span> inputElement<span class="token punctuation">.</span><span class="token function">nextLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>input<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"inputOver"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                inputOver <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"输入完毕！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                elementlist<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                elementIndex<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token keyword">while</span> <span class="token punctuation">(</span>inputOver <span class="token operator">==</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//用do-while语句加上if判断来控制输入N行夹杂数字大小写的字符串</span>
+        elementIndex <span class="token operator">=</span> elementIndex <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"排序前:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> newArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>elementIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>k <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">> "</span> <span class="token operator">+</span> elementlist<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>index <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>index<span class="token operator">++</span><span class="token punctuation">)</span>
+            newArray<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> elementlist<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+            newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"\\d+"</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>String element <span class="token operator">:</span> newArray<span class="token punctuation">)</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span>element <span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"排序后\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> listIndex<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>listIndex <span class="token operator">&lt;</span>newArray<span class="token punctuation">.</span>length<span class="token punctuation">;</span>listIndex<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">sortArrays</span><span class="token punctuation">(</span>listIndex<span class="token punctuation">,</span>newArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sortArrays</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">,</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> newArray<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> sortArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>k<span class="token operator">&lt;</span>newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            sortArray<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>sortArray<span class="token punctuation">,</span>String<span class="token punctuation">.</span>CASE_INSENSITIVE_ORDER<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String finalString <span class="token operator">=</span> <span class="token string">">>"</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>sortArray<span class="token punctuation">.</span>length<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            finalString <span class="token operator">=</span> finalString<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>sortArray<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>finalString<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
 ]]></content>
     
     <summary type="html">
@@ -451,7 +1440,190 @@
       <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="Java Basic" scheme="http://yoursite.com/tags/Java-Basic/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS学习笔记05 图片放大特效</title>
+    <link href="http://yoursite.com/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/"/>
+    <id>http://yoursite.com/2016/11/01/CSS学习笔记05 图片放大特效/</id>
+    <published>2016-11-01T06:43:37.000Z</published>
+    <updated>2017-03-22T14:21:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
+
+<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
+    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    //防止图片爆出外层div
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre class=&quot; language-css&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;token selector&quot;&gt;&lt;span class=&quot;token class&quot;&gt;.img-zoom-in&lt;/span&gt; img &lt;/span&gt;
+    
+    </summary>
+    
+      <category term="css" scheme="http://yoursite.com/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://yoursite.com/tags/css/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS学习笔记04 背景</title>
+    <link href="http://yoursite.com/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/"/>
+    <id>http://yoursite.com/2016/11/01/CSS学习笔记04 背景/</id>
+    <published>2016-11-01T06:43:37.000Z</published>
+    <updated>2017-03-22T14:21:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="透明背景"><a href="#透明背景" class="headerlink" title="透明背景"></a>透明背景</h4><pre class=" language-css"><code class="language-css"><span class="token selector">nav </span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> black<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.menu</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> transparent<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="设置透明"><a href="#设置透明" class="headerlink" title="设置透明"></a>设置透明</h5><h5 id="这样就使得菜单的颜色与导航栏的颜色一致"><a href="#这样就使得菜单的颜色与导航栏的颜色一致" class="headerlink" title="这样就使得菜单的颜色与导航栏的颜色一致"></a>这样就使得菜单的颜色与导航栏的颜色一致</h5><h4 id="背景加亮凸显文字"><a href="#背景加亮凸显文字" class="headerlink" title="背景加亮凸显文字"></a>背景加亮凸显文字</h4><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.menu</span> > li > a<span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">255</span>,<span class="token number">255</span>,<span class="token number">255</span>, <span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="0-1代表透明度为百分之十"><a href="#0-1代表透明度为百分之十" class="headerlink" title="0.1代表透明度为百分之十"></a>0.1代表透明度为百分之十</h5>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;透明背景&quot;&gt;&lt;a href=&quot;#透明背景&quot; class=&quot;headerlink&quot; title=&quot;透明背景&quot;&gt;&lt;/a&gt;透明背景&lt;/h4&gt;&lt;pre class=&quot; language-css&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class
+    
+    </summary>
+    
+      <category term="css" scheme="http://yoursite.com/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://yoursite.com/tags/css/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS学习笔记02 nav上下居中</title>
+    <link href="http://yoursite.com/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/"/>
+    <id>http://yoursite.com/2016/11/01/CSS学习笔记 02 nav上下居中/</id>
+    <published>2016-11-01T06:43:37.000Z</published>
+    <updated>2017-03-22T14:21:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
+<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;CSS学习笔记-02-nav上下居中&quot;&gt;&lt;a href=&quot;#CSS学习笔记-02-nav上下居中&quot; class=&quot;headerlink&quot; title=&quot;CSS学习笔记 02 nav上下居中&quot;&gt;&lt;/a&gt;CSS学习笔记 02 nav上下居中&lt;/h1&gt;&lt;pre clas
+    
+    </summary>
+    
+      <category term="css" scheme="http://yoursite.com/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://yoursite.com/tags/css/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS 学习笔记01 wrapper class实现居中</title>
+    <link href="http://yoursite.com/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2001%20wrapper%20class/"/>
+    <id>http://yoursite.com/2016/11/01/CSS 学习笔记 01 wrapper class/</id>
+    <published>2016-11-01T06:43:37.000Z</published>
+    <updated>2017-03-22T14:18:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="div内容居中"><a href="#div内容居中" class="headerlink" title="div内容居中"></a>div内容居中</h2><pre class=" language-html"><code class="language-html">    <span class="token comment" spellcheck="true">&lt;!-- DESKTOP NAVIGATION  --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>nav</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wrap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar-left<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>site title<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar-right<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>menu<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>search<span class="token punctuation">"</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Search<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Search<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>nav</span><span class="token punctuation">></span></span>
+</code></pre>
+<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.wrap</span></span><span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">90%</span><span class="token punctuation">;</span> 
+    <span class="token property">margin</span><span class="token punctuation">:</span> <span class="token number">0</span> auto<span class="token punctuation">;</span>
+    <span class="token property">max-width</span><span class="token punctuation">:</span> <span class="token number">1000</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>1.用百分号的好处就是能够实时计算</p>
+<p>2.margin用于自动保持边距使得内容居中</p>
+<p>3.max-width规定了居中内容的宽度（极有用）</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;div内容居中&quot;&gt;&lt;a href=&quot;#div内容居中&quot; class=&quot;headerlink&quot; title=&quot;div内容居中&quot;&gt;&lt;/a&gt;div内容居中&lt;/h2&gt;&lt;pre class=&quot; language-html&quot;&gt;&lt;code class=&quot;language-htm
+    
+    </summary>
+    
+      <category term="css" scheme="http://yoursite.com/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://yoursite.com/tags/css/"/>
+    
+      <category term="html" scheme="http://yoursite.com/tags/html/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS 学习笔记03 按钮Full Height全高度实现</title>
+    <link href="http://yoursite.com/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003%20%E6%8C%89%E9%92%AEFull%20Height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://yoursite.com/2016/11/01/CSS 学习笔记03 按钮Full Height全高度实现/</id>
+    <published>2016-11-01T06:43:37.000Z</published>
+    <updated>2017-03-22T14:21:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector">nav a<span class="token class">.button.alert</span></span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">1.1</span>rem<span class="token punctuation">;</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="line-height-保证居中"><a href="#line-height-保证居中" class="headerlink" title="line-height 保证居中"></a>line-height 保证居中</h4><h4 id="接着将padding-top和buttom设置为0即可"><a href="#接着将padding-top和buttom设置为0即可" class="headerlink" title="接着将padding-top和buttom设置为0即可"></a>接着将padding-top和buttom设置为0即可</h4>]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre class=&quot; language-css&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;token selector&quot;&gt;nav a&lt;span class=&quot;token class&quot;&gt;.button.alert&lt;/span&gt;&lt;/span
+    
+    </summary>
+    
+      <category term="css" scheme="http://yoursite.com/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://yoursite.com/tags/css/"/>
     
   </entry>
   
