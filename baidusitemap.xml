@@ -3,6 +3,32 @@
 
 
     
+  <url>
+    <loc>http://tecknight.xyz/2017/03/23/Express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2017-03-23T15:28:46.000Z</lastmod>
+    <data>
+        <display>
+        <title>Express下多次callback引发的问题</title>
+        <pubTime>2017-03-23T15:26:43.000Z</pubTime>
+        
+        <tag>node</tag>
+         
+        <tag>Express</tag>
+         
+        <tag>问题总结</tag>
+         
+        <tag>异步</tag>
+         
+         
+           
+             
+              <breadCrumb title="Node" url="http://tecknight.xyz/categories/Node/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://tecknight.xyz/2017/01/25/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
@@ -349,9 +375,9 @@
         <title>php处理html字符串</title>
         <pubTime>2016-11-12T03:19:10.000Z</pubTime>
         
-        <tag>function</tag>
-         
         <tag>php</tag>
+         
+        <tag>function</tag>
          
          
            
@@ -394,11 +420,11 @@
         <title>gulp.js简易入门指南</title>
         <pubTime>2016-11-20T06:39:33.000Z</pubTime>
         
+        <tag>node</tag>
+         
         <tag>npm</tag>
          
         <tag>cli</tag>
-         
-        <tag>node</tag>
          
         <tag>front end dev</tag>
          
