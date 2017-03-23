@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[vue-router 快速入门]]></title>
-      <url>http://yoursite.com/2017/03/01/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
+      <url>http://tecknight.xyz/2017/03/01/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
       <content type="html"><![CDATA[<h3 id="配置路由"><a href="#配置路由" class="headerlink" title="配置路由"></a>配置路由</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> vue-router --save
 </code></pre>
 <a id="more"></a>
@@ -92,7 +92,7 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
     
     <entry>
       <title><![CDATA[vuex快速入门]]></title>
-      <url>http://yoursite.com/2017/02/08/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
+      <url>http://tecknight.xyz/2017/02/08/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
       <content type="html"><![CDATA[<h3 id="基本用途："><a href="#基本用途：" class="headerlink" title="基本用途："></a>基本用途：</h3><ul>
 <li><p>将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了<code>props</code>传值的链式响应的代码冗余</p>
 </li>
@@ -211,7 +211,7 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     
     <entry>
       <title><![CDATA[Laravel 5 常用帮助函数]]></title>
-      <url>http://yoursite.com/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
+      <url>http://tecknight.xyz/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
       <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
 </code></pre>
@@ -239,7 +239,7 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     
     <entry>
       <title><![CDATA[Laravel学习笔记]]></title>
-      <url>http://yoursite.com/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <url>http://tecknight.xyz/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h3 id="常用函数："><a href="#常用函数：" class="headerlink" title="常用函数："></a>常用函数：</h3><ul>
 <li>compact(‘变量1’,’变量2’)    </li>
 </ul>
@@ -426,7 +426,7 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     
     <entry>
       <title><![CDATA[Laravel5 新手填坑指南]]></title>
-      <url>http://yoursite.com/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
+      <url>http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
       <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
 <p>注意事项：</p>
 <p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
@@ -489,7 +489,7 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     
     <entry>
       <title><![CDATA[Vue 学习总结]]></title>
-      <url>http://yoursite.com/2017/01/25/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <url>http://tecknight.xyz/2017/01/25/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<p>##将数据渲染进DOM元素</p>
 <ol>
 <li>&#123;&#123;message&#125;&#125;</li>
@@ -736,7 +736,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
     <entry>
       <title><![CDATA[Sass语法点总结]]></title>
-      <url>http://yoursite.com/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</url>
+      <url>http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
 <li><p>@import</p>
 <p> 引入sass模块</p>
@@ -772,7 +772,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
     <entry>
       <title><![CDATA[Sass之CSS模块化]]></title>
-      <url>http://yoursite.com/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+      <url>http://tecknight.xyz/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
       <content type="html"><![CDATA[<p>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import</p>
 <p><code>@import &#39;partials/temp;&#39;</code></p>
 <p>partials文件夹中的模块scss文件最前面必须加上下划线 _</p>
@@ -818,7 +818,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
     <entry>
       <title><![CDATA[php数组常用方法详解]]></title>
-      <url>http://yoursite.com/2016/11/27/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
+      <url>http://tecknight.xyz/2016/11/27/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
       <content type="html"><![CDATA[<h4 id="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"><a href="#众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法" class="headerlink" title="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"></a>众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法</h4><h4 id="我们先建立一个对象post以便于演示"><a href="#我们先建立一个对象post以便于演示" class="headerlink" title="我们先建立一个对象post以便于演示"></a>我们先建立一个对象post以便于演示</h4><a id="more"></a>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">class</span> <span class="token class-name">Post</span>
 <span class="token punctuation">{</span>
@@ -968,7 +968,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
     <entry>
       <title><![CDATA[gulp.js简易入门指南]]></title>
-      <url>http://yoursite.com/2016/11/20/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</url>
+      <url>http://tecknight.xyz/2016/11/20/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</url>
       <content type="html"><![CDATA[<h4 id="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"><a href="#gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件" class="headerlink" title="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"></a>gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件</h4><a id="more"></a>
 <p>为什么需要gulp?</p>
 <ul>
@@ -1052,7 +1052,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[php处理html字符串]]></title>
-      <url>http://yoursite.com/2016/11/12/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+      <url>http://tecknight.xyz/2016/11/12/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
       <content type="html"><![CDATA[<h4 id="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"><a href="#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用" class="headerlink" title="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"></a>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4><h3 id="需要用到的函数："><a href="#需要用到的函数：" class="headerlink" title="需要用到的函数："></a>需要用到的函数：</h3><ul>
 <li>str_replace() 字符串替换</li>
 <li>html_entity_decode() html字符串转html标签 </li>
@@ -1107,7 +1107,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[UNIX时间戳与time()算时间差]]></title>
-      <url>http://yoursite.com/2016/11/05/UNIX%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</url>
+      <url>http://tecknight.xyz/2016/11/05/UNIX%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</url>
       <content type="html"><![CDATA[<p>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案</p>
 <h3 id="需要用到的函数"><a href="#需要用到的函数" class="headerlink" title="需要用到的函数"></a>需要用到的函数</h3><h4 id="getdate-unix数字时间戳"><a href="#getdate-unix数字时间戳" class="headerlink" title="getdate(unix数字时间戳)"></a>getdate(unix数字时间戳)</h4><p>将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间<br><a id="more"></a></p>
 <h3 id="time"><a href="#time" class="headerlink" title="time()"></a>time()</h3><p>方便获取现在的时间</p>
@@ -1170,7 +1170,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[TP常用函数总结]]></title>
-      <url>http://yoursite.com/2016/11/04/TP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</url>
+      <url>http://tecknight.xyz/2016/11/04/TP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<h3 id="I函数"><a href="#I函数" class="headerlink" title="I函数"></a>I函数</h3><p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
 <p>定义: <code>I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;)</code></p>
 <p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code><br><a id="more"></a><br>好处：自动过滤输入，增加安全性，官方推荐</p>
@@ -1210,7 +1210,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[夹杂数字字母大小写的字符串按字典排序方法]]></title>
-      <url>http://yoursite.com/2016/11/04/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/</url>
+      <url>http://tecknight.xyz/2016/11/04/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/</url>
       <content type="html"><![CDATA[<h2 id="核心步骤概要"><a href="#核心步骤概要" class="headerlink" title="核心步骤概要"></a>核心步骤概要</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>过滤数字等特殊符号，只剩下字母</p>
 <p>这里要用到String类自带的replaceAll方法以及表达式进行过滤</p>
 <h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将字符串进行单字符分割<br><a id="more"></a><br>这里要用到String类自带的substring方法</p>
@@ -1376,7 +1376,7 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     
     <entry>
       <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
-      <url>http://yoursite.com/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
+      <url>http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
       <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
     <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
@@ -1408,7 +1408,7 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     
     <entry>
       <title><![CDATA[CSS学习笔记04 背景]]></title>
-      <url>http://yoursite.com/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/</url>
+      <url>http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/</url>
       <content type="html"><![CDATA[<h4 id="透明背景"><a href="#透明背景" class="headerlink" title="透明背景"></a>透明背景</h4><pre class=" language-css"><code class="language-css"><span class="token selector">nav </span><span class="token punctuation">{</span>
     <span class="token property">background-color</span><span class="token punctuation">:</span> black<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -1440,7 +1440,7 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     
     <entry>
       <title><![CDATA[CSS学习笔记02 nav上下居中]]></title>
-      <url>http://yoursite.com/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
+      <url>http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
       <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
     <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
     <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
@@ -1475,7 +1475,7 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     
     <entry>
       <title><![CDATA[CSS 学习笔记01 wrapper class实现居中]]></title>
-      <url>http://yoursite.com/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2001%20wrapper%20class/</url>
+      <url>http://tecknight.xyz/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2001%20wrapper%20class/</url>
       <content type="html"><![CDATA[<h2 id="div内容居中"><a href="#div内容居中" class="headerlink" title="div内容居中"></a>div内容居中</h2><pre class=" language-html"><code class="language-html">    <span class="token comment" spellcheck="true">&lt;!-- DESKTOP NAVIGATION  --></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>nav</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wrap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -1521,7 +1521,7 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     
     <entry>
       <title><![CDATA[CSS 学习笔记03 按钮Full Height全高度实现]]></title>
-      <url>http://yoursite.com/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003%20%E6%8C%89%E9%92%AEFull%20Height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</url>
+      <url>http://tecknight.xyz/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003%20%E6%8C%89%E9%92%AEFull%20Height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</url>
       <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector">nav a<span class="token class">.button.alert</span></span><span class="token punctuation">{</span>
     <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
     <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">1.1</span>rem<span class="token punctuation">;</span>
