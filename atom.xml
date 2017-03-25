@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tecknight.xyz/"/>
-  <updated>2017-03-23T15:28:46.000Z</updated>
+  <updated>2017-03-25T03:06:12.000Z</updated>
   <id>http://tecknight.xyz/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://tecknight.xyz/2017/03/23/Express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     <id>http://tecknight.xyz/2017/03/23/Express下多次callback引发的问题/</id>
     <published>2017-03-23T15:26:43.000Z</published>
-    <updated>2017-03-23T15:28:46.000Z</updated>
+    <updated>2017-03-25T03:06:12.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="错误结果"><a href="#错误结果" class="headerlink" title="错误结果"></a>错误结果</h3><blockquote>
 <p>Error: Can’t render headers after they are sent to the client.</p>
@@ -53,7 +53,7 @@
 <p>res.contentType(type) (Express only)</p>
 <p>res.send([body]) (Express only)</p>
 </blockquote>
-<p>最后我们的查询数据是以响应内容中的<code>body</code>的形式返回给客户端的，当要进行<code>send</code>的时候，<code>node</code>自带的函数就会先运行，当然运行第一个<code>Promise</code>的时候是没有问题的，问题在于:<strong><code>send</code>本身并不能中断当前执行的任务</strong>，只要还没有<code>return</code>，代码仍然会继续运行，当第二个<code>Promise</code>被执行时，执行至第三步，也就是设置响应头的时候原先的响应头信息依然存在，触犯了<strong><code>node</code></strong>中不能重复设置响应头信息的规定，所以<code>node</code>先抛错，这一切看起来也就顺其自然了</p>
+<p>最后我们的查询数据是以响应内容中的<code>body</code>的形式返回给客户端的，当要进行<code>send</code>的时候，<code>node</code>自带的函数就会先运行，当然运行第一个<code>Promise</code>的时候是没有问题的，问题在于:<strong><code>send</code>本身并不能中断当前执行的任务</strong>，只要还没有<code>return</code>，代码仍然会继续运行，这也恰恰印证了<code>node</code>的异步非阻塞IO的特性，即便是第一个<code>Promise</code>执行时，并不会阻塞第二个<code>Promise</code>的继续执行，如果第一个<code>Promise</code>的<code>res.send</code>已经执行，当第二个<code>Promise</code>被执行时，执行至第三步，也就是设置响应头的时候原先的响应头信息依然存在，触犯了<strong><code>node</code></strong>中不能重复设置响应头信息的规定，所以<code>node</code>先抛错，这一切看起来也就顺其自然了</p>
 <h3 id="All-in-all-解决方案呢？"><a href="#All-in-all-解决方案呢？" class="headerlink" title="All in all 解决方案呢？"></a>All in all 解决方案呢？</h3><ul>
 <li>避免使用多次<code>send</code>,多次设置响应头就会出现此错误</li>
 <li>谨慎使用异步<code>Promise</code>，可以考虑<code>Promise</code>嵌套<strong>（推荐）</strong></li>
@@ -78,6 +78,8 @@
       <category term="问题总结" scheme="http://tecknight.xyz/tags/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
     
       <category term="异步" scheme="http://tecknight.xyz/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+      <category term="Debug" scheme="http://tecknight.xyz/tags/Debug/"/>
     
   </entry>
   

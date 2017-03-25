@@ -37,7 +37,7 @@
 <p>res.contentType(type) (Express only)</p>
 <p>res.send([body]) (Express only)</p>
 </blockquote>
-<p>最后我们的查询数据是以响应内容中的<code>body</code>的形式返回给客户端的，当要进行<code>send</code>的时候，<code>node</code>自带的函数就会先运行，当然运行第一个<code>Promise</code>的时候是没有问题的，问题在于:<strong><code>send</code>本身并不能中断当前执行的任务</strong>，只要还没有<code>return</code>，代码仍然会继续运行，当第二个<code>Promise</code>被执行时，执行至第三步，也就是设置响应头的时候原先的响应头信息依然存在，触犯了<strong><code>node</code></strong>中不能重复设置响应头信息的规定，所以<code>node</code>先抛错，这一切看起来也就顺其自然了</p>
+<p>最后我们的查询数据是以响应内容中的<code>body</code>的形式返回给客户端的，当要进行<code>send</code>的时候，<code>node</code>自带的函数就会先运行，当然运行第一个<code>Promise</code>的时候是没有问题的，问题在于:<strong><code>send</code>本身并不能中断当前执行的任务</strong>，只要还没有<code>return</code>，代码仍然会继续运行，这也恰恰印证了<code>node</code>的异步非阻塞IO的特性，即便是第一个<code>Promise</code>执行时，并不会阻塞第二个<code>Promise</code>的继续执行，如果第一个<code>Promise</code>的<code>res.send</code>已经执行，当第二个<code>Promise</code>被执行时，执行至第三步，也就是设置响应头的时候原先的响应头信息依然存在，触犯了<strong><code>node</code></strong>中不能重复设置响应头信息的规定，所以<code>node</code>先抛错，这一切看起来也就顺其自然了</p>
 <h3 id="All-in-all-解决方案呢？"><a href="#All-in-all-解决方案呢？" class="headerlink" title="All in all 解决方案呢？"></a>All in all 解决方案呢？</h3><ul>
 <li>避免使用多次<code>send</code>,多次设置响应头就会出现此错误</li>
 <li>谨慎使用异步<code>Promise</code>，可以考虑<code>Promise</code>嵌套<strong>（推荐）</strong></li>
@@ -61,6 +61,8 @@
             <tag> 问题总结 </tag>
             
             <tag> 异步 </tag>
+            
+            <tag> Debug </tag>
             
         </tags>
         

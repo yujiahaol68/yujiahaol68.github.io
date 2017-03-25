@@ -10,7 +10,7 @@
     
     <title>
         
-            Express下多次callback引发的问题 | 
+            Tag: Debug | 
         
         A Refactor&#39;s Blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing,node,Express,问题总结,异步,Debug">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://tecknight.xyz">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Express下多次callback引发的问题 | A Refactor&#39;s Blog">
+    <meta property="og:title" content="Tag: Debug | A Refactor&#39;s Blog">
     <meta property="og:description" content="Live or Die.Take your time and make your choices.">
-    <meta property="og:article:tag" content="node"> <meta property="og:article:tag" content="Express"> <meta property="og:article:tag" content="问题总结"> <meta property="og:article:tag" content="异步"> <meta property="og:article:tag" content="Debug"> 
+    
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -203,265 +203,94 @@
                         </button>
                     
 
-                    <!-- Post TOC -->
-
+                    <!-- Index Module -->
+<div class="material-index mdl-grid">
     
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
+    <div class="locate-thumbnail-symbol"></div>
 
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
+    <!-- Pin on top -->
+    
 
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#错误结果"><span class="post-toc-number">1.</span> <span class="post-toc-text">错误结果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#出现场景："><span class="post-toc-number">2.</span> <span class="post-toc-text">出现场景：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题排查："><span class="post-toc-number">3.</span> <span class="post-toc-text">问题排查：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题分析："><span class="post-toc-number">4.</span> <span class="post-toc-text">问题分析：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#All-in-all-解决方案呢？"><span class="post-toc-number">5.</span> <span class="post-toc-text">All in all 解决方案呢？</span></a></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
+    <!-- Normal Post -->
+    
+        
+        
+            <!-- Paradox Thumbnail -->
+            <div class="post_entry-module mdl-card mdl-shadow--3dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
+        
+    
 
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/03/23/Express下多次callback引发的问题/">Express下多次callback引发的问题</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            错误结果
+Error: Can’t render header...
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/03/23/Express下多次callback引发的问题/" target="_self">Continue Reading</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="http://ojt3x01ru.bkt.clouddn.com/image/me/me.jpeg" width="44px" height="44px" alt="Tecker.Yu's avatar">
+            </div>
+            <div>
+                <strong>Tecker.Yu</strong>
+                <span>Mar 23, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                <a class="post_category-link" href="/categories/Node/">Node</a>
+            </span>
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+        
+        
+        
+    
+
+    
+
+    
+        <script>
+    var randomNum;
+
+    var locatePost = $('.locate-thumbnail-symbol').next();
+    for(var i = 0; i < 10; i++) {
+        randomNum = Math.floor(Math.random() * 19 + 1);
+
+        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
+        locatePost.children('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')')
+
+        locatePost = locatePost.next();
+    }
 </script>
 
-        
-    
-            <p class="article-headline-p">
-                Express下多次callback引发的问题
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="http://ojt3x01ru.bkt.clouddn.com/image/me/me.jpeg" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Tecker.Yu</strong>
-        <span>Mar 23, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">devices other</i>
-            <span class="visuallyhidden">devices other</span>
-        </button>
-        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
-            <li class="mdl-menu__item">Read this article on other device</li>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAACzUlEQVR42u3aQXZaMRAEQO5/6eQAfuDuGewQqf4qiw+otHBH03r8ufJ5YGNjY2NjY2NjY38k+xE/7ae+vvnss8mbb1gzNjY29tHsb/70B+8kb34lJbzZerCxsbHvZL+OltfvtMtNIud1sOVrxsbGxsbeb0EeTk8XjY2NjY39Y+xN5CQbhI2NjY393qHS5riy375/NkvDxsbG/nh2W9x+wr9/td/GxsbG/mB2+2wu3LSh9fpwUq8cGxsb+1B2Hgzt1myK4faok6wTGxsb+1R2Ek77MNsXw2/YXGxsbOyj2bOhUv4Ns2I4hw2HStjY2NhHsNvRT167Jhcoo6s26+oCGxsb+2x2fkUmOXi0ZcBsU2YDJmxsbOxT2bNqth0M7cOsDU5sbGzsm9n5QD+PqKTKzQvd5PvrfhsbGxv7P2fnI5u2HsiL4dk7xUZjY2NjX8BuL9C0Ve4m6vLD0rDoxcbGxj6CPRvczCLwNwtmbGxs7LPZG0ZbBrTh1MZY3W9jY2NjH8RuhzWzw0k+7s8PKsXWY2NjYx/KnlUC7REiHyolv5uHKzY2NvZt7DaoZsGWRFp+vHnDlR1sbGzs49h5MOQj+3yh+5oBGxsb+zZ2vrj8oLJ/P9/04viEjY2NfQF7czBoh02bCMzrB2xsbOwb2O0VxlklMCsk8qFStGZsbGzsa9j51yVxkmzcrKhYHUWwsbGxL2BvqtbiGs2i3M0jExsbG/s29qwYyCvh/ELn7Hm6ZdjY2NiHstsnrwredbCZ1b3fBBg2Njb2Qew2GPJxz2xT2kKiWC02Njb20ezZT7aRltcJ7/pObGxs7NvYyYAm+U9/G2M/MVTCxsbGxs4v4rz+4c2QKC+DV1d2sLGxsbFH45724NGOn7CxsbHvZG/K2iJI1iVE/ilsbGzse9jtpcY2itprmvkFnXwTsbGxsU9l3/NgY2NjY2NjY2Njf8zzFw3Zw6Zc00V1AAAAAElFTkSuQmCC">
-        </ul>
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Debug/">Debug</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Express/">Express</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/node/">node</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/异步/">异步</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/问题总结/">问题总结</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;Views
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Express下多次callback引发的问题&url=http://tecknight.xyz//2017/03/23/Express下多次callback引发的问题/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                Share to Weibo
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-
-    <!-- Share Facebook -->
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=Express下多次callback引发的问题&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2017/03/23/Express下多次callback引发的问题/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                Share to QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <h3 id="错误结果"><a href="#错误结果" class="headerlink" title="错误结果"></a>错误结果</h3><blockquote>
-<p>Error: Can’t render headers after they are sent to the client.</p>
-<p>错误：当响应头被发回客户端时不能被正确渲染！</p>
-</blockquote>
-<h3 id="出现场景："><a href="#出现场景：" class="headerlink" title="出现场景："></a>出现场景：</h3><blockquote>
-<p>Express环境下使用mongoose model 进行模糊查询时，需要用ORM进行至少一次至多两次的查询，查询用的都是Promise进行的异步操作</p>
-</blockquote>
-<h3 id="问题排查："><a href="#问题排查：" class="headerlink" title="问题排查："></a>问题排查：</h3><ul>
-<li><p><strong>响应头的设置出现了冲突</strong>  </p>
-</li>
-<li><p>是<code>res.send(docs)</code>出错</p>
-</li>
-<li><p><strong>调试时移除了其中一个<code>Promise</code>查询，错误消失</strong></p>
-</li>
-<li><p>问题出在<code>Promise</code>上</p>
-</li>
-</ul>
-<h3 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h3><p><strong>为什么连续的两个<code>Promise</code>回调会最终导致响应头渲染冲突?</strong></p>
-<p>渲染冲突出现在错误的顶部，跟错误抛出的顺序有关，这与<code>Express</code>自带的<code>res</code>对象有关，而<code>res</code>又继承自<code>node.js</code>原生的<code>http.ServerResponse</code> 类，在<code>res</code>调用<code>res.writeHead(statusCode)</code>写入响应头的状态码之前，我们可以尽情的写入响应头的头信息，在一个<code>res.send(docs)</code>中，应该包含着以下几步，有的是<code>exprerss</code>自己的，有的则是属于<code>node</code>原生<code>http</code>模块的</p>
-<p><strong>按以下顺序开始运行:</strong></p>
-<blockquote>
-<p>res.writeContinue()</p>
-<p>res.statusCode = 404</p>
-<p>res.setHeader(name, value)</p>
-<p>res.getHeader(name)</p>
-<p>res.removeHeader(name)</p>
-<p>res.header(key[, val]) (Express only)</p>
-<p>res.charset = ‘utf-8’ (Express only)</p>
-<p>res.contentType(type) (Express only)</p>
-<p>res.send([body]) (Express only)</p>
-</blockquote>
-<p>最后我们的查询数据是以响应内容中的<code>body</code>的形式返回给客户端的，当要进行<code>send</code>的时候，<code>node</code>自带的函数就会先运行，当然运行第一个<code>Promise</code>的时候是没有问题的，问题在于:<strong><code>send</code>本身并不能中断当前执行的任务</strong>，只要还没有<code>return</code>，代码仍然会继续运行，这也恰恰印证了<code>node</code>的异步非阻塞IO的特性，即便是第一个<code>Promise</code>执行时，并不会阻塞第二个<code>Promise</code>的继续执行，如果第一个<code>Promise</code>的<code>res.send</code>已经执行，当第二个<code>Promise</code>被执行时，执行至第三步，也就是设置响应头的时候原先的响应头信息依然存在，触犯了<strong><code>node</code></strong>中不能重复设置响应头信息的规定，所以<code>node</code>先抛错，这一切看起来也就顺其自然了</p>
-<h3 id="All-in-all-解决方案呢？"><a href="#All-in-all-解决方案呢？" class="headerlink" title="All in all 解决方案呢？"></a>All in all 解决方案呢？</h3><ul>
-<li>避免使用多次<code>send</code>,多次设置响应头就会出现此错误</li>
-<li>谨慎使用异步<code>Promise</code>，可以考虑<code>Promise</code>嵌套<strong>（推荐）</strong></li>
-<li><code>send</code>之前记得加上<code>return</code>让后面的代码不会运行，但这个方法不好难以控制，当异步操作写在一起的时候，谁知道会是哪一个家伙先结束呢？ </li>
-</ul>
-
-    
-
     
 </div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/01/vue-router-快速入门/" id="post_nav-older" class="next-content">
-            Older
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
 
 
                     
@@ -650,14 +479,6 @@ It will not impact the appearance and can give developers a lot of support :)
 </aside>
 
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
 
                     
 
