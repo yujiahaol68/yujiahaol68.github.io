@@ -10,10 +10,10 @@
 <p>Error: Can’t render headers after they are sent to the client.</p>
 <p>错误：当响应头被发回客户端时不能被正确渲染！</p>
 </blockquote>
-<h3 id="出现场景："><a href="#出现场景：" class="headerlink" title="出现场景："></a>出现场景：</h3><blockquote>
+<h3 id="出现场景"><a href="#出现场景" class="headerlink" title="出现场景"></a>出现场景</h3><blockquote>
 <p>Express环境下使用mongoose model 进行模糊查询时，需要用ORM进行至少一次至多两次的查询，查询用的都是Promise进行的异步操作</p>
 </blockquote>
-<h3 id="问题排查："><a href="#问题排查：" class="headerlink" title="问题排查："></a>问题排查：</h3><ul>
+<h3 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h3><ul>
 <li><p><strong>响应头的设置出现了冲突</strong>  </p>
 </li>
 <li><p>是<code>res.send(docs)</code>出错</p>
@@ -23,7 +23,7 @@
 <li><p>问题出在<code>Promise</code>上</p>
 </li>
 </ul>
-<h3 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h3><p><strong>为什么连续的两个<code>Promise</code>回调会最终导致响应头渲染冲突?</strong></p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p><strong>为什么连续的两个<code>Promise</code>回调会最终导致响应头渲染冲突?</strong></p>
 <p>渲染冲突出现在错误的顶部，跟错误抛出的顺序有关，这与<code>Express</code>自带的<code>res</code>对象有关，而<code>res</code>又继承自<code>node.js</code>原生的<code>http.ServerResponse</code> 类，在<code>res</code>调用<code>res.writeHead(statusCode)</code>写入响应头的状态码之前，我们可以尽情的写入响应头的头信息，在一个<code>res.send(docs)</code>中，应该包含着以下几步，有的是<code>exprerss</code>自己的，有的则是属于<code>node</code>原生<code>http</code>模块的</p>
 <p><strong>按以下顺序开始运行:</strong></p>
 <blockquote>
