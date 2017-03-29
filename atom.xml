@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tecknight.xyz/"/>
-  <updated>2017-03-25T03:08:26.000Z</updated>
+  <updated>2017-03-29T05:15:19.000Z</updated>
   <id>http://tecknight.xyz/</id>
   
   <author>
@@ -14,6 +14,163 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux WEB基础 学习笔记</title>
+    <link href="http://tecknight.xyz/2017/03/29/Linux-WEB%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://tecknight.xyz/2017/03/29/Linux-WEB基础-学习笔记/</id>
+    <published>2017-03-29T04:39:21.000Z</published>
+    <updated>2017-03-29T05:15:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="系统版本选择"><a href="#系统版本选择" class="headerlink" title="系统版本选择"></a>系统版本选择</h2><ul>
+<li>根据不同发行版本的特性</li>
+</ul>
+<h3 id="red-hat-企业（付费）"><a href="#red-hat-企业（付费）" class="headerlink" title="red hat 企业（付费）"></a>red hat 企业（付费）</h3><h3 id="ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备"><a href="#ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备" class="headerlink" title="ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备"></a>ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备</h3><h3 id="debian-稳定可靠，但更新周期长"><a href="#debian-稳定可靠，但更新周期长" class="headerlink" title="debian 稳定可靠，但更新周期长"></a>debian 稳定可靠，但更新周期长</h3><h3 id="Mint-台式机用户并支持专利性媒体"><a href="#Mint-台式机用户并支持专利性媒体" class="headerlink" title="Mint 台式机用户并支持专利性媒体"></a>Mint 台式机用户并支持专利性媒体</h3><h3 id="Core-OS-容器化应用程序的计算机集群建设"><a href="#Core-OS-容器化应用程序的计算机集群建设" class="headerlink" title="Core OS 容器化应用程序的计算机集群建设"></a>Core OS 容器化应用程序的计算机集群建设</h3><h2 id="系统路径"><a href="#系统路径" class="headerlink" title="系统路径"></a>系统路径</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">pwd</span>
+</code></pre>
+<p><strong>返回当前的目录位置</strong></p>
+<p><code>/</code>表示系统的根目录，可以进入的最高位置</p>
+<p>所有<code>Linux</code>系统中都可以找到<code>/home</code>这样的目录，除少数例外情况，<code>home</code>目录可以容纳每个用户的所有主目录</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">ls</span> -a
+</code></pre>
+<p><strong>显示所有文件包括隐藏文件</strong></p>
+<p>任何前缀是<code>.</code>的文件都是会被系统隐藏的</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">ls</span> -al
+</code></pre>
+<p>以长格式打印所有文件信息</p>
+<img src="/2017/03/29/Linux-WEB基础-学习笔记/2.png" alt="2.png" title="">
+<pre class=" language-bash"><code class="language-bash">drwxr-xr-x 4 root root 4096 Jul 2 21:00 <span class="token punctuation">..</span>
+</code></pre>
+<p>首字符为d，代表这个结果是目录，<code>-</code>代表文件</p>
+<p>后面的每三个分割开来看，分别对应所有者<code>owner</code>，组<code>group</code>，所有人<code>everyone</code></p>
+<p>分别是读，写和是否为可执行文件对应字母为<code>r</code>,<code>w</code>,<code>x</code></p>
+<p>后面紧接着就是所有者和组，linux在创建用户的时候会自动创建相同名字的组</p>
+<h2 id="根目录常用文件夹"><a href="#根目录常用文件夹" class="headerlink" title="根目录常用文件夹"></a>根目录常用文件夹</h2><p><code>etc</code> 存储配置文件，配置服务器的时候就会修改其中的文件</p>
+<p><code>var</code> 存储可变的文件，里面的文件一般会随着时间的推移而变大，可找到系统日志和应用程序日志</p>
+<p><code>bin</code> 用于存储可执行的二进制文件，所有用户都可以访问，一般在启动时和系统维护进程中用到</p>
+<p><code>sbin</code> 与<code>bin</code>类似除了其中的可执行文件只能被<code>root</code>用户用于系统管理和维护</p>
+<p><code>lib</code> 存储支持系统中存储的二进制文件的库文件</p>
+<p><code>usr</code> 用于存储用户程序</p>
+<h2 id="命令的运行过程"><a href="#命令的运行过程" class="headerlink" title="命令的运行过程"></a>命令的运行过程</h2><ol>
+<li>输入<code>ls</code></li>
+<li>系统在<code>$path</code>中按顺序寻找路径下名称为<code>ls</code>的可执行文件</li>
+<li>找到在<code>bin</code>中</li>
+</ol>
+<h2 id="Linux-安全"><a href="#Linux-安全" class="headerlink" title="Linux 安全"></a>Linux 安全</h2><h3 id="使用最少权限"><a href="#使用最少权限" class="headerlink" title="使用最少权限"></a>使用最少权限</h3><p><strong>超级用户root</strong></p>
+<p>通常情况下，我们禁用root的可远程访问权限，用自己创建的身份登录，然后通过其他命令，我们也可以以root身份运行超级用户的命令，使服务器在用户名及密码未知的情况下被攻破的可能性得到降低</p>
+<p>普通用户可以在命令前面加上<code>sudo</code>来以<code>root</code>的身份运行命令，其中的好处是会出现警告，提前预知危险</p>
+<h3 id="使用包管理软件"><a href="#使用包管理软件" class="headerlink" title="使用包管理软件"></a>使用包管理软件</h3><p>所有可用的程序包来源都会列在<code>/etc/apt/sources.list</code>文件中</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update
+</code></pre>
+<p>更新仓库源，并不会对系统进行更改</p>
+<p>真正升级包要使用</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> upgrade
+</code></pre>
+<h4 id="包finger的使用"><a href="#包finger的使用" class="headerlink" title="包finger的使用"></a>包finger的使用</h4><p>用途：用于查询用户的各种信息打印成易于阅读的格式</p>
+<p>Command</p>
+<pre class=" language-bash"><code class="language-bash">finger
+finger 用户名
+</code></pre>
+<p>用户信息大部分都存储在<code>/etc/passwd</code>中，用<code>cat</code>打开如下</p>
+<img src="/2017/03/29/Linux-WEB基础-学习笔记/1.png" alt="1.png" title="">
+<p>文件中的每一行代表一个单独的用户，每个条目包含数个由冒号隔开的字段</p>
+<p>第一个字段是指用户名，第二个用于存储加密的密码，第三和第四字段分别存储用户的ID和组ID，第五个字段用于存储更多说明，最后两个是用户的主目录和用户默认的<code>shell</code>，可以看到，linux的<code>root</code>用户的组ID和用户ID都是0</p>
+<h3 id="用户权限"><a href="#用户权限" class="headerlink" title="用户权限"></a>用户权限</h3><ul>
+<li>创建新用户</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> adduser student
+</code></pre>
+<ul>
+<li>远程SSH登录</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">ssh</span> student@127.0.0.1 -p 2222
+</code></pre>
+<p><code>用户名@IP地址</code></p>
+<p><code>-p 端口号</code></p>
+<ul>
+<li>赋予<code>sudo</code>权限</li>
+</ul>
+<p>有sudo权限的用户登录执行</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">cat</span> /etc/sudoers
+</code></pre>
+<p>ubuntu中有<code>sudo</code>权限的用户都在<code>/etc/sudoers.d</code>中</p>
+<p>可使用已有的用户进行<code>cp</code>成用户名，然后用<code>nano</code>进行编辑</p>
+<p>将名字改为用户名保存</p>
+<ul>
+<li>强制下次登录时重置密码</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">passwd</span> -e 用户名
+</code></pre>
+<h3 id="基于密钥的身份验证"><a href="#基于密钥的身份验证" class="headerlink" title="基于密钥的身份验证"></a>基于密钥的身份验证</h3><h4 id="公共密钥加密"><a href="#公共密钥加密" class="headerlink" title="公共密钥加密"></a>公共密钥加密</h4><p>服务器发送任意消息至客户端，客户端用私有密钥进行加密，再将加密后的消息发送给服务器，服务器用公共密钥进行解密，如果与服务器发送的值相等，那么通过</p>
+<p><strong>私有密钥要自己保留</strong></p>
+<h4 id="在本地生成密钥对"><a href="#在本地生成密钥对" class="headerlink" title="在本地生成密钥对"></a>在本地生成密钥对</h4><pre class=" language-bash"><code class="language-bash">ssh-keygen
+</code></pre>
+<p>为密钥添加密码</p>
+<p>生成的<code>.pub</code>文件就是放在服务器上用于密码身份验证的文件</p>
+<h4 id="将公钥放在服务器上"><a href="#将公钥放在服务器上" class="headerlink" title="将公钥放在服务器上"></a>将公钥放在服务器上</h4><p>登录</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">mkdir</span> .ssh
+<span class="token function">touch</span> .ssh/authorized_keys
+</code></pre>
+<p>拷贝本地的密钥内容至服务器更创建的文件中，并为文件设置权限</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">chmod</span> 700 .ssh
+<span class="token function">chmod</span> 644 .ssh/authorized_keys
+</code></pre>
+<p>使用ssh密钥登录</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">ssh</span> student@127.0.0.1 -p 2222 -i ~/.ssh/密钥名称
+</code></pre>
+<h4 id="禁用密码登录"><a href="#禁用密码登录" class="headerlink" title="禁用密码登录"></a>禁用密码登录</h4><ul>
+<li>编辑<code>SSHD</code>配置文件</li>
+</ul>
+<p>SSHD: 运行于服务器上监听SSH连接的服务</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/ssh/sshd_config
+</code></pre>
+<p>将<code>PasswordAuthentication</code>设置为<code>no</code>保存</p>
+<p>然后重启服务，让它重新读取配置文件</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">service</span> <span class="token function">ssh</span> restart
+</code></pre>
+<h3 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h3><img src="/2017/03/29/Linux-WEB基础-学习笔记/3.png" alt="3.png" title="">
+<h4 id="数字与权限的关系"><a href="#数字与权限的关系" class="headerlink" title="数字与权限的关系"></a>数字与权限的关系</h4><p>r = 4</p>
+<p>w = 2</p>
+<p>x = 1</p>
+<p>无需权限，值为0</p>
+<p>加在一起即为要进行应用的全部权限数量（注意只是对于一种用户）</p>
+<p><strong>系统需要一次处理三个权限，以一次设置用户，组和所有人的权限</strong></p>
+<h4 id="更改文件权限"><a href="#更改文件权限" class="headerlink" title="更改文件权限"></a>更改文件权限</h4><pre><code>chmod 数字 文件夹或文件 //改权限
+chown 所有者 文件 //更改所有者
+chgrp 组名 文件名 //更改组
+</code></pre><h3 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h3><h4 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h4><p>每个应用程序都会被分配端口来处理各自的请求</p>
+<p>常见端口如下图</p>
+<img src="/2017/03/29/Linux-WEB基础-学习笔记/4.png" alt="4.png" title="">
+<p>通过防火墙，可以控制服务器允许哪个端口接受请求</p>
+<h4 id="只开放让应用程序行使正常功能的端口"><a href="#只开放让应用程序行使正常功能的端口" class="headerlink" title="只开放让应用程序行使正常功能的端口"></a>只开放让应用程序行使正常功能的端口</h4><h4 id="ubuntu-ufw-防火墙"><a href="#ubuntu-ufw-防火墙" class="headerlink" title="ubuntu ufw 防火墙"></a>ubuntu ufw 防火墙</h4><p>激活<code>ufw</code></p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> ufw status //查看状态
+</code></pre>
+<p><strong>写入防火墙规则并开启防火墙</strong></p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> ufw default deny incoming  //阻止所有 default allow outgoing 允许所有
+<span class="token function">sudo</span> ufw allow <span class="token function">ssh</span>    //允许开放SSH连接端口
+<span class="token function">sudo</span> ufw allow www     //允许HTTP请求
+<span class="token function">sudo</span> ufw <span class="token function">enable</span>        //开启防火墙
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;系统版本选择&quot;&gt;&lt;a href=&quot;#系统版本选择&quot; class=&quot;headerlink&quot; title=&quot;系统版本选择&quot;&gt;&lt;/a&gt;系统版本选择&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;根据不同发行版本的特性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;red-hat-企业（付费）&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://tecknight.xyz/categories/Linux/"/>
+    
+    
+      <category term="linux" scheme="http://tecknight.xyz/tags/linux/"/>
+    
+      <category term="web" scheme="http://tecknight.xyz/tags/web/"/>
+    
+      <category term="shell" scheme="http://tecknight.xyz/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>Express下多次callback引发的问题</title>
@@ -80,6 +237,71 @@
       <category term="异步" scheme="http://tecknight.xyz/tags/%E5%BC%82%E6%AD%A5/"/>
     
       <category term="Debug" scheme="http://tecknight.xyz/tags/Debug/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS 7 升级最新版本git</title>
+    <link href="http://tecknight.xyz/2017/03/11/CentOS-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/"/>
+    <id>http://tecknight.xyz/2017/03/11/CentOS-7-升级最新版本git/</id>
+    <published>2017-03-11T02:30:11.000Z</published>
+    <updated>2017-03-29T04:38:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作:"></a>准备工作:</h3><blockquote>
+<p>CentOS 上的最新git版本也只有1.8.3，就想试着装上最新的版本，没想到差点玩脱，全当记录一次冒险经历</p>
+</blockquote>
+<ul>
+<li>Development tools 没装的要装上，不然GCC编译时会出错</li>
+</ul>
+<pre><code># yum -y groupinstall Development tools
+</code></pre><ul>
+<li>再卸载CentOS自带的老版本git </li>
+</ul>
+<pre><code># yum -y remove git
+</code></pre><h3 id="下载git并安装"><a href="#下载git并安装" class="headerlink" title="下载git并安装"></a>下载git并安装</h3><pre><code># cd /usr/src
+# wget https://www.kernel.org/pub/software/scm/git/git-2.12.0.tar.gz
+# tar xzf git-2.12.0.tar.gz
+</code></pre><h4 id="安装注意事项："><a href="#安装注意事项：" class="headerlink" title="安装注意事项："></a>安装注意事项：</h4><pre><code># cd git-2.12.0
+# make prefix=/usr/local/git all
+</code></pre><p>此时报错</p>
+<pre class=" language-bash"><code class="language-bash">/usr/src/git-2.12.0/utf8.c:463：对‘libiconv’未定义的引用
+libgit.a<span class="token punctuation">(</span>utf8.o<span class="token punctuation">)</span>：在函数‘reencode_string_len’中：
+/usr/src/git-2.12.0/utf8.c:524：对‘libiconv_open’未定义的引用
+/usr/src/git-2.12.0/utf8.c:535：对‘libiconv_close’未定义的引用
+/usr/src/git-2.12.0/utf8.c:529：对‘libiconv_open’未定义的引用
+collect2: 错误：ld 返回 1
+make: *** <span class="token punctuation">[</span>git-credential-store<span class="token punctuation">]</span> 错误 1
+</code></pre>
+<p>原方案：</p>
+<pre><code># make prefix=/usr/local/git all
+# make prefix=/usr/local/git install
+</code></pre><p>解决方案：</p>
+<p>可替换为</p>
+<pre><code># ./configure --without-iconv
+# make CFLAGS=-liconv prefix=/usr/local/git all
+# make CFLAGS=-liconv prefix=/usr/local/git install
+</code></pre><h3 id="最后将git加入环境变量"><a href="#最后将git加入环境变量" class="headerlink" title="最后将git加入环境变量"></a>最后将git加入环境变量</h3><pre><code># echo &quot;export PATH=$PATH:/usr/local/git/bin&quot; &gt;&gt; /etc/bashrc
+# source /etc/bashrc
+</code></pre><p><strong>大功告成！查看一下git的版本</strong></p>
+<pre><code># git --version
+&gt;&gt; git version 2.12.0
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot; title=&quot;准备工作:&quot;&gt;&lt;/a&gt;准备工作:&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;CentOS 上的最新git版本也只有1.8.3，就想试着装上最新的版本，没想到差点玩脱，全当
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://tecknight.xyz/categories/Linux/"/>
+    
+    
+      <category term="linux" scheme="http://tecknight.xyz/tags/linux/"/>
+    
+      <category term="centOS" scheme="http://tecknight.xyz/tags/centOS/"/>
+    
+      <category term="git" scheme="http://tecknight.xyz/tags/git/"/>
     
   </entry>
   
@@ -844,44 +1066,6 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
   </entry>
   
   <entry>
-    <title>Sass语法点总结</title>
-    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
-    <published>2016-12-03T11:43:37.000Z</published>
-    <updated>2017-03-22T14:33:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
-<li><p>@import</p>
-<p> 引入sass模块</p>
-</li>
-<li><p>@include</p>
-<p> 引入mixin函数</p>
-</li>
-<li><p>@mixin</p>
-<p> 声明函数 </p>
-</li>
-<li><p>@extends</p>
-<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Sass之CSS模块化</title>
     <link href="http://tecknight.xyz/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/"/>
     <id>http://tecknight.xyz/2016/12/03/Sass之CSS模块化/</id>
@@ -918,6 +1102,44 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
       &lt;p&gt;一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@import &amp;#39;partials/temp;&amp;#39
+    
+    </summary>
+    
+      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
+    
+      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sass语法点总结</title>
+    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
+    <published>2016-12-03T11:43:37.000Z</published>
+    <updated>2017-03-22T14:33:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
     
     </summary>
     
@@ -1607,91 +1829,6 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     
     
       <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CSS学习笔记02 nav上下居中</title>
-    <link href="http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/"/>
-    <id>http://tecknight.xyz/2016/11/01/CSS学习笔记 02 nav上下居中/</id>
-    <published>2016-11-01T06:43:37.000Z</published>
-    <updated>2017-03-22T14:21:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
-    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
-    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
-<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;CSS学习笔记-02-nav上下居中&quot;&gt;&lt;a href=&quot;#CSS学习笔记-02-nav上下居中&quot; class=&quot;headerlink&quot; title=&quot;CSS学习笔记 02 nav上下居中&quot;&gt;&lt;/a&gt;CSS学习笔记 02 nav上下居中&lt;/h1&gt;&lt;pre clas
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CSS 学习笔记01 wrapper class实现居中</title>
-    <link href="http://tecknight.xyz/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2001%20wrapper%20class/"/>
-    <id>http://tecknight.xyz/2016/11/01/CSS 学习笔记 01 wrapper class/</id>
-    <published>2016-11-01T06:43:37.000Z</published>
-    <updated>2017-03-22T14:18:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="div内容居中"><a href="#div内容居中" class="headerlink" title="div内容居中"></a>div内容居中</h2><pre class=" language-html"><code class="language-html">    <span class="token comment" spellcheck="true">&lt;!-- DESKTOP NAVIGATION  --></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>nav</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wrap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar-left<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>site title<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar-right<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>menu<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>search<span class="token punctuation">"</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Search<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Search<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
-          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>nav</span><span class="token punctuation">></span></span>
-</code></pre>
-<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.wrap</span></span><span class="token punctuation">{</span>
-    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">90%</span><span class="token punctuation">;</span> 
-    <span class="token property">margin</span><span class="token punctuation">:</span> <span class="token number">0</span> auto<span class="token punctuation">;</span>
-    <span class="token property">max-width</span><span class="token punctuation">:</span> <span class="token number">1000</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>1.用百分号的好处就是能够实时计算</p>
-<p>2.margin用于自动保持边距使得内容居中</p>
-<p>3.max-width规定了居中内容的宽度（极有用）</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;div内容居中&quot;&gt;&lt;a href=&quot;#div内容居中&quot; class=&quot;headerlink&quot; title=&quot;div内容居中&quot;&gt;&lt;/a&gt;div内容居中&lt;/h2&gt;&lt;pre class=&quot; language-html&quot;&gt;&lt;code class=&quot;language-htm
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-      <category term="html" scheme="http://tecknight.xyz/tags/html/"/>
     
   </entry>
   
