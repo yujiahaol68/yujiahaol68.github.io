@@ -10,7 +10,7 @@
     
     <title>
         
-            Laravel5 新手填坑指南 | 
+            Categories: Machine Learning | 
         
         A Refactor&#39;s Blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing,php,Laravel">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://tecknight.xyz">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Laravel5 新手填坑指南 | A Refactor&#39;s Blog">
+    <meta property="og:title" content="Categories: Machine Learning | A Refactor&#39;s Blog">
     <meta property="og:description" content="Live or Die.Take your time and make your choices.">
-    <meta property="og:article:tag" content="php"> <meta property="og:article:tag" content="Laravel"> 
+    
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -203,277 +203,93 @@
                         </button>
                     
 
-                    <!-- Post TOC -->
-
+                    <!-- Index Module -->
+<div class="material-index mdl-grid">
     
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
+    <div class="locate-thumbnail-symbol"></div>
 
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
+    <!-- Pin on top -->
+    
 
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#浏览器篇"><span class="post-toc-number">1.</span> <span class="post-toc-text">浏览器篇</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#环境配置篇"><span class="post-toc-number">2.</span> <span class="post-toc-text">环境配置篇</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正确开发习惯养成"><span class="post-toc-number">3.</span> <span class="post-toc-text">正确开发习惯养成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据库篇"><span class="post-toc-number">4.</span> <span class="post-toc-text">数据库篇</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><span class="post-toc-number">4.0.1.</span> <span class="post-toc-text">注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#目录结构篇"><span class="post-toc-number">5.</span> <span class="post-toc-text">目录结构篇</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#命名空间篇"><span class="post-toc-number">6.</span> <span class="post-toc-text">命名空间篇</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#路由篇"><span class="post-toc-number">7.</span> <span class="post-toc-text">路由篇</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#用户登录篇-Auth"><span class="post-toc-number">8.</span> <span class="post-toc-text">用户登录篇 Auth</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#表单篇-RESTful"><span class="post-toc-number">9.</span> <span class="post-toc-text">表单篇 RESTful</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据绑定视图"><span class="post-toc-number">10.</span> <span class="post-toc-text">数据绑定视图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注意compact的参数是字符串！！！"><span class="post-toc-number">10.1.</span> <span class="post-toc-text">注意compact的参数是字符串！！！</span></a></li></ol></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
+    <!-- Normal Post -->
+    
+        
+        
+            <!-- Paradox Thumbnail -->
+            <div class="post_entry-module mdl-card mdl-shadow--3dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
+        
+    
 
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/04/08/机器学习的常用概念/">机器学习的常用概念</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            特征(属性)通常是训练样本集的列，可看作是每个列的列名，比如区分鸟的品种可以用...
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/04/08/机器学习的常用概念/" target="_self">Continue Reading</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="http://ojt3x01ru.bkt.clouddn.com/image/me/me.jpeg" width="44px" height="44px" alt="Tecker.Yu's avatar">
+            </div>
+            <div>
+                <strong>Tecker.Yu</strong>
+                <span>Apr 08, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                <a class="post_category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+            </span>
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+        
+        
+        
+    
+
+    
+
+    
+        <script>
+    var randomNum;
+
+    var locatePost = $('.locate-thumbnail-symbol').next();
+    for(var i = 0; i < 10; i++) {
+        randomNum = Math.floor(Math.random() * 19 + 1);
+
+        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
+        locatePost.children('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')')
+
+        locatePost = locatePost.next();
+    }
 </script>
 
-        
-    
-            <p class="article-headline-p">
-                Laravel5 新手填坑指南
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="http://ojt3x01ru.bkt.clouddn.com/image/me/me.jpeg" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Tecker.Yu</strong>
-        <span>Feb 03, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">devices other</i>
-            <span class="visuallyhidden">devices other</span>
-        </button>
-        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
-            <li class="mdl-menu__item">Read this article on other device</li>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAACzUlEQVR42u3ay27jQAwEQP//T+9eFwis7eY4iSCWToasx5QuBNnz+rPyeGFjY2NjY2NjY2Pfkv2Kj7eP+/Lvu7v+PfP1muu3nK8ZGxsb+9ns5DUJ4BqTf453Tz5aMzY2NvYCdrv06+vfLa4tkJ/6NNjY2NjYs9/JvwkSGxsbG/s7Clg+6MlHTt/XrmBjY2NvYLdtwDUmWsrxJ/ihWRo2Njb27dl5aHqf3z+ab2NjY2PfmN0e1wUsiQfO257hyrGxsbEfym5D3HysM6POIoHo7djY2Nhr2Mmi2605bWnMS1qOx8bGxt7DTgrMebg7C24jXj5Lw8bGxn4QOxkVJdFs/nsWBs9iDGxsbOw97JPRf1J42lYk/0zRvdjY2NgPZbfxahsGfGrcf10yo9KLjY2NvYCdNyTJi/OW5lPtSr1TCRsbG/vR7JOYth0J5cOpvHxiY2Nj72SfFLZiuDMKA2b3YmNjY29gt5sv80YiAc/i4fwzYWNjY29g521D3jC0oWw7wGrDZmxsbOwN7HxLTRsJ51Hx+fXF5ktsbGzsR7NnWx5PWpS21ckLLTY2NvYGdjGUOY4Q2kjgpFxhY2Njb2PnpSUf8eRlsi1R7QfCxsbG3sbOg9W2UM0KYTtsioZK2NjY2A9in8e359ck50/WjI2Njf1sdhu45oOkvBy2Ban9NNjY2Ngb2J+KdU9CgtlgqziPjY2NvYDdboKZFZ42eJh9emxsbGzs84ahLWCfinuxsbGxt7HbIxnrt3clLVD+5GjLDjY2NvaD2LNi0JaodoQ0C57/8zRsbGzsR7NzUh4DRO3BKBJOwgBsbGzsney2YUgK3kmJ+oVZGjY2NvYa9qyotOOkpBDmQQU2NjY2djLEb/EnZ5IAAxsbG3sbux3oDAPXMn44KWzY2NjYe9izIdH5XUn5SbbyDIdK2NjY2I9g7zmwsbGxsbGxsbGxb3P8BTJb4pUEf9tXAAAAAElFTkSuQmCC">
-        </ul>
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Laravel/">Laravel</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/php/">php</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;Views
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Laravel5 新手填坑指南&url=http://tecknight.xyz//2017/02/03/Laravel 新手填坑指南/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                Share to Weibo
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-
-    <!-- Share Facebook -->
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=Laravel5 新手填坑指南&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2017/02/03/Laravel 新手填坑指南/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                Share to QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
-<p>注意事项：</p>
-<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
-<p>Mac/Linux (少很多麻烦)</p>
-<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
-<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
-</li>
-<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
-</li>
-<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
-</li>
-</ol>
-<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
-<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
-</ol>
-<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
-<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
-</ol>
-<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
-<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
-</ol>
-<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
-<li><p>引用的时候必须写成 </p>
-<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
-</code></pre>
-</li>
-<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
-</li>
-</ol>
-<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
-<li>用户的退出登录可以看成是提交一个DELETE表单</li>
-<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
-<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
-</ol>
-<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
-</code></pre>
-<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
-
-    
-
     
 </div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/02/03/Laravel 学习笔记/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Newer
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/01/25/Vue学习笔记/" id="post_nav-older" class="next-content">
-            Older
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
 
 
                     
