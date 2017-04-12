@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tecknight.xyz/"/>
-  <updated>2017-04-11T13:01:01.000Z</updated>
+  <updated>2017-04-12T14:31:28.000Z</updated>
   <id>http://tecknight.xyz/</id>
   
   <author>
@@ -14,6 +14,103 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>最精简restful实现</title>
+    <link href="http://tecknight.xyz/2017/04/12/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://tecknight.xyz/2017/04/12/最精简restful实现/</id>
+    <published>2017-04-12T14:25:23.000Z</published>
+    <updated>2017-04-12T14:31:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Time-is-short-Just-show-me-the-code"><a href="#Time-is-short-Just-show-me-the-code" class="headerlink" title="Time is short. Just show me the code!"></a>Time is short. Just show me the code!</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> url <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'url'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/*
+附上测试方法
+curl -X GET http://localhost:3000
+curl -X POST -d "Node should test in action" http://localhost:3000
+curl -X DELETE http://localhost:3000/1
+curl -X PUT -d "Pratice node every day" http://localhost:3000/1
+*/</span>
+
+<span class="token keyword">var</span> server <span class="token operator">=</span> http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// method include POST,GET,DELETE,PUT</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token string">'POST'</span><span class="token punctuation">:</span>
+            <span class="token keyword">var</span> item <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// convert bytes to utf-8 encoding data</span>
+            req<span class="token punctuation">.</span><span class="token function">setEncoding</span><span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// listening data event, POST data will send to server by chunk (bytes array)</span>
+            req<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                item <span class="token operator">+</span><span class="token operator">=</span>chunk<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'end'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'OK\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'GET'</span><span class="token punctuation">:</span>
+            items<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token string">') '</span> <span class="token operator">+</span> element <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'DELETE'</span><span class="token punctuation">:</span>
+            <span class="token keyword">var</span> path <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span>pathname<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//get string '/1'</span>
+            <span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// convert String to Number</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isNaN</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Invalid item id'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>items<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">404</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Item not found!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                items<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'delete success!\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'PUT'</span><span class="token punctuation">:</span>
+            <span class="token keyword">var</span> newItem <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> putPath <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span>pathname<span class="token punctuation">;</span>
+            <span class="token keyword">var</span> j <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>putPath<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isNaN</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Invalid item id'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>items<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">404</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'item not found!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                req<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    newItem <span class="token operator">+</span><span class="token operator">=</span> chunk<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                items<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">=</span> newItem<span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'update success!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Time-is-short-Just-show-me-the-code&quot;&gt;&lt;a href=&quot;#Time-is-short-Just-show-me-the-code&quot; class=&quot;headerlink&quot; title=&quot;Time is short. Just sh
+    
+    </summary>
+    
+      <category term="Node" scheme="http://tecknight.xyz/categories/Node/"/>
+    
+    
+      <category term="node" scheme="http://tecknight.xyz/tags/node/"/>
+    
+      <category term="native" scheme="http://tecknight.xyz/tags/native/"/>
+    
+      <category term="RESTFul" scheme="http://tecknight.xyz/tags/RESTFul/"/>
+    
+  </entry>
   
   <entry>
     <title>python 语法基础</title>
@@ -699,6 +796,73 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
   </entry>
   
   <entry>
+    <title>Laravel5 新手填坑指南</title>
+    <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/"/>
+    <id>http://tecknight.xyz/2017/02/03/Laravel 新手填坑指南/</id>
+    <published>2017-02-03T05:26:19.000Z</published>
+    <updated>2017-03-22T14:51:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
+<p>注意事项：</p>
+<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
+<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
+<p>Mac/Linux (少很多麻烦)</p>
+<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
+<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
+<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
+<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
+</li>
+<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
+</li>
+<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
+</li>
+</ol>
+<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
+<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
+</ol>
+<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
+<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
+</ol>
+<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
+<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
+</ol>
+<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
+<li><p>引用的时候必须写成 </p>
+<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
+</li>
+</ol>
+<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
+<li>用户的退出登录可以看成是提交一个DELETE表单</li>
+<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
+<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
+</ol>
+<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
+</code></pre>
+<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;浏览器篇&quot;&gt;&lt;a href=&quot;#浏览器篇&quot; class=&quot;headerlink&quot; title=&quot;浏览器篇&quot;&gt;&lt;/a&gt;浏览器篇&lt;/h3&gt;&lt;p&gt;开发浏览器: Chorme（不用解释）&lt;/p&gt;
+&lt;p&gt;注意事项：&lt;/p&gt;
+&lt;p&gt;一定要先清缓存！清缓存！清缓存！ 重要的说三
+    
+    </summary>
+    
+      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
+    
+    
+      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
+    
+      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Laravel 5 常用帮助函数</title>
     <link href="http://tecknight.xyz/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/"/>
     <id>http://tecknight.xyz/2017/02/03/Laravel 5 常用帮助函数/</id>
@@ -912,73 +1076,6 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </summary>
     
       <category term="PHP" scheme="http://tecknight.xyz/categories/PHP/"/>
-    
-    
-      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
-    
-      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Laravel5 新手填坑指南</title>
-    <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/"/>
-    <id>http://tecknight.xyz/2017/02/03/Laravel 新手填坑指南/</id>
-    <published>2017-02-03T05:26:19.000Z</published>
-    <updated>2017-03-22T14:51:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
-<p>注意事项：</p>
-<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
-<p>Mac/Linux (少很多麻烦)</p>
-<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
-<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
-</li>
-<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
-</li>
-<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
-</li>
-</ol>
-<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
-<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
-</ol>
-<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
-<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
-</ol>
-<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
-<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
-</ol>
-<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
-<li><p>引用的时候必须写成 </p>
-<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
-</code></pre>
-</li>
-<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
-</li>
-</ol>
-<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
-<li>用户的退出登录可以看成是提交一个DELETE表单</li>
-<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
-<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
-</ol>
-<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
-</code></pre>
-<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;浏览器篇&quot;&gt;&lt;a href=&quot;#浏览器篇&quot; class=&quot;headerlink&quot; title=&quot;浏览器篇&quot;&gt;&lt;/a&gt;浏览器篇&lt;/h3&gt;&lt;p&gt;开发浏览器: Chorme（不用解释）&lt;/p&gt;
-&lt;p&gt;注意事项：&lt;/p&gt;
-&lt;p&gt;一定要先清缓存！清缓存！清缓存！ 重要的说三
-    
-    </summary>
-    
-      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
     
     
       <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
@@ -1242,6 +1339,44 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
   </entry>
   
   <entry>
+    <title>Sass语法点总结</title>
+    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
+    <published>2016-12-03T11:43:37.000Z</published>
+    <updated>2017-03-22T14:33:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
+    
+    </summary>
+    
+      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
+    
+      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Sass之CSS模块化</title>
     <link href="http://tecknight.xyz/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/"/>
     <id>http://tecknight.xyz/2016/12/03/Sass之CSS模块化/</id>
@@ -1278,44 +1413,6 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
       &lt;p&gt;一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@import &amp;#39;partials/temp;&amp;#39
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Sass语法点总结</title>
-    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
-    <published>2016-12-03T11:43:37.000Z</published>
-    <updated>2017-03-22T14:33:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
-<li><p>@import</p>
-<p> 引入sass模块</p>
-</li>
-<li><p>@include</p>
-<p> 引入mixin函数</p>
-</li>
-<li><p>@mixin</p>
-<p> 声明函数 </p>
-</li>
-<li><p>@extends</p>
-<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
     
     </summary>
     
@@ -1907,40 +2004,6 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     
     
       <category term="Java" scheme="http://tecknight.xyz/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CSS学习笔记04 背景</title>
-    <link href="http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/"/>
-    <id>http://tecknight.xyz/2016/11/01/CSS学习笔记04 背景/</id>
-    <published>2016-11-01T06:43:37.000Z</published>
-    <updated>2017-03-22T14:21:43.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="透明背景"><a href="#透明背景" class="headerlink" title="透明背景"></a>透明背景</h4><pre class=" language-css"><code class="language-css"><span class="token selector">nav </span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> black<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.menu</span> </span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> transparent<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h5 id="设置透明"><a href="#设置透明" class="headerlink" title="设置透明"></a>设置透明</h5><h5 id="这样就使得菜单的颜色与导航栏的颜色一致"><a href="#这样就使得菜单的颜色与导航栏的颜色一致" class="headerlink" title="这样就使得菜单的颜色与导航栏的颜色一致"></a>这样就使得菜单的颜色与导航栏的颜色一致</h5><h4 id="背景加亮凸显文字"><a href="#背景加亮凸显文字" class="headerlink" title="背景加亮凸显文字"></a>背景加亮凸显文字</h4><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.menu</span> > li > a<span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">255</span>,<span class="token number">255</span>,<span class="token number">255</span>, <span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h5 id="0-1代表透明度为百分之十"><a href="#0-1代表透明度为百分之十" class="headerlink" title="0.1代表透明度为百分之十"></a>0.1代表透明度为百分之十</h5>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;透明背景&quot;&gt;&lt;a href=&quot;#透明背景&quot; class=&quot;headerlink&quot; title=&quot;透明背景&quot;&gt;&lt;/a&gt;透明背景&lt;/h4&gt;&lt;pre class=&quot; language-css&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
     
   </entry>
   

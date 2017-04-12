@@ -10,7 +10,7 @@
     
     <title>
         
-            TP常用函数总结 | 
+            最精简restful实现 | 
         
         A Refactor&#39;s Blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing,ThinkPHP">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing,node,native,RESTFul">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://tecknight.xyz">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="TP常用函数总结 | A Refactor&#39;s Blog">
+    <meta property="og:title" content="最精简restful实现 | A Refactor&#39;s Blog">
     <meta property="og:description" content="Live or Die.Take your time and make your choices.">
-    <meta property="og:article:tag" content="ThinkPHP"> 
+    <meta property="og:article:tag" content="node"> <meta property="og:article:tag" content="native"> <meta property="og:article:tag" content="RESTFul"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -229,7 +229,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#I函数"><span class="post-toc-number">1.</span> <span class="post-toc-text">I函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#D函数"><span class="post-toc-number">2.</span> <span class="post-toc-text">D函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#M函数"><span class="post-toc-number">3.</span> <span class="post-toc-text">M函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#U函数"><span class="post-toc-number">4.</span> <span class="post-toc-text">U函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#E函数"><span class="post-toc-number">5.</span> <span class="post-toc-text">E函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#F函数"><span class="post-toc-number">6.</span> <span class="post-toc-text">F函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#S函数"><span class="post-toc-number">7.</span> <span class="post-toc-text">S函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#T函数"><span class="post-toc-number">8.</span> <span class="post-toc-text">T函数</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Time-is-short-Just-show-me-the-code"><span class="post-toc-number">1.</span> <span class="post-toc-text">Time is short. Just show me the code!</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -265,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                TP常用函数总结
+                最精简restful实现
             </p>
         </div>
 
@@ -284,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Tecker.Yu</strong>
-        <span>Nov 04, 2016</span>
+        <span>Apr 12, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -305,7 +305,7 @@
         </button>
         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
             <li class="mdl-menu__item">Read this article on other device</li>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC2klEQVR42u3aUXLbMAwEUN//0u0BWqu7oNxY5NNXJo4kPmYmGwB8/TryemFjY2NjY2NjY2N/JfsVX3/+/F8e/ebT66ddryT/yXf3YmNjY5/A/sef/oB9vcRk6fmq2jVjY2Njn8Nuw+M6wPIgvH5+G2bY2NjY2MkjkuhqF52ULtjY2NjYdwVYUQBcApIInJU02NjY2Gey2ybOrGDIW1GzrcfGxsY+k902g77h6x+Yb2NjY2N/JXt2zSKtbUIlQVWsGRsbG3tTdvLifCltK3+2KW1TDBsbG3tvdtKmz7/fRmA76J0NhrGxsbFPYLfHH+8aMMzePoxSbGxs7E3ZbTGwMta9rT1UHvfExsbGPoe9cqS+HdC28fbBAMPGxsZ+OPuuAmC96d+2sdp1YmNjY+/KzsGzQWw77k0icxhp2NjY2Fuz83ZSC84HsfmoINk+bGxs7HPY67GURFHbrmpbXZECGxsb+xh23awJ8LPWUl6WRCGKjY2NvSk7+Ye+LTPaYUP+aT5CKMYD2NjY2Fuw85s/N6zNC5jkvdjY2NinsdsDMe0W5Oz1aBzOt7GxsbEfy65jYHkps4ia/UqwsbGxz2GvHJqZlSIr97aDAWxsbOwz2W0DqH1aHpntKLo4soONjY19ALsd2c6e9ontXgowbGxs7Eexi/Z63Ohf2ab2jcNSBBsbG3tr9uygZNuiyo9Xrm80NjY29gnshHfd3GmHuO1Atwiqd8/BxsbGPpIdtd3LSIsaQOVRoWEpgo2Njb0F+94FDYuEcuvbdhI2Njb23uxZi6cdGORvzAueNj6xsbGx92bnoZW0nPKRQLL02bZiY2Njn8lum0o5fjaQuHcwjI2NjY3dNpXye68LlfZdPzboxcbGxn4IO7l3ZWxQx9L/CTBsbGzsh7Dz4e7K8Z1k3Nu2t6LnY2NjY2/NXh/0zkIlaVolJU30K8HGxsbelH3OhY2NjY2NjY2Njf0112/E9UlLNdcuUAAAAABJRU5ErkJggg==">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC1ElEQVR42u3aW3IbMQwEQN//0skBEkszgJTIZPPLJe9y2asqw3h8/bpyfWFjY2NjY2NjY2N/JPsrXo/v+vPz765PdvjLoR/eG50ZGxsb+2j2kz/9o2sSQHJlfv2Tp2BjY2NfwE6CShvY2mCTB782EGJjY2NjJ+En+e13ryy5CxsbGxv73exZyvE48Xh8BmxsbGzstkDTlv43RaIPqqVhY2Njfzx7VvT5vz//0/42NjY29gez25WUhDY7JIFw+FxsbGzsQ9l5YHgc9toUIhnfTFKUouWAjY2NfQG7Le7nh9sHuReUqLCxsbGPZs8C1fuatUl4q5sT2NjY2Ieyk3/0N8nAq15rm35gY2Nj38NuD9QOULbBLz9V/QVgY2NjH8pODpF8Pms5zEaFZifExsbGPpW9L+7kbd08OUmSkDr4YWNjYx/NfnzEJGDkJfs2UOWt32GjFxsbG/uHs9sGbTtwkwe2Pe/JztjY2NiHstvW6aa4kyQks8RmFbexsbGxj2DPkopZGag9dLLDsL+NjY2NfQS7Hb5px2va9kDSNp6lT9jY2NinstuS/b5hkBw0HwktBkOxsbGxD2VvjpUHv9lQTp60RF8GNjY29qHsJAi145hJUpG3DfIB0CfBDxsbG/tQ9mwIJn9k2xieXY+NjY2N3ZaE3hGoXtU8wMbGxr6N3T64Hb7JX9Bst+TVYGNjY9/AToLZLMHYtH73KQo2Njb2zewkdCUpSh4O8zQDGxsbGzvhtaRZoapFtm1gbGxs7BvY7Zq9iKR4lJPy82BjY2PfwG4DQ952TV7EbOdhUoSNjY19NLt95H5EctYkyEtIq0YvNjY29o9lJwWavJQzG9nZr7qWho2NjX0xu92h3bPlYWNjY2Pvw1K72z7VKXbAxsbGvoDdFv3zlsCm/ZDstgpg2NjY2EewV8WadeKR7LZvTmNjY2Ofyr5nYWNjY2NjY2NjY3/M+g2I3lMli206MAAAAABJRU5ErkJggg==">
         </ul>
     
 
@@ -317,7 +317,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/ThinkPHP/">ThinkPHP</a>
+        <a class="post_tag-link" href="/tags/RESTFul/">RESTFul</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/native/">native</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/node/">node</a>
     </ul>
     
 
@@ -344,7 +344,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=TP常用函数总结&url=http://tecknight.xyz//2016/11/04/TP常用函数总结/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=最精简restful实现&url=http://tecknight.xyz//2017/04/12/最精简restful实现/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -365,7 +365,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=TP常用函数总结&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2016/11/04/TP常用函数总结/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=最精简restful实现&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2017/04/12/最精简restful实现/index.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to QQ
             </li>
@@ -383,26 +383,77 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="I函数"><a href="#I函数" class="headerlink" title="I函数"></a>I函数</h3><p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
-<p>定义: <code>I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;)</code></p>
-<p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code><br><a id="more"></a><br>好处：自动过滤输入，增加安全性，官方推荐</p>
-<h3 id="D函数"><a href="#D函数" class="headerlink" title="D函数"></a>D函数</h3><p>用途：new出Model对象进行数据的增删改查，而且可以调用Model中的业务逻辑</p>
-<p>定义：<code>D(&#39;Model名&#39;)</code></p>
-<h3 id="M函数"><a href="#M函数" class="headerlink" title="M函数"></a>M函数</h3><p>用途：可对Model对应的表进行基本的CURD操作，而且节约资源</p>
-<p>定义: <code>M(&#39;Model名&#39;)</code></p>
-<p>缺点：不能调用Model中的自定义业务逻辑</p>
-<h3 id="U函数"><a href="#U函数" class="headerlink" title="U函数"></a>U函数</h3><p>用途：动态生成URL，是官方推荐的URL生成方式</p>
-<p>定义：<code>U(&#39;模块/控制器/操作&#39;)</code></p>
-<h3 id="E函数"><a href="#E函数" class="headerlink" title="E函数"></a>E函数</h3><p>用途：用于错误调试，可以输出错误信息并中断操作</p>
-<p>用法：<code>E($msg)</code></p>
-<h3 id="F函数"><a href="#F函数" class="headerlink" title="F函数"></a>F函数</h3><p>用途：建立快速缓存，为存储的数据带来更快的操作</p>
-<p>缓存Data：<code>F(&#39;data&#39;,$Data,保存目录(可选))</code></p>
-<p>获取：<code>F(&#39;data&#39;)</code></p>
-<p>删除: <code>F(&#39;data&#39;, NULL)</code></p>
-<p>查询缓存: <code>$Model-&gt;cache(&#39;data&#39;)-&gt;select()</code></p>
-<h3 id="S函数"><a href="#S函数" class="headerlink" title="S函数"></a>S函数</h3><p>外部获取缓存内容：<code>$value = S(&#39;cache_name&#39;)</code></p>
-<h3 id="T函数"><a href="#T函数" class="headerlink" title="T函数"></a>T函数</h3><p>专门用于获取模板的地址，用于display()中</p>
-<p>定义: <code>T(模块/主题/控制器/操作,视图分层)</code></p>
+        <h3 id="Time-is-short-Just-show-me-the-code"><a href="#Time-is-short-Just-show-me-the-code" class="headerlink" title="Time is short. Just show me the code!"></a>Time is short. Just show me the code!</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> url <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'url'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/*
+附上测试方法
+curl -X GET http://localhost:3000
+curl -X POST -d "Node should test in action" http://localhost:3000
+curl -X DELETE http://localhost:3000/1
+curl -X PUT -d "Pratice node every day" http://localhost:3000/1
+*/</span>
+
+<span class="token keyword">var</span> server <span class="token operator">=</span> http<span class="token punctuation">.</span><span class="token function">createServer</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// method include POST,GET,DELETE,PUT</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token string">'POST'</span><span class="token punctuation">:</span>
+            <span class="token keyword">var</span> item <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// convert bytes to utf-8 encoding data</span>
+            req<span class="token punctuation">.</span><span class="token function">setEncoding</span><span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// listening data event, POST data will send to server by chunk (bytes array)</span>
+            req<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                item <span class="token operator">+</span><span class="token operator">=</span>chunk<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            req<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'end'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'OK\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'GET'</span><span class="token punctuation">:</span>
+            items<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token string">') '</span> <span class="token operator">+</span> element <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'DELETE'</span><span class="token punctuation">:</span>
+            <span class="token keyword">var</span> path <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span>pathname<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//get string '/1'</span>
+            <span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// convert String to Number</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isNaN</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Invalid item id'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>items<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">404</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Item not found!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                items<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'delete success!\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'PUT'</span><span class="token punctuation">:</span>
+            <span class="token keyword">var</span> newItem <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> putPath <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span>pathname<span class="token punctuation">;</span>
+            <span class="token keyword">var</span> j <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>putPath<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isNaN</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Invalid item id'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>items<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">404</span><span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'item not found!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                req<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    newItem <span class="token operator">+</span><span class="token operator">=</span> chunk<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                items<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">=</span> newItem<span class="token punctuation">;</span>
+                res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'update success!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 
     
 
@@ -426,21 +477,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2016/11/05/UNIX时间戳与time-算时间差/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Newer
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2016/11/04/夹杂数字字母大小写的字符串排序方法/" id="post_nav-older" class="next-content">
+        <a href="/2017/04/11/python-语法基础/" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
