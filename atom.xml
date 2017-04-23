@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tecknight.xyz/"/>
-  <updated>2017-04-12T14:31:28.000Z</updated>
+  <updated>2017-04-23T01:29:07.000Z</updated>
   <id>http://tecknight.xyz/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>用supertest进行API测试</title>
+    <link href="http://tecknight.xyz/2017/04/23/%E7%94%A8supertest%E8%BF%9B%E8%A1%8CAPI%E6%B5%8B%E8%AF%95/"/>
+    <id>http://tecknight.xyz/2017/04/23/用supertest进行API测试/</id>
+    <published>2017-04-23T00:13:51.000Z</published>
+    <updated>2017-04-23T01:29:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是<code>mocha</code>和<code>chai</code>，<br>然后我们应该有相配合的请求模块来帮助我们更好地完成断言的工作，今天要介绍的主角就是<code>supertest</code></p>
+<p>用过<code>superagent</code>的童鞋应该都知道，<code>supertest</code>的用法同样简洁优雅，本文环境基于<code>Express</code>，废话不说，上实战代码</p>
+<h3 id="GET-请求"><a href="#GET-请求" class="headerlink" title="GET 请求"></a>GET 请求</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">const</span> assert <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>assert<span class="token punctuation">;</span>
+<span class="token keyword">const</span> request <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'supertest'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> should <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'should'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../../app'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> _ <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'lodash'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 将supertest设成request是习惯使然</span>
+
+<span class="token comment" spellcheck="true">// 断言</span>
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"get /"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// it描述了API的功能，预期的返回内容</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should respond with ...."</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 使用supertest进行GET请求，并验证其返回的状态码</span>
+        <span class="token keyword">return</span> <span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">'Accept'</span><span class="token punctuation">,</span> <span class="token string">'application/json'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//设置请求头</span>
+            <span class="token punctuation">.</span><span class="token function">expect</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//预期的状态码</span>
+            <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                assert<span class="token punctuation">.</span><span class="token function">notEqual</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">findIndex</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">// 使用assert断言库进行断言，如果lodash找不到json中的最外层的键值对(找里面的话可以在body的基础上继续访问)</span>
+                    <span class="token comment" spellcheck="true">// 使用equal或者是to.include.keys('key')也是可以的</span>
+                    <span class="token string">'key'</span> <span class="token punctuation">:</span> <span class="token string">'value'</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="POST-请求"><a href="#POST-请求" class="headerlink" title="POST 请求"></a>POST 请求</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// 前面不再赘述，我们专注于supertest</span>
+<span class="token keyword">return</span> <span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/search'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> key<span class="token punctuation">:</span> <span class="token string">'value'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">// x-www-form-urlencoded</span>
+        <span class="token punctuation">.</span><span class="token function">field</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">,</span> <span class="token string">'Jack'</span><span class="token punctuation">)</span>      <span class="token comment" spellcheck="true">// form-data</span>
+        <span class="token punctuation">.</span><span class="token function">attach</span><span class="token punctuation">(</span><span class="token string">'avatar'</span><span class="token punctuation">,</span> <span class="token string">'test/fixtures/homeboy.jpg'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// post上传附件</span>
+</code></pre>
+<h3 id="PUT或DELETE请求"><a href="#PUT或DELETE请求" class="headerlink" title="PUT或DELETE请求"></a>PUT或DELETE请求</h3><p>同理</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span><span class="token string">'/path'</span><span class="token punctuation">)</span>
+<span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">'/path'</span><span class="token punctuation">)</span>
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是&lt;code&gt;mocha&lt;/code&gt;和&lt;code&gt;chai&lt;/code&gt;，&lt;br&gt;然后我们应该有相配合的请求模块来帮助我们更好地完成断言的工作，今天要介绍的主角就是&lt;code&gt;superte
+    
+    </summary>
+    
+      <category term="Node" scheme="http://tecknight.xyz/categories/Node/"/>
+    
+    
+      <category term="node" scheme="http://tecknight.xyz/tags/node/"/>
+    
+      <category term="Express" scheme="http://tecknight.xyz/tags/Express/"/>
+    
+      <category term="api" scheme="http://tecknight.xyz/tags/api/"/>
+    
+      <category term="test" scheme="http://tecknight.xyz/tags/test/"/>
+    
+  </entry>
   
   <entry>
     <title>最精简restful实现</title>
@@ -796,73 +861,6 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
   </entry>
   
   <entry>
-    <title>Laravel5 新手填坑指南</title>
-    <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/"/>
-    <id>http://tecknight.xyz/2017/02/03/Laravel 新手填坑指南/</id>
-    <published>2017-02-03T05:26:19.000Z</published>
-    <updated>2017-03-22T14:51:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
-<p>注意事项：</p>
-<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
-<p>Mac/Linux (少很多麻烦)</p>
-<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
-<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
-</li>
-<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
-</li>
-<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
-</li>
-</ol>
-<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
-<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
-</ol>
-<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
-<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
-</ol>
-<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
-<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
-</ol>
-<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
-<li><p>引用的时候必须写成 </p>
-<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
-</code></pre>
-</li>
-<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
-</li>
-</ol>
-<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
-<li>用户的退出登录可以看成是提交一个DELETE表单</li>
-<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
-<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
-</ol>
-<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
-</code></pre>
-<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;浏览器篇&quot;&gt;&lt;a href=&quot;#浏览器篇&quot; class=&quot;headerlink&quot; title=&quot;浏览器篇&quot;&gt;&lt;/a&gt;浏览器篇&lt;/h3&gt;&lt;p&gt;开发浏览器: Chorme（不用解释）&lt;/p&gt;
-&lt;p&gt;注意事项：&lt;/p&gt;
-&lt;p&gt;一定要先清缓存！清缓存！清缓存！ 重要的说三
-    
-    </summary>
-    
-      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
-    
-    
-      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
-    
-      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Laravel 5 常用帮助函数</title>
     <link href="http://tecknight.xyz/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/"/>
     <id>http://tecknight.xyz/2017/02/03/Laravel 5 常用帮助函数/</id>
@@ -1076,6 +1074,73 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </summary>
     
       <category term="PHP" scheme="http://tecknight.xyz/categories/PHP/"/>
+    
+    
+      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
+    
+      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Laravel5 新手填坑指南</title>
+    <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/"/>
+    <id>http://tecknight.xyz/2017/02/03/Laravel 新手填坑指南/</id>
+    <published>2017-02-03T05:26:19.000Z</published>
+    <updated>2017-03-22T14:51:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
+<p>注意事项：</p>
+<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
+<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
+<p>Mac/Linux (少很多麻烦)</p>
+<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
+<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
+<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
+<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
+</li>
+<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
+</li>
+<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
+</li>
+</ol>
+<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
+<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
+</ol>
+<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
+<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
+</ol>
+<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
+<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
+</ol>
+<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
+<li><p>引用的时候必须写成 </p>
+<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
+</li>
+</ol>
+<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
+<li>用户的退出登录可以看成是提交一个DELETE表单</li>
+<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
+<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
+</ol>
+<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
+</code></pre>
+<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;浏览器篇&quot;&gt;&lt;a href=&quot;#浏览器篇&quot; class=&quot;headerlink&quot; title=&quot;浏览器篇&quot;&gt;&lt;/a&gt;浏览器篇&lt;/h3&gt;&lt;p&gt;开发浏览器: Chorme（不用解释）&lt;/p&gt;
+&lt;p&gt;注意事项：&lt;/p&gt;
+&lt;p&gt;一定要先清缓存！清缓存！清缓存！ 重要的说三
+    
+    </summary>
+    
+      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
     
     
       <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
@@ -1339,44 +1404,6 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
   </entry>
   
   <entry>
-    <title>Sass语法点总结</title>
-    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
-    <published>2016-12-03T11:43:37.000Z</published>
-    <updated>2017-03-22T14:33:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
-<li><p>@import</p>
-<p> 引入sass模块</p>
-</li>
-<li><p>@include</p>
-<p> 引入mixin函数</p>
-</li>
-<li><p>@mixin</p>
-<p> 声明函数 </p>
-</li>
-<li><p>@extends</p>
-<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Sass之CSS模块化</title>
     <link href="http://tecknight.xyz/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/"/>
     <id>http://tecknight.xyz/2016/12/03/Sass之CSS模块化/</id>
@@ -1413,6 +1440,44 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
       &lt;p&gt;一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@import &amp;#39;partials/temp;&amp;#39
+    
+    </summary>
+    
+      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
+    
+      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sass语法点总结</title>
+    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
+    <published>2016-12-03T11:43:37.000Z</published>
+    <updated>2017-03-22T14:33:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
     
     </summary>
     
@@ -1834,176 +1899,6 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     
       <category term="ThinkPHP" scheme="http://tecknight.xyz/tags/ThinkPHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>夹杂数字字母大小写的字符串按字典排序方法</title>
-    <link href="http://tecknight.xyz/2016/11/04/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/"/>
-    <id>http://tecknight.xyz/2016/11/04/夹杂数字字母大小写的字符串排序方法/</id>
-    <published>2016-11-04T05:30:43.000Z</published>
-    <updated>2017-03-22T12:29:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="核心步骤概要"><a href="#核心步骤概要" class="headerlink" title="核心步骤概要"></a>核心步骤概要</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>过滤数字等特殊符号，只剩下字母</p>
-<p>这里要用到String类自带的replaceAll方法以及表达式进行过滤</p>
-<h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将字符串进行单字符分割<br><a id="more"></a><br>这里要用到String类自带的substring方法</p>
-<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>将分割得到的单字符String数组进行忽略大小写的排序</p>
-<p>这里要用到Arrays类中的sort方法</p>
-<h2 id="关键代码演示"><a href="#关键代码演示" class="headerlink" title="关键代码演示"></a>关键代码演示</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>因为输入的行数和字符串内容任意，所以将每行的字符串直接add入Java的ArrayList动态数组中，接着再装入用length初始化的String字符串数组newArray中，从而避免了从Object类型进行强制转换String[]的风险</p>
-<hr>
-<h3 id="字符串过滤演示"><a href="#字符串过滤演示" class="headerlink" title="字符串过滤演示"></a>字符串过滤演示</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
-newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"\\d+"</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//这里演示的是去除数字</span>
-</code></pre>
-<p><strong>拓展：</strong></p>
-<p>.replaceAll(“转义符+正则表达式”,”要替换成的字符”);</p>
-<h3 id="字符串分割演示"><a href="#字符串分割演示" class="headerlink" title="字符串分割演示"></a>字符串分割演示</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>k<span class="token operator">&lt;</span>newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span>
-sortArray<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用一个for循环一次切割一个字符并添加入sortArray中</span>
-</code></pre>
-<p><strong>拓展：</strong></p>
-<h4 id="String类常用方法"><a href="#String类常用方法" class="headerlink" title="String类常用方法"></a>String类常用方法</h4><table>
-<thead>
-<tr>
-<th>方法用途</th>
-<th>定义 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>起止字符分割字符串</td>
-<td>substring(int beginIndex,int endIndex)</td>
-</tr>
-<tr>
-<td>将某字符用作分隔符</td>
-<td>split(String regex) return String[]</td>
-</tr>
-<tr>
-<td>转成大写字母</td>
-<td>toUpperCase()</td>
-</tr>
-<tr>
-<td>转成小写字母</td>
-<td>toLowerCase()</td>
-</tr>
-<tr>
-<td>去掉开始和末尾的空格</td>
-<td>trim() return a string </td>
-</tr>
-<tr>
-<td>比较字符串</td>
-<td>boolean equals(Object anObject)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="单字符String数组排序演示"><a href="#单字符String数组排序演示" class="headerlink" title="单字符String数组排序演示"></a>单字符String数组排序演示</h3><pre class=" language-java"><code class="language-java">Arrays<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>sortArray<span class="token punctuation">,</span>String<span class="token punctuation">.</span>CASE_INSENSITIVE_ORDER<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//不分大小写进行排序</span>
-</code></pre>
-<p><strong>拓展：</strong></p>
-<h4 id="Arrays类常用方法"><a href="#Arrays类常用方法" class="headerlink" title="Arrays类常用方法"></a>Arrays类常用方法</h4><table>
-<thead>
-<tr>
-<th>方法用途</th>
-<th>定义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>将数组排序</td>
-<td>sort()</td>
-</tr>
-<tr>
-<td>查找数组中的值</td>
-<td>binarySearch(object[ ], object key) *先用sort()排序后用</td>
-</tr>
-<tr>
-<td>复制数组</td>
-<td>int[] copyOf(int[] original,int newLength)</td>
-</tr>
-<tr>
-<td>数组中值的替换</td>
-<td>fill(int[] a,int val)</td>
-</tr>
-<tr>
-<td>待续….</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="完整代码demo演示"><a href="#完整代码demo演示" class="headerlink" title="完整代码demo演示"></a>完整代码demo演示</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * Created by Tecker on 2016/6/21.
- */</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UsingArrayList</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">int</span> elementIndex <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        Scanner inputElement <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Scanner</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ArrayList elementlist <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">boolean</span> inputOver <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请任意输入N行N个字符串\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"当输入inputOver时结束\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">do</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"输入第"</span> <span class="token operator">+</span> elementIndex <span class="token operator">+</span> <span class="token string">"个字符串\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            String input <span class="token operator">=</span> inputElement<span class="token punctuation">.</span><span class="token function">nextLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>input<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"inputOver"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                inputOver <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"输入完毕！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">else</span> <span class="token punctuation">{</span>
-                elementlist<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                elementIndex<span class="token operator">++</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token keyword">while</span> <span class="token punctuation">(</span>inputOver <span class="token operator">==</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//用do-while语句加上if判断来控制输入N行夹杂数字大小写的字符串</span>
-        elementIndex <span class="token operator">=</span> elementIndex <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"排序前:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        String<span class="token punctuation">[</span><span class="token punctuation">]</span> newArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>elementIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>k <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">">> "</span> <span class="token operator">+</span> elementlist<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>index <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>index<span class="token operator">++</span><span class="token punctuation">)</span>
-            newArray<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> elementlist<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span>elementIndex<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
-            newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"\\d+"</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>String element <span class="token operator">:</span> newArray<span class="token punctuation">)</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span>element <span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"排序后\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> listIndex<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>listIndex <span class="token operator">&lt;</span>newArray<span class="token punctuation">.</span>length<span class="token punctuation">;</span>listIndex<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token function">sortArrays</span><span class="token punctuation">(</span>listIndex<span class="token punctuation">,</span>newArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sortArrays</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">,</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> newArray<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        String<span class="token punctuation">[</span><span class="token punctuation">]</span> sortArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>k<span class="token operator">&lt;</span>newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            sortArray<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> newArray<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        Arrays<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>sortArray<span class="token punctuation">,</span>String<span class="token punctuation">.</span>CASE_INSENSITIVE_ORDER<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        String finalString <span class="token operator">=</span> <span class="token string">">>"</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>sortArray<span class="token punctuation">.</span>length<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            finalString <span class="token operator">=</span> finalString<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>sortArray<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>finalString<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span>
-</code></pre>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;核心步骤概要&quot;&gt;&lt;a href=&quot;#核心步骤概要&quot; class=&quot;headerlink&quot; title=&quot;核心步骤概要&quot;&gt;&lt;/a&gt;核心步骤概要&lt;/h2&gt;&lt;h3 id=&quot;过滤&quot;&gt;&lt;a href=&quot;#过滤&quot; class=&quot;headerlink&quot; title=&quot;过滤&quot;&gt;&lt;/a&gt;过滤&lt;/h3&gt;&lt;p&gt;过滤数字等特殊符号，只剩下字母&lt;/p&gt;
-&lt;p&gt;这里要用到String类自带的replaceAll方法以及表达式进行过滤&lt;/p&gt;
-&lt;h3 id=&quot;分割&quot;&gt;&lt;a href=&quot;#分割&quot; class=&quot;headerlink&quot; title=&quot;分割&quot;&gt;&lt;/a&gt;分割&lt;/h3&gt;&lt;p&gt;将字符串进行单字符分割&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://tecknight.xyz/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://tecknight.xyz/tags/Java/"/>
     
   </entry>
   
