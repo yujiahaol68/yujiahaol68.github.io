@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing,Vue">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing,Vue">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -257,7 +257,7 @@
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
             <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
+    var randomNum = Math.floor(Math.random() * 15 + 1);
 
     $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
 </script>
@@ -492,16 +492,15 @@ vm<span class="token punctuation">.</span><span class="token function">$watch</s
 <p>###绑定HTML Class<br>语法：<code>v-bind:class={class1:布尔变量,class2...}</code></p>
 <p>class还可以是数据对象,甚至是计算属性！</p>
 <p>#####通过控制布尔变量可以使元素的class动态切换</p>
-<p><code>&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p>
-<p>###绑定内联样式</p>
-<p><code>v-bind:style=&quot;{ color: mycolor}&quot;</code> mycolor在data中定义</p>
+<figcaption>v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p></figcaption><pre class=" language-&lt;div"><code class="language-&lt;div"><p>###绑定内联样式</p>
+<p><code>v-bind:style="{ color: mycolor}"</code> mycolor在data中定义</p>
 <p>复杂内联样式推荐绑定styleObject对象</p>
-<pre class=" language-javascript"><code class="language-javascript">data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-  styleObject<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-    color<span class="token punctuation">:</span> <span class="token string">'red'</span><span class="token punctuation">,</span>
-    fontSize<span class="token punctuation">:</span> <span class="token string">'13px'</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre><code class="javascript">data: {
+  styleObject: {
+    color: 'red',
+    fontSize: '13px'
+  }
+}
 </code></pre>
 <p>##条件渲染<br>判断一个标签的输出 <code>v-if=&quot;ok&quot;</code> ok值决定是否显示</p>
 <p>判断一块标签的显示 用template元素作为包装元素，下面为根据需要显示的标签块</p>
@@ -574,7 +573,7 @@ vm<span class="token punctuation">.</span><span class="token function">$watch</s
 <p>注意：组件的data必须是函数！通过return的方式将data传入组件绑定的元素中</p>
 <p>意义：类似接口解耦，使得同一个data在不同的组件中都能有自己不同的状态！</p>
 <p>###传递数据<br>父–&gt;子 props:[‘字段名’]</p>
-<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code><br><code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></p>
+<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code><br><code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></pre>
 <p>###props验证</p>
 <pre class=" language-javascript"><code class="language-javascript">propB<span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">,</span> Number<span class="token punctuation">]</span><span class="token punctuation">,</span>
     <span class="token comment" spellcheck="true">// 必须且是字符串</span>
@@ -647,7 +646,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
 
     <!-- Next Nav -->
     
-        <a href="/2016/12/03/Sass之CSS模块化/" id="post_nav-older" class="next-content">
+        <a href="/2016/12/03/Sass语法点总结/" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
@@ -739,7 +738,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/04/">April 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">March 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">February 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">January 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">December 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">November 2016<span class="sidebar_archives-count">11</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/06/">June 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">May 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">April 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">March 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">February 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">January 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">December 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">November 2016<span class="sidebar_archives-count">11</span></a>
             </ul>
         </li>
         
@@ -757,7 +756,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -791,7 +790,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
         <li>
             <a href="/archives">
                 Number of articles
-                <span class="sidebar-badge">26</span>
+                <span class="sidebar-badge">28</span>
             </a>
         </li>
         

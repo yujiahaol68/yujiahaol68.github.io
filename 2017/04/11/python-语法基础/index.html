@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,mongoDB,technique and code sharing,python">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing,python">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -229,7 +229,76 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#其中记录了python跟别的语言不一样的一些基础知识点"><span class="post-toc-number">1.</span> <span class="post-toc-text">其中记录了python跟别的语言不一样的一些基础知识点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#布尔类型"><span class="post-toc-number">2.</span> <span class="post-toc-text">布尔类型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#除法"><span class="post-toc-number">3.</span> <span class="post-toc-text">除法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#字符-类似C的ASCII码"><span class="post-toc-number">4.</span> <span class="post-toc-text">字符(类似C的ASCII码)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#格式化输出"><span class="post-toc-number">5.</span> <span class="post-toc-text">格式化输出</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数据类型之list-类比数组"><span class="post-toc-number">6.</span> <span class="post-toc-text">数据类型之list(类比数组)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数据类型之tuple元组"><span class="post-toc-number">7.</span> <span class="post-toc-text">数据类型之tuple元组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#if语句"><span class="post-toc-number">8.</span> <span class="post-toc-text">if语句</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#循环"><span class="post-toc-number">9.</span> <span class="post-toc-text">循环</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#dict-键值对"><span class="post-toc-number">10.</span> <span class="post-toc-text">dict 键值对</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#set-key的集合"><span class="post-toc-number">11.</span> <span class="post-toc-text">set key的集合</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#字符串对象"><span class="post-toc-number">12.</span> <span class="post-toc-text">字符串对象</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#基本函数"><span class="post-toc-number">13.</span> <span class="post-toc-text">基本函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#类型转换"><span class="post-toc-number">14.</span> <span class="post-toc-text">类型转换</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#定义函数"><span class="post-toc-number">15.</span> <span class="post-toc-text">定义函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缩进体置空"><span class="post-toc-number">16.</span> <span class="post-toc-text">缩进体置空</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#函数返回值"><span class="post-toc-number">17.</span> <span class="post-toc-text">函数返回值</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#类型检查"><span class="post-toc-number">18.</span> <span class="post-toc-text">类型检查</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参数"><span class="post-toc-number">19.</span> <span class="post-toc-text">参数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#尾递归优化递归函数"><span class="post-toc-number">20.</span> <span class="post-toc-text">尾递归优化递归函数</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#其中记录了python跟别的语言不一样的一些基础知识点"><span class="post-toc-number">1.</span> <span class="post-toc-text">其中记录了python跟别的语言不一样的一些基础知识点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#布尔类型"><span class="post-toc-number">2.</span> <span class="post-toc-text">布尔类型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#除法"><span class="post-toc-number">3.</span> <span class="post-toc-text">除法/ 默认的除法是精确除法
+// 才是通常的取商的整数部分
+字符(类似C的ASCII码)ord() 字符对应编码
+chr() 编码转字符
+'aaa'.encode('utf-8') 转成对应编码形式的bytes
+'aaa'.decode('utf-8') 从bytes转成utf-8编码
+格式化输出r = 18.0555
+'%.2f%%' %r
+# '18.06%'
+
+数据类型之list(类比数组)获取list元素个数len(变量名)
+访问元素下标为负表示都是第几个元素
+末尾添加元素 vary.append(...)
+插入指定位置 vary.insert(1, 'Jack')
+末尾元素去除 vary.pop()
+去除指定位置 vary.pop(2)
+元素之间的数据类型可不同
+数据类型之tuple元组与list相比这样定义出来的数组内的元素是不可直接变的，数据更加安全
+间接改变的原理：tuple是保持元素的指向不变，指向的内容是可能可变的，例如元素是list
+t = ('A', 'B', 'C')
+
+if语句: 替代花括号块
+elif 等价于其他语言的 else if
+循环for-in 循环    for x in ...:
+continue 打破当前循环进入下一次循环
+break 退出循环体
+dict 键值对d = {'A':11,'B':22,'C':33}
+d['B']
+# 22
+
+找不到key时会报错，所以查key之前要判断一下key in d的返回值再查找
+或者
+d.get('B', -1) 第二个参数指定了找不到时返回的值
+dict 中的key不可变
+删除 d.pop(key)
+set key的集合初始化需传入一个list，传入的元素不能有重复的
+s = set([5,5,6,7,7,6,7])
+# {5, 6, 7}
+
+添加 add(key)
+删除 remove(key)
+字符串对象str.remove('a', 'A')将a替换成A但是方法会返回一个新的串，原来的str不可变！
+基本函数abs()
+max() 可以放任意个参数只返回最大
+a = abs 给abs函数引用发给a，调用a()效果一样
+类型转换int(要转换的变量)
+其他类似
+定义函数def 替代function
+缩进体置空pass
+函数返回值居然可以有多个!! 我的三观…
+def goBack(x,y)
+    return x,y
+
+a,b = goBack(1,2)
+
+原因：返回的是tuple
+类型检查def goBack(x,y)
+    if isinstance(x, (int, float)):
+        return x,y
+# 允许int和float类型
+
+参数def power(x, n=2):
+# n默认值为2
+
+默认参数必须指向不变对象
+参数可以是 list 或者 tuble，利用可变参数
+可变参数 def calc(*numbers): 多参数自动组装成tuple
+关键字参数 def person(name, age, **kw): 方便扩展函数的参数
+参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数
+尾递归优化递归函数指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#除法"><span class="post-toc-number">4.</span> <span class="post-toc-text">除法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#字符-类似C的ASCII码"><span class="post-toc-number">5.</span> <span class="post-toc-text">字符(类似C的ASCII码)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#格式化输出"><span class="post-toc-number">6.</span> <span class="post-toc-text">格式化输出</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数据类型之list-类比数组"><span class="post-toc-number">7.</span> <span class="post-toc-text">数据类型之list(类比数组)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数据类型之tuple元组"><span class="post-toc-number">8.</span> <span class="post-toc-text">数据类型之tuple元组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#if语句"><span class="post-toc-number">9.</span> <span class="post-toc-text">if语句</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#循环"><span class="post-toc-number">10.</span> <span class="post-toc-text">循环</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#dict-键值对"><span class="post-toc-number">11.</span> <span class="post-toc-text">dict 键值对</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#set-key的集合"><span class="post-toc-number">12.</span> <span class="post-toc-text">set key的集合</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#字符串对象"><span class="post-toc-number">13.</span> <span class="post-toc-text">字符串对象</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#基本函数"><span class="post-toc-number">14.</span> <span class="post-toc-text">基本函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#类型转换"><span class="post-toc-number">15.</span> <span class="post-toc-text">类型转换</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#定义函数"><span class="post-toc-number">16.</span> <span class="post-toc-text">定义函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缩进体置空"><span class="post-toc-number">17.</span> <span class="post-toc-text">缩进体置空</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#函数返回值"><span class="post-toc-number">18.</span> <span class="post-toc-text">函数返回值</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#类型检查"><span class="post-toc-number">19.</span> <span class="post-toc-text">类型检查</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参数"><span class="post-toc-number">20.</span> <span class="post-toc-text">参数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#尾递归优化递归函数"><span class="post-toc-number">21.</span> <span class="post-toc-text">尾递归优化递归函数</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -257,7 +326,7 @@
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
             <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
+    var randomNum = Math.floor(Math.random() * 15 + 1);
 
     $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
 </script>
@@ -383,17 +452,15 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h4 id="其中记录了python跟别的语言不一样的一些基础知识点"><a href="#其中记录了python跟别的语言不一样的一些基础知识点" class="headerlink" title="其中记录了python跟别的语言不一样的一些基础知识点"></a>其中记录了python跟别的语言不一样的一些基础知识点</h4><h4 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h4><p><code>True</code></p>
-<p><code>False</code></p>
-<h4 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h4><p><code>/</code> 默认的除法是精确除法</p>
+        <h4 id="其中记录了python跟别的语言不一样的一些基础知识点"><a href="#其中记录了python跟别的语言不一样的一些基础知识点" class="headerlink" title="其中记录了python跟别的语言不一样的一些基础知识点"></a>其中记录了python跟别的语言不一样的一些基础知识点</h4><h4 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h4><figcaption><p><code>False</code></p></figcaption><pre class=" language-True</code></p>"><h4 id="除法"><a href="#除法" class="headerlink" title="除法"><code class="language-True</code></p>"><h4 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h4><p><code>/</code> 默认的除法是精确除法</p>
 <p><code>//</code> 才是通常的取商的整数部分</p>
 <h4 id="字符-类似C的ASCII码"><a href="#字符-类似C的ASCII码" class="headerlink" title="字符(类似C的ASCII码)"></a>字符(类似C的ASCII码)</h4><p><code>ord()</code> 字符对应编码</p>
 <p><code>chr()</code> 编码转字符</p>
-<p><code>&#39;aaa&#39;.encode(&#39;utf-8&#39;)</code> 转成对应编码形式的<code>bytes</code></p>
-<p><code>&#39;aaa&#39;.decode(&#39;utf-8&#39;)</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
-<h4 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h4><pre class=" language-python"><code class="language-python">r <span class="token operator">=</span> <span class="token number">18.0555</span>
-<span class="token string">'%.2f%%'</span> <span class="token operator">%</span>r
-<span class="token comment" spellcheck="true"># '18.06%'</span>
+<p><code>'aaa'.encode('utf-8')</code> 转成对应编码形式的<code>bytes</code></p>
+<p><code>'aaa'.decode('utf-8')</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
+<h4 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h4><pre><code class="python">r = 18.0555
+'%.2f%%' %r
+# '18.06%'
 </code></pre>
 <h4 id="数据类型之list-类比数组"><a href="#数据类型之list-类比数组" class="headerlink" title="数据类型之list(类比数组)"></a>数据类型之list(类比数组)</h4><p>获取<code>list</code>元素个数<code>len(变量名)</code></p>
 <p>访问元素下标为负表示都是第几个元素</p>
@@ -454,7 +521,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
 <p>可变参数 <code>def calc(*numbers):</code> 多参数自动组装成<code>tuple</code></p>
 <p>关键字参数 <code>def person(name, age, **kw):</code> 方便扩展函数的参数</p>
 <p><code>参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数</code></p>
-<h4 id="尾递归优化递归函数"><a href="#尾递归优化递归函数" class="headerlink" title="尾递归优化递归函数"></a>尾递归优化递归函数</h4><p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></p>
+<h4 id="尾递归优化递归函数"><a href="#尾递归优化递归函数" class="headerlink" title="尾递归优化递归函数"></a>尾递归优化递归函数</h4><p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></pre>
 <p>注意：标准解释器并不支持这种用法</p>
 
     
@@ -585,7 +652,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/04/">April 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">March 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">February 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">January 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">December 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">November 2016<span class="sidebar_archives-count">11</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/06/">June 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">May 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">April 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">March 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">February 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">January 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">December 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">November 2016<span class="sidebar_archives-count">11</span></a>
             </ul>
         </li>
         
@@ -603,7 +670,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -637,7 +704,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
         <li>
             <a href="/archives">
                 Number of articles
-                <span class="sidebar-badge">26</span>
+                <span class="sidebar-badge">28</span>
             </a>
         </li>
         

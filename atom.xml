@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tecknight.xyz/"/>
-  <updated>2017-04-23T01:29:07.000Z</updated>
+  <updated>2017-06-08T09:12:27.000Z</updated>
   <id>http://tecknight.xyz/</id>
   
   <author>
@@ -14,6 +14,292 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>centOS下的node部署环境搭建</title>
+    <link href="http://tecknight.xyz/2017/06/08/centOS%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://tecknight.xyz/2017/06/08/centOS下的node部署环境搭建/</id>
+    <published>2017-06-08T08:21:41.000Z</published>
+    <updated>2017-06-08T09:12:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程"><a href="#本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程" class="headerlink" title="本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程"></a>本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程</h2><p><a href="https://jp.godaddy.com/help/set-up-nodejs-application-for-production-centos-17354" target="_blank" rel="external">node的安装过程详情</a></p>
+<p>其他的直接上亲自实践过的安装命令以及需要注意的地方，习惯用英文注释，部分重点已用中文指出</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true">#update software</span>
+<span class="token function">sudo</span> yum update -y
+<span class="token comment" spellcheck="true">#back to root dir</span>
+<span class="token function">cd</span> ~
+<span class="token comment" spellcheck="true">#Nginx</span>
+<span class="token function">sudo</span> yum -y <span class="token function">install</span> <span class="token function">make</span> zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
+<span class="token comment" spellcheck="true">#If pcre</span>
+rpm -qa pcre
+<span class="token comment" spellcheck="true">#yes download nginx stable version</span>
+<span class="token function">wget</span> http://nginx.org/download/nginx-1.12.0.tar.gz
+<span class="token function">tar</span> zxvf nginx-1.12.0.tar.gz
+<span class="token comment" spellcheck="true">#switch to root for mkdir</span>
+<span class="token function">su</span> root
+<span class="token function">cd</span> nginx-1.12.0
+./configure <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span>
+<span class="token function">cd</span> ~ <span class="token operator">&amp;&amp;</span> <span class="token keyword">exit</span>
+<span class="token function">rm</span> -rf nginx-1.12.0
+<span class="token function">rm</span> nginx-1.12.0.tar.gz
+<span class="token comment" spellcheck="true">#start nginx</span>
+<span class="token comment" spellcheck="true">#access public IP should success</span>
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+<span class="token comment" spellcheck="true">#self-start config</span>
+<span class="token function">sudo</span> <span class="token function">vi</span> /lib/systemd/system/nginx.service
+<span class="token comment" spellcheck="true">#content</span>
+<span class="token keyword">:</span><span class="token string">'
+[Unit]
+Description=nginx
+After=network.target
+[Service]
+Type=forking
+ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+ExecReload=/usr/local/nginx/sbin/nginx -s reload
+ExecStop=/usr/local/nginx/sbin/nginx -s quit
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target
+'</span>
+systemctl start nginx.service
+systemctl <span class="token function">enable</span> nginx.service
+<span class="token comment" spellcheck="true">#check if running</span>
+systemctl list-units --type<span class="token operator">=</span>service
+
+<span class="token comment" spellcheck="true">#Mongodb</span>
+<span class="token function">sudo</span> <span class="token function">vi</span> /etc/yum.repos.d/mongodb-org-3.4.repo
+
+<span class="token comment" spellcheck="true">#https://docs.mongodb.com/master/tutorial/install-mongodb-on-red-hat/</span>
+<span class="token comment" spellcheck="true">#content</span>
+<span class="token keyword">:</span><span class="token string">'
+[mongodb-org-3.4]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/<span class="token variable">$releasever</span>/mongodb-org/3.4/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
+'</span>
+
+<span class="token comment" spellcheck="true">#yum install mongodb</span>
+<span class="token function">sudo</span> yum -y <span class="token function">install</span> mongodb-org
+<span class="token comment" spellcheck="true">#start mongodb(default it can self-start when booting)</span>
+<span class="token function">sudo</span> <span class="token function">service</span> mongod start
+<span class="token comment" spellcheck="true">#self-start</span>
+<span class="token function">sudo</span> <span class="token function">chkconfig</span> mongod on
+
+<span class="token comment" spellcheck="true">#pm2 install</span>
+<span class="token function">sudo</span> cnpm i pm2 -g
+
+<span class="token comment" spellcheck="true">#redis</span>
+<span class="token function">wget</span> http://download.redis.io/releases/redis-3.2.9.tar.gz
+<span class="token function">su</span> root
+<span class="token function">tar</span> xzf redis-3.2.9.tar.gz
+<span class="token function">cd</span> redis-3.2.9
+<span class="token function">make</span>
+<span class="token function">cd</span> src
+<span class="token function">cp</span> redis-server redis-cli redis-sentinel redis-benchmark redis-check-aof redis-check-rdb /usr/local/bin
+<span class="token function">mkdir</span> /etc/redis
+<span class="token function">mkdir</span> -p /var/lib/redis/6379
+<span class="token function">cp</span> redis.conf /etc/redis/6379.conf
+
+<span class="token function">vi</span> /etc/redis/6379.conf
+<span class="token keyword">:</span><span class="token string">'
+daemonize yes
+logfile /var/log/redis_6379.log
+dir /var/lib/redis/6379
+'</span>
+
+<span class="token function">cp</span> utils/redis_init_script /etc/init.d/redis
+
+<span class="token function">vi</span> /lib/systemd/system/redis.service
+<span class="token comment" spellcheck="true">#content</span>
+<span class="token keyword">:</span><span class="token string">'
+[Unit]
+Description=Redis on port 6379
+[Service]
+Type=forking
+ExecStart=/etc/init.d/redis_6379 start
+ExecStop=/etc/init.d/redis_6379 stop
+[Install]
+WantedBy=multi-user.target
+
+vm.overcommit_memory = 1
+net.core.somaxconn=512
+'</span>
+systemctl start redis.service
+systemctl <span class="token function">enable</span> redis.service
+
+<span class="token function">cd</span> <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> <span class="token function">cd</span> <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> -rf redis-3.2.9 redis-3.2.9.tar.gz
+
+<span class="token comment" spellcheck="true">#kernel config</span>
+sysctl -w vm.overcommit_memory<span class="token operator">=</span>1
+sysctl -w net.core.somaxconn<span class="token operator">=</span>512
+<span class="token keyword">echo</span> never <span class="token operator">></span> /sys/kernel/mm/transparent_hugepage/enabled
+
+<span class="token comment" spellcheck="true">#booting shell</span>
+<span class="token keyword">echo</span> never <span class="token operator">>></span> /sys/kernel/mm/transparent_hugepage/enabled
+<span class="token keyword">echo</span> never <span class="token operator">>></span> /sys/kernel/mm/transparent_hugepage/defrag
+systemctl restart mongod.service
+
+<span class="token comment" spellcheck="true">#nginx conf ( Remember to configure user !!!)</span>
+<span class="token comment" spellcheck="true">#nginx 配置内容经优化（踩过的坑，最顶部的注释要去掉替换成对应的用户名，否则会无文件权限！！）</span>
+<span class="token comment" spellcheck="true">#其中含负载均衡及反向代理的配置，模仿着配置好就行</span>
+<span class="token keyword">:</span><span class="token string">'
+#user userName
+
+http {
+    client_header_buffer_size 3k;
+    client_max_body_size 2m;
+    client_body_buffer_size 7k;
+    large_client_header_buffers 2 1k;
+
+    client_body_timeout   32;
+    client_header_timeout 32;
+    reset_timedout_connection on;
+
+    open_file_cache max=200000 inactive=20s;
+    open_file_cache_valid 30s;
+    open_file_cache_min_uses 2;
+    open_file_cache_errors on;
+
+    tcp_nopush on;
+    tcp_nodelay on;
+    types_hash_max_size 2048;
+
+    gzip on;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    types_hash_max_size 2048;
+
+}
+
+# 负载均衡
+upstream pro_name {
+    server 127.0.0.1:3000;
+#   balanceServer ip2;
+#   balanceServer ip3;
+}
+
+server {
+    listen 80;
+    server_name pro_name;
+    charset utf-8;
+    access_log /var/log/nginx/app.log;
+    root /home/.../code/...;
+
+
+
+    location ~ /api/ {
+        proxy_pass http://pro_name;
+        proxy_redirect off;
+        proxy_set_header X-Forwarded-For <span class="token variable">$proxy_add_x_forwarded_for</span>;
+        proxy_set_header Host <span class="token variable">$http_host</span>;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_http_version 1.1;
+        proxy_read_timeout 7s;
+    }
+
+    location ~ /.ht {
+        deny all;
+    }
+
+    location ~* \.(css|js|gif|jpe?g|png|ico)$ {
+        root /home/.../code/...;
+        expires 168h;
+    }
+
+    location / {
+        index  index.html index.htm;
+    }
+
+
+}
+'</span>
+
+<span class="token comment" spellcheck="true">#实用nginx命令，养成好习惯</span>
+<span class="token comment" spellcheck="true">#everytime save change of .conf</span>
+/usr/local/nginx/sbin/nginx -t  <span class="token comment" spellcheck="true">#Check Syntax</span>
+/usr/local/nginx/sbin/nginx -s reload <span class="token comment" spellcheck="true">#Smooth reload nginx</span>
+
+<span class="token comment" spellcheck="true">#nginx optimize</span>
+sysctl -w net.core.somaxconn<span class="token operator">=</span>1024
+</code></pre>
+<h3 id="最后使用pm2进行node项目的管理，包括简单的监控"><a href="#最后使用pm2进行node项目的管理，包括简单的监控" class="headerlink" title="最后使用pm2进行node项目的管理，包括简单的监控"></a>最后使用pm2进行node项目的管理，包括简单的监控</h3><p>详情请见</p>
+<p><a href="http://pm2.keymetrics.io/" target="_blank" rel="external">pm2进程管理</a></p>
+<p><a href="https://keymetrics.io/" target="_blank" rel="external">keymetrics监控项目</a></p>
+<h3 id="附上腾讯云主机在生产环境下的安全组配置"><a href="#附上腾讯云主机在生产环境下的安全组配置" class="headerlink" title="附上腾讯云主机在生产环境下的安全组配置"></a>附上腾讯云主机在生产环境下的安全组配置</h3><img src="/2017/06/08/centOS下的node部署环境搭建/1.png" alt="1.png" title="">
+<img src="/2017/06/08/centOS下的node部署环境搭建/2.png" alt="2.png" title="">]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程&quot;&gt;&lt;a href=&quot;#本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程&quot; class=&quot;headerlink&quot; title=&quot;本文
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://tecknight.xyz/categories/Linux/"/>
+    
+    
+      <category term="linux" scheme="http://tecknight.xyz/tags/linux/"/>
+    
+      <category term="centOS" scheme="http://tecknight.xyz/tags/centOS/"/>
+    
+      <category term="node" scheme="http://tecknight.xyz/tags/node/"/>
+    
+      <category term="deploy" scheme="http://tecknight.xyz/tags/deploy/"/>
+    
+      <category term="环境搭建" scheme="http://tecknight.xyz/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mongoose下的promise技巧</title>
+    <link href="http://tecknight.xyz/2017/05/02/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/"/>
+    <id>http://tecknight.xyz/2017/05/02/mongoose下的promise技巧/</id>
+    <published>2017-05-02T04:18:46.000Z</published>
+    <updated>2017-06-08T08:24:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>在Promise大行其道的世界里，使用promise可谓是家常便饭了，写一个漂亮的promise极其重要</p>
+<p>本文将会基于Express环境实战mongoose的promise，帮大家避免一些常见的错误并对promise链进行调整以提高其可读性</p>
+<p>最后，本文将会介绍一种极少见的promise奇淫怪技，解决一些难以解决的又不得不解决的异步冲突</p>
+</blockquote>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>虽然<code>mongoose</code>本身也有自带<code>promise</code>且大部分操作返回就是一个<code>promise</code>对象，但大多数情况下我们还是毅然决然的换成<code>bluebird</code>这个promise库，其中提供了大量的<br>promise操作可供我们使用，废话少说，赶紧上路！</p>
+<h2 id="Bad-example"><a href="#Bad-example" class="headerlink" title="Bad example"></a>Bad example</h2><p>你可能看过这样的<code>Promise</code>链中链</p>
+<pre class=" language-javascript"><code class="language-javascript">user_group<span class="token punctuation">.</span><span class="token function">findByName</span><span class="token punctuation">(</span><span class="token string">'admin'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>doc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            user<span class="token punctuation">.</span><span class="token function">findUser</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>userObj<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token operator">...</span><span class="token punctuation">.</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token function">next</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">next</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>看到这里不用写都应该能发现，这<code>Promise</code>已经失去了它原本的使命，层层嵌套，犹如又回到了地狱回调的节奏，可读性不免让人觉得糟糕</p>
+<h2 id="Let’s-pratice"><a href="#Let’s-pratice" class="headerlink" title="Let’s pratice"></a>Let’s pratice</h2><p>我们可以来动手改写一下</p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续.."></a>未完待续..</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;在Promise大行其道的世界里，使用promise可谓是家常便饭了，写一个漂亮的promise极其重要&lt;/p&gt;
+&lt;p&gt;本文将会基于Express环境实战mongoose的promise，帮大家避免一些常见的错误并对promise链进行调整以提高其
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://tecknight.xyz/categories/Linux/"/>
+    
+    
+      <category term="promise" scheme="http://tecknight.xyz/tags/promise/"/>
+    
+      <category term="mongoose" scheme="http://tecknight.xyz/tags/mongoose/"/>
+    
+  </entry>
   
   <entry>
     <title>用supertest进行API测试</title>
@@ -184,17 +470,15 @@ server<span class="token punctuation">.</span><span class="token function">liste
     <published>2017-04-11T12:58:59.000Z</published>
     <updated>2017-04-11T13:01:01.000Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="其中记录了python跟别的语言不一样的一些基础知识点"><a href="#其中记录了python跟别的语言不一样的一些基础知识点" class="headerlink" title="其中记录了python跟别的语言不一样的一些基础知识点"></a>其中记录了python跟别的语言不一样的一些基础知识点</h4><h4 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h4><p><code>True</code></p>
-<p><code>False</code></p>
-<h4 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h4><p><code>/</code> 默认的除法是精确除法</p>
+    <content type="html"><![CDATA[<h4 id="其中记录了python跟别的语言不一样的一些基础知识点"><a href="#其中记录了python跟别的语言不一样的一些基础知识点" class="headerlink" title="其中记录了python跟别的语言不一样的一些基础知识点"></a>其中记录了python跟别的语言不一样的一些基础知识点</h4><h4 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h4><figcaption><p><code>False</code></p></figcaption><pre class=" language-True</code></p>"><h4 id="除法"><a href="#除法" class="headerlink" title="除法"><code class="language-True</code></p>"><h4 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h4><p><code>/</code> 默认的除法是精确除法</p>
 <p><code>//</code> 才是通常的取商的整数部分</p>
 <h4 id="字符-类似C的ASCII码"><a href="#字符-类似C的ASCII码" class="headerlink" title="字符(类似C的ASCII码)"></a>字符(类似C的ASCII码)</h4><p><code>ord()</code> 字符对应编码</p>
 <p><code>chr()</code> 编码转字符</p>
-<p><code>&#39;aaa&#39;.encode(&#39;utf-8&#39;)</code> 转成对应编码形式的<code>bytes</code></p>
-<p><code>&#39;aaa&#39;.decode(&#39;utf-8&#39;)</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
-<h4 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h4><pre class=" language-python"><code class="language-python">r <span class="token operator">=</span> <span class="token number">18.0555</span>
-<span class="token string">'%.2f%%'</span> <span class="token operator">%</span>r
-<span class="token comment" spellcheck="true"># '18.06%'</span>
+<p><code>'aaa'.encode('utf-8')</code> 转成对应编码形式的<code>bytes</code></p>
+<p><code>'aaa'.decode('utf-8')</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
+<h4 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h4><pre><code class="python">r = 18.0555
+'%.2f%%' %r
+# '18.06%'
 </code></pre>
 <h4 id="数据类型之list-类比数组"><a href="#数据类型之list-类比数组" class="headerlink" title="数据类型之list(类比数组)"></a>数据类型之list(类比数组)</h4><p>获取<code>list</code>元素个数<code>len(变量名)</code></p>
 <p>访问元素下标为负表示都是第几个元素</p>
@@ -255,7 +539,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
 <p>可变参数 <code>def calc(*numbers):</code> 多参数自动组装成<code>tuple</code></p>
 <p>关键字参数 <code>def person(name, age, **kw):</code> 方便扩展函数的参数</p>
 <p><code>参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数</code></p>
-<h4 id="尾递归优化递归函数"><a href="#尾递归优化递归函数" class="headerlink" title="尾递归优化递归函数"></a>尾递归优化递归函数</h4><p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></p>
+<h4 id="尾递归优化递归函数"><a href="#尾递归优化递归函数" class="headerlink" title="尾递归优化递归函数"></a>尾递归优化递归函数</h4><p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></pre>
 <p>注意：标准解释器并不支持这种用法</p>
 ]]></content>
     
@@ -366,9 +650,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
 <h3 id="red-hat-企业（付费）"><a href="#red-hat-企业（付费）" class="headerlink" title="red hat 企业（付费）"></a>red hat 企业（付费）</h3><h3 id="ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备"><a href="#ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备" class="headerlink" title="ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备"></a>ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备</h3><h3 id="debian-稳定可靠，但更新周期长"><a href="#debian-稳定可靠，但更新周期长" class="headerlink" title="debian 稳定可靠，但更新周期长"></a>debian 稳定可靠，但更新周期长</h3><h3 id="Mint-台式机用户并支持专利性媒体"><a href="#Mint-台式机用户并支持专利性媒体" class="headerlink" title="Mint 台式机用户并支持专利性媒体"></a>Mint 台式机用户并支持专利性媒体</h3><h3 id="Core-OS-容器化应用程序的计算机集群建设"><a href="#Core-OS-容器化应用程序的计算机集群建设" class="headerlink" title="Core OS 容器化应用程序的计算机集群建设"></a>Core OS 容器化应用程序的计算机集群建设</h3><h2 id="系统路径"><a href="#系统路径" class="headerlink" title="系统路径"></a>系统路径</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">pwd</span>
 </code></pre>
 <p><strong>返回当前的目录位置</strong></p>
-<p><code>/</code>表示系统的根目录，可以进入的最高位置</p>
-<p>所有<code>Linux</code>系统中都可以找到<code>/home</code>这样的目录，除少数例外情况，<code>home</code>目录可以容纳每个用户的所有主目录</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token function">ls</span> -a
+<figcaption><p>所有<code>Linux</code>系统中都可以找到<code>/home</code>这样的目录，除少数例外情况，<code>home</code>目录可以容纳每个用户的所有主目录</p></figcaption><pre class=" language-/</code>表示系统的根目录，可以进入的最高位置</p>"><pre><code class="bash"><code class="language-/</code>表示系统的根目录，可以进入的最高位置</p>"><pre><code class="bash">ls -a
 </code></pre>
 <p><strong>显示所有文件包括隐藏文件</strong></p>
 <p>任何前缀是<code>.</code>的文件都是会被系统隐藏的</p>
@@ -479,7 +761,7 @@ chgrp 组名 文件名 //更改组
 <p>常见端口如下图</p>
 <img src="/2017/03/29/Linux-WEB基础-学习笔记/4.png" alt="4.png" title="">
 <p>通过防火墙，可以控制服务器允许哪个端口接受请求</p>
-<h4 id="只开放让应用程序行使正常功能的端口"><a href="#只开放让应用程序行使正常功能的端口" class="headerlink" title="只开放让应用程序行使正常功能的端口"></a>只开放让应用程序行使正常功能的端口</h4><h4 id="ubuntu-ufw-防火墙"><a href="#ubuntu-ufw-防火墙" class="headerlink" title="ubuntu ufw 防火墙"></a>ubuntu ufw 防火墙</h4><p>激活<code>ufw</code></p>
+<h4 id="只开放让应用程序行使正常功能的端口"><a href="#只开放让应用程序行使正常功能的端口" class="headerlink" title="只开放让应用程序行使正常功能的端口"></a>只开放让应用程序行使正常功能的端口</h4><h4 id="ubuntu-ufw-防火墙"><a href="#ubuntu-ufw-防火墙" class="headerlink" title="ubuntu ufw 防火墙"></a>ubuntu ufw 防火墙</h4><p>激活<code>ufw</code></pre>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> ufw status //查看状态
 </code></pre>
 <p><strong>写入防火墙规则并开启防火墙</strong></p>
@@ -861,36 +1143,6 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
   </entry>
   
   <entry>
-    <title>Laravel 5 常用帮助函数</title>
-    <link href="http://tecknight.xyz/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/"/>
-    <id>http://tecknight.xyz/2017/02/03/Laravel 5 常用帮助函数/</id>
-    <published>2017-02-03T05:26:19.000Z</published>
-    <updated>2017-03-22T14:44:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
-</code></pre>
-<h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//生成10位随机密码</span>
-</code></pre>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-app-用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;a href=&quot;#1-app-用于快速生成对应命名空间下的类的实例&quot; class=&quot;headerlink&quot; title=&quot;1.app() 用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;/a&gt;1.app() 用于快速
-    
-    </summary>
-    
-      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
-    
-    
-      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
-    
-      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Laravel学习笔记</title>
     <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://tecknight.xyz/2017/02/03/Laravel 学习笔记/</id>
@@ -974,13 +1226,12 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
 </ul>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">redirect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">intended</span><span class="token punctuation">(</span><span class="token function">route</span><span class="token punctuation">(</span><span class="token string">'users.show'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>Auth<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">user</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<h3 id="关于Blade"><a href="#关于Blade" class="headerlink" title="关于Blade"></a>关于Blade</h3><p><code>@yield(&#39;title&#39;, &#39;Sample&#39;)</code></p>
-<p>声明title变量及其默认值</p>
-<pre><code>@yield(&#39;content&#39;)
+<h3 id="关于Blade"><a href="#关于Blade" class="headerlink" title="关于Blade"></a>关于Blade</h3><figcaption>&#39;Sample&#39;)</code></p></figcaption><pre class=" language-@yield(&#39;title&#39;,"><code class="language-@yield(&#39;title&#39;,"><p>声明title变量及其默认值</p>
+<pre><code>@yield('content')
 // content区域
 
-@extends(&#39;layouts.default&#39;)
-@section(&#39;content&#39;)
+@extends('layouts.default')
+@section('content')
 // 内容将会被插入布局模板中
 @stop
 </code></pre><p><code>@yield</code> 用于定义</p>
@@ -1010,7 +1261,7 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
 <p><code>Auth::user()</code>当前登录实例</p>
 <p><code>Auth::check()</code> 是否已经登录</p>
 <p>API:</p>
-<p><code>bool attempt(array $credentials = array(), bool $remember = false)</code></p>
+<p><code>bool attempt(array $credentials = array(), bool $remember = false)</code></pre>
 <p>第二个参数用来开发记住密码</p>
 <h3 id="中间件的使用"><a href="#中间件的使用" class="headerlink" title="中间件的使用"></a>中间件的使用</h3><ul>
 <li>在用户控制器构造方法中应用中间件</li>
@@ -1074,6 +1325,36 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </summary>
     
       <category term="PHP" scheme="http://tecknight.xyz/categories/PHP/"/>
+    
+    
+      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
+    
+      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Laravel 5 常用帮助函数</title>
+    <link href="http://tecknight.xyz/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/"/>
+    <id>http://tecknight.xyz/2017/02/03/Laravel 5 常用帮助函数/</id>
+    <published>2017-02-03T05:26:19.000Z</published>
+    <updated>2017-03-22T14:44:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
+</code></pre>
+<h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成10位随机密码</span>
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-app-用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;a href=&quot;#1-app-用于快速生成对应命名空间下的类的实例&quot; class=&quot;headerlink&quot; title=&quot;1.app() 用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;/a&gt;1.app() 用于快速
+    
+    </summary>
+    
+      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
     
     
       <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
@@ -1265,16 +1546,15 @@ vm<span class="token punctuation">.</span><span class="token function">$watch</s
 <p>###绑定HTML Class<br>语法：<code>v-bind:class={class1:布尔变量,class2...}</code></p>
 <p>class还可以是数据对象,甚至是计算属性！</p>
 <p>#####通过控制布尔变量可以使元素的class动态切换</p>
-<p><code>&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p>
-<p>###绑定内联样式</p>
-<p><code>v-bind:style=&quot;{ color: mycolor}&quot;</code> mycolor在data中定义</p>
+<figcaption>v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p></figcaption><pre class=" language-&lt;div"><code class="language-&lt;div"><p>###绑定内联样式</p>
+<p><code>v-bind:style="{ color: mycolor}"</code> mycolor在data中定义</p>
 <p>复杂内联样式推荐绑定styleObject对象</p>
-<pre class=" language-javascript"><code class="language-javascript">data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-  styleObject<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-    color<span class="token punctuation">:</span> <span class="token string">'red'</span><span class="token punctuation">,</span>
-    fontSize<span class="token punctuation">:</span> <span class="token string">'13px'</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre><code class="javascript">data: {
+  styleObject: {
+    color: 'red',
+    fontSize: '13px'
+  }
+}
 </code></pre>
 <p>##条件渲染<br>判断一个标签的输出 <code>v-if=&quot;ok&quot;</code> ok值决定是否显示</p>
 <p>判断一块标签的显示 用template元素作为包装元素，下面为根据需要显示的标签块</p>
@@ -1347,7 +1627,7 @@ vm<span class="token punctuation">.</span><span class="token function">$watch</s
 <p>注意：组件的data必须是函数！通过return的方式将data传入组件绑定的元素中</p>
 <p>意义：类似接口解耦，使得同一个data在不同的组件中都能有自己不同的状态！</p>
 <p>###传递数据<br>父–&gt;子 props:[‘字段名’]</p>
-<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code><br><code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></p>
+<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code><br><code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></pre>
 <p>###props验证</p>
 <pre class=" language-javascript"><code class="language-javascript">propB<span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">,</span> Number<span class="token punctuation">]</span><span class="token punctuation">,</span>
     <span class="token comment" spellcheck="true">// 必须且是字符串</span>
@@ -1404,6 +1684,44 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
   </entry>
   
   <entry>
+    <title>Sass语法点总结</title>
+    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
+    <published>2016-12-03T11:43:37.000Z</published>
+    <updated>2017-03-22T14:33:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
+    
+    </summary>
+    
+      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
+    
+      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Sass之CSS模块化</title>
     <link href="http://tecknight.xyz/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/"/>
     <id>http://tecknight.xyz/2016/12/03/Sass之CSS模块化/</id>
@@ -1440,44 +1758,6 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
       &lt;p&gt;一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@import &amp;#39;partials/temp;&amp;#39
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Sass语法点总结</title>
-    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
-    <published>2016-12-03T11:43:37.000Z</published>
-    <updated>2017-03-22T14:33:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
-<li><p>@import</p>
-<p> 引入sass模块</p>
-</li>
-<li><p>@include</p>
-<p> 引入mixin函数</p>
-</li>
-<li><p>@mixin</p>
-<p> 声明函数 </p>
-</li>
-<li><p>@extends</p>
-<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
     
     </summary>
     
@@ -1789,116 +2069,6 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
       <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
     
       <category term="function" scheme="http://tecknight.xyz/tags/function/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UNIX时间戳与time()算时间差</title>
-    <link href="http://tecknight.xyz/2016/11/05/UNIX%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/"/>
-    <id>http://tecknight.xyz/2016/11/05/UNIX时间戳与time-算时间差/</id>
-    <published>2016-11-05T08:35:24.000Z</published>
-    <updated>2017-03-22T12:30:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案</p>
-<h3 id="需要用到的函数"><a href="#需要用到的函数" class="headerlink" title="需要用到的函数"></a>需要用到的函数</h3><h4 id="getdate-unix数字时间戳"><a href="#getdate-unix数字时间戳" class="headerlink" title="getdate(unix数字时间戳)"></a>getdate(unix数字时间戳)</h4><p>将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间<br><a id="more"></a></p>
-<h3 id="time"><a href="#time" class="headerlink" title="time()"></a>time()</h3><p>方便获取现在的时间</p>
-<h4 id="现假设从mysql中获取到时间戳为-result"><a href="#现假设从mysql中获取到时间戳为-result" class="headerlink" title="现假设从mysql中获取到时间戳为$result"></a>现假设从mysql中获取到时间戳为$result</h4><pre class=" language-php"><code class="language-php">              <span class="token variable">$date_time_array</span> <span class="token operator">=</span> <span class="token function">getdate</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-              <span class="token variable">$hour</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'hours'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token variable">$min</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'minutes'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token variable">$second</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'seconds'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token variable">$month</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'mon'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token variable">$day</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'mday'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token variable">$year</span> <span class="token operator">=</span> <span class="token variable">$date_time_array</span><span class="token punctuation">[</span><span class="token string">'year'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token variable">$now_time_array</span> <span class="token operator">=</span> <span class="token function">getdate</span><span class="token punctuation">(</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$year</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'year'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'year'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$year</span><span class="token punctuation">;</span>
-                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'年前'</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$month</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mon'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mon'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$month</span><span class="token punctuation">;</span>
-                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'月前'</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$day</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mday'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'mday'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$day</span><span class="token punctuation">;</span>
-                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'天前'</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$hour</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'hours'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'hours'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$hour</span><span class="token punctuation">;</span>
-                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'小时前'</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$min</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'minutes'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'minutes'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$min</span><span class="token punctuation">;</span>
-                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'分钟前'</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$second</span><span class="token operator">&lt;</span><span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'seconds'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token variable">$diff</span> <span class="token operator">=</span> <span class="token variable">$now_time_array</span><span class="token punctuation">[</span><span class="token string">'seconds'</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token variable">$second</span><span class="token punctuation">;</span>
-                <span class="token variable">$timediff</span> <span class="token operator">=</span> <span class="token variable">$diff</span><span class="token punctuation">.</span><span class="token string">'秒前'</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-</code></pre>
-<p>循环嵌套顺序判断年月日时分秒，找到第一个不同项相减，就能够计算出数据的距今时间</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案&lt;/p&gt;
-&lt;h3 id=&quot;需要用到的函数&quot;&gt;&lt;a href=&quot;#需要用到的函数&quot; class=&quot;headerlink&quot; title=&quot;需要用到的函数&quot;&gt;&lt;/a&gt;需要用到的函数&lt;/h3&gt;&lt;h4 id=&quot;getdate-unix数字时间戳&quot;&gt;&lt;a href=&quot;#getdate-unix数字时间戳&quot; class=&quot;headerlink&quot; title=&quot;getdate(unix数字时间戳)&quot;&gt;&lt;/a&gt;getdate(unix数字时间戳)&lt;/h4&gt;&lt;p&gt;将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间&lt;br&gt;
-    
-    </summary>
-    
-      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
-    
-    
-      <category term="algorithms" scheme="http://tecknight.xyz/tags/algorithms/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TP常用函数总结</title>
-    <link href="http://tecknight.xyz/2016/11/04/TP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/"/>
-    <id>http://tecknight.xyz/2016/11/04/TP常用函数总结/</id>
-    <published>2016-11-04T06:45:08.000Z</published>
-    <updated>2017-03-22T12:29:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="I函数"><a href="#I函数" class="headerlink" title="I函数"></a>I函数</h3><p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
-<p>定义: <code>I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;)</code></p>
-<p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code><br><a id="more"></a><br>好处：自动过滤输入，增加安全性，官方推荐</p>
-<h3 id="D函数"><a href="#D函数" class="headerlink" title="D函数"></a>D函数</h3><p>用途：new出Model对象进行数据的增删改查，而且可以调用Model中的业务逻辑</p>
-<p>定义：<code>D(&#39;Model名&#39;)</code></p>
-<h3 id="M函数"><a href="#M函数" class="headerlink" title="M函数"></a>M函数</h3><p>用途：可对Model对应的表进行基本的CURD操作，而且节约资源</p>
-<p>定义: <code>M(&#39;Model名&#39;)</code></p>
-<p>缺点：不能调用Model中的自定义业务逻辑</p>
-<h3 id="U函数"><a href="#U函数" class="headerlink" title="U函数"></a>U函数</h3><p>用途：动态生成URL，是官方推荐的URL生成方式</p>
-<p>定义：<code>U(&#39;模块/控制器/操作&#39;)</code></p>
-<h3 id="E函数"><a href="#E函数" class="headerlink" title="E函数"></a>E函数</h3><p>用途：用于错误调试，可以输出错误信息并中断操作</p>
-<p>用法：<code>E($msg)</code></p>
-<h3 id="F函数"><a href="#F函数" class="headerlink" title="F函数"></a>F函数</h3><p>用途：建立快速缓存，为存储的数据带来更快的操作</p>
-<p>缓存Data：<code>F(&#39;data&#39;,$Data,保存目录(可选))</code></p>
-<p>获取：<code>F(&#39;data&#39;)</code></p>
-<p>删除: <code>F(&#39;data&#39;, NULL)</code></p>
-<p>查询缓存: <code>$Model-&gt;cache(&#39;data&#39;)-&gt;select()</code></p>
-<h3 id="S函数"><a href="#S函数" class="headerlink" title="S函数"></a>S函数</h3><p>外部获取缓存内容：<code>$value = S(&#39;cache_name&#39;)</code></p>
-<h3 id="T函数"><a href="#T函数" class="headerlink" title="T函数"></a>T函数</h3><p>专门用于获取模板的地址，用于display()中</p>
-<p>定义: <code>T(模块/主题/控制器/操作,视图分层)</code></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;I函数&quot;&gt;&lt;a href=&quot;#I函数&quot; class=&quot;headerlink&quot; title=&quot;I函数&quot;&gt;&lt;/a&gt;I函数&lt;/h3&gt;&lt;p&gt;用途：获取输入数据，例如表单的接收，API的GET接收参数&lt;/p&gt;
-&lt;p&gt;定义: &lt;code&gt;I(&amp;#39;接收的数据&amp;#39;，&amp;#39;默认值&amp;#39;,&amp;#39;接收数据的类型&amp;#39;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;用法：&lt;code&gt;I(&amp;#39;get.id&amp;#39;,1,&amp;#39;int&amp;#39;)&lt;/code&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
-    
-    
-      <category term="ThinkPHP" scheme="http://tecknight.xyz/tags/ThinkPHP/"/>
     
   </entry>
   
