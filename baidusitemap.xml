@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://tecknight.xyz/2017/09/10/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</loc>
+    <lastmod>2017-09-10T07:16:38.000Z</lastmod>
+    <data>
+        <display>
+        <title>使用sftp搭建本地快速部署环境</title>
+        <pubTime>2017-09-10T07:11:53.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>web</tag>
+         
+        <tag>shell</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://tecknight.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://tecknight.xyz/2017/06/08/centOS%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2017-06-08T09:12:27.000Z</lastmod>
     <data>
@@ -11,11 +35,11 @@
         <title>centOS下的node部署环境搭建</title>
         <pubTime>2017-06-08T08:21:41.000Z</pubTime>
         
+        <tag>node</tag>
+         
         <tag>linux</tag>
          
         <tag>centOS</tag>
-         
-        <tag>node</tag>
          
         <tag>deploy</tag>
          

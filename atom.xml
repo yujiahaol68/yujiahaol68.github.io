@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tecknight.xyz/"/>
-  <updated>2017-06-08T09:12:27.000Z</updated>
+  <updated>2017-09-10T07:16:38.000Z</updated>
   <id>http://tecknight.xyz/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用sftp搭建本地快速部署环境</title>
+    <link href="http://tecknight.xyz/2017/09/10/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/"/>
+    <id>http://tecknight.xyz/2017/09/10/使用sftp搭建本地快速部署环境/</id>
+    <published>2017-09-10T07:11:53.000Z</published>
+    <updated>2017-09-10T07:16:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>首先，我们要确保<code>sshd</code>也就是我们的ssh服务处于运行状态之中，下面以centos为例来讲解搭建的过程。</p>
+<p>必要的包: <code>openssh-clients</code> <code>openssh-server</code></p>
+<p>运行下面的命令以确定我们的ssh服务处于active的状态中</p>
+<pre><code>$ systemctl status sshd
+</code></pre><h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>新建一个用户(非root用户请加sudo)</p>
+<pre><code>$ adduser test
+</code></pre><pre><code>$ passwd test
+</code></pre><p>设置密码，更新用户令牌信息，本地生成SSH密钥并将公钥放置于服务器，确保能从本地使用SSH登录远程主机</p>
+<p>明确新用户的文件夹权限</p>
+<pre><code>$ chown root:root /../somepath/sftp
+$ chmod 755 /../somepath/sftp
+</code></pre><p>在sftp文件夹下创建<code>uploads</code>文件夹，所有上传的文件都会在里面，将拥有者设置为test用户</p>
+<pre><code>$ chown test:test /../somepath/sftp/uploads
+</code></pre><p>将<code>PasswordAuthentication</code>设置为<code>no</code>并保存，确保不能用密码建立SSH连接并重启SSH服务</p>
+<pre><code>$ vi /etc/ssh/sshd_config
+$ ...
+$ systemctl restart sshd
+</code></pre><p>现在在本地尝试使用<code>sftp</code>进行登录</p>
+<pre><code>sftp -i ~/.ssh/key test@ip_address
+</code></pre><p>发现进入sftp即成功！</p>
+<h3 id="使用vscode配置快速部署环境"><a href="#使用vscode配置快速部署环境" class="headerlink" title="使用vscode配置快速部署环境"></a>使用vscode配置快速部署环境</h3><p>这里是用的是 <code>ftp-sync</code> 插件</p>
+<p>安装完成之后按<code>F1</code>键</p>
+<p>选择<code>Ftp-sync: init</code></p>
+<p>就可以在<code>.vscode</code>文件夹下找到<code>ftp-sync.json</code>文件</p>
+<pre><code>{
+    &quot;remotePath&quot;: &quot;/../sftp/uploads/project&quot;,
+    &quot;host&quot;: &quot;&quot;,    // ip地址
+    &quot;username&quot;: &quot;test&quot;,
+    &quot;password&quot;: null,    // 留空，因为使用了更安全的sftp协议传输文件
+    &quot;port&quot;: 22,    // SSH端口
+    &quot;secure&quot;: true,
+    &quot;protocol&quot;: &quot;sftp&quot;,
+    &quot;uploadOnSave&quot;: false,
+    &quot;passive&quot;: false,
+    &quot;debug&quot;: false,
+    &quot;privateKeyPath&quot;: &quot;/Users/user/.ssh/key&quot;,  // 本地密钥的地址
+    &quot;passphrase&quot;: null,
+    &quot;ignore&quot;: [
+        &quot;\\.vscode&quot;,
+        &quot;\\.git&quot;,
+        &quot;\\.DS_Store&quot;,
+        &quot;\\node_modules&quot;,
+        &quot;\\test&quot;,
+        &quot;\\.travis.yml&quot;        // 想要忽略上传的文件夹或文件
+    ],
+    &quot;generatedFiles&quot;: {
+        &quot;uploadOnSave&quot;: false,
+        &quot;extensionsToInclude&quot;: [],
+        &quot;path&quot;: &quot;&quot;
+    }
+}
+</code></pre><p>然后愉快地快速部署到服务器吧</p>
+<figcaption></p></figcaption><pre class=" language-F1</code>"><code class="language-F1</code>"><p>选择 <code>Ftp-sync: Local To Remote</code></pre>
+<p>选择 <code>full-sync</code>，执行上传。大功告成！</p>
+<p>注： 如果是node项目的话可以使用<code>pm2</code>检测文件更改自动重启服务，一键更新线上代码！</p>
+<p>参考：</p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-enable-sftp-without-shell-access-on-centos-7" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-enable-sftp-without-shell-access-on-centos-7</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h3&gt;&lt;p&gt;首先，我们要确保&lt;code&gt;sshd&lt;/code&gt;也就是我们的ssh服务处于运行状态之中，下面以centos为例来讲解搭建的过程。&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://tecknight.xyz/categories/Linux/"/>
+    
+    
+      <category term="linux" scheme="http://tecknight.xyz/tags/linux/"/>
+    
+      <category term="web" scheme="http://tecknight.xyz/tags/web/"/>
+    
+      <category term="shell" scheme="http://tecknight.xyz/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>centOS下的node部署环境搭建</title>
@@ -240,11 +324,11 @@ sysctl -w net.core.somaxconn<span class="token operator">=</span>1024
       <category term="Linux" scheme="http://tecknight.xyz/categories/Linux/"/>
     
     
+      <category term="node" scheme="http://tecknight.xyz/tags/node/"/>
+    
       <category term="linux" scheme="http://tecknight.xyz/tags/linux/"/>
     
       <category term="centOS" scheme="http://tecknight.xyz/tags/centOS/"/>
-    
-      <category term="node" scheme="http://tecknight.xyz/tags/node/"/>
     
       <category term="deploy" scheme="http://tecknight.xyz/tags/deploy/"/>
     
@@ -1143,6 +1227,73 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
   </entry>
   
   <entry>
+    <title>Laravel5 新手填坑指南</title>
+    <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/"/>
+    <id>http://tecknight.xyz/2017/02/03/Laravel 新手填坑指南/</id>
+    <published>2017-02-03T05:26:19.000Z</published>
+    <updated>2017-03-22T14:51:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
+<p>注意事项：</p>
+<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
+<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
+<p>Mac/Linux (少很多麻烦)</p>
+<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
+<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
+<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
+<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
+</li>
+<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
+</li>
+<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
+</li>
+</ol>
+<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
+<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
+</ol>
+<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
+<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
+</ol>
+<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
+<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
+</ol>
+<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
+<li><p>引用的时候必须写成 </p>
+<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
+</li>
+</ol>
+<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
+<li>用户的退出登录可以看成是提交一个DELETE表单</li>
+<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
+<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
+</ol>
+<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
+</code></pre>
+<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;浏览器篇&quot;&gt;&lt;a href=&quot;#浏览器篇&quot; class=&quot;headerlink&quot; title=&quot;浏览器篇&quot;&gt;&lt;/a&gt;浏览器篇&lt;/h3&gt;&lt;p&gt;开发浏览器: Chorme（不用解释）&lt;/p&gt;
+&lt;p&gt;注意事项：&lt;/p&gt;
+&lt;p&gt;一定要先清缓存！清缓存！清缓存！ 重要的说三
+    
+    </summary>
+    
+      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
+    
+    
+      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
+    
+      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Laravel学习笔记</title>
     <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://tecknight.xyz/2017/02/03/Laravel 学习笔记/</id>
@@ -1351,73 +1502,6 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     <summary type="html">
     
       &lt;h3 id=&quot;1-app-用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;a href=&quot;#1-app-用于快速生成对应命名空间下的类的实例&quot; class=&quot;headerlink&quot; title=&quot;1.app() 用于快速生成对应命名空间下的类的实例&quot;&gt;&lt;/a&gt;1.app() 用于快速
-    
-    </summary>
-    
-      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
-    
-    
-      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
-    
-      <category term="Laravel" scheme="http://tecknight.xyz/tags/Laravel/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Laravel5 新手填坑指南</title>
-    <link href="http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/"/>
-    <id>http://tecknight.xyz/2017/02/03/Laravel 新手填坑指南/</id>
-    <published>2017-02-03T05:26:19.000Z</published>
-    <updated>2017-03-22T14:51:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
-<p>注意事项：</p>
-<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
-<p>Mac/Linux (少很多麻烦)</p>
-<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
-<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
-</li>
-<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
-</li>
-<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
-</li>
-</ol>
-<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
-<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
-</ol>
-<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
-<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
-</ol>
-<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
-<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
-</ol>
-<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
-<li><p>引用的时候必须写成 </p>
-<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
-</code></pre>
-</li>
-<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
-</li>
-</ol>
-<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
-<li>用户的退出登录可以看成是提交一个DELETE表单</li>
-<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
-<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
-</ol>
-<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
-</code></pre>
-<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;浏览器篇&quot;&gt;&lt;a href=&quot;#浏览器篇&quot; class=&quot;headerlink&quot; title=&quot;浏览器篇&quot;&gt;&lt;/a&gt;浏览器篇&lt;/h3&gt;&lt;p&gt;开发浏览器: Chorme（不用解释）&lt;/p&gt;
-&lt;p&gt;注意事项：&lt;/p&gt;
-&lt;p&gt;一定要先清缓存！清缓存！清缓存！ 重要的说三
     
     </summary>
     
@@ -1684,44 +1768,6 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
   </entry>
   
   <entry>
-    <title>Sass语法点总结</title>
-    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
-    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
-    <published>2016-12-03T11:43:37.000Z</published>
-    <updated>2017-03-22T14:33:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
-<li><p>@import</p>
-<p> 引入sass模块</p>
-</li>
-<li><p>@include</p>
-<p> 引入mixin函数</p>
-</li>
-<li><p>@mixin</p>
-<p> 声明函数 </p>
-</li>
-<li><p>@extends</p>
-<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
-    
-    </summary>
-    
-      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
-    
-    
-      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
-    
-      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Sass之CSS模块化</title>
     <link href="http://tecknight.xyz/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/"/>
     <id>http://tecknight.xyz/2016/12/03/Sass之CSS模块化/</id>
@@ -1758,6 +1804,44 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
       &lt;p&gt;一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@import &amp;#39;partials/temp;&amp;#39
+    
+    </summary>
+    
+      <category term="css" scheme="http://tecknight.xyz/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://tecknight.xyz/tags/css/"/>
+    
+      <category term="Sass" scheme="http://tecknight.xyz/tags/Sass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sass语法点总结</title>
+    <link href="http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://tecknight.xyz/2016/12/03/Sass语法点总结/</id>
+    <published>2016-12-03T11:43:37.000Z</published>
+    <updated>2017-03-22T14:33:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot;&gt;&lt;a href=&quot;#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值&quot; class=&quot;h
     
     </summary>
     
@@ -2005,70 +2089,6 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
       <category term="cli" scheme="http://tecknight.xyz/tags/cli/"/>
     
       <category term="front end dev" scheme="http://tecknight.xyz/tags/front-end-dev/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>php处理html字符串</title>
-    <link href="http://tecknight.xyz/2016/11/12/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>http://tecknight.xyz/2016/11/12/php处理html字符串/</id>
-    <published>2016-11-12T03:19:10.000Z</published>
-    <updated>2017-03-22T12:29:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"><a href="#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用" class="headerlink" title="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"></a>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4><h3 id="需要用到的函数："><a href="#需要用到的函数：" class="headerlink" title="需要用到的函数："></a>需要用到的函数：</h3><ul>
-<li>str_replace() 字符串替换</li>
-<li>html_entity_decode() html字符串转html标签 </li>
-<li>strip_tags() 除去所有html标签</li>
-<li>preg_match_all() 全局正则匹配字符串</li>
-<li>array_unique() 去除数组中重复的元素(用于解决全局正则匹配带来的元素重复的问题)</li>
-<li>array_flip() 将键值交换，因为键名不能重复，所以重复元素会被去掉，两次flip下来就能够得到不重复的键值数组</li>
-<li>array_values() 返回只有键值无键名的数组<a id="more"></a>
-<h3 id="快速去除html字符"><a href="#快速去除html字符" class="headerlink" title="快速去除html字符"></a>快速去除html字符</h3></li>
-</ul>
-<pre class=" language-php"><code class="language-php"><span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">strip_tags</span><span class="token punctuation">(</span><span class="token function">html_entity_decode</span><span class="token punctuation">(</span><span class="token variable">$htmlStr</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'&lt;br>'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>先转HTML标签再去除标签，但是注意保留换行标签，在APP中的文字依然需要简单地排版。<br>接着我们再把br标签再转成本地APP的\n</p>
-<pre class=" language-php"><code class="language-php"><span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string">'&lt;br/>'</span><span class="token punctuation">,</span><span class="token string">'\n'</span><span class="token punctuation">,</span><span class="token variable">$bewrite</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>但似乎字符串还是没有除干净，因为会残余一些html本身的换行字符&amp;和空格,再替换一次</p>
-<pre class=" language-php"><code class="language-php"><span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string">'&amp;nbsp;'</span><span class="token punctuation">,</span><span class="token string">' '</span><span class="token punctuation">,</span><span class="token variable">$bewrite</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token variable">$bewrite</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string">'&amp;amp;'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">,</span><span class="token variable">$bewrite</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>但通常情况下，我们的HTML字符串中不仅有文本，还有图片，img中的src属性也必须要挑出来</p>
-<h3 id="正则匹配标签属性"><a href="#正则匹配标签属性" class="headerlink" title="正则匹配标签属性"></a>正则匹配标签属性</h3><p>下面我以img中匹配src图片地址为例子</p>
-<pre class=" language-php"><code class="language-php"><span class="token variable">$unmatchedstr</span> <span class="token operator">=</span> <span class="token function">html_entity_decode</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'secondgoods_bewrite'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//转html字符串</span>
-<span class="token function">preg_match_all</span><span class="token punctuation">(</span><span class="token string">'/\&lt;img.*?src\=\"(.*?)\"[^>]*>/i'</span><span class="token punctuation">,</span><span class="token variable">$unmatchedstr</span><span class="token punctuation">,</span><span class="token variable">$match</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//正则匹配图片src地址</span>
-</code></pre>
-<p>但这还没完，我们发现正则出来的链接有许多的重复的链接，我们必须要去除变量$match[1]中重复的值</p>
-<pre class=" language-php"><code class="language-php"><span class="token variable">$matches</span> <span class="token operator">=</span> <span class="token function">array_unique</span><span class="token punctuation">(</span><span class="token variable">$match</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//来两次array_flip()或许比unique更加高效一些</span>
-<span class="token variable">$matchresult</span> <span class="token operator">=</span> <span class="token function">array_values</span><span class="token punctuation">(</span><span class="token variable">$matches</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取键值数组的值，去掉键名就完成了</span>
-</code></pre>
-<p>附文：</p>
-<p>对于远程的src地址，有一种特殊的正则匹配可以排除掉本地的图片</p>
-<pre class=" language-php"><code class="language-php"><span class="token function">preg_match_all</span><span class="token punctuation">(</span><span class="token string">'/((http|https):\/\/)+(\w+\.)+(\w+)[\w\/\.\-]*(jpg|gif|png)/'</span><span class="token punctuation">,</span><span class="token variable">$unmatchedstr</span><span class="token punctuation">,</span><span class="token variable">$matches</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;a href=&quot;#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot; class=&quot;headerlink&quot; title=&quot;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&quot;&gt;&lt;/a&gt;在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用&lt;/h4&gt;&lt;h3 id=&quot;需要用到的函数：&quot;&gt;&lt;a href=&quot;#需要用到的函数：&quot; class=&quot;headerlink&quot; title=&quot;需要用到的函数：&quot;&gt;&lt;/a&gt;需要用到的函数：&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;str_replace() 字符串替换&lt;/li&gt;
-&lt;li&gt;html_entity_decode() html字符串转html标签 &lt;/li&gt;
-&lt;li&gt;strip_tags() 除去所有html标签&lt;/li&gt;
-&lt;li&gt;preg_match_all() 全局正则匹配字符串&lt;/li&gt;
-&lt;li&gt;array_unique() 去除数组中重复的元素(用于解决全局正则匹配带来的元素重复的问题)&lt;/li&gt;
-&lt;li&gt;array_flip() 将键值交换，因为键名不能重复，所以重复元素会被去掉，两次flip下来就能够得到不重复的键值数组&lt;/li&gt;
-&lt;li&gt;array_values() 返回只有键值无键名的数组
-    
-    </summary>
-    
-      <category term="php" scheme="http://tecknight.xyz/categories/php/"/>
-    
-    
-      <category term="php" scheme="http://tecknight.xyz/tags/php/"/>
-    
-      <category term="function" scheme="http://tecknight.xyz/tags/function/"/>
     
   </entry>
   
