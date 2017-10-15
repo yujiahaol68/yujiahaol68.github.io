@@ -389,7 +389,9 @@
 <h3 id="red-hat-企业（付费）"><a href="#red-hat-企业（付费）" class="headerlink" title="red hat 企业（付费）"></a>red hat 企业（付费）</h3><h3 id="ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备"><a href="#ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备" class="headerlink" title="ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备"></a>ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备</h3><h3 id="debian-稳定可靠，但更新周期长"><a href="#debian-稳定可靠，但更新周期长" class="headerlink" title="debian 稳定可靠，但更新周期长"></a>debian 稳定可靠，但更新周期长</h3><h3 id="Mint-台式机用户并支持专利性媒体"><a href="#Mint-台式机用户并支持专利性媒体" class="headerlink" title="Mint 台式机用户并支持专利性媒体"></a>Mint 台式机用户并支持专利性媒体</h3><h3 id="Core-OS-容器化应用程序的计算机集群建设"><a href="#Core-OS-容器化应用程序的计算机集群建设" class="headerlink" title="Core OS 容器化应用程序的计算机集群建设"></a>Core OS 容器化应用程序的计算机集群建设</h3><h2 id="系统路径"><a href="#系统路径" class="headerlink" title="系统路径"></a>系统路径</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">pwd</span>
 </code></pre>
 <p><strong>返回当前的目录位置</strong></p>
-<figcaption><p>所有<code>Linux</code>系统中都可以找到<code>/home</code>这样的目录，除少数例外情况，<code>home</code>目录可以容纳每个用户的所有主目录</p></figcaption><pre class=" language-/</code>表示系统的根目录，可以进入的最高位置</p>"><pre><code class="bash"><code class="language-/</code>表示系统的根目录，可以进入的最高位置</p>"><pre><code class="bash">ls -a
+<p><code>/</code>表示系统的根目录，可以进入的最高位置</p>
+<p>所有<code>Linux</code>系统中都可以找到<code>/home</code>这样的目录，除少数例外情况，<code>home</code>目录可以容纳每个用户的所有主目录</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">ls</span> -a
 </code></pre>
 <p><strong>显示所有文件包括隐藏文件</strong></p>
 <p>任何前缀是<code>.</code>的文件都是会被系统隐藏的</p>
@@ -500,7 +502,7 @@ chgrp 组名 文件名 //更改组
 <p>常见端口如下图</p>
 <img src="/2017/03/29/Linux-WEB基础-学习笔记/4.png" alt="4.png" title="">
 <p>通过防火墙，可以控制服务器允许哪个端口接受请求</p>
-<h4 id="只开放让应用程序行使正常功能的端口"><a href="#只开放让应用程序行使正常功能的端口" class="headerlink" title="只开放让应用程序行使正常功能的端口"></a>只开放让应用程序行使正常功能的端口</h4><h4 id="ubuntu-ufw-防火墙"><a href="#ubuntu-ufw-防火墙" class="headerlink" title="ubuntu ufw 防火墙"></a>ubuntu ufw 防火墙</h4><p>激活<code>ufw</code></pre>
+<h4 id="只开放让应用程序行使正常功能的端口"><a href="#只开放让应用程序行使正常功能的端口" class="headerlink" title="只开放让应用程序行使正常功能的端口"></a>只开放让应用程序行使正常功能的端口</h4><h4 id="ubuntu-ufw-防火墙"><a href="#ubuntu-ufw-防火墙" class="headerlink" title="ubuntu ufw 防火墙"></a>ubuntu ufw 防火墙</h4><p>激活<code>ufw</code></p>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> ufw status //查看状态
 </code></pre>
 <p><strong>写入防火墙规则并开启防火墙</strong></p>
@@ -638,7 +640,7 @@ chgrp 组名 文件名 //更改组
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/09/">September 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">June 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">May 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">April 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">March 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">February 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">January 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">December 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">November 2016<span class="sidebar_archives-count">11</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/10/">October 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">September 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">June 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">May 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">April 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">March 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">February 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">January 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">December 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">November 2016<span class="sidebar_archives-count">11</span></a>
             </ul>
         </li>
         
@@ -656,7 +658,7 @@ chgrp 组名 文件名 //更改组
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/TypeScript/">TypeScript<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -690,7 +692,7 @@ chgrp 组名 文件名 //更改组
         <li>
             <a href="/archives">
                 Number of articles
-                <span class="sidebar-badge">29</span>
+                <span class="sidebar-badge">30</span>
             </a>
         </li>
         

@@ -1,11 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  
+<search> 
   
     
     <entry>
+      <title><![CDATA[常见设计模式概要及其实践-TypeScript实现]]></title>
+      <url>/2017/10/15/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A6%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E8%B7%B5-TypeScript%E5%AE%9E%E7%8E%B0/</url>
+      <content type="html"><![CDATA[<p>若有不足或纰漏，欢迎指教</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h3><p>得益于TypeScript强大灵活的OOP语法，使得在js中使用经典且可靠的OOP设计模式变成了现实，虽然有的公司已经在大规模地使用TS进行中大型项目的开发，但极少有项目真正充分发挥了TS健全的OO语法优势，Java like 的OOP语法使其在思想上与Java的设计模式几乎无异，本文选取了一些常见且重要的设计模式进行提炼总结，避免探讨OOP与函数式编程孰优孰劣，模式的具体实现均采用TS进行编写，文末有彩蛋哦。</p>
+<p>本文所有实战代码示例的<a href="https://github.com/yujiahaol68/design-pattern-learning-ts" target="_blank" rel="external">GitHub仓库地址</a>，欢迎Star</p>
+<p>使用设计模式的意义：库与框架无法帮助我们将应用组织成容易了解，容易维护，具有弹性的架构，所以需要设计模式</p>
+<h3 id="基本设计原则："><a href="#基本设计原则：" class="headerlink" title="基本设计原则："></a>基本设计原则：</h3><ul>
+<li>封装变化</li>
+<li>多用组合，少用继承</li>
+<li>想到系统以后可能需要的变化以及应付变化的原则</li>
+<li>针对接口编程，不针对实现编程</li>
+<li>为了交互对象之间的松耦合设计而努力</li>
+<li>松耦合的目的在于把对象依赖降到最低，增强系统的弹性</li>
+<li>类应该对扩展开放，对修改关闭（开闭原则）</li>
+<li>依赖抽象，不要依赖具体类</li>
+<li>依赖反转原则：变量不可以持有具体类的引用，不要让类派生自具体类，不要覆盖基类中已实现的方法（子类应共享），不大会改变的对象可以违反，变化的对象可以使用工厂封装变化</li>
+<li>最少知识原则：设计过程中不要让过多的类耦合在一起，使得尽可能少的类在一起交互</li>
+<li>对象方法内只应调用对象本身的方法，或参数传进来对象的方法，或此方法创建的任何对象，或对象内的组件的方法（如果调用其它方法返回的是对象，不要调用其方法）</li>
+<li>采用原则之前应全盘考虑所有因素</li>
+<li>高层组件可以自行决定何时让低层组件参与，但低层组件不可以直接调用高层组件（在一些情况下也可以但绝不能形成环形依赖）</li>
+<li>一个职责只指派给一个类，当它被设计成支持一组相关功能时，就具有了高内聚</li>
+<li>上述所有的原则并非工程中的金科玉律，实际情况需要我们不断地平衡和取舍</li>
+</ul>
+<h3 id="策略模式-Strategy-pattern"><a href="#策略模式-Strategy-pattern" class="headerlink" title="策略模式 Strategy pattern"></a>策略模式 Strategy pattern</h3><p>核心步骤是把类1中多变的不同种行为委托封装进一个个的行为类中，行为类1.2.3..将实现各自的同一接口的不同变种并以属性的形式存在于各个类1的相似类中，使算法变化独立于使用算法的客户</p>
+<h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ol>
+<li>可以随时扩充新的行为</li>
+<li>同一个类可以通过setter动态地改变它的行为</li>
+</ol>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/strategy/main.ts" target="_blank" rel="external">Strategy</a></p>
+<h3 id="观察者模式-Observer-pattern"><a href="#观察者模式-Observer-pattern" class="headerlink" title="观察者模式 Observer pattern"></a>观察者模式 Observer pattern</h3><p>用于更好描述对象之间一对多的关系，当多个对象（观察者）依赖于一个对象（主题）的状态变化时，观察者模式可以帮助我们进行状态分发，将更新发送到各个观察者中，并使这两者松耦合</p>
+<h4 id="核心步骤："><a href="#核心步骤：" class="headerlink" title="核心步骤："></a>核心步骤：</h4><p>主题类实现Observable接口，类中实现了对观察者的管理和对是否推送数据的判断，观察者类实现Observer接口，实现其中包含update方法供主题类调用，当注册新的观察者时，主题对象会将观察者对象存在观察者数组中，推送数据时遍历数组调用update方法，将数据传入其观察者对象中</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/observer/main.ts" target="_blank" rel="external">Observer</a></p>
+<h3 id="装饰者模式-Decorator-pattern"><a href="#装饰者模式-Decorator-pattern" class="headerlink" title="装饰者模式 Decorator pattern"></a>装饰者模式 Decorator pattern</h3><p>动态的赋予已有对象新的职责，比继承更具弹性，其中有使用到继承，但只是利用继承来达到类型匹配超类而不获得行为，行为来自于装饰者和基础组件或与其它装饰者的组合。</p>
+<p>作为设计模式届的多米诺，每个新的被装饰者都不仅包含着上一个装饰者的状态而且还可以扩展自己的属性，通过共同的超类使得状态的共性得以保存且能够进行向上层级的链式调用，可以近似看做子类递归调用父类，使用此模式可以很好的替代继承</p>
+<h4 id="核心步骤：-1"><a href="#核心步骤：-1" class="headerlink" title="核心步骤："></a>核心步骤：</h4><p>被装饰类统一派生自一个超抽象类A获得其类型，装饰抽象类B继承A，并在构造函数中保存A类型的对象的所有状态，每一个新的装饰者包装上一次的被装饰者，被装饰类在被装饰之后仍可不断地被扩展</p>
+<h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><p>客户代码不能依赖特殊类型，会出现许多小对象，过度使用会导致程序复杂</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/decorator/main.ts" target="_blank" rel="external">Decorator</a></p>
+<h3 id="工厂模式-Factory-pattern"><a href="#工厂模式-Factory-pattern" class="headerlink" title="工厂模式 Factory pattern"></a>工厂模式 Factory pattern</h3><p>制造对象和解决耦合的好办法，严格来讲这并非一种模式而是一种编码习惯，将派生类的实例化封装在工厂类的静态方法中，抽象工厂方法可以让子类自行决定制造方式，在外部我们调用的抽象方法具有很大的弹性，实现可以不用绑定具体的类，这就得到了另外一个好处：使得超类和子类对象的代码解耦。而且能够将实例化延迟至子类中进行</p>
+<h4 id="核心要点"><a href="#核心要点" class="headerlink" title="核心要点"></a>核心要点</h4><p>对需要弹性的方法使用抽象工厂方法来替代，想要使得产品可定制，可以将产品类定义成抽象类并提供一些默认的属性和方法或抽象方法，派生类可以自行进行覆盖重写或自行实现，不同的工厂类可以隐藏不同的产品的制造细节但却保留着相同的制作流程</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/factory/simple.ts" target="_blank" rel="external">Simple Factory</a></p>
+<h4 id="抽象工厂-Abstract-Factory"><a href="#抽象工厂-Abstract-Factory" class="headerlink" title="抽象工厂 Abstract Factory"></a>抽象工厂 Abstract Factory</h4><p>不同的工厂类实现同一抽象工厂接口制造相似的产品，相似的产品再依赖于产品共同的接口来使得客户无须关心实际产出的具体产品就能使用</p>
+<p>二者区别在于工厂方法委托子类来实例化对象，而抽象工厂建立了产品与客户的接口契约，两者都可以把客户从具体产品中解耦出来</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/factory/abstract.ts" target="_blank" rel="external">Abstract Factory</a></p>
+<h3 id="单例模式-Singleton-pattern"><a href="#单例模式-Singleton-pattern" class="headerlink" title="单例模式 Singleton pattern"></a>单例模式 Singleton pattern</h3><p>实例化唯一一个对象，提供一个全局访问点，所有设计模式中最简单但非常实用且用途广泛</p>
+<h4 id="核心要点："><a href="#核心要点：" class="headerlink" title="核心要点："></a>核心要点：</h4><p>把一个静态私有变量确立为唯一的实例，外部通过静态方法访问这个唯一的实例，并把构造函数设为私有</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/singleton/main.ts" target="_blank" rel="external">Singleton</a></p>
+<h3 id="命令模式-Command-pattern"><a href="#命令模式-Command-pattern" class="headerlink" title="命令模式 Command pattern"></a>命令模式 Command pattern</h3><p>封装请求引入中间代理对象，将动作的请求者从动作的执行者中解耦出来，常用于工作队列或大型数据结构的操作记录以及事务处理</p>
+<h4 id="核心步骤：-2"><a href="#核心步骤：-2" class="headerlink" title="核心步骤："></a>核心步骤：</h4><p>具体任务执行细节封装于Command接口的execute方法的实现中，然后将实现接口的类的实例传递给它的客户，再由客户通过调用其execute方法来执行</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/command/main.ts" target="_blank" rel="external">Command</a></p>
+<h3 id="适配器模式-Adapter-pattern"><a href="#适配器模式-Adapter-pattern" class="headerlink" title="适配器模式 Adapter pattern"></a>适配器模式 Adapter pattern</h3><p>包装某些接口以实现不同的目的，转换接口使其能被其他的对象使用，改变接口符合客户的期望</p>
+<h4 id="核心要点：-1"><a href="#核心要点：-1" class="headerlink" title="核心要点："></a>核心要点：</h4><p>对象适配器类实现目标接口并在其中调用待适配的对象的对应方法，使得在客户代码不变的前提下可以调用不同接口的对象</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/adapter/main.ts" target="_blank" rel="external">Adapter</a></p>
+<h3 id="外观模式-Facade-pattern"><a href="#外观模式-Facade-pattern" class="headerlink" title="外观模式 Facade pattern"></a>外观模式 Facade pattern</h3><p>使用外观类Facade简化接口，封装复杂的子系统，并暴露出更少的更简单的接口，打造更高层的功能，针对外观编程可以使得客户与子系统的组件解耦</p>
+<h4 id="核心要点：-2"><a href="#核心要点：-2" class="headerlink" title="核心要点："></a>核心要点：</h4><p>构造Facade类的时候集合子系统的各个组件对象，暴露出的接口提供更直接更高层的操作，契合最少知识原则</p>
+<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/facade/main.ts" target="_blank" rel="external">Facade</a></p>
+<h3 id="模板方法模式-Template-Method-pattern"><a href="#模板方法模式-Template-Method-pattern" class="headerlink" title="模板方法模式 Template Method pattern"></a>模板方法模式 Template Method pattern</h3><p>这种封装方式可以使得子类在任何时候都可以将自己挂载进运算里，模板方法定义了一个算法步骤，并允许子类为其中的部分步骤提供自己的实现</p>
+<h4 id="核心要点：-3"><a href="#核心要点：-3" class="headerlink" title="核心要点："></a>核心要点：</h4><p>将相同的步骤抽离出来在抽象类中实现，不同的步骤在子类之中分别实现（父类中以抽象方法的形式存在），子类通过调用同一个模板方法去实现各自的功能（功能有部分不同，但单从模板方法中无法得知，因为被统一抽象了）。模板方法中可以加入钩子方法，提供默认的实现或留空以供子类进行覆盖，通过条件进行流程控制我们可以大大增加算法的灵活性，钩子方法通常是算法当中可选的一部分</p>
+<h4 id="常见应用场景"><a href="#常见应用场景" class="headerlink" title="常见应用场景:"></a>常见应用场景:</h4><p>对象排序的时候对象需要先实现一个比较方法</p>
+<h3 id="总结（踩蛋）"><a href="#总结（踩蛋）" class="headerlink" title="总结（踩蛋）"></a>总结（踩蛋）</h3><p>如果看到这里时，你仍然觉得这么多的模式使你头晕脑胀更别说应用的话，请收下这几枚硬干货：</p>
+<ul>
+<li>计算机科学领域的任何问题, 都可以通过添加一个中间层来解决，几乎所有的设计模式都遵循了这个原则来应对变化增加弹性或进行扩展</li>
+<li>抽象与复用是核心需求，摸石们都为了满足这两点而不断地努力着</li>
+<li>没有完美的模式能够完美应对所有的变化</li>
+</ul>
+<p>最后，希望你能够将模式多多应用到业务或编写框架中，尽最大努力编写出干净，可扩展，易维护的架构。</p>
+<p><strong>参考资料:</strong> 《HeadFirst设计模式中文版》2007年第一版</p>
+<p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
+<p>联系方式：tecker_yuknigh@163.com</p>
+]]></content>
+      
+        <categories>
+            
+            <category> TypeScript </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> node </tag>
+            
+            <tag> TypeScript </tag>
+            
+            <tag> learning </tag>
+            
+            <tag> design pattern </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用sftp搭建本地快速部署环境]]></title>
-      <url>http://tecknight.xyz/2017/09/10/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</url>
+      <url>/2017/09/10/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</url>
       <content type="html"><![CDATA[<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>首先，我们要确保<code>sshd</code>也就是我们的ssh服务处于运行状态之中，下面以centos为例来讲解搭建的过程。</p>
 <p>必要的包: <code>openssh-clients</code> <code>openssh-server</code></p>
 <p>运行下面的命令以确定我们的ssh服务处于active的状态中</p>
@@ -58,7 +149,8 @@ $ systemctl restart sshd
     }
 }
 </code></pre><p>然后愉快地快速部署到服务器吧</p>
-<figcaption></p></figcaption><pre class=" language-F1</code>"><code class="language-F1</code>"><p>选择 <code>Ftp-sync: Local To Remote</code></pre>
+<p><code>F1</code> </p>
+<p>选择 <code>Ftp-sync: Local To Remote</code></p>
 <p>选择 <code>full-sync</code>，执行上传。大功告成！</p>
 <p>注： 如果是node项目的话可以使用<code>pm2</code>检测文件更改自动重启服务，一键更新线上代码！</p>
 <p>参考：</p>
@@ -86,7 +178,7 @@ $ systemctl restart sshd
     
     <entry>
       <title><![CDATA[centOS下的node部署环境搭建]]></title>
-      <url>http://tecknight.xyz/2017/06/08/centOS%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <url>/2017/06/08/centOS%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
       <content type="html"><![CDATA[<h2 id="本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程"><a href="#本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程" class="headerlink" title="本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程"></a>本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程</h2><p><a href="https://jp.godaddy.com/help/set-up-nodejs-application-for-production-centos-17354" target="_blank" rel="external">node的安装过程详情</a></p>
 <p>其他的直接上亲自实践过的安装命令以及需要注意的地方，习惯用英文注释，部分重点已用中文指出</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
@@ -305,11 +397,11 @@ sysctl -w net.core.somaxconn<span class="token operator">=</span>1024
         
         <tags>
             
-            <tag> node </tag>
-            
             <tag> linux </tag>
             
             <tag> centOS </tag>
+            
+            <tag> node </tag>
             
             <tag> deploy </tag>
             
@@ -321,7 +413,7 @@ sysctl -w net.core.somaxconn<span class="token operator">=</span>1024
     
     <entry>
       <title><![CDATA[mongoose下的promise技巧]]></title>
-      <url>http://tecknight.xyz/2017/05/02/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/</url>
+      <url>/2017/05/02/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>在Promise大行其道的世界里，使用promise可谓是家常便饭了，写一个漂亮的promise极其重要</p>
 <p>本文将会基于Express环境实战mongoose的promise，帮大家避免一些常见的错误并对promise链进行调整以提高其可读性</p>
@@ -366,7 +458,7 @@ sysctl -w net.core.somaxconn<span class="token operator">=</span>1024
     
     <entry>
       <title><![CDATA[用supertest进行API测试]]></title>
-      <url>http://tecknight.xyz/2017/04/23/%E7%94%A8supertest%E8%BF%9B%E8%A1%8CAPI%E6%B5%8B%E8%AF%95/</url>
+      <url>/2017/04/23/%E7%94%A8supertest%E8%BF%9B%E8%A1%8CAPI%E6%B5%8B%E8%AF%95/</url>
       <content type="html"><![CDATA[<p>在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是<code>mocha</code>和<code>chai</code>，<br>然后我们应该有相配合的请求模块来帮助我们更好地完成断言的工作，今天要介绍的主角就是<code>supertest</code></p>
 <p>用过<code>superagent</code>的童鞋应该都知道，<code>supertest</code>的用法同样简洁优雅，本文环境基于<code>Express</code>，废话不说，上实战代码</p>
 <h3 id="GET-请求"><a href="#GET-请求" class="headerlink" title="GET 请求"></a>GET 请求</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">const</span> assert <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>assert<span class="token punctuation">;</span>
@@ -429,7 +521,7 @@ sysctl -w net.core.somaxconn<span class="token operator">=</span>1024
     
     <entry>
       <title><![CDATA[最精简restful实现]]></title>
-      <url>http://tecknight.xyz/2017/04/12/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</url>
+      <url>/2017/04/12/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</url>
       <content type="html"><![CDATA[<h3 id="Time-is-short-Just-show-me-the-code"><a href="#Time-is-short-Just-show-me-the-code" class="headerlink" title="Time is short. Just show me the code!"></a>Time is short. Just show me the code!</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">var</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">var</span> url <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'url'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">var</span> items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -524,16 +616,18 @@ server<span class="token punctuation">.</span><span class="token function">liste
     
     <entry>
       <title><![CDATA[python 语法基础]]></title>
-      <url>http://tecknight.xyz/2017/04/11/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/</url>
-      <content type="html"><![CDATA[<h4 id="其中记录了python跟别的语言不一样的一些基础知识点"><a href="#其中记录了python跟别的语言不一样的一些基础知识点" class="headerlink" title="其中记录了python跟别的语言不一样的一些基础知识点"></a>其中记录了python跟别的语言不一样的一些基础知识点</h4><h4 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h4><figcaption><p><code>False</code></p></figcaption><pre class=" language-True</code></p>"><h4 id="除法"><a href="#除法" class="headerlink" title="除法"><code class="language-True</code></p>"><h4 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h4><p><code>/</code> 默认的除法是精确除法</p>
+      <url>/2017/04/11/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/</url>
+      <content type="html"><![CDATA[<h4 id="其中记录了python跟别的语言不一样的一些基础知识点"><a href="#其中记录了python跟别的语言不一样的一些基础知识点" class="headerlink" title="其中记录了python跟别的语言不一样的一些基础知识点"></a>其中记录了python跟别的语言不一样的一些基础知识点</h4><h4 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h4><p><code>True</code></p>
+<p><code>False</code></p>
+<h4 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h4><p><code>/</code> 默认的除法是精确除法</p>
 <p><code>//</code> 才是通常的取商的整数部分</p>
 <h4 id="字符-类似C的ASCII码"><a href="#字符-类似C的ASCII码" class="headerlink" title="字符(类似C的ASCII码)"></a>字符(类似C的ASCII码)</h4><p><code>ord()</code> 字符对应编码</p>
 <p><code>chr()</code> 编码转字符</p>
-<p><code>'aaa'.encode('utf-8')</code> 转成对应编码形式的<code>bytes</code></p>
-<p><code>'aaa'.decode('utf-8')</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
-<h4 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h4><pre><code class="python">r = 18.0555
-'%.2f%%' %r
-# '18.06%'
+<p><code>&#39;aaa&#39;.encode(&#39;utf-8&#39;)</code> 转成对应编码形式的<code>bytes</code></p>
+<p><code>&#39;aaa&#39;.decode(&#39;utf-8&#39;)</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
+<h4 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h4><pre class=" language-python"><code class="language-python">r <span class="token operator">=</span> <span class="token number">18.0555</span>
+<span class="token string">'%.2f%%'</span> <span class="token operator">%</span>r
+<span class="token comment" spellcheck="true"># '18.06%'</span>
 </code></pre>
 <h4 id="数据类型之list-类比数组"><a href="#数据类型之list-类比数组" class="headerlink" title="数据类型之list(类比数组)"></a>数据类型之list(类比数组)</h4><p>获取<code>list</code>元素个数<code>len(变量名)</code></p>
 <p>访问元素下标为负表示都是第几个元素</p>
@@ -594,7 +688,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
 <p>可变参数 <code>def calc(*numbers):</code> 多参数自动组装成<code>tuple</code></p>
 <p>关键字参数 <code>def person(name, age, **kw):</code> 方便扩展函数的参数</p>
 <p><code>参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数</code></p>
-<h4 id="尾递归优化递归函数"><a href="#尾递归优化递归函数" class="headerlink" title="尾递归优化递归函数"></a>尾递归优化递归函数</h4><p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></pre>
+<h4 id="尾递归优化递归函数"><a href="#尾递归优化递归函数" class="headerlink" title="尾递归优化递归函数"></a>尾递归优化递归函数</h4><p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></p>
 <p>注意：标准解释器并不支持这种用法</p>
 ]]></content>
       
@@ -615,7 +709,7 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
     
     <entry>
       <title><![CDATA[机器学习的常用概念]]></title>
-      <url>http://tecknight.xyz/2017/04/08/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A6%82%E5%BF%B5/</url>
+      <url>/2017/04/08/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A6%82%E5%BF%B5/</url>
       <content type="html"><![CDATA[<h4 id="特征-属性"><a href="#特征-属性" class="headerlink" title="特征(属性)"></a>特征(属性)</h4><p>通常是训练样本集的列，可看作是每个列的列名，比如区分鸟的品种可以用体重，后背颜色此类的特征来加以区分</p>
 <h4 id="特征实例"><a href="#特征实例" class="headerlink" title="特征实例"></a>特征实例</h4><p>某一特征列其中的数据</p>
 <h4 id="特征的种类"><a href="#特征的种类" class="headerlink" title="特征的种类"></a>特征的种类</h4><ul>
@@ -693,14 +787,16 @@ a<span class="token punctuation">,</span>b <span class="token operator">=</span>
     
     <entry>
       <title><![CDATA[Linux WEB基础 学习笔记]]></title>
-      <url>http://tecknight.xyz/2017/03/29/Linux-WEB%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <url>/2017/03/29/Linux-WEB%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h2 id="系统版本选择"><a href="#系统版本选择" class="headerlink" title="系统版本选择"></a>系统版本选择</h2><ul>
 <li>根据不同发行版本的特性</li>
 </ul>
 <h3 id="red-hat-企业（付费）"><a href="#red-hat-企业（付费）" class="headerlink" title="red hat 企业（付费）"></a>red hat 企业（付费）</h3><h3 id="ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备"><a href="#ubuntu-跨设备：服务器，台式，笔记本，嵌入式设备" class="headerlink" title="ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备"></a>ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备</h3><h3 id="debian-稳定可靠，但更新周期长"><a href="#debian-稳定可靠，但更新周期长" class="headerlink" title="debian 稳定可靠，但更新周期长"></a>debian 稳定可靠，但更新周期长</h3><h3 id="Mint-台式机用户并支持专利性媒体"><a href="#Mint-台式机用户并支持专利性媒体" class="headerlink" title="Mint 台式机用户并支持专利性媒体"></a>Mint 台式机用户并支持专利性媒体</h3><h3 id="Core-OS-容器化应用程序的计算机集群建设"><a href="#Core-OS-容器化应用程序的计算机集群建设" class="headerlink" title="Core OS 容器化应用程序的计算机集群建设"></a>Core OS 容器化应用程序的计算机集群建设</h3><h2 id="系统路径"><a href="#系统路径" class="headerlink" title="系统路径"></a>系统路径</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">pwd</span>
 </code></pre>
 <p><strong>返回当前的目录位置</strong></p>
-<figcaption><p>所有<code>Linux</code>系统中都可以找到<code>/home</code>这样的目录，除少数例外情况，<code>home</code>目录可以容纳每个用户的所有主目录</p></figcaption><pre class=" language-/</code>表示系统的根目录，可以进入的最高位置</p>"><pre><code class="bash"><code class="language-/</code>表示系统的根目录，可以进入的最高位置</p>"><pre><code class="bash">ls -a
+<p><code>/</code>表示系统的根目录，可以进入的最高位置</p>
+<p>所有<code>Linux</code>系统中都可以找到<code>/home</code>这样的目录，除少数例外情况，<code>home</code>目录可以容纳每个用户的所有主目录</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">ls</span> -a
 </code></pre>
 <p><strong>显示所有文件包括隐藏文件</strong></p>
 <p>任何前缀是<code>.</code>的文件都是会被系统隐藏的</p>
@@ -811,7 +907,7 @@ chgrp 组名 文件名 //更改组
 <p>常见端口如下图</p>
 <img src="/2017/03/29/Linux-WEB基础-学习笔记/4.png" alt="4.png" title="">
 <p>通过防火墙，可以控制服务器允许哪个端口接受请求</p>
-<h4 id="只开放让应用程序行使正常功能的端口"><a href="#只开放让应用程序行使正常功能的端口" class="headerlink" title="只开放让应用程序行使正常功能的端口"></a>只开放让应用程序行使正常功能的端口</h4><h4 id="ubuntu-ufw-防火墙"><a href="#ubuntu-ufw-防火墙" class="headerlink" title="ubuntu ufw 防火墙"></a>ubuntu ufw 防火墙</h4><p>激活<code>ufw</code></pre>
+<h4 id="只开放让应用程序行使正常功能的端口"><a href="#只开放让应用程序行使正常功能的端口" class="headerlink" title="只开放让应用程序行使正常功能的端口"></a>只开放让应用程序行使正常功能的端口</h4><h4 id="ubuntu-ufw-防火墙"><a href="#ubuntu-ufw-防火墙" class="headerlink" title="ubuntu ufw 防火墙"></a>ubuntu ufw 防火墙</h4><p>激活<code>ufw</code></p>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> ufw status //查看状态
 </code></pre>
 <p><strong>写入防火墙规则并开启防火墙</strong></p>
@@ -843,7 +939,7 @@ chgrp 组名 文件名 //更改组
     
     <entry>
       <title><![CDATA[Express下多次callback引发的问题]]></title>
-      <url>http://tecknight.xyz/2017/03/23/Express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      <url>/2017/03/23/Express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<h3 id="错误结果"><a href="#错误结果" class="headerlink" title="错误结果"></a>错误结果</h3><blockquote>
 <p>Error: Can’t render headers after they are sent to the client.</p>
 <p>错误：当响应头被发回客户端时不能被正确渲染！</p>
@@ -908,7 +1004,7 @@ chgrp 组名 文件名 //更改组
     
     <entry>
       <title><![CDATA[CentOS 7 升级最新版本git]]></title>
-      <url>http://tecknight.xyz/2017/03/11/CentOS-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/</url>
+      <url>/2017/03/11/CentOS-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/</url>
       <content type="html"><![CDATA[<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作:"></a>准备工作:</h3><blockquote>
 <p>CentOS 上的最新git版本也只有1.8.3，就想试着装上最新的版本，没想到差点玩脱，全当记录一次冒险经历</p>
 </blockquote>
@@ -970,7 +1066,7 @@ make: *** <span class="token punctuation">[</span>git-credential-store<span clas
     
     <entry>
       <title><![CDATA[vue-router 快速入门]]></title>
-      <url>http://tecknight.xyz/2017/03/01/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
+      <url>/2017/03/01/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
       <content type="html"><![CDATA[<h3 id="配置路由"><a href="#配置路由" class="headerlink" title="配置路由"></a>配置路由</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> vue-router --save
 </code></pre>
 <a id="more"></a>
@@ -1057,7 +1153,7 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
     
     <entry>
       <title><![CDATA[vuex快速入门]]></title>
-      <url>http://tecknight.xyz/2017/02/08/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
+      <url>/2017/02/08/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
       <content type="html"><![CDATA[<h3 id="基本用途："><a href="#基本用途：" class="headerlink" title="基本用途："></a>基本用途：</h3><ul>
 <li><p>将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了<code>props</code>传值的链式响应的代码冗余</p>
 </li>
@@ -1175,71 +1271,8 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </entry>
     
     <entry>
-      <title><![CDATA[Laravel5 新手填坑指南]]></title>
-      <url>http://tecknight.xyz/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
-      <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
-<p>注意事项：</p>
-<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
-<p>Mac/Linux (少很多麻烦)</p>
-<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
-<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
-</li>
-<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
-</li>
-<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
-</li>
-</ol>
-<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
-<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
-</ol>
-<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
-<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
-</ol>
-<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
-<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
-</ol>
-<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
-<li><p>引用的时候必须写成 </p>
-<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
-</code></pre>
-</li>
-<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
-</li>
-</ol>
-<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
-<li>用户的退出登录可以看成是提交一个DELETE表单</li>
-<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
-<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
-</ol>
-<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
-</code></pre>
-<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
-]]></content>
-      
-        <categories>
-            
-            <category> php </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> php </tag>
-            
-            <tag> Laravel </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Laravel学习笔记]]></title>
-      <url>http://tecknight.xyz/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <url>/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h3 id="常用函数："><a href="#常用函数：" class="headerlink" title="常用函数："></a>常用函数：</h3><ul>
 <li>compact(‘变量1’,’变量2’)    </li>
 </ul>
@@ -1317,12 +1350,13 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
 </ul>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">redirect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">intended</span><span class="token punctuation">(</span><span class="token function">route</span><span class="token punctuation">(</span><span class="token string">'users.show'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>Auth<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">user</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<h3 id="关于Blade"><a href="#关于Blade" class="headerlink" title="关于Blade"></a>关于Blade</h3><figcaption>&#39;Sample&#39;)</code></p></figcaption><pre class=" language-@yield(&#39;title&#39;,"><code class="language-@yield(&#39;title&#39;,"><p>声明title变量及其默认值</p>
-<pre><code>@yield('content')
+<h3 id="关于Blade"><a href="#关于Blade" class="headerlink" title="关于Blade"></a>关于Blade</h3><p><code>@yield(&#39;title&#39;, &#39;Sample&#39;)</code></p>
+<p>声明title变量及其默认值</p>
+<pre><code>@yield(&#39;content&#39;)
 // content区域
 
-@extends('layouts.default')
-@section('content')
+@extends(&#39;layouts.default&#39;)
+@section(&#39;content&#39;)
 // 内容将会被插入布局模板中
 @stop
 </code></pre><p><code>@yield</code> 用于定义</p>
@@ -1352,7 +1386,7 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
 <p><code>Auth::user()</code>当前登录实例</p>
 <p><code>Auth::check()</code> 是否已经登录</p>
 <p>API:</p>
-<p><code>bool attempt(array $credentials = array(), bool $remember = false)</code></pre>
+<p><code>bool attempt(array $credentials = array(), bool $remember = false)</code></p>
 <p>第二个参数用来开发记住密码</p>
 <h3 id="中间件的使用"><a href="#中间件的使用" class="headerlink" title="中间件的使用"></a>中间件的使用</h3><ul>
 <li>在用户控制器构造方法中应用中间件</li>
@@ -1425,7 +1459,7 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     
     <entry>
       <title><![CDATA[Laravel 5 常用帮助函数]]></title>
-      <url>http://tecknight.xyz/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
+      <url>/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
       <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
 </code></pre>
@@ -1452,8 +1486,71 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </entry>
     
     <entry>
+      <title><![CDATA[Laravel5 新手填坑指南]]></title>
+      <url>/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
+      <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
+<p>注意事项：</p>
+<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
+<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
+<p>Mac/Linux (少很多麻烦)</p>
+<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
+<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
+<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
+<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
+</li>
+<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
+</li>
+<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
+</li>
+</ol>
+<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
+<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
+</ol>
+<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
+<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
+</ol>
+<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
+<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
+</ol>
+<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
+<li><p>引用的时候必须写成 </p>
+<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
+</li>
+</ol>
+<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
+<li>用户的退出登录可以看成是提交一个DELETE表单</li>
+<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
+<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
+</ol>
+<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
+</code></pre>
+<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
+]]></content>
+      
+        <categories>
+            
+            <category> php </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> php </tag>
+            
+            <tag> Laravel </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Vue 学习总结]]></title>
-      <url>http://tecknight.xyz/2017/01/25/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <url>/2017/01/25/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<p>##将数据渲染进DOM元素</p>
 <ol>
 <li>&#123;&#123;message&#125;&#125;</li>
@@ -1563,15 +1660,16 @@ vm<span class="token punctuation">.</span><span class="token function">$watch</s
 <p>###绑定HTML Class<br>语法：<code>v-bind:class={class1:布尔变量,class2...}</code></p>
 <p>class还可以是数据对象,甚至是计算属性！</p>
 <p>#####通过控制布尔变量可以使元素的class动态切换</p>
-<figcaption>v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p></figcaption><pre class=" language-&lt;div"><code class="language-&lt;div"><p>###绑定内联样式</p>
-<p><code>v-bind:style="{ color: mycolor}"</code> mycolor在data中定义</p>
+<p><code>&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p>
+<p>###绑定内联样式</p>
+<p><code>v-bind:style=&quot;{ color: mycolor}&quot;</code> mycolor在data中定义</p>
 <p>复杂内联样式推荐绑定styleObject对象</p>
-<pre><code class="javascript">data: {
-  styleObject: {
-    color: 'red',
-    fontSize: '13px'
-  }
-}
+<pre class=" language-javascript"><code class="language-javascript">data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+  styleObject<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    color<span class="token punctuation">:</span> <span class="token string">'red'</span><span class="token punctuation">,</span>
+    fontSize<span class="token punctuation">:</span> <span class="token string">'13px'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>##条件渲染<br>判断一个标签的输出 <code>v-if=&quot;ok&quot;</code> ok值决定是否显示</p>
 <p>判断一块标签的显示 用template元素作为包装元素，下面为根据需要显示的标签块</p>
@@ -1644,7 +1742,7 @@ vm<span class="token punctuation">.</span><span class="token function">$watch</s
 <p>注意：组件的data必须是函数！通过return的方式将data传入组件绑定的元素中</p>
 <p>意义：类似接口解耦，使得同一个data在不同的组件中都能有自己不同的状态！</p>
 <p>###传递数据<br>父–&gt;子 props:[‘字段名’]</p>
-<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code><br><code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></pre>
+<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code><br><code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></p>
 <p>###props验证</p>
 <pre class=" language-javascript"><code class="language-javascript">propB<span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">,</span> Number<span class="token punctuation">]</span><span class="token punctuation">,</span>
     <span class="token comment" spellcheck="true">// 必须且是字符串</span>
@@ -1698,8 +1796,44 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     </entry>
     
     <entry>
+      <title><![CDATA[Sass语法点总结]]></title>
+      <url>/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+            <tag> Sass </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Sass之CSS模块化]]></title>
-      <url>http://tecknight.xyz/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+      <url>/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
       <content type="html"><![CDATA[<p>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import</p>
 <p><code>@import &#39;partials/temp;&#39;</code></p>
 <p>partials文件夹中的模块scss文件最前面必须加上下划线 _</p>
@@ -1744,44 +1878,8 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     </entry>
     
     <entry>
-      <title><![CDATA[Sass语法点总结]]></title>
-      <url>http://tecknight.xyz/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</url>
-      <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
-<li><p>@import</p>
-<p> 引入sass模块</p>
-</li>
-<li><p>@include</p>
-<p> 引入mixin函数</p>
-</li>
-<li><p>@mixin</p>
-<p> 声明函数 </p>
-</li>
-<li><p>@extends</p>
-<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
-</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-            <tag> Sass </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[php数组常用方法详解]]></title>
-      <url>http://tecknight.xyz/2016/11/27/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
+      <url>/2016/11/27/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
       <content type="html"><![CDATA[<h4 id="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"><a href="#众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法" class="headerlink" title="众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法"></a>众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法</h4><h4 id="我们先建立一个对象post以便于演示"><a href="#我们先建立一个对象post以便于演示" class="headerlink" title="我们先建立一个对象post以便于演示"></a>我们先建立一个对象post以便于演示</h4><a id="more"></a>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">class</span> <span class="token class-name">Post</span>
 <span class="token punctuation">{</span>
@@ -1931,7 +2029,7 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     
     <entry>
       <title><![CDATA[gulp.js简易入门指南]]></title>
-      <url>http://tecknight.xyz/2016/11/20/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</url>
+      <url>/2016/11/20/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</url>
       <content type="html"><![CDATA[<h4 id="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"><a href="#gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件" class="headerlink" title="gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件"></a>gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件</h4><a id="more"></a>
 <p>为什么需要gulp?</p>
 <ul>
@@ -2015,7 +2113,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[php处理html字符串]]></title>
-      <url>http://tecknight.xyz/2016/11/12/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+      <url>/2016/11/12/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
       <content type="html"><![CDATA[<h4 id="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"><a href="#在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用" class="headerlink" title="在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用"></a>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4><h3 id="需要用到的函数："><a href="#需要用到的函数：" class="headerlink" title="需要用到的函数："></a>需要用到的函数：</h3><ul>
 <li>str_replace() 字符串替换</li>
 <li>html_entity_decode() html字符串转html标签 </li>
@@ -2070,7 +2168,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[UNIX时间戳与time()算时间差]]></title>
-      <url>http://tecknight.xyz/2016/11/05/UNIX%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</url>
+      <url>/2016/11/05/UNIX%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</url>
       <content type="html"><![CDATA[<p>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案</p>
 <h3 id="需要用到的函数"><a href="#需要用到的函数" class="headerlink" title="需要用到的函数"></a>需要用到的函数</h3><h4 id="getdate-unix数字时间戳"><a href="#getdate-unix数字时间戳" class="headerlink" title="getdate(unix数字时间戳)"></a>getdate(unix数字时间戳)</h4><p>将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间<br><a id="more"></a></p>
 <h3 id="time"><a href="#time" class="headerlink" title="time()"></a>time()</h3><p>方便获取现在的时间</p>
@@ -2133,7 +2231,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[TP常用函数总结]]></title>
-      <url>http://tecknight.xyz/2016/11/04/TP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</url>
+      <url>/2016/11/04/TP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<h3 id="I函数"><a href="#I函数" class="headerlink" title="I函数"></a>I函数</h3><p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
 <p>定义: <code>I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;)</code></p>
 <p>用法：<code>I(&#39;get.id&#39;,1,&#39;int&#39;)</code><br><a id="more"></a><br>好处：自动过滤输入，增加安全性，官方推荐</p>
@@ -2173,7 +2271,7 @@ gulp<span class="token punctuation">.</span><span class="token function">task</s
     
     <entry>
       <title><![CDATA[夹杂数字字母大小写的字符串按字典排序方法]]></title>
-      <url>http://tecknight.xyz/2016/11/04/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/</url>
+      <url>/2016/11/04/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/</url>
       <content type="html"><![CDATA[<h2 id="核心步骤概要"><a href="#核心步骤概要" class="headerlink" title="核心步骤概要"></a>核心步骤概要</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>过滤数字等特殊符号，只剩下字母</p>
 <p>这里要用到String类自带的replaceAll方法以及表达式进行过滤</p>
 <h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>将字符串进行单字符分割<br><a id="more"></a><br>这里要用到String类自带的substring方法</p>
@@ -2338,135 +2436,8 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     </entry>
     
     <entry>
-      <title><![CDATA[CSS 学习笔记03 按钮Full Height全高度实现]]></title>
-      <url>http://tecknight.xyz/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003%20%E6%8C%89%E9%92%AEFull%20Height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</url>
-      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector">nav a<span class="token class">.button.alert</span></span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
-    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">1.1</span>rem<span class="token punctuation">;</span>
-    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h4 id="line-height-保证居中"><a href="#line-height-保证居中" class="headerlink" title="line-height 保证居中"></a>line-height 保证居中</h4><h4 id="接着将padding-top和buttom设置为0即可"><a href="#接着将padding-top和buttom设置为0即可" class="headerlink" title="接着将padding-top和buttom设置为0即可"></a>接着将padding-top和buttom设置为0即可</h4>]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
-      <url>http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
-      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
-
-<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
-    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    //防止图片爆出外层div
-</code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[CSS学习笔记04 背景]]></title>
-      <url>http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/</url>
-      <content type="html"><![CDATA[<h4 id="透明背景"><a href="#透明背景" class="headerlink" title="透明背景"></a>透明背景</h4><pre class=" language-css"><code class="language-css"><span class="token selector">nav </span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> black<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.menu</span> </span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> transparent<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h5 id="设置透明"><a href="#设置透明" class="headerlink" title="设置透明"></a>设置透明</h5><h5 id="这样就使得菜单的颜色与导航栏的颜色一致"><a href="#这样就使得菜单的颜色与导航栏的颜色一致" class="headerlink" title="这样就使得菜单的颜色与导航栏的颜色一致"></a>这样就使得菜单的颜色与导航栏的颜色一致</h5><h4 id="背景加亮凸显文字"><a href="#背景加亮凸显文字" class="headerlink" title="背景加亮凸显文字"></a>背景加亮凸显文字</h4><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.menu</span> > li > a<span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">255</span>,<span class="token number">255</span>,<span class="token number">255</span>, <span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h5 id="0-1代表透明度为百分之十"><a href="#0-1代表透明度为百分之十" class="headerlink" title="0.1代表透明度为百分之十"></a>0.1代表透明度为百分之十</h5>]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[CSS学习笔记02 nav上下居中]]></title>
-      <url>http://tecknight.xyz/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
-      <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
-    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
-    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
-<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
-]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[CSS 学习笔记01 wrapper class实现居中]]></title>
-      <url>http://tecknight.xyz/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2001%20wrapper%20class/</url>
+      <url>/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2001%20wrapper%20class/</url>
       <content type="html"><![CDATA[<h2 id="div内容居中"><a href="#div内容居中" class="headerlink" title="div内容居中"></a>div内容居中</h2><pre class=" language-html"><code class="language-html">    <span class="token comment" spellcheck="true">&lt;!-- DESKTOP NAVIGATION  --></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>nav</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>top-bar<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wrap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -2505,6 +2476,133 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
             <tag> css </tag>
             
             <tag> html </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[CSS学习笔记04 背景]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/</url>
+      <content type="html"><![CDATA[<h4 id="透明背景"><a href="#透明背景" class="headerlink" title="透明背景"></a>透明背景</h4><pre class=" language-css"><code class="language-css"><span class="token selector">nav </span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> black<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.menu</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> transparent<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="设置透明"><a href="#设置透明" class="headerlink" title="设置透明"></a>设置透明</h5><h5 id="这样就使得菜单的颜色与导航栏的颜色一致"><a href="#这样就使得菜单的颜色与导航栏的颜色一致" class="headerlink" title="这样就使得菜单的颜色与导航栏的颜色一致"></a>这样就使得菜单的颜色与导航栏的颜色一致</h5><h4 id="背景加亮凸显文字"><a href="#背景加亮凸显文字" class="headerlink" title="背景加亮凸显文字"></a>背景加亮凸显文字</h4><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.menu</span> > li > a<span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">255</span>,<span class="token number">255</span>,<span class="token number">255</span>, <span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="0-1代表透明度为百分之十"><a href="#0-1代表透明度为百分之十" class="headerlink" title="0.1代表透明度为百分之十"></a>0.1代表透明度为百分之十</h5>]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
+      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
+
+<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
+    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    //防止图片爆出外层div
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[CSS学习笔记02 nav上下居中]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
+      <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
+<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
+]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[CSS 学习笔记03 按钮Full Height全高度实现]]></title>
+      <url>/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003%20%E6%8C%89%E9%92%AEFull%20Height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</url>
+      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector">nav a<span class="token class">.button.alert</span></span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">1.1</span>rem<span class="token punctuation">;</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="line-height-保证居中"><a href="#line-height-保证居中" class="headerlink" title="line-height 保证居中"></a>line-height 保证居中</h4><h4 id="接着将padding-top和buttom设置为0即可"><a href="#接着将padding-top和buttom设置为0即可" class="headerlink" title="接着将padding-top和buttom设置为0即可"></a>接着将padding-top和buttom设置为0即可</h4>]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
             
         </tags>
         

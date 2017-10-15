@@ -4,6 +4,32 @@
 
     
   <url>
+    <loc>http://tecknight.xyz/2017/10/15/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A6%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E8%B7%B5-TypeScript%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2017-10-15T04:42:17.000Z</lastmod>
+    <data>
+        <display>
+        <title>常见设计模式概要及其实践-TypeScript实现</title>
+        <pubTime>2017-10-15T02:29:16.000Z</pubTime>
+        
+        <tag>node</tag>
+         
+        <tag>TypeScript</tag>
+         
+        <tag>learning</tag>
+         
+        <tag>design pattern</tag>
+         
+         
+           
+             
+              <breadCrumb title="TypeScript" url="http://tecknight.xyz/categories/TypeScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://tecknight.xyz/2017/09/10/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</loc>
     <lastmod>2017-09-10T07:16:38.000Z</lastmod>
     <data>
@@ -35,11 +61,11 @@
         <title>centOS下的node部署环境搭建</title>
         <pubTime>2017-06-08T08:21:41.000Z</pubTime>
         
-        <tag>node</tag>
-         
         <tag>linux</tag>
          
         <tag>centOS</tag>
+         
+        <tag>node</tag>
          
         <tag>deploy</tag>
          
