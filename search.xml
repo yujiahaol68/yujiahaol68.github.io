@@ -1466,6 +1466,97 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </entry>
     
     <entry>
+      <title><![CDATA[Laravel 5 常用帮助函数]]></title>
+      <url>/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
+      <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
+</code></pre>
+<h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成10位随机密码</span>
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> php </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> php </tag>
+            
+            <tag> Laravel </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Laravel5 新手填坑指南]]></title>
+      <url>/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
+      <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
+<p>注意事项：</p>
+<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
+<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
+<p>Mac/Linux (少很多麻烦)</p>
+<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
+<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
+<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
+<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
+</li>
+<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
+</li>
+<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
+</li>
+</ol>
+<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
+<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
+</ol>
+<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
+<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
+</ol>
+<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
+<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
+</ol>
+<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
+<li><p>引用的时候必须写成 </p>
+<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
+</li>
+</ol>
+<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
+<li>用户的退出登录可以看成是提交一个DELETE表单</li>
+<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
+<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
+</ol>
+<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
+</code></pre>
+<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
+]]></content>
+      
+        <categories>
+            
+            <category> php </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> php </tag>
+            
+            <tag> Laravel </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Laravel学习笔记]]></title>
       <url>/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h3 id="常用函数："><a href="#常用函数：" class="headerlink" title="常用函数："></a>常用函数：</h3><ul>
@@ -1638,97 +1729,6 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
         <categories>
             
             <category> PHP </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> php </tag>
-            
-            <tag> Laravel </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Laravel 5 常用帮助函数]]></title>
-      <url>/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
-      <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
-</code></pre>
-<h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//生成10位随机密码</span>
-</code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> php </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> php </tag>
-            
-            <tag> Laravel </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Laravel5 新手填坑指南]]></title>
-      <url>/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
-      <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
-<p>注意事项：</p>
-<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
-<p>Mac/Linux (少很多麻烦)</p>
-<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
-<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
-</li>
-<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
-</li>
-<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
-</li>
-</ol>
-<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
-<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
-</ol>
-<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
-<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
-</ol>
-<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
-<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
-</ol>
-<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
-<li><p>引用的时候必须写成 </p>
-<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
-</code></pre>
-</li>
-<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
-</li>
-</ol>
-<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
-<li>用户的退出登录可以看成是提交一个DELETE表单</li>
-<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
-<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
-</ol>
-<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
-</code></pre>
-<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
-]]></content>
-      
-        <categories>
-            
-            <category> php </category>
             
         </categories>
         
@@ -2677,21 +2677,17 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     </entry>
     
     <entry>
-      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
-      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
-      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
-
-<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <title><![CDATA[CSS 学习笔记03 按钮Full Height全高度实现]]></title>
+      <url>/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003%20%E6%8C%89%E9%92%AEFull%20Height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</url>
+      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector">nav a<span class="token class">.button.alert</span></span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">1.1</span>rem<span class="token punctuation">;</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
-    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    //防止图片爆出外层div
 </code></pre>
-]]></content>
+<h4 id="line-height-保证居中"><a href="#line-height-保证居中" class="headerlink" title="line-height 保证居中"></a>line-height 保证居中</h4><h4 id="接着将padding-top和buttom设置为0即可"><a href="#接着将padding-top和buttom设置为0即可" class="headerlink" title="接着将padding-top和buttom设置为0即可"></a>接着将padding-top和buttom设置为0即可</h4>]]></content>
       
         <categories>
             
@@ -2741,23 +2737,20 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     </entry>
     
     <entry>
-      <title><![CDATA[CSS学习笔记02 nav上下居中]]></title>
-      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
-      <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
-    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
+      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
+
+<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
-    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
+    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    //防止图片爆出外层div
 </code></pre>
-<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
-<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
 ]]></content>
       
         <categories>
@@ -2776,17 +2769,24 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     </entry>
     
     <entry>
-      <title><![CDATA[CSS 学习笔记03 按钮Full Height全高度实现]]></title>
-      <url>/2016/11/01/CSS%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003%20%E6%8C%89%E9%92%AEFull%20Height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</url>
-      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector">nav a<span class="token class">.button.alert</span></span><span class="token punctuation">{</span>
+      <title><![CDATA[CSS学习笔记02 nav上下居中]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
+      <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
     <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
-    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">1.1</span>rem<span class="token punctuation">;</span>
-    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
     <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
     <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<h4 id="line-height-保证居中"><a href="#line-height-保证居中" class="headerlink" title="line-height 保证居中"></a>line-height 保证居中</h4><h4 id="接着将padding-top和buttom设置为0即可"><a href="#接着将padding-top和buttom设置为0即可" class="headerlink" title="接着将padding-top和buttom设置为0即可"></a>接着将padding-top和buttom设置为0即可</h4>]]></content>
+<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
+<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
+]]></content>
       
         <categories>
             

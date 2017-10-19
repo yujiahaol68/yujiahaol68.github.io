@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tecknight.xyz/about/index.html</loc>
+    
+    <lastmod>2017-10-19T05:58:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tecknight.xyz/2017/10/17/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</loc>
     
     <lastmod>2017-10-18T12:17:48.000Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>http://tecknight.xyz/2017/03/23/Express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2017-03-25T03:08:26.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tecknight.xyz/about/index.html</loc>
-    
-    <lastmod>2017-03-22T14:58:19.000Z</lastmod>
     
   </url>
   
