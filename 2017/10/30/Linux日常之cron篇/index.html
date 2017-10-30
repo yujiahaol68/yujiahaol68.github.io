@@ -10,7 +10,7 @@
     
     <title>
         
-            用supertest进行API测试 | 
+            Linux日常之cron篇 | 
         
         A Refactor&#39;s Blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing,node,Express,api,test">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing,linux,运维">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://tecknight.xyz">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="用supertest进行API测试 | A Refactor&#39;s Blog">
+    <meta property="og:title" content="Linux日常之cron篇 | A Refactor&#39;s Blog">
     <meta property="og:description" content="Live or Die.Take your time and make your choices.">
-    <meta property="og:article:tag" content="node"> <meta property="og:article:tag" content="Express"> <meta property="og:article:tag" content="api"> <meta property="og:article:tag" content="test"> 
+    <meta property="og:article:tag" content="linux"> <meta property="og:article:tag" content="运维"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -229,7 +229,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#GET-请求"><span class="post-toc-number">1.</span> <span class="post-toc-text">GET 请求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#POST-请求"><span class="post-toc-number">2.</span> <span class="post-toc-text">POST 请求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#PUT或DELETE请求"><span class="post-toc-number">3.</span> <span class="post-toc-text">PUT或DELETE请求</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#crontab"><span class="post-toc-number">1.</span> <span class="post-toc-text">crontab</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -265,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                用supertest进行API测试
+                Linux日常之cron篇
             </p>
         </div>
 
@@ -284,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Tecker.Yu</strong>
-        <span>Apr 23, 2017</span>
+        <span>Oct 30, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -305,7 +305,7 @@
         </button>
         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
             <li class="mdl-menu__item">Read this article on other device</li>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC30lEQVR42u3aQXLbQAwEQP7/08nVVY6UmQXjULvNU8qmKDQPGQPY69eR14WNjY2NjY2NjY39SPYVX8n9X+/5fv+rJ/yhxPIJ7+vBxsbGPoH9l//6gyKSO1tS8o1JzdjY2NjnsPNAeh8kSUC+LO5tsK3VjI2NjY2dNwx5UCXf2EYgNjY2NvZkSDQpN3mV7TdiY2Njn8nOBzRtgCXNxtor+KFZGjY2Nvbj2e2i9wn//g/7bWxsbOxHshcPMi41BnnwJHfWNWNjY2Nvys5Xs2uHIPPGZt7AjA5fYmNjY38sOwHk5ear3HbRW7Qcr14cNjY29qbsyei/Xfq2yOQVF8sGbGxs7E3Z+ePWRkVto9KOsYooxcbGxt6UfVdQtVE0OYKTv25sbGzsE9j5AGjShMybinZtUOy3sbGxsT+cHY1jAl5SUPLZ/J72RWNjY2Pvyl4Mg6XBUD4SSn7SrqWxsbGxz2Rf4ysJmBoQj7ewsbGxT2P/i/hpP7U2rhrN0rCxsbE3YucDoCI24kM/7aogXyRjY2Nj783OwyAn3bW4bYOqaEWwsbGxN2KvjZbyJiEPufa1Jk/GxsbGPofdrnjbRiIHtIFaHCHCxsbG3pR975o2XwnkjcdadBUdGDY2NvaHs/MwuGsdOz+CszhywsbGxt6UvXYUcm2h2y4S8jqjn2NjY2NvzW7/3G/bgHzFmzcz9f3Y2NjYB7Dz0U/y23bZ0A6k8kU1NjY29gnstcdNWohJDYsramxsbOwD2Fd55Z9qQ+uuqrCxsbFPYK/9od8OfdqFcXsEM6ocGxsbe1P2DcEwCLm1ZUC7eMbGxsY+gT0PrXwN/D668tfUjpmwsbGxT2DnB3cmRzDzY53zIRc2NjY29mQMlK+Ni9LztS42NjY29ridyMsdxdJ8qISNjY29EbsIgzjS8uBZGxv90CwNGxsb+/Hs+aI3j7ScMTm4g42NjX0O+5wLGxsbGxsbGxsb+zHXb3P+mt0LM9i5AAAAAElFTkSuQmCC">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC10lEQVR42u3aUXLiQAwFQO5/6eQAu3aeJEJA0/6iINjTk6q8SJrH15HXAxsbGxsbGxsbG/st2Y/4+vdbV3f4zyODO1wu9+K75TVjY2Njr2b/8Kf/Anm1lPvtuHongfXWjI2NjX0OO39M/k4v0u55zTVjY2NjYxcDJomuauGBjY2NjT1nJ6/zDcqbRH8cYNjY2Ngfwq6GSh5vT46i1/fSsLGxsd+enUfI+7x+6XwbGxsb+43Zk6t3EGeyuaPVYmNjYy9lzxtG+UGcZx3ZaY6HsbGxsZeyk4CZhFPOTgbAvZIJGxsbeze72qzplQrJGCCJpfyQEDY2NvZp7Grw5IXEhDGJt6gCw8bGxl7EroZHr/wohM3gKeXcxsbGxl7BzsuJ3ti12gDqFTA/bBw2Njb2avY9rFck5LGUb27vkBA2NjY2dm+h5UHs4NP7FWJjY2PvZiclRzJYrY54qwXP/CnY2NjYW9nJIZjqEPc+wCaFTT42wMbGxj6NnURCbwDQ+27SzHpCgGFjY2OvYFfLj3nRkv98PqJoNpWwsbGxV7Anj8lHApPhwSQasbGxsU9gV8NpcoxmckAn2cRmKYKNjY394ewqrPCvf+sITjUgC5uIjY2NvZSdj1SrDx6FzWAYgI2NjX0muxoJvWM3vTvkg4pmUwkbGxt7BTsPsN5CJyOEX+ylYWNjY69g5+PVZIN6ZUzeVJqEKDY2NvZWdl5yVMMsWXTvaM4vnjnFxsbG/kB2tWDoNY+qMZlvR/4Lw8bGxt7Krl7JdtyH3Pwp1fIGGxsbeze7Fw/z8XC11Ok1nrCxsbHPYedto3JsxG2mXnurefgSGxsbeym7OohN3qkObpNQrG4lNjY2NnbvWGRvodXC5kUBho2Njb2IPW/c98bMT9gmbGxs7APYk1v3RgJJyM1LI2xsbOwT2Pmgt9q4r44ZJispBxg2Njb2CvY5FzY2NjY2NjY2NvbbXN8jaa/y4tHuAwAAAABJRU5ErkJggg==">
         </ul>
     
 
@@ -317,7 +317,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Express/">Express</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/api/">api</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/node/">node</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/test/">test</a>
+        <a class="post_tag-link" href="/tags/linux/">linux</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/运维/">运维</a>
     </ul>
     
 
@@ -344,7 +344,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=用supertest进行API测试&url=http://tecknight.xyz//2017/04/23/用supertest进行API测试/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Linux日常之cron篇&url=http://tecknight.xyz//2017/10/30/Linux日常之cron篇/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -365,7 +365,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=用supertest进行API测试&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2017/04/23/用supertest进行API测试/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=Linux日常之cron篇&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2017/10/30/Linux日常之cron篇/index.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to QQ
             </li>
@@ -383,43 +383,22 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是<code>mocha</code>和<code>chai</code>，<br>然后我们应该有相配合的请求模块来帮助我们更好地完成断言的工作，今天要介绍的主角就是<code>supertest</code></p>
-<p>用过<code>superagent</code>的童鞋应该都知道，<code>supertest</code>的用法同样简洁优雅，本文环境基于<code>Express</code>，废话不说，上实战代码</p>
-<h3 id="GET-请求"><a href="#GET-请求" class="headerlink" title="GET 请求"></a>GET 请求</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">const</span> assert <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>assert<span class="token punctuation">;</span>
-<span class="token keyword">const</span> request <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'supertest'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> should <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'should'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../../app'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> _ <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'lodash'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">// 将supertest设成request是习惯使然</span>
-
-<span class="token comment" spellcheck="true">// 断言</span>
-<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"get /"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// it描述了API的功能，预期的返回内容</span>
-    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should respond with ...."</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 使用supertest进行GET请求，并验证其返回的状态码</span>
-        <span class="token keyword">return</span> <span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">'Accept'</span><span class="token punctuation">,</span> <span class="token string">'application/json'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//设置请求头</span>
-            <span class="token punctuation">.</span><span class="token function">expect</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//预期的状态码</span>
-            <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                assert<span class="token punctuation">.</span><span class="token function">notEqual</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">findIndex</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token punctuation">{</span>
-                    <span class="token comment" spellcheck="true">// 使用assert断言库进行断言，如果lodash找不到json中的最外层的键值对(找里面的话可以在body的基础上继续访问)</span>
-                    <span class="token comment" spellcheck="true">// 使用equal或者是to.include.keys('key')也是可以的</span>
-                    <span class="token string">'key'</span> <span class="token punctuation">:</span> <span class="token string">'value'</span>
-                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h3 id="POST-请求"><a href="#POST-请求" class="headerlink" title="POST 请求"></a>POST 请求</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// 前面不再赘述，我们专注于supertest</span>
-<span class="token keyword">return</span> <span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/search'</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> key<span class="token punctuation">:</span> <span class="token string">'value'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">// x-www-form-urlencoded</span>
-        <span class="token punctuation">.</span><span class="token function">field</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">,</span> <span class="token string">'Jack'</span><span class="token punctuation">)</span>      <span class="token comment" spellcheck="true">// form-data</span>
-        <span class="token punctuation">.</span><span class="token function">attach</span><span class="token punctuation">(</span><span class="token string">'avatar'</span><span class="token punctuation">,</span> <span class="token string">'test/fixtures/homeboy.jpg'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// post上传附件</span>
-</code></pre>
-<h3 id="PUT或DELETE请求"><a href="#PUT或DELETE请求" class="headerlink" title="PUT或DELETE请求"></a>PUT或DELETE请求</h3><p>同理</p>
-<pre class=" language-javascript"><code class="language-javascript"><span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span><span class="token string">'/path'</span><span class="token punctuation">)</span>
-<span class="token function">request</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">'/path'</span><span class="token punctuation">)</span>
-</code></pre>
+        <p>cron 能够让我们创建 linux 的定时任务，是系统的内置服务，通过加入自己的配置来达到在某时间段重复执行任务的目的</p>
+<h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>通过执行这个命令，我们可以将我们的 <code>crontab</code> 文件装载到 <code>/var/spool/cron/crontabs</code> 中</p>
+<p>文件内格式:</p>
+<p><code>13 04 * * * Command</code></p>
+<p>最开始的五列从左到右依次为分，时，天，月，星期，星号表示每个</p>
+<p>分隔符：</p>
+<p><code>,</code> 表示分隔时间点，如： <code>00 10,12 * * *</code> 的意思是每天的10点和12点</p>
+<p><code>-</code> 表示时间段，又如： <code>00 10-12 * * *</code> 的意思是每天10点到12点的每个整点时刻</p>
+<p><code>\n</code> 表示每隔n单位的时间，如： <code>*/5 * * * *</code> 的意思是每隔5分钟 </p>
+<p><strong>值得注意的是要运行的执行文件需要使用全局路径</strong></p>
+<p>例如：<br><code>13 04 * * * /etc/init.d/smb restart</code></p>
+<p>常用参数</p>
+<pre><code>$ crontab -l // 列出任务
+$ crontab -r name // 删除任务文件
+$ crontab -e // 更改并安装任务文件，进入编辑区，编辑完成保存退出即成功
+</code></pre><p>如果是某一时刻一次性的任务调度可以使用 <code>at</code> 命令</p>
 
     
 
@@ -443,21 +422,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/05/02/mongoose下的promise技巧/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Newer
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/04/12/最精简restful实现/" id="post_nav-older" class="next-content">
+        <a href="/2017/10/17/一文讲透koa-源码剖析/" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

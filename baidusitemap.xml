@@ -3,6 +3,28 @@
 
 
     
+  <url>
+    <loc>http://tecknight.xyz/2017/10/30/Linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/</loc>
+    <lastmod>2017-10-30T12:42:45.000Z</lastmod>
+    <data>
+        <display>
+        <title>Linux日常之cron篇</title>
+        <pubTime>2017-10-30T12:04:37.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>运维</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://tecknight.xyz/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://tecknight.xyz/2017/10/17/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</loc>
@@ -86,11 +108,11 @@
         <title>centOS下的node部署环境搭建</title>
         <pubTime>2017-06-08T08:21:41.000Z</pubTime>
         
+        <tag>node</tag>
+         
         <tag>linux</tag>
          
         <tag>centOS</tag>
-         
-        <tag>node</tag>
          
         <tag>deploy</tag>
          
