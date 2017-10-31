@@ -10,7 +10,7 @@
     
     <title>
         
-            常见设计模式概要及其实践-TypeScript实现 | 
+            Linux日常之进程内存篇 | 
         
         A Refactor&#39;s Blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing,node,TypeScript,design pattern,learning">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://tecknight.xyz">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="常见设计模式概要及其实践-TypeScript实现 | A Refactor&#39;s Blog">
+    <meta property="og:title" content="Linux日常之进程内存篇 | A Refactor&#39;s Blog">
     <meta property="og:description" content="Live or Die.Take your time and make your choices.">
-    <meta property="og:article:tag" content="node"> <meta property="og:article:tag" content="TypeScript"> <meta property="og:article:tag" content="design pattern"> <meta property="og:article:tag" content="learning"> 
+    
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -229,7 +229,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言:</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基本设计原则："><span class="post-toc-number">2.</span> <span class="post-toc-text">基本设计原则：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#策略模式-Strategy-pattern"><span class="post-toc-number">3.</span> <span class="post-toc-text">策略模式 Strategy pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#优点："><span class="post-toc-number">3.1.</span> <span class="post-toc-text">优点：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#观察者模式-Observer-pattern"><span class="post-toc-number">4.</span> <span class="post-toc-text">观察者模式 Observer pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心步骤："><span class="post-toc-number">4.1.</span> <span class="post-toc-text">核心步骤：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#装饰者模式-Decorator-pattern"><span class="post-toc-number">5.</span> <span class="post-toc-text">装饰者模式 Decorator pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心步骤：-1"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">核心步骤：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缺点："><span class="post-toc-number">5.2.</span> <span class="post-toc-text">缺点：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#工厂模式-Factory-pattern"><span class="post-toc-number">6.</span> <span class="post-toc-text">工厂模式 Factory pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心要点"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">核心要点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#抽象工厂-Abstract-Factory"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">抽象工厂 Abstract Factory</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单例模式-Singleton-pattern"><span class="post-toc-number">7.</span> <span class="post-toc-text">单例模式 Singleton pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心要点："><span class="post-toc-number">7.1.</span> <span class="post-toc-text">核心要点：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#命令模式-Command-pattern"><span class="post-toc-number">8.</span> <span class="post-toc-text">命令模式 Command pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心步骤：-2"><span class="post-toc-number">8.1.</span> <span class="post-toc-text">核心步骤：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#适配器模式-Adapter-pattern"><span class="post-toc-number">9.</span> <span class="post-toc-text">适配器模式 Adapter pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心要点：-1"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">核心要点：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#外观模式-Facade-pattern"><span class="post-toc-number">10.</span> <span class="post-toc-text">外观模式 Facade pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心要点：-2"><span class="post-toc-number">10.1.</span> <span class="post-toc-text">核心要点：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模板方法模式-Template-Method-pattern"><span class="post-toc-number">11.</span> <span class="post-toc-text">模板方法模式 Template Method pattern</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#核心要点：-3"><span class="post-toc-number">11.1.</span> <span class="post-toc-text">核心要点：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#常见应用场景"><span class="post-toc-number">11.2.</span> <span class="post-toc-text">常见应用场景:</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结（踩蛋）"><span class="post-toc-number">12.</span> <span class="post-toc-text">总结（踩蛋）</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基本概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内核对进程和内存的管理"><span class="post-toc-number">1.0.0.1.</span> <span class="post-toc-text">内核对进程和内存的管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理解内核对进程的管理"><span class="post-toc-number">1.0.0.2.</span> <span class="post-toc-text">理解内核对进程的管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#系统调用"><span class="post-toc-number">1.0.0.3.</span> <span class="post-toc-text">系统调用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#进程的追踪"><span class="post-toc-number">1.0.0.4.</span> <span class="post-toc-text">进程的追踪</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#追踪线程"><span class="post-toc-number">1.0.0.5.</span> <span class="post-toc-text">追踪线程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#测量CPU时间"><span class="post-toc-number">1.0.0.6.</span> <span class="post-toc-text">测量CPU时间</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#平均负载"><span class="post-toc-number">1.0.0.7.</span> <span class="post-toc-text">平均负载</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理解CPU，内核与内存的关系"><span class="post-toc-number">1.0.0.8.</span> <span class="post-toc-text">理解CPU，内核与内存的关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内存页面中的错误"><span class="post-toc-number">1.0.0.9.</span> <span class="post-toc-text">内存页面中的错误</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#对CPU和内存进行监控"><span class="post-toc-number">1.0.0.10.</span> <span class="post-toc-text">对CPU和内存进行监控</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#IO监控"><span class="post-toc-number">1.0.0.11.</span> <span class="post-toc-text">IO监控</span></a></li></ol></li></ol></li></ol></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -265,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                常见设计模式概要及其实践-TypeScript实现
+                Linux日常之进程内存篇
             </p>
         </div>
 
@@ -284,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Tecker.Yu</strong>
-        <span>Oct 15, 2017</span>
+        <span>Oct 31, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -305,7 +305,7 @@
         </button>
         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
             <li class="mdl-menu__item">Read this article on other device</li>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAADgUlEQVR42u3aS27bQBAFQN//0sk2gKDR68/QQlBcGTQpDouLh+7pnz+Of44fBDhw4MCBAwcOHDhwfDHHT3zkd71e+e7M+d7Xa96dGb0LDhw4cOC4wPEhil6Wcl70eRHzM+c15O+CAwcOHDhuc5xfYH7Xme/8y+foHb0LDhw4cOD4Ao5zuOYRWC0UceDAgQPH/8eRtP8mi87XgwMHDhw4vp+j0FALXilBTMq8/K5f6JXiwIEDB47xQMP3//3ofAcOHDhw4Hjh6B27ZVjvfBKr0bvgwIEDB45VjmqY5aVUr7Srtvnycu7tlThw4MCB4wJHdTwuGUeoXpMDnT9MNZJx4MCBA8dtjt1Iy4cPettR1WfhwIEDB47nOc6LmA/S9aK0GuF52YkDBw4cOHY58uA8PzgfMsg3q5IozT9G1BzEgQMHDhxLHNXyLCHrAT3zXBw4cODAcY9jPpo2H5tLjskHW9uFw4EDBw4cg22nyWtXg7MKN7kSBw4cOHDc5ug1B5OY7I1HVOM/KfM+rBMHDhw4cKxyzIfSqvGctwi3hhs+fGwcOHDgwLHKkW/q9DaEJqMGW7+PAwcOHDie5OhFZh6i8zKvt61VKBdx4MCBA8cqRy/S8mDLi8PJGMQk1HHgwIEDxw2OXmuvh3WvnGtuVuHAgQMHjsc5ooGz4EiurP5mHvA4cODAgeN5jknxVh19SO6qjkH0mpU4cODAgeM2R7Ux1yuxep8hIVue78CBAwcOHC2OfLghbyPmhd9kSKJXEOLAgQMHjtscvYJq68xkQ2vyMXDgwIEDxzMck62gJNjysYkJX37gwIEDB45djuqAQjUOq0Ny85GIchGIAwcOHDhWOZplz2AR8yKt19DEgQMHDhzPcEzG46pFXe9lJs3BqDjEgQMHDhyrHPlPJAFZHYnIh/PyrazlEg4HDhw4cAyag73yqbrE3tOrHyAf9cOBAwcOHLsc5e3/IBR7cJNoz0s+HDhw4MBxm6MXV3lY9sqwamE2aRHiwIEDB44bHHm4TsYUqkMSeSHXC2wcOHDgwHGbY2v0LV9KtUTcbQviwIEDB45v4OiFdD48V20mzjfAcODAgQPH73LcGE3IN4ryQM1LPhw4cODAcY9jN/aSZSWLzv/bHH3AgQMHDhwXOPJGW7K4asMuf24S4cmqcODAgQPHPQ4HDhw4cODAgQMHDhw4vuz4C5mtQ5Ts3Eg+AAAAAElFTkSuQmCC">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC20lEQVR42u3aW3LCMAwFUPa/6XYBlORKCp3EPvliGGN8zExVPV4/Wz4vbGxsbGxsbGxs7FuyX/Hz/qn3HY53/uMowT7HKwtnxsbGxl6affKn/3BNcinz1/MzY2NjY+/A/hQA8jXHV/DpcMfUPHye7IONjY2NXQwqyafy9b2fARsbGxt7XkKqFqryohI2NjY29vdCS3KIJPj10htsbGzsPdl50/Q+r/+1v42NjY19Y3b16YWlajshGfcpnxwbGxt7UXavAJSUgXqN217CE50EGxsbewN2UtDJQ1cSwPIGQPUKsLGxsfdh52lDNTkptGCDpm8hUOVFJWxsbOwl2NVAlZeBJivzMtNoZAcbGxt7IXa+RR7eeuM7efOg3HjAxsbGXppdbaxWGXnyM0lgTt7HxsbGXpR9bTO1V3K6Kl05OQk2Njb2ouxeKOqV+JNCf1I8qjYtsLGxsddm94ryvZQgL1rlP0zeDMbGxsbegf298lB+ub1Q2hy+xMbGxl6CnYeoSWKQ7JmHw+r4DjY2NvY+7MmmvULVtUFuNHOKjY2N/Vh2r/TfKyf1wlvefj65PmxsbOyl2b0S/zxpyQcuq+EKGxsbG7s6WJOsvCpEVQfusbGxsXdgVw/au7h84CYveOVtBmxsbOx92PMmQV7oSfDVzzZradjY2NiPZff+rc8LRpNiU3I1zfYANjY29nLs6ut8gKY6sjlJdU5SKWxsbOwt2d8IYL2L67UZsLGxsfdkV0dq8tJ/0n7otXubRSVsbGzsJdjVp/pl1VZxtWBUWImNjY29KLsaJHrUvDg1T3JGXRFsbGzsx7LnYzH5Bc2Tmeb3YmNjY2/AToo1SajoNXGveka1NGxsbOxt2PMS0iRpqY4ZYWNjY2PngzXV0JWvz0Pmx+QEGxsbewN2fqzk4pKrrF7ZZHwHGxsbe212dbseI2/u5sOahfexsbGxF2Xv82BjY2NjY2NjY2Pf5vkF0A6v8p/320sAAAAASUVORK5CYII=">
         </ul>
     
 
@@ -317,7 +317,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/TypeScript/">TypeScript</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/design-pattern/">design pattern</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/learning/">learning</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/node/">node</a>
+        
     </ul>
     
 
@@ -344,7 +344,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=常见设计模式概要及其实践-TypeScript实现&url=http://tecknight.xyz//2017/10/15/常见设计模式概要及其实践-TypeScript实现/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Linux日常之进程内存篇&url=http://tecknight.xyz//2017/10/31/Linux日常之进程内存篇/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 Share to Weibo
             </li>
@@ -365,7 +365,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=常见设计模式概要及其实践-TypeScript实现&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2017/10/15/常见设计模式概要及其实践-TypeScript实现/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=A Refactor&#39;s Blog&title=Linux日常之进程内存篇&summary=Live or Die.Take your time and make your choices.&pics=http://tecknight.xyzhttp://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png&url=http://tecknight.xyz/2017/10/31/Linux日常之进程内存篇/index.html" target="_blank">
             <li class="mdl-menu__item">
                 Share to QQ
             </li>
@@ -383,73 +383,51 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>若有不足或纰漏，欢迎指教</p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h3><p>得益于TypeScript强大灵活的OOP语法，使得在js中使用经典且可靠的OOP设计模式变成了现实，虽然有的公司已经在大规模地使用TS进行中大型项目的开发，但极少有项目真正充分发挥了TS健全的OO语法优势，Java like 的OOP语法使其在思想上与Java的设计模式几乎无异，本文选取了一些常见且重要的设计模式进行提炼总结，避免探讨OOP与函数式编程孰优孰劣，模式的具体实现均采用TS进行编写，文末有彩蛋哦。</p>
-<p>本文所有实战代码示例的<a href="https://github.com/yujiahaol68/design-pattern-learning-ts" target="_blank" rel="external">GitHub仓库地址</a>，欢迎Star</p>
-<p>使用设计模式的意义：库与框架无法帮助我们将应用组织成容易了解，容易维护，具有弹性的架构，所以需要设计模式</p>
-<h3 id="基本设计原则："><a href="#基本设计原则：" class="headerlink" title="基本设计原则："></a>基本设计原则：</h3><ul>
-<li>封装变化</li>
-<li>多用组合，少用继承</li>
-<li>想到系统以后可能需要的变化以及应付变化的原则</li>
-<li>针对接口编程，不针对实现编程</li>
-<li>为了交互对象之间的松耦合设计而努力</li>
-<li>松耦合的目的在于把对象依赖降到最低，增强系统的弹性</li>
-<li>类应该对扩展开放，对修改关闭（开闭原则）</li>
-<li>依赖抽象，不要依赖具体类</li>
-<li>依赖反转原则：变量不可以持有具体类的引用，不要让类派生自具体类，不要覆盖基类中已实现的方法（子类应共享），不大会改变的对象可以违反，变化的对象可以使用工厂封装变化</li>
-<li>最少知识原则：设计过程中不要让过多的类耦合在一起，使得尽可能少的类在一起交互</li>
-<li>对象方法内只应调用对象本身的方法，或参数传进来对象的方法，或此方法创建的任何对象，或对象内的组件的方法（如果调用其它方法返回的是对象，不要调用其方法）</li>
-<li>采用原则之前应全盘考虑所有因素</li>
-<li>高层组件可以自行决定何时让低层组件参与，但低层组件不可以直接调用高层组件（在一些情况下也可以但绝不能形成环形依赖）</li>
-<li>一个职责只指派给一个类，当它被设计成支持一组相关功能时，就具有了高内聚</li>
-<li>上述所有的原则并非工程中的金科玉律，实际情况需要我们不断地平衡和取舍</li>
+        <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p>
+<p><strong>进程</strong>：计算机中运行的所有程序，并由内核统一管理，这些进程组成了用户空间</p>
+<p><strong>用户进程</strong>：如图形界面的进程，服务器进程，命令行进程这类用户层级的进程</p>
+<p>内核在内核模式中运行，能直接访问处理器和内存，不能容错；而用户进程运行于用户模式中，一个进程崩溃不会影响整个系统的运行</p>
+<p><strong>线程</strong>：比进程更加细粒度的概念，一般所提到的进程都是单线程，多线程的进程的启动会比多进程要更快，主线程会类似<code>fork</code>出来其他的子线程，<br>而且可以方便地相互通信以及共享IO和系统资源</p>
+<h4 id="内核对进程和内存的管理"><a href="#内核对进程和内存的管理" class="headerlink" title="内核对进程和内存的管理"></a>内核对进程和内存的管理</h4><ul>
+<li>进程：内核决定哪一个进程可以使用CPU</li>
+<li>内存：内核管理所有内存，为进程分配内存，包括进程间的共享内存以及空闲内存</li>
 </ul>
-<h3 id="策略模式-Strategy-pattern"><a href="#策略模式-Strategy-pattern" class="headerlink" title="策略模式 Strategy pattern"></a>策略模式 Strategy pattern</h3><p>核心步骤是把类1中多变的不同种行为委托封装进一个个的行为类中，行为类1.2.3..将实现各自的同一接口的不同变种并以属性的形式存在于各个类1的相似类中，使算法变化独立于使用算法的客户</p>
-<h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ol>
-<li>可以随时扩充新的行为</li>
-<li>同一个类可以通过setter动态地改变它的行为</li>
-</ol>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/strategy/main.ts" target="_blank" rel="external">Strategy</a></p>
-<h3 id="观察者模式-Observer-pattern"><a href="#观察者模式-Observer-pattern" class="headerlink" title="观察者模式 Observer pattern"></a>观察者模式 Observer pattern</h3><p>用于更好描述对象之间一对多的关系，当多个对象（观察者）依赖于一个对象（主题）的状态变化时，观察者模式可以帮助我们进行状态分发，将更新发送到各个观察者中，并使这两者松耦合</p>
-<h4 id="核心步骤："><a href="#核心步骤：" class="headerlink" title="核心步骤："></a>核心步骤：</h4><p>主题类实现Observable接口，类中实现了对观察者的管理和对是否推送数据的判断，观察者类实现Observer接口，实现其中包含update方法供主题类调用，当注册新的观察者时，主题对象会将观察者对象存在观察者数组中，推送数据时遍历数组调用update方法，将数据传入其观察者对象中</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/observer/main.ts" target="_blank" rel="external">Observer</a></p>
-<h3 id="装饰者模式-Decorator-pattern"><a href="#装饰者模式-Decorator-pattern" class="headerlink" title="装饰者模式 Decorator pattern"></a>装饰者模式 Decorator pattern</h3><p>动态的赋予已有对象新的职责，比继承更具弹性，其中有使用到继承，但只是利用继承来达到类型匹配超类而不获得行为，行为来自于装饰者和基础组件或与其它装饰者的组合。</p>
-<p>作为设计模式届的多米诺，每个新的被装饰者都不仅包含着上一个装饰者的状态而且还可以扩展自己的属性，通过共同的超类使得状态的共性得以保存且能够进行向上层级的链式调用，可以近似看做子类递归调用父类，使用此模式可以很好的替代继承</p>
-<h4 id="核心步骤：-1"><a href="#核心步骤：-1" class="headerlink" title="核心步骤："></a>核心步骤：</h4><p>被装饰类统一派生自一个超抽象类A获得其类型，装饰抽象类B继承A，并在构造函数中保存A类型的对象的所有状态，每一个新的装饰者包装上一次的被装饰者，被装饰类在被装饰之后仍可不断地被扩展</p>
-<h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><p>客户代码不能依赖特殊类型，会出现许多小对象，过度使用会导致程序复杂</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/decorator/main.ts" target="_blank" rel="external">Decorator</a></p>
-<h3 id="工厂模式-Factory-pattern"><a href="#工厂模式-Factory-pattern" class="headerlink" title="工厂模式 Factory pattern"></a>工厂模式 Factory pattern</h3><p>制造对象和解决耦合的好办法，严格来讲这并非一种模式而是一种编码习惯，将派生类的实例化封装在工厂类的静态方法中，抽象工厂方法可以让子类自行决定制造方式，在外部我们调用的抽象方法具有很大的弹性，实现可以不用绑定具体的类，这就得到了另外一个好处：使得超类和子类对象的代码解耦。而且能够将实例化延迟至子类中进行</p>
-<h4 id="核心要点"><a href="#核心要点" class="headerlink" title="核心要点"></a>核心要点</h4><p>对需要弹性的方法使用抽象工厂方法来替代，想要使得产品可定制，可以将产品类定义成抽象类并提供一些默认的属性和方法或抽象方法，派生类可以自行进行覆盖重写或自行实现，不同的工厂类可以隐藏不同的产品的制造细节但却保留着相同的制作流程</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/factory/simple.ts" target="_blank" rel="external">Simple Factory</a></p>
-<h4 id="抽象工厂-Abstract-Factory"><a href="#抽象工厂-Abstract-Factory" class="headerlink" title="抽象工厂 Abstract Factory"></a>抽象工厂 Abstract Factory</h4><p>不同的工厂类实现同一抽象工厂接口制造相似的产品，相似的产品再依赖于产品共同的接口来使得客户无须关心实际产出的具体产品就能使用</p>
-<p>二者区别在于工厂方法委托子类来实例化对象，而抽象工厂建立了产品与客户的接口契约，两者都可以把客户从具体产品中解耦出来</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/factory/abstract.ts" target="_blank" rel="external">Abstract Factory</a></p>
-<h3 id="单例模式-Singleton-pattern"><a href="#单例模式-Singleton-pattern" class="headerlink" title="单例模式 Singleton pattern"></a>单例模式 Singleton pattern</h3><p>实例化唯一一个对象，提供一个全局访问点，所有设计模式中最简单但非常实用且用途广泛</p>
-<h4 id="核心要点："><a href="#核心要点：" class="headerlink" title="核心要点："></a>核心要点：</h4><p>把一个静态私有变量确立为唯一的实例，外部通过静态方法访问这个唯一的实例，并把构造函数设为私有</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/singleton/main.ts" target="_blank" rel="external">Singleton</a></p>
-<h3 id="命令模式-Command-pattern"><a href="#命令模式-Command-pattern" class="headerlink" title="命令模式 Command pattern"></a>命令模式 Command pattern</h3><p>封装请求引入中间代理对象，将动作的请求者从动作的执行者中解耦出来，常用于工作队列或大型数据结构的操作记录以及事务处理</p>
-<h4 id="核心步骤：-2"><a href="#核心步骤：-2" class="headerlink" title="核心步骤："></a>核心步骤：</h4><p>具体任务执行细节封装于Command接口的execute方法的实现中，然后将实现接口的类的实例传递给它的客户，再由客户通过调用其execute方法来执行</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/command/main.ts" target="_blank" rel="external">Command</a></p>
-<h3 id="适配器模式-Adapter-pattern"><a href="#适配器模式-Adapter-pattern" class="headerlink" title="适配器模式 Adapter pattern"></a>适配器模式 Adapter pattern</h3><p>包装某些接口以实现不同的目的，转换接口使其能被其他的对象使用，改变接口符合客户的期望</p>
-<h4 id="核心要点：-1"><a href="#核心要点：-1" class="headerlink" title="核心要点："></a>核心要点：</h4><p>对象适配器类实现目标接口并在其中调用待适配的对象的对应方法，使得在客户代码不变的前提下可以调用不同接口的对象</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/adapter/main.ts" target="_blank" rel="external">Adapter</a></p>
-<h3 id="外观模式-Facade-pattern"><a href="#外观模式-Facade-pattern" class="headerlink" title="外观模式 Facade pattern"></a>外观模式 Facade pattern</h3><p>使用外观类Facade简化接口，封装复杂的子系统，并暴露出更少的更简单的接口，打造更高层的功能，针对外观编程可以使得客户与子系统的组件解耦</p>
-<h4 id="核心要点：-2"><a href="#核心要点：-2" class="headerlink" title="核心要点："></a>核心要点：</h4><p>构造Facade类的时候集合子系统的各个组件对象，暴露出的接口提供更直接更高层的操作，契合最少知识原则</p>
-<p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/facade/main.ts" target="_blank" rel="external">Facade</a></p>
-<h3 id="模板方法模式-Template-Method-pattern"><a href="#模板方法模式-Template-Method-pattern" class="headerlink" title="模板方法模式 Template Method pattern"></a>模板方法模式 Template Method pattern</h3><p>这种封装方式可以使得子类在任何时候都可以将自己挂载进运算里，模板方法定义了一个算法步骤，并允许子类为其中的部分步骤提供自己的实现</p>
-<h4 id="核心要点：-3"><a href="#核心要点：-3" class="headerlink" title="核心要点："></a>核心要点：</h4><p>将相同的步骤抽离出来在抽象类中实现，不同的步骤在子类之中分别实现（父类中以抽象方法的形式存在），子类通过调用同一个模板方法去实现各自的功能（功能有部分不同，但单从模板方法中无法得知，因为被统一抽象了）。模板方法中可以加入钩子方法，提供默认的实现或留空以供子类进行覆盖，通过条件进行流程控制我们可以大大增加算法的灵活性，钩子方法通常是算法当中可选的一部分</p>
-<h4 id="常见应用场景"><a href="#常见应用场景" class="headerlink" title="常见应用场景:"></a>常见应用场景:</h4><p>对象排序的时候对象需要先实现一个比较方法</p>
-<h3 id="总结（踩蛋）"><a href="#总结（踩蛋）" class="headerlink" title="总结（踩蛋）"></a>总结（踩蛋）</h3><p>如果看到这里时，你仍然觉得这么多的模式使你头晕脑胀更别说应用的话，请收下这几枚硬干货：</p>
-<ul>
-<li>计算机科学领域的任何问题, 都可以通过添加一个中间层来解决，几乎所有的设计模式都遵循了这个原则来应对变化增加弹性或进行扩展</li>
-<li>抽象与复用是核心需求，摸石们都为了满足这两点而不断地努力着</li>
-<li>没有完美的模式能够完美应对所有的变化</li>
+<h4 id="理解内核对进程的管理"><a href="#理解内核对进程的管理" class="headerlink" title="理解内核对进程的管理"></a>理解内核对进程的管理</h4><p>对单核CPU来说，每一个进程都是轮流使用CPU，CPU会对每一个到来的进程计时，到时即暂停，接着切换至内核模式，内核会记录下CPU和内存的状态，<br>用于恢复被停止的进程，内核执行上一时间段的任务如磁盘读写，然后选择已就绪的进程来执行，内核为新进程准备CPU和内存（也可以是为了之前暂停的进程），<br>内核将时间段告诉CPU，内核将CPU切换回用户模式，然后进程继续使用CPU进行计算</p>
+<p>CPU的使用权在进程之间切换的过程叫做<strong>上下文切换</strong>，内核运行于上下文切换的间隙时间中</p>
+<h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><p><strong>fork()</strong>: 内核创建进程副本</p>
+<p><strong>exec()</strong>： 内核使用<code>exec(program)</code>中的program来替换当前的进程</p>
+<p>需要内核帮忙的进程都使用先<code>fork</code>然后<code>exec(..)</code>的方式来请求内核</p>
+<h4 id="进程的追踪"><a href="#进程的追踪" class="headerlink" title="进程的追踪"></a>进程的追踪</h4><p>常用命令： </p>
+<p>进程信息：<code>top</code>和 <code>ps</code></p>
+<p>进程与文件的信息： <code>lsof</code></p>
+<p>追踪系统调用： <code>strace</code></p>
+<p>追踪共享库调用： <code>ltrace</code></p>
+<h4 id="追踪线程"><a href="#追踪线程" class="headerlink" title="追踪线程"></a>追踪线程</h4><pre><code>$ ps m
+</code></pre><p>或者 <code>top</code> 下按 <code>H</code></p>
+<h4 id="测量CPU时间"><a href="#测量CPU时间" class="headerlink" title="测量CPU时间"></a>测量CPU时间</h4><pre><code>$ top -p pid1
+</code></pre><p>命令文件执行CPU计时</p>
+<pre><code>$ /usr/bin/time command
+</code></pre><h4 id="平均负载"><a href="#平均负载" class="headerlink" title="平均负载"></a>平均负载</h4><pre><code>$ uptime
+</code></pre><p>表明CPU的繁忙程度，通常web服务器的平均负载较高，进程的启动快，结束也快</p>
+<p>平均负载高但是响应慢的话通常是内存性能受到较大的影响，内存不足时会有很多的进程在准备状态，但是没有足够的内存供要执行的进程使用</p>
+<p>内存的状态可以使用： <code>free</code> 命令查看</p>
+<h4 id="理解CPU，内核与内存的关系"><a href="#理解CPU，内核与内存的关系" class="headerlink" title="理解CPU，内核与内存的关系"></a>理解CPU，内核与内存的关系</h4><p>CPU通过MMU（内存管理单元）将进程访问的虚拟地址转换为实际的内存地址，内核辅助MMU将进程使用的内存划分为更小的区域，成为页面，多个页面使用<br>页面表（内核维护的一个数据结构）进行管理，MMU可以通过这个页面表将虚拟地址映射到实际的内存地址，页面的分配是按需分配，按需的过程大致是开始时指令会被加载到<br>页面，如果这个进程的下一个指令被执行的时候之前已加载的内存页面不存在，那么内核就会加载指令需要的内存页面，再让程序恢复执行，如果进程需要更多的内存，也同样需要<br>内核先去获得更多的内存然后再进行分配</p>
+<h4 id="内存页面中的错误"><a href="#内存页面中的错误" class="headerlink" title="内存页面中的错误"></a>内存页面中的错误</h4><ul>
+<li>轻微内存页面错误：如果需要的内存页面在主内存中但是MMU无法找到，通常是进程想要更多的内存但是MMU中的空间有限时发生</li>
+<li>严重内存页面错误：如果需要的页面在主内存中不存在的话，那么内核就会尝试从磁盘等存储媒介中加载，多数的错误会影响系统性能，在第一次从磁盘中加载代码或者<br>是内存不足时极可能出现</li>
 </ul>
-<p>最后，希望你能够将模式多多应用到业务或编写框架中，尽最大努力编写出干净，可扩展，易维护的架构。</p>
-<p><strong>参考资料:</strong> 《HeadFirst设计模式中文版》2007年第一版</p>
-<p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
-<p>联系方式：tecker_yuknigh@163.com</p>
-
+<p>查看方式：</p>
+<pre><code>$ /usr/bin/time
+</code></pre><h4 id="对CPU和内存进行监控"><a href="#对CPU和内存进行监控" class="headerlink" title="对CPU和内存进行监控"></a>对CPU和内存进行监控</h4><pre><code>$ vmstat n // 每n秒刷新一次数据
+</code></pre><h4 id="IO监控"><a href="#IO监控" class="headerlink" title="IO监控"></a>IO监控</h4><ul>
+<li>全局</li>
+</ul>
+<pre><code>$ iostat
+</code></pre><ul>
+<li>对进程</li>
+</ul>
+<pre><code>$ iotop
+</code></pre>
     
 
     
@@ -472,21 +450,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/10/17/一文讲透koa-源码剖析/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Newer
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/09/10/使用sftp搭建本地快速部署环境/" id="post_nav-older" class="next-content">
+        <a href="/2017/10/30/Linux日常之cron篇/" id="post_nav-older" class="next-content">
             Older
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

@@ -3,6 +3,58 @@
   
     
     <entry>
+      <title><![CDATA[Linux日常之进程内存篇]]></title>
+      <url>/2017/10/31/Linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/</url>
+      <content type="html"><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p>
+<p><strong>进程</strong>：计算机中运行的所有程序，并由内核统一管理，这些进程组成了用户空间</p>
+<p><strong>用户进程</strong>：如图形界面的进程，服务器进程，命令行进程这类用户层级的进程</p>
+<p>内核在内核模式中运行，能直接访问处理器和内存，不能容错；而用户进程运行于用户模式中，一个进程崩溃不会影响整个系统的运行</p>
+<p><strong>线程</strong>：比进程更加细粒度的概念，一般所提到的进程都是单线程，多线程的进程的启动会比多进程要更快，主线程会类似<code>fork</code>出来其他的子线程，<br>而且可以方便地相互通信以及共享IO和系统资源</p>
+<h4 id="内核对进程和内存的管理"><a href="#内核对进程和内存的管理" class="headerlink" title="内核对进程和内存的管理"></a>内核对进程和内存的管理</h4><ul>
+<li>进程：内核决定哪一个进程可以使用CPU</li>
+<li>内存：内核管理所有内存，为进程分配内存，包括进程间的共享内存以及空闲内存</li>
+</ul>
+<h4 id="理解内核对进程的管理"><a href="#理解内核对进程的管理" class="headerlink" title="理解内核对进程的管理"></a>理解内核对进程的管理</h4><p>对单核CPU来说，每一个进程都是轮流使用CPU，CPU会对每一个到来的进程计时，到时即暂停，接着切换至内核模式，内核会记录下CPU和内存的状态，<br>用于恢复被停止的进程，内核执行上一时间段的任务如磁盘读写，然后选择已就绪的进程来执行，内核为新进程准备CPU和内存（也可以是为了之前暂停的进程），<br>内核将时间段告诉CPU，内核将CPU切换回用户模式，然后进程继续使用CPU进行计算</p>
+<p>CPU的使用权在进程之间切换的过程叫做<strong>上下文切换</strong>，内核运行于上下文切换的间隙时间中</p>
+<h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><p><strong>fork()</strong>: 内核创建进程副本</p>
+<p><strong>exec()</strong>： 内核使用<code>exec(program)</code>中的program来替换当前的进程</p>
+<p>需要内核帮忙的进程都使用先<code>fork</code>然后<code>exec(..)</code>的方式来请求内核</p>
+<h4 id="进程的追踪"><a href="#进程的追踪" class="headerlink" title="进程的追踪"></a>进程的追踪</h4><p>常用命令： </p>
+<p>进程信息：<code>top</code>和 <code>ps</code></p>
+<p>进程与文件的信息： <code>lsof</code></p>
+<p>追踪系统调用： <code>strace</code></p>
+<p>追踪共享库调用： <code>ltrace</code></p>
+<h4 id="追踪线程"><a href="#追踪线程" class="headerlink" title="追踪线程"></a>追踪线程</h4><pre><code>$ ps m
+</code></pre><p>或者 <code>top</code> 下按 <code>H</code></p>
+<h4 id="测量CPU时间"><a href="#测量CPU时间" class="headerlink" title="测量CPU时间"></a>测量CPU时间</h4><pre><code>$ top -p pid1
+</code></pre><p>命令文件执行CPU计时</p>
+<pre><code>$ /usr/bin/time command
+</code></pre><h4 id="平均负载"><a href="#平均负载" class="headerlink" title="平均负载"></a>平均负载</h4><pre><code>$ uptime
+</code></pre><p>表明CPU的繁忙程度，通常web服务器的平均负载较高，进程的启动快，结束也快</p>
+<p>平均负载高但是响应慢的话通常是内存性能受到较大的影响，内存不足时会有很多的进程在准备状态，但是没有足够的内存供要执行的进程使用</p>
+<p>内存的状态可以使用： <code>free</code> 命令查看</p>
+<h4 id="理解CPU，内核与内存的关系"><a href="#理解CPU，内核与内存的关系" class="headerlink" title="理解CPU，内核与内存的关系"></a>理解CPU，内核与内存的关系</h4><p>CPU通过MMU（内存管理单元）将进程访问的虚拟地址转换为实际的内存地址，内核辅助MMU将进程使用的内存划分为更小的区域，成为页面，多个页面使用<br>页面表（内核维护的一个数据结构）进行管理，MMU可以通过这个页面表将虚拟地址映射到实际的内存地址，页面的分配是按需分配，按需的过程大致是开始时指令会被加载到<br>页面，如果这个进程的下一个指令被执行的时候之前已加载的内存页面不存在，那么内核就会加载指令需要的内存页面，再让程序恢复执行，如果进程需要更多的内存，也同样需要<br>内核先去获得更多的内存然后再进行分配</p>
+<h4 id="内存页面中的错误"><a href="#内存页面中的错误" class="headerlink" title="内存页面中的错误"></a>内存页面中的错误</h4><ul>
+<li>轻微内存页面错误：如果需要的内存页面在主内存中但是MMU无法找到，通常是进程想要更多的内存但是MMU中的空间有限时发生</li>
+<li>严重内存页面错误：如果需要的页面在主内存中不存在的话，那么内核就会尝试从磁盘等存储媒介中加载，多数的错误会影响系统性能，在第一次从磁盘中加载代码或者<br>是内存不足时极可能出现</li>
+</ul>
+<p>查看方式：</p>
+<pre><code>$ /usr/bin/time
+</code></pre><h4 id="对CPU和内存进行监控"><a href="#对CPU和内存进行监控" class="headerlink" title="对CPU和内存进行监控"></a>对CPU和内存进行监控</h4><pre><code>$ vmstat n // 每n秒刷新一次数据
+</code></pre><h4 id="IO监控"><a href="#IO监控" class="headerlink" title="IO监控"></a>IO监控</h4><ul>
+<li>全局</li>
+</ul>
+<pre><code>$ iostat
+</code></pre><ul>
+<li>对进程</li>
+</ul>
+<pre><code>$ iotop
+</code></pre>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Linux日常之cron篇]]></title>
       <url>/2017/10/30/Linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/</url>
       <content type="html"><![CDATA[<p>cron 能够让我们创建 linux 的定时任务，是系统的内置服务，通过加入自己的配置来达到在某时间段重复执行任务的目的</p>
@@ -630,11 +682,11 @@ sysctl -w net.core.somaxconn<span class="token operator">=</span>1024
         
         <tags>
             
-            <tag> node </tag>
-            
             <tag> linux </tag>
             
             <tag> centOS </tag>
+            
+            <tag> node </tag>
             
             <tag> deploy </tag>
             
@@ -1504,6 +1556,69 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </entry>
     
     <entry>
+      <title><![CDATA[Laravel5 新手填坑指南]]></title>
+      <url>/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
+      <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
+<p>注意事项：</p>
+<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
+<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
+<p>Mac/Linux (少很多麻烦)</p>
+<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
+<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
+<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
+<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
+</li>
+<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
+</li>
+<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
+</li>
+</ol>
+<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
+<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
+</ol>
+<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
+<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
+</ol>
+<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
+<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
+</ol>
+<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
+<li><p>引用的时候必须写成 </p>
+<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
+</li>
+</ol>
+<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
+<li>用户的退出登录可以看成是提交一个DELETE表单</li>
+<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
+<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
+</ol>
+<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
+</code></pre>
+<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
+]]></content>
+      
+        <categories>
+            
+            <category> php </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> php </tag>
+            
+            <tag> Laravel </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Laravel学习笔记]]></title>
       <url>/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h3 id="常用函数："><a href="#常用函数：" class="headerlink" title="常用函数："></a>常用函数：</h3><ul>
@@ -1699,69 +1814,6 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
 <h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment" spellcheck="true">//生成10位随机密码</span>
 </code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> php </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> php </tag>
-            
-            <tag> Laravel </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Laravel5 新手填坑指南]]></title>
-      <url>/2017/02/03/Laravel%20%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</url>
-      <content type="html"><![CDATA[<h3 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h3><p>开发浏览器: Chorme（不用解释）</p>
-<p>注意事项：</p>
-<p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="环境配置篇"><a href="#环境配置篇" class="headerlink" title="环境配置篇"></a>环境配置篇</h3><p>开发环境：</p>
-<p>Mac/Linux (少很多麻烦)</p>
-<p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="正确开发习惯养成"><a href="#正确开发习惯养成" class="headerlink" title="正确开发习惯养成"></a>正确开发习惯养成</h3><p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h3><ol>
-<li><p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
-</li>
-<li><p><code>Model</code>中的代码改变之后，最好<code>migrate:refresh</code>一下，虽然还不理解Eloquent背后的机制，但是可以肯定的是，这样一种映射结构是牢固紧密的，如果Model中的函数被调用一次，那么,这种调用的映射关系会与数据库有持久性关联，如果<code>Model</code>的函数写错了，并且此函数被调用过了，请麻烦<code>refresh</code>一下</p>
-</li>
-<li><p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
-</li>
-</ol>
-<h5 id="注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可"><a href="#注意：如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可" class="headerlink" title="注意：如果不是修改原来的migration而是新建migration的话直接php artisan migrate即可"></a>注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5><h3 id="目录结构篇"><a href="#目录结构篇" class="headerlink" title="目录结构篇"></a>目录结构篇</h3><ol>
-<li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
-</ol>
-<h3 id="命名空间篇"><a href="#命名空间篇" class="headerlink" title="命名空间篇"></a>命名空间篇</h3><ol>
-<li>很多的<code>Class couldn&#39;t find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
-</ol>
-<h3 id="路由篇"><a href="#路由篇" class="headerlink" title="路由篇"></a>路由篇</h3><ol>
-<li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
-</ol>
-<h3 id="用户登录篇-Auth"><a href="#用户登录篇-Auth" class="headerlink" title="用户登录篇 Auth"></a>用户登录篇 Auth</h3><ol>
-<li><p>引用的时候必须写成 </p>
-<pre class=" language-php"><code class="language-php"> <span class="token keyword">use</span> <span class="token package">Auth</span><span class="token punctuation">;</span>
-</code></pre>
-</li>
-<li><p>所有路由都要加上<code>-&gt;name(&#39;_name_&#39;)</code>，不然<code>&amp;#123;&amp;#123; route(&#39;name) &amp;#125;&amp;#125;</code>用不了</p>
-</li>
-</ol>
-<h3 id="表单篇-RESTful"><a href="#表单篇-RESTful" class="headerlink" title="表单篇 RESTful"></a>表单篇 RESTful</h3><ol>
-<li>用户的退出登录可以看成是提交一个DELETE表单</li>
-<li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
-<li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field(&#39;PATCH&#39;) &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field(&#39;DELETE&#39;) &amp;#125;&amp;#125;</code></li>
-</ol>
-<h3 id="数据绑定视图"><a href="#数据绑定视图" class="headerlink" title="数据绑定视图"></a>数据绑定视图</h3><pre class=" language-php"><code class="language-php"><span class="token keyword">return</span> <span class="token function">view</span><span class="token punctuation">(</span><span class="token string">'users.edit'</span><span class="token punctuation">,</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//用compact将user实例数据与视图进行绑定</span>
-</code></pre>
-<h4 id="注意compact的参数是字符串！！！"><a href="#注意compact的参数是字符串！！！" class="headerlink" title="注意compact的参数是字符串！！！"></a>注意compact的参数是字符串！！！</h4><p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
 ]]></content>
       
         <categories>
@@ -2697,6 +2749,38 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     </entry>
     
     <entry>
+      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
+      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
+
+<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
+    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    //防止图片爆出外层div
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[CSS学习笔记04 背景]]></title>
       <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/</url>
       <content type="html"><![CDATA[<h4 id="透明背景"><a href="#透明背景" class="headerlink" title="透明背景"></a>透明背景</h4><pre class=" language-css"><code class="language-css"><span class="token selector">nav </span><span class="token punctuation">{</span>
@@ -2729,20 +2813,23 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     </entry>
     
     <entry>
-      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
-      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
-      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
-
-<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <title><![CDATA[CSS学习笔记02 nav上下居中]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
+      <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
-    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    //防止图片爆出外层div
+<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
+<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
+<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
 ]]></content>
       
         <categories>
@@ -2801,41 +2888,6 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
             <tag> css </tag>
             
             <tag> html </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[CSS学习笔记02 nav上下居中]]></title>
-      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2002%20nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</url>
-      <content type="html"><![CDATA[<h1 id="CSS学习笔记-02-nav上下居中"><a href="#CSS学习笔记-02-nav上下居中" class="headerlink" title="CSS学习笔记 02 nav上下居中"></a>CSS学习笔记 02 nav上下居中</h1><pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.nav-desktop</span></span><span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#e83a37</span><span class="token punctuation">;</span>
-    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">18</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding-bottom</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.menu-text</span> </span><span class="token punctuation">{</span>
-    <span class="token property">line-height</span><span class="token punctuation">:</span> <span class="token number">60</span>px<span class="token punctuation">;</span>
-    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
-<p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
-]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
             
         </tags>
         
