@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Tecker.Yu">
     <meta name="description" content="Live or Die.Take your time and make your choices.">
-    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing">
+    <meta name="keywords" content="hexo-material,Tecker.Yu,blog,web development,node.js,linux,mongoDB,technique and code sharing,linux,运维">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -50,7 +50,7 @@
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Linux日常之进程内存篇 | A Refactor&#39;s Blog">
     <meta property="og:description" content="Live or Die.Take your time and make your choices.">
-    
+    <meta property="og:article:tag" content="linux"> <meta property="og:article:tag" content="运维"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -229,7 +229,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基本概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内核对进程和内存的管理"><span class="post-toc-number">1.0.0.1.</span> <span class="post-toc-text">内核对进程和内存的管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理解内核对进程的管理"><span class="post-toc-number">1.0.0.2.</span> <span class="post-toc-text">理解内核对进程的管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#系统调用"><span class="post-toc-number">1.0.0.3.</span> <span class="post-toc-text">系统调用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#进程的追踪"><span class="post-toc-number">1.0.0.4.</span> <span class="post-toc-text">进程的追踪</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#追踪线程"><span class="post-toc-number">1.0.0.5.</span> <span class="post-toc-text">追踪线程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#测量CPU时间"><span class="post-toc-number">1.0.0.6.</span> <span class="post-toc-text">测量CPU时间</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#平均负载"><span class="post-toc-number">1.0.0.7.</span> <span class="post-toc-text">平均负载</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理解CPU，内核与内存的关系"><span class="post-toc-number">1.0.0.8.</span> <span class="post-toc-text">理解CPU，内核与内存的关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内存页面中的错误"><span class="post-toc-number">1.0.0.9.</span> <span class="post-toc-text">内存页面中的错误</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#对CPU和内存进行监控"><span class="post-toc-number">1.0.0.10.</span> <span class="post-toc-text">对CPU和内存进行监控</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#IO监控"><span class="post-toc-number">1.0.0.11.</span> <span class="post-toc-text">IO监控</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#基本概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本概念</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内核对进程和内存的管理"><span class="post-toc-number">2.</span> <span class="post-toc-text">内核对进程和内存的管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理解内核对进程的管理"><span class="post-toc-number">3.</span> <span class="post-toc-text">理解内核对进程的管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#系统调用"><span class="post-toc-number">4.</span> <span class="post-toc-text">系统调用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#进程的追踪"><span class="post-toc-number">5.</span> <span class="post-toc-text">进程的追踪</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#追踪线程"><span class="post-toc-number">6.</span> <span class="post-toc-text">追踪线程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#测量CPU时间"><span class="post-toc-number">7.</span> <span class="post-toc-text">测量CPU时间</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#平均负载"><span class="post-toc-number">8.</span> <span class="post-toc-text">平均负载</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#理解CPU，内核与内存的关系"><span class="post-toc-number">9.</span> <span class="post-toc-text">理解CPU，内核与内存的关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内存页面中的错误"><span class="post-toc-number">10.</span> <span class="post-toc-text">内存页面中的错误</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#对CPU和内存进行监控"><span class="post-toc-number">11.</span> <span class="post-toc-text">对CPU和内存进行监控</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#IO监控"><span class="post-toc-number">12.</span> <span class="post-toc-text">IO监控</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -317,7 +317,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="/tags/linux/">linux</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/运维/">运维</a>
     </ul>
     
 
@@ -383,7 +383,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p>
+        <h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p>
 <p><strong>进程</strong>：计算机中运行的所有程序，并由内核统一管理，这些进程组成了用户空间</p>
 <p><strong>用户进程</strong>：如图形界面的进程，服务器进程，命令行进程这类用户层级的进程</p>
 <p>内核在内核模式中运行，能直接访问处理器和内存，不能容错；而用户进程运行于用户模式中，一个进程崩溃不会影响整个系统的运行</p>
@@ -566,7 +566,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/TypeScript/">TypeScript<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/BuildingTools/">BuildingTools<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Java/">Java<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/Machine-Learning/">Machine Learning<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Node/">Node<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/PHP/">PHP<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/TypeScript/">TypeScript<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Vue/">Vue<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css/">css<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/categories/php/">php<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/python/">python<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         

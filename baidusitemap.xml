@@ -5,14 +5,21 @@
     
   <url>
     <loc>http://tecknight.xyz/2017/10/31/Linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/</loc>
-    <lastmod>2017-10-31T11:16:48.000Z</lastmod>
+    <lastmod>2017-10-31T11:18:27.000Z</lastmod>
     <data>
         <display>
         <title>Linux日常之进程内存篇</title>
         <pubTime>2017-10-31T04:23:14.000Z</pubTime>
         
+        <tag>linux</tag>
+         
+        <tag>运维</tag>
+         
          
            
+             
+              <breadCrumb title="Linux" url="http://tecknight.xyz/categories/Linux/"/>
+          
         </display>
     </data>
     </url>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tecknight.xyz/"/>
-  <updated>2017-10-31T11:16:48.000Z</updated>
+  <updated>2017-10-31T11:18:27.000Z</updated>
   <id>http://tecknight.xyz/</id>
   
   <author>
@@ -21,20 +21,26 @@
     <link href="http://tecknight.xyz/2017/10/31/Linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/"/>
     <id>http://tecknight.xyz/2017/10/31/Linux日常之进程内存篇/</id>
     <published>2017-10-31T04:23:14.000Z</published>
-    <updated>2017-10-31T11:16:48.000Z</updated>
+    <updated>2017-10-31T11:18:27.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p><p><strong>进程</strong>：计算机中运行的所有程序，并由内核统一管理，这些进程组成了用户空间</p><p><strong>用户进程</strong>：如图形界面的进程，服务器进程，命令行进程这类用户层级的进程</p><p>内核在内核模式中运行，能直接访问处理器和内存，不能容错；而用户进程运行于用户模式中，一个进程崩溃不会影响整个系统的运行</p><p><strong>线程</strong>：比进程更加细粒度的概念，一般所提到的进程都是单线程，多线程的进程的启动会比多进程要更快，主线程会类似<code>fork</code>出来其他的子线程，<br>而且可以方便地相互通信以及共享IO和系统资源</p><h4 id="内核对进程和内存的管理"><a href="#内核对进程和内存的管理" class="headerlink" title="内核对进程和内存的管理"></a>内核对进程和内存的管理</h4><ul><li>进程：内核决定哪一个进程可以使用CPU</li><li>内存：内核管理所有内存，为进程分配内存，包括进程间的共享内存以及空闲内存</li></ul><h4 id="理解内核对进程的管理"><a href="#理解内核对进程的管理" class="headerlink" title="理解内核对进程的管理"></a>理解内核对进程的管理</h4><p>对单核CPU来说，每一个进程都是轮流使用CPU，CPU会对每一个到来的进程计时，到时即暂停，接着切换至内核模式，内核会记录下CPU和内存的状态，<br>用于恢复被停止的进程，内核执行上一时间段的任务如磁盘读写，然后选择已就绪的进程来执行，内核为新进程准备CPU和内存（也可以是为了之前暂停的进程），<br>内核将时间段告诉CPU，内核将CPU切换回用户模式，然后进程继续使用CPU进行计算</p><p>CPU的使用权在进程之间切换的过程叫做<strong>上下文切换</strong>，内核运行于上下文切换的间隙时间中</p><h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><p><strong>fork()</strong>: 内核创建进程副本</p><p><strong>exec()</strong>： 内核使用<code>exec(program)</code>中的program来替换当前的进程</p><p>需要内核帮忙的进程都使用先<code>fork</code>然后<code>exec(..)</code>的方式来请求内核</p><h4 id="进程的追踪"><a href="#进程的追踪" class="headerlink" title="进程的追踪"></a>进程的追踪</h4><p>常用命令： </p><p>进程信息：<code>top</code>和 <code>ps</code></p><p>进程与文件的信息： <code>lsof</code></p><p>追踪系统调用： <code>strace</code></p><p>追踪共享库调用： <code>ltrace</code></p><h4 id="追踪线程"><a href="#追踪线程" class="headerlink" title="追踪线程"></a>追踪线程</h4><pre><code>$ ps m</code></pre><p>或者 <code>top</code> 下按 <code>H</code></p><h4 id="测量CPU时间"><a href="#测量CPU时间" class="headerlink" title="测量CPU时间"></a>测量CPU时间</h4><pre><code>$ top -p pid1</code></pre><p>命令文件执行CPU计时</p><pre><code>$ /usr/bin/time command</code></pre><h4 id="平均负载"><a href="#平均负载" class="headerlink" title="平均负载"></a>平均负载</h4><pre><code>$ uptime</code></pre><p>表明CPU的繁忙程度，通常web服务器的平均负载较高，进程的启动快，结束也快</p><p>平均负载高但是响应慢的话通常是内存性能受到较大的影响，内存不足时会有很多的进程在准备状态，但是没有足够的内存供要执行的进程使用</p><p>内存的状态可以使用： <code>free</code> 命令查看</p><h4 id="理解CPU，内核与内存的关系"><a href="#理解CPU，内核与内存的关系" class="headerlink" title="理解CPU，内核与内存的关系"></a>理解CPU，内核与内存的关系</h4><p>CPU通过MMU（内存管理单元）将进程访问的虚拟地址转换为实际的内存地址，内核辅助MMU将进程使用的内存划分为更小的区域，成为页面，多个页面使用<br>页面表（内核维护的一个数据结构）进行管理，MMU可以通过这个页面表将虚拟地址映射到实际的内存地址，页面的分配是按需分配，按需的过程大致是开始时指令会被加载到<br>页面，如果这个进程的下一个指令被执行的时候之前已加载的内存页面不存在，那么内核就会加载指令需要的内存页面，再让程序恢复执行，如果进程需要更多的内存，也同样需要<br>内核先去获得更多的内存然后再进行分配</p><h4 id="内存页面中的错误"><a href="#内存页面中的错误" class="headerlink" title="内存页面中的错误"></a>内存页面中的错误</h4><ul><li>轻微内存页面错误：如果需要的内存页面在主内存中但是MMU无法找到，通常是进程想要更多的内存但是MMU中的空间有限时发生</li><li>严重内存页面错误：如果需要的页面在主内存中不存在的话，那么内核就会尝试从磁盘等存储媒介中加载，多数的错误会影响系统性能，在第一次从磁盘中加载代码或者<br>是内存不足时极可能出现</li></ul><p>查看方式：</p><pre><code>$ /usr/bin/time</code></pre><h4 id="对CPU和内存进行监控"><a href="#对CPU和内存进行监控" class="headerlink" title="对CPU和内存进行监控"></a>对CPU和内存进行监控</h4><pre><code>$ vmstat n // 每n秒刷新一次数据</code></pre><h4 id="IO监控"><a href="#IO监控" class="headerlink" title="IO监控"></a>IO监控</h4><ul><li>全局</li></ul><pre><code>$ iostat</code></pre><ul><li>对进程</li></ul><pre><code>$ iotop</code></pre>]]></content>
+    <content type="html"><![CDATA[<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p><p><strong>进程</strong>：计算机中运行的所有程序，并由内核统一管理，这些进程组成了用户空间</p><p><strong>用户进程</strong>：如图形界面的进程，服务器进程，命令行进程这类用户层级的进程</p><p>内核在内核模式中运行，能直接访问处理器和内存，不能容错；而用户进程运行于用户模式中，一个进程崩溃不会影响整个系统的运行</p><p><strong>线程</strong>：比进程更加细粒度的概念，一般所提到的进程都是单线程，多线程的进程的启动会比多进程要更快，主线程会类似<code>fork</code>出来其他的子线程，<br>而且可以方便地相互通信以及共享IO和系统资源</p><h4 id="内核对进程和内存的管理"><a href="#内核对进程和内存的管理" class="headerlink" title="内核对进程和内存的管理"></a>内核对进程和内存的管理</h4><ul><li>进程：内核决定哪一个进程可以使用CPU</li><li>内存：内核管理所有内存，为进程分配内存，包括进程间的共享内存以及空闲内存</li></ul><h4 id="理解内核对进程的管理"><a href="#理解内核对进程的管理" class="headerlink" title="理解内核对进程的管理"></a>理解内核对进程的管理</h4><p>对单核CPU来说，每一个进程都是轮流使用CPU，CPU会对每一个到来的进程计时，到时即暂停，接着切换至内核模式，内核会记录下CPU和内存的状态，<br>用于恢复被停止的进程，内核执行上一时间段的任务如磁盘读写，然后选择已就绪的进程来执行，内核为新进程准备CPU和内存（也可以是为了之前暂停的进程），<br>内核将时间段告诉CPU，内核将CPU切换回用户模式，然后进程继续使用CPU进行计算</p><p>CPU的使用权在进程之间切换的过程叫做<strong>上下文切换</strong>，内核运行于上下文切换的间隙时间中</p><h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><p><strong>fork()</strong>: 内核创建进程副本</p><p><strong>exec()</strong>： 内核使用<code>exec(program)</code>中的program来替换当前的进程</p><p>需要内核帮忙的进程都使用先<code>fork</code>然后<code>exec(..)</code>的方式来请求内核</p><h4 id="进程的追踪"><a href="#进程的追踪" class="headerlink" title="进程的追踪"></a>进程的追踪</h4><p>常用命令： </p><p>进程信息：<code>top</code>和 <code>ps</code></p><p>进程与文件的信息： <code>lsof</code></p><p>追踪系统调用： <code>strace</code></p><p>追踪共享库调用： <code>ltrace</code></p><h4 id="追踪线程"><a href="#追踪线程" class="headerlink" title="追踪线程"></a>追踪线程</h4><pre><code>$ ps m</code></pre><p>或者 <code>top</code> 下按 <code>H</code></p><h4 id="测量CPU时间"><a href="#测量CPU时间" class="headerlink" title="测量CPU时间"></a>测量CPU时间</h4><pre><code>$ top -p pid1</code></pre><p>命令文件执行CPU计时</p><pre><code>$ /usr/bin/time command</code></pre><h4 id="平均负载"><a href="#平均负载" class="headerlink" title="平均负载"></a>平均负载</h4><pre><code>$ uptime</code></pre><p>表明CPU的繁忙程度，通常web服务器的平均负载较高，进程的启动快，结束也快</p><p>平均负载高但是响应慢的话通常是内存性能受到较大的影响，内存不足时会有很多的进程在准备状态，但是没有足够的内存供要执行的进程使用</p><p>内存的状态可以使用： <code>free</code> 命令查看</p><h4 id="理解CPU，内核与内存的关系"><a href="#理解CPU，内核与内存的关系" class="headerlink" title="理解CPU，内核与内存的关系"></a>理解CPU，内核与内存的关系</h4><p>CPU通过MMU（内存管理单元）将进程访问的虚拟地址转换为实际的内存地址，内核辅助MMU将进程使用的内存划分为更小的区域，成为页面，多个页面使用<br>页面表（内核维护的一个数据结构）进行管理，MMU可以通过这个页面表将虚拟地址映射到实际的内存地址，页面的分配是按需分配，按需的过程大致是开始时指令会被加载到<br>页面，如果这个进程的下一个指令被执行的时候之前已加载的内存页面不存在，那么内核就会加载指令需要的内存页面，再让程序恢复执行，如果进程需要更多的内存，也同样需要<br>内核先去获得更多的内存然后再进行分配</p><h4 id="内存页面中的错误"><a href="#内存页面中的错误" class="headerlink" title="内存页面中的错误"></a>内存页面中的错误</h4><ul><li>轻微内存页面错误：如果需要的内存页面在主内存中但是MMU无法找到，通常是进程想要更多的内存但是MMU中的空间有限时发生</li><li>严重内存页面错误：如果需要的页面在主内存中不存在的话，那么内核就会尝试从磁盘等存储媒介中加载，多数的错误会影响系统性能，在第一次从磁盘中加载代码或者<br>是内存不足时极可能出现</li></ul><p>查看方式：</p><pre><code>$ /usr/bin/time</code></pre><h4 id="对CPU和内存进行监控"><a href="#对CPU和内存进行监控" class="headerlink" title="对CPU和内存进行监控"></a>对CPU和内存进行监控</h4><pre><code>$ vmstat n // 每n秒刷新一次数据</code></pre><h4 id="IO监控"><a href="#IO监控" class="headerlink" title="IO监控"></a>IO监控</h4><ul><li>全局</li></ul><pre><code>$ iostat</code></pre><ul><li>对进程</li></ul><pre><code>$ iotop</code></pre>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;内核&lt;/strong&gt;：运行于硬件之上，是操作系统的核心，运行于内存中&lt;/p&gt;
+        &lt;h4 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;内核&lt;/strong&gt;：运行于硬件之上，是操作系统的核心，运行于内存中&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;进程&lt;
       
     
     </summary>
     
+      <category term="Linux" scheme="http://tecknight.xyz/categories/Linux/"/>
+    
+    
+      <category term="linux" scheme="http://tecknight.xyz/tags/linux/"/>
+    
+      <category term="运维" scheme="http://tecknight.xyz/tags/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   

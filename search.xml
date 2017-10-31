@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[Linux日常之进程内存篇]]></title>
       <url>/2017/10/31/Linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/</url>
-      <content type="html"><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p>
+      <content type="html"><![CDATA[<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p><strong>内核</strong>：运行于硬件之上，是操作系统的核心，运行于内存中</p>
 <p><strong>进程</strong>：计算机中运行的所有程序，并由内核统一管理，这些进程组成了用户空间</p>
 <p><strong>用户进程</strong>：如图形界面的进程，服务器进程，命令行进程这类用户层级的进程</p>
 <p>内核在内核模式中运行，能直接访问处理器和内存，不能容错；而用户进程运行于用户模式中，一个进程崩溃不会影响整个系统的运行</p>
@@ -51,6 +51,20 @@
 <pre><code>$ iotop
 </code></pre>]]></content>
       
+        <categories>
+            
+            <category> Linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> 运维 </tag>
+            
+        </tags>
         
     </entry>
     
