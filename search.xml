@@ -3,6 +3,108 @@
   
     
     <entry>
+      <title><![CDATA[SQL基础简明总结]]></title>
+      <url>/2017/11/04/SQL%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<h4 id="Inner-Join"><a href="#Inner-Join" class="headerlink" title="Inner Join"></a>Inner Join</h4><p>只含有关联的行</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> field1<span class="token punctuation">,</span> RTRIM<span class="token punctuation">(</span>field2<span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token number">f2</span>
+<span class="token keyword">FROM</span> table_one <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> table_two
+<span class="token keyword">ON</span> table_one<span class="token punctuation">.</span>table_two_id <span class="token operator">=</span> table_two<span class="token punctuation">.</span>id
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> field1<span class="token punctuation">,</span> <span class="token number">f2</span>
+<span class="token keyword">HAVING</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>table_two<span class="token punctuation">.</span>credit<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">2</span>
+<span class="token keyword">WHERE</span> condition1 <span class="token operator">AND</span> condition2 <span class="token operator">AND</span> field1 <span class="token operator">LIKE</span> <span class="token string">'%@hotmail.com'</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> field3<span class="token punctuation">;</span>
+</code></pre>
+<h4 id="Self-Join"><a href="#Self-Join" class="headerlink" title="Self Join"></a>Self Join</h4><p>可用于替代子查询</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token number">c1</span><span class="token punctuation">.</span>cust_id<span class="token punctuation">,</span> <span class="token number">c1</span><span class="token punctuation">.</span>cust_name<span class="token punctuation">,</span> <span class="token number">c1</span><span class="token punctuation">.</span>cust_contact
+<span class="token keyword">FROM</span> customers <span class="token keyword">AS</span> <span class="token number">c1</span><span class="token punctuation">,</span> customers <span class="token keyword">AS</span> <span class="token number">c2</span>
+<span class="token keyword">WHERE</span> <span class="token number">c1</span><span class="token punctuation">.</span>cust_name <span class="token operator">=</span> <span class="token number">c2</span><span class="token punctuation">.</span>cust_name
+<span class="token operator">AND</span> <span class="token number">c2</span><span class="token punctuation">.</span>cust_contact <span class="token operator">=</span> <span class="token string">'Jim'</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="Outer-Join"><a href="#Outer-Join" class="headerlink" title="Outer Join"></a>Outer Join</h4><p>包含没有关联行的行</p>
+<ul>
+<li><code>LEFT</code> 指的是 <code>OUTER JOIN</code> 左边的表选择所有行</li>
+</ul>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> customers<span class="token punctuation">.</span>cust_id<span class="token punctuation">,</span> orders<span class="token punctuation">.</span>order_num
+<span class="token keyword">FROM</span> customers <span class="token keyword">LEFT</span> <span class="token keyword">OUTER</span> <span class="token keyword">JOIN</span> orders
+<span class="token keyword">ON</span> customers<span class="token punctuation">.</span>cust_id <span class="token operator">=</span> orders<span class="token punctuation">.</span>cust_id<span class="token punctuation">;</span>
+</code></pre>
+<h4 id="UNION"><a href="#UNION" class="headerlink" title="UNION"></a>UNION</h4><p>连接多个查询，但必须每个查询的列必须相同</p>
+<h4 id="INSERT-INTO"><a href="#INSERT-INTO" class="headerlink" title="INSERT INTO"></a>INSERT INTO</h4><pre class=" language-sql"><code class="language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> table1<span class="token punctuation">(</span>
+    field1<span class="token punctuation">,</span>
+    field2
+<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>VALUES</code> 可替换为 <code>SELECT</code> 来插入检索的数据</p>
+<p><code>SELECT INTO</code> 可用于从表中导出数据到另一个表中</p>
+<h4 id="表操作"><a href="#表操作" class="headerlink" title="表操作"></a>表操作</h4><pre class=" language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table1
+<span class="token keyword">ADD</span> field CHAR<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token keyword">DROP</span> <span class="token keyword">COLUMN</span> deletedField
+</code></pre>
+<h4 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h4><p>用于重用SQL语句，一般用于简化复杂的查询语句，或者是过滤数据</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> cv <span class="token keyword">AS</span>
+<span class="token keyword">SELECT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">WHERE</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">SELECT</span> field1<span class="token punctuation">,</span> field2
+<span class="token keyword">FROM</span> cv
+<span class="token keyword">WHERE</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token operator">-</span> 两个<span class="token keyword">where</span>子句会自动组合
+</code></pre>
+<h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><p>批量的SQL语句要么全部执行，要么都不执行或回退到特定语句</p>
+<p>用于保证数据的完整性</p>
+<p>事务可用于管理增删改语句</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">START</span> <span class="token keyword">TRANSACTION</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">SAVEPOINT</span> delete1
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">ROLLBACK</span> <span class="token keyword">TO</span> delete1
+<span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
+
+<span class="token operator">-</span> 可以在想结束的地方<span class="token keyword">COMMIT</span>，判断是否出错来执行回退
+</code></pre>
+<h4 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h4><p><strong>主键</strong> 每行的唯一标示，值不能够重用，不允许为NULL，不允许用户修改，自动生成，关键词 <code>PRIMARY KEY</code></p>
+<p><strong>外键</strong> 确保与此列关联的另一表的列存在引用的值，否则会报错，关键词 </p>
+<pre class=" language-sql"><code class="language-sql"><span class="token operator">-</span> 定义中
+REFERENCE table1 <span class="token punctuation">(</span>field1<span class="token punctuation">)</span>
+<span class="token operator">-</span> 更改中
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table1
+<span class="token keyword">ADD</span> <span class="token keyword">CONSTRAINT</span>
+<span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>user_id<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> <span class="token keyword">user</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+</code></pre>
+<p><strong>唯一约束</strong> 保证列中的值唯一，可包含NULL值，可修改可更新，使用关键词 <code>UNIQUE</code></p>
+<p><strong>检查约束</strong> 限定值的范围</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">ADD</span> <span class="token keyword">CONSTRAINT</span> <span class="token keyword">CHECK</span> <span class="token punctuation">(</span> field <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">)</span>
+</code></pre>
+<p><strong>索引</strong> 提前恰当的排序，当查找这个排好序的列时会非常快，主键数据本身就是排序的，提高查找性能，<br>却降低了增删改的性能，因为索引会在这些操作中动态更新索引</p>
+<p>关键词 <code>CREATE INDEX</code></p>
+<p><strong>触发器</strong> 关联特定表上的增删改操作，约束的性能更佳，使用前可以先考虑使用约束，能用于保持数据库的完整性</p>
+]]></content>
+      
+        <categories>
+            
+            <category> DataBase </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> DB </tag>
+            
+            <tag> sql </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Linux必知之网络基础篇]]></title>
       <url>/2017/10/31/Linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/</url>
       <content type="html"><![CDATA[<h4 id="基本层次结构"><a href="#基本层次结构" class="headerlink" title="基本层次结构"></a>基本层次结构</h4><img src="/2017/10/31/Linux必知之网络基础篇/InternetLayers.png" alt="InternetLayers.png" title="">
@@ -1734,6 +1836,34 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
     </entry>
     
     <entry>
+      <title><![CDATA[Laravel 5 常用帮助函数]]></title>
+      <url>/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
+      <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
+</code></pre>
+<h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成10位随机密码</span>
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> php </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> php </tag>
+            
+            <tag> Laravel </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Laravel学习笔记]]></title>
       <url>/2017/02/03/Laravel%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h3 id="常用函数："><a href="#常用函数：" class="headerlink" title="常用函数："></a>常用函数：</h3><ul>
@@ -1906,34 +2036,6 @@ computed<span class="token punctuation">:</span> <span class="token punctuation"
         <categories>
             
             <category> PHP </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> php </tag>
-            
-            <tag> Laravel </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Laravel 5 常用帮助函数]]></title>
-      <url>/2017/02/03/Laravel%205%20%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</url>
-      <content type="html"><![CDATA[<h3 id="1-app-用于快速生成对应命名空间下的类的实例"><a href="#1-app-用于快速生成对应命名空间下的类的实例" class="headerlink" title="1.app() 用于快速生成对应命名空间下的类的实例"></a>1.app() 用于快速生成对应命名空间下的类的实例</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$faker</span> <span class="token operator">=</span> <span class="token function">app</span><span class="token punctuation">(</span>Faker\<span class="token package">Generator</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//生成了一个Faker的生成器实例</span>
-</code></pre>
-<h3 id="2-str-random-用于快速生成限定范围内的随机字符串"><a href="#2-str-random-用于快速生成限定范围内的随机字符串" class="headerlink" title="2.str_random() 用于快速生成限定范围内的随机字符串"></a>2.str_random() 用于快速生成限定范围内的随机字符串</h3><pre class=" language-php"><code class="language-php"><span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">str_random</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//生成10位随机密码</span>
-</code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> php </category>
             
         </categories>
         
@@ -2196,42 +2298,6 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
     </entry>
     
     <entry>
-      <title><![CDATA[Sass语法点总结]]></title>
-      <url>/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</url>
-      <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
-<li><p>@import</p>
-<p> 引入sass模块</p>
-</li>
-<li><p>@include</p>
-<p> 引入mixin函数</p>
-</li>
-<li><p>@mixin</p>
-<p> 声明函数 </p>
-</li>
-<li><p>@extends</p>
-<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
-</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-            <tag> Sass </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Sass之CSS模块化]]></title>
       <url>/2016/12/03/Sass%E4%B9%8BCSS%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
       <content type="html"><![CDATA[<p>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import</p>
@@ -2256,6 +2322,42 @@ bus<span class="token punctuation">.</span><span class="token function">美on</s
 <li>button </li>
 <li>schedule</li>
 </ul>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+            <tag> Sass </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Sass语法点总结]]></title>
+      <url>/2016/12/03/Sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<h4 id="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值"><a href="#类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似-变量名：值" class="headerlink" title="类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值;"></a>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似<code>$变量名：值;</code></h4><h3 id="常用关键词"><a href="#常用关键词" class="headerlink" title="常用关键词"></a>常用关键词</h3><ol>
+<li><p>@import</p>
+<p> 引入sass模块</p>
+</li>
+<li><p>@include</p>
+<p> 引入mixin函数</p>
+</li>
+<li><p>@mixin</p>
+<p> 声明函数 </p>
+</li>
+<li><p>@extends</p>
+<p> 继承某CSS类的样式(存在问题，尽量不使用)</p>
 </li>
 </ol>
 ]]></content>
@@ -2864,6 +2966,38 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
     </entry>
     
     <entry>
+      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
+      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
+      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
+
+<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
+    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>    //防止图片爆出外层div
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> css </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[CSS学习笔记04 背景]]></title>
       <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004%20%E8%83%8C%E6%99%AF/</url>
       <content type="html"><![CDATA[<h4 id="透明背景"><a href="#透明背景" class="headerlink" title="透明背景"></a>透明背景</h4><pre class=" language-css"><code class="language-css"><span class="token selector">nav </span><span class="token punctuation">{</span>
@@ -2913,38 +3047,6 @@ sortArray<span class="token punctuation">[</span>k<span class="token punctuation
 </code></pre>
 <p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
 <p>法二：<br>直接修改padding-top，用devTool动态改变数值看结果</p>
-]]></content>
-      
-        <categories>
-            
-            <category> css </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[CSS学习笔记05 图片放大特效]]></title>
-      <url>/2016/11/01/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005%20%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</url>
-      <content type="html"><![CDATA[<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.img-zoom-in</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transition</span><span class="token punctuation">:</span>all <span class="token number">.2</span>s ease-in-out<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    <span class="token selector">//记得加上浏览器前缀或者自动补全prefix
-
-<span class="token class">.img-zoom-in</span><span class="token pseudo-class">:hover</span> img </span><span class="token punctuation">{</span>
-    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector"><span class="token class">.post-thumb</span> </span><span class="token punctuation">{</span>
-    <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>    //防止图片爆出外层div
-</code></pre>
 ]]></content>
       
         <categories>
