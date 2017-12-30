@@ -1,0 +1,1388 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>Vue 学习总结</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        
+
+
+        
+            <meta name="author" content="Tecker.Yu">
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Vue 学习总结"/>
+<meta name="twitter:description" content="##将数据渲染进DOM元素 &#123;&#123;message&#125;&#125; v-bind:属性= (也可写作 :属性=) ##常用语句 判断 v-if 循环 v-for=&quot;todo in todos&quot; 按钮 v-on:click=&quot;函数名"/>
+
+        <meta property="og:title" content="Vue 学习总结" />
+<meta property="og:description" content="##将数据渲染进DOM元素 &#123;&#123;message&#125;&#125; v-bind:属性= (也可写作 :属性=) ##常用语句 判断 v-if 循环 v-for=&quot;todo in todos&quot; 按钮 v-on:click=&quot;函数名" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+
+
+
+<meta property="article:published_time" content="2017-01-25T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-01-25T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="Vue 学习总结">
+<meta itemprop="description" content="##将数据渲染进DOM元素 &#123;&#123;message&#125;&#125; v-bind:属性= (也可写作 :属性=) ##常用语句 判断 v-if 循环 v-for=&quot;todo in todos&quot; 按钮 v-on:click=&quot;函数名">
+
+
+<meta itemprop="datePublished" content="2017-01-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-01-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2342">
+
+
+
+<meta itemprop="keywords" content="Vue," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-11-04'>
+                                    November 4, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-30'>
+                                    October 30, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-17'>
+                                    October 17, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&text=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&title=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&title=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&title=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&description=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Vue 学习总结</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2017-01-25'>
+            January 25, 2017</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>5 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&text=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&title=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&title=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&title=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f&description=Vue%20%e5%ad%a6%e4%b9%a0%e6%80%bb%e7%bb%93" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fvue%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
+  
+
+  
+
+  <div id="content">
+    <p>##将数据渲染进DOM元素</p>
+
+<ol>
+<li>&#123;&#123;message&#125;&#125;</li>
+<li>v-bind:属性= (也可写作 :属性=)</li>
+</ol>
+
+<p>##常用语句
+判断  <code>v-if</code></p>
+
+<p>循环  <code>v-for=&quot;todo in todos&quot;</code></p>
+
+<p>按钮 <code>v-on:click=&quot;函数名&quot;</code> (也可写作 @click=)</p>
+
+<p>表单数据和应用数据双向绑定 <code>v-model=&quot;数据名&quot;</code></p>
+
+<p>##组件</p>
+
+<pre><code class="language-javascript">Vue.component('todo-item',
+  // The todo-item component now accepts a
+  // &quot;prop&quot;, which is like a custom attribute. 
+  // This prop is called todo. 
+  props: ['todo'],  
+  template: '&lt;li&gt;{{ todo.text }}&lt;/li&gt;'
+})
+</code></pre>
+
+<ul>
+<li><p>props作为子组件的接口，接收父类的数据，同时解耦</p></li>
+
+<li><p>组件可以作为自定义标签在HTML中使用</p></li>
+
+<li><p>所有的 Vue.js 组件其实都是被扩展的 Vue 实例</p></li>
+</ul>
+
+<p>实质上是一个预定义的Vue实例，在实例app中，app相当于父类，而组件相当于是app中的子类，父类的数据可以通过<code>v-bind:字段名</code>
+的方式将父类作用域中的数据传入子类组件中</p>
+
+<p>####用Vue创建的应用的大致结构</p>
+
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+  &lt;app-nav&gt;&lt;/app-nav&gt;
+  &lt;app-view&gt;
+    &lt;app-sidebar&gt;&lt;/app-sidebar&gt;
+    &lt;app-content&gt;&lt;/app-content&gt;
+  &lt;/app-view&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>###创建实例</p>
+
+<pre><code class="language-javascript">var vm = new Vue({
+  // 选项
+})
+
+</code></pre>
+
+<p>传入的选项对象包括：</p>
+
+<ul>
+<li><p>数据</p></li>
+
+<li><p>模板</p></li>
+
+<li><p>挂载元素</p></li>
+
+<li><p>方法</p></li>
+
+<li><p>生命周期钩子</p></li>
+</ul>
+
+<p>###属性和方法</p>
+
+<pre><code class="language-javascript">var data = { a: 1 }
+var vm = new Vue({
+  el: '#example',
+  data: data
+})
+//vm.a === data.a
+vm.$data === data // -&gt; true
+vm.$el === document.getElementById('example') // -&gt; true
+// $watch 是一个实例方法
+vm.$watch('a', function (newVal, oldVal) {
+  // 这个回调将在 vm.a  改变后调用
+})
+</code></pre>
+
+<p>#####注意：</p>
+
+<ul>
+<li><p>所有代理的属性都是响应的，添加新的属性时不会触发视图的更新</p></li>
+
+<li><p>钩子的<code>this</code>代表着调用它的实例</p></li>
+</ul>
+
+<p>###插值</p>
+
+<p>####文本</p>
+
+<ol>
+<li><p>用双大括号<code>&amp;#123;&amp;#123;数据对象 &amp;#124; 过滤器&amp;#125;&amp;#125;</code></p>
+
+<p>注意：</p>
+
+<p>双大括号中也可以是JS表达式可对数据进行运算</p>
+
+<p>渲染结果解释为纯文本</p>
+
+<p>若要输出HTML，需要在div中设置</p>
+
+<p><code>&lt;div v-html=&quot;rawHtml&quot;&gt;&lt;/div&gt;</code></p></li>
+</ol>
+
+<p>##计算属性
+用于将复杂的数据运算包含于实例的初始化中</p>
+
+<p>作为其中一个选项对象：</p>
+
+<pre><code class="language-javascript">computed: {
+    // a computed getter
+    reversedMessage: function () {
+      // this points to the vm instance
+      return 		   
+      this.message.split('').reverse().join('')
+    }
+  }
+
+</code></pre>
+
+<p>reversedMessage作为计算过后的新属性，直接用双大括号进行解释即可得到计算的最终结果</p>
+
+<p>####计算缓存与Method的区别
+好处：当数据的值不改变的时候，依然会使用计算缓存而无需像调用Method那样重新计算
+前提：计算缓存的使用必须要基于相关依赖，像Date.now()就不行</p>
+
+<p>####计算缓存与$watch</p>
+
+<p>在数据变动时，可以优先考虑用计算缓存，而并非watch回调</p>
+
+<p>注意:计算属性默认为getter，也可设置为setter,setter在内部赋值的时候会被调用</p>
+
+<hr />
+
+<p>##观察者 Watchers</p>
+
+<p>当数据值变动时，相对于计算属性，更加的通用，执行异步操作(ajax访问API)或需要响应不断变化昂贵的数据操作时这很有用,例如限制访问API的频率</p>
+
+<p>##Class 与 Style绑定</p>
+
+<p>###绑定HTML Class
+语法：<code>v-bind:class={class1:布尔变量,class2...}</code></p>
+
+<p>class还可以是数据对象,甚至是计算属性！</p>
+
+<p>#####通过控制布尔变量可以使元素的class动态切换</p>
+
+<p><code>&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</code></p>
+
+<p>###绑定内联样式</p>
+
+<p><code>v-bind:style=&quot;{ color: mycolor}&quot;</code> mycolor在data中定义</p>
+
+<p>复杂内联样式推荐绑定styleObject对象</p>
+
+<pre><code class="language-javascript">data: {
+  styleObject: {
+    color: 'red',
+    fontSize: '13px'
+  }
+}
+</code></pre>
+
+<p>##条件渲染
+判断一个标签的输出 <code>v-if=&quot;ok&quot;</code> ok值决定是否显示</p>
+
+<p>判断一块标签的显示 用template元素作为包装元素，下面为根据需要显示的标签块</p>
+
+<p><code>v-else</code>可以和<code>v-if</code>和<code>v-show</code>一起使用</p>
+
+<p><code>v-show</code>专门用于对渲染元素的CSS属性，且不支持<code>&lt;template&gt;</code>标签</p>
+
+<p>####v-if 和 v-show比较</p>
+
+<p>频繁切换使用的用v-show,条件不大可能改变的v-if</p>
+
+<p>##列表渲染</p>
+
+<p><code>&lt;template v-for=&quot;&quot;&gt;</code></p>
+
+<pre><code class="language-html">&lt;div v-for=&quot;(value, key, index) in object&quot;&gt;
+  {{ index }}. {{ key }} : {{ value }}
+&lt;/div&gt;
+</code></pre>
+
+<p>index索引，key键，value值</p>
+
+<p>##key(未完)</p>
+
+<p>作用：让Vue标识出节点的身份，检测数组元素的突变
+用法：v-bind:key=&ldquo;item.id&rdquo;</p>
+
+<p>##数组更新检测</p>
+
+<p>变异方法：一组用来观察数组的方法，可以触发视图更新</p>
+
+<ul>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>splice()</li>
+<li>sort()</li>
+<li>reverse()</li>
+</ul>
+
+<p>非变异方法：不会改变原始数组的数据，但是会返回新的数组，适用于不想改变原值的情况</p>
+
+<ul>
+<li>filter()</li>
+<li>concat()</li>
+<li>slice()</li>
+</ul>
+
+<p>##事件处理器</p>
+
+<p>###监听事件</p>
+
+<p><code>v-on:</code>指令，例如点击<code>v-on:click=&quot;触发方法名&quot;</code></p>
+
+<p>###内联事件处理
+<code>&lt;button v-on:click=&quot;say('hi')&quot;&gt;Say hi&lt;/button&gt;</code>
+say方法名(传入的参数)</p>
+
+<p>如果要访问DOM原生对象,传入的参数要有 特殊符号美元+event</p>
+
+<p>###事件修饰符
+添加在click和submit后</p>
+
+<ul>
+<li>.stop</li>
+<li>.prevent</li>
+<li>.capture</li>
+<li>.self</li>
+</ul>
+
+<p>###按键修饰符
+<code>&lt;input v-on:keyup.13=&quot;submit&quot;&gt;</code>
+13表示键值，该按键按下后会触发submit</p>
+
+<p><code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code></p>
+
+<p>达到直接在HTML中监听事件的效果</p>
+
+<p>##表单控件绑定
+略
+##组件
+###注册全局组件</p>
+
+<p><code>Vue.component('my-component', {
+  选项
+})</code>  父组件
+``</p>
+
+<p>必须先注册组件，然后再初始化父实例，才能在父实例中使用组件自定义标签</p>
+
+<p>###注册局部组件</p>
+
+<pre><code class="language-javascript">var Child = {
+  template: '&lt;div&gt;A custom component!&lt;/div&gt;'
+}
+new Vue({
+  // ...
+  components: {
+    // &lt;my-component&gt; 将只在父模板可用
+    'my-component': Child
+  }
+})
+</code></pre>
+
+<p>子组件
+###data</p>
+
+<p>注意：组件的data必须是函数！通过return的方式将data传入组件绑定的元素中</p>
+
+<p>意义：类似接口解耦，使得同一个data在不同的组件中都能有自己不同的状态！</p>
+
+<p>###传递数据
+父&ndash;&gt;子 props:[&lsquo;字段名&rsquo;]</p>
+
+<p>动态绑定 <code>v-bind:字段名=&quot;父数据名&quot;</code>
+<code>&lt;child v-bind:my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></p>
+
+<p>###props验证</p>
+
+<pre><code class="language-javascript">propB: [String, Number],
+    // 必须且是字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 数字，有默认值
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 数组／对象的默认值应当由一个工厂函数返回
+</code></pre>
+
+<p>###组件v-model数据双向绑定
+表单自定义绑定：</p>
+
+<p>1.绑定value</p>
+
+<p>2.有新的value时触发input事件</p>
+
+<p>###非父子组件的通信
+须使用一个空vue实例来当中央</p>
+
+<pre><code class="language-javascript">var bus = new Vue()
+// 触发组件 A 中的事件
+bus.美元emit('id-selected', 1)
+// 在组件 B 创建的钩子中监听事件
+bus.美on('id-selected', function (id) {
+  
+})
+
+</code></pre>
+
+<p>###内容分发</p>
+
+<p>绑定子组件内的指令到一个组件的根节点，必须在子组件的内部定义模板时进行绑定</p>
+
+<pre><code class="language-html">&lt;my-component&gt;
+    &lt;p&gt;This is some original content&lt;/p&gt;
+    &lt;p&gt;This is some more original content&lt;/p&gt;
+  &lt;/my-component&gt;
+</code></pre>
+
+<p>在父模板中放入子组件的标签，其中的内容将会被安插到子组件的<code>&lt;slot&gt;&lt;/slot&gt;</code>标签中</p>
+
+<p>slot=&ldquo;名称&rdquo;  可以定义名字以标识父插入子的何处</p>
+
+  </div>
+
+  <footer>
+    <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/vue'>Vue</a></li>
+    
+</ul>
+
+  </footer>
+
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/"
+                class="button big previous">Sass之CSS模块化</a></li>
+    
+
+    
+        <li><a href="/blog/laravel-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                class="button big next">Laravel学习笔记</a></li>
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
+              </h3>
+              
+              <time class="published" datetime='2017-11-04'>
+                November 4, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-30'>
+                October 30, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-17'>
+                October 17, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">Linux</a>
+                <span style="float:right;">8</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">6</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">Node</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">Vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">Java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">Machine Learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">PHP</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">Tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">TypeScript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2017
+        
+          NEXT IS WHAT ?
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Design pattern on NEXT IS WHAT ?</title>
+    <link>/tags/design-pattern/</link>
+    <description>Recent content in Design pattern on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/design-pattern/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>常见设计模式概要及其实践-TypeScript实现</title>
+      <link>/blog/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A6%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E8%B7%B5-typescript%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A6%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E8%B7%B5-typescript%E5%AE%9E%E7%8E%B0/</guid>
+      <description>若有不足或纰漏，欢迎指教 前言: 得益于TypeScript强大灵活的OOP语法，使得在js中使用经典且可靠的OOP设计模式变成了现实，虽然有</description>
+    </item>
+    
+  </channel>
+</rss>

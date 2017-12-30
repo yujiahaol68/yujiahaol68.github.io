@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on NEXT IS WHAT ?</title>
+    <link>/categories/python/</link>
+    <description>Recent content in Python on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>python 语法基础</title>
+      <link>/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/</guid>
+      <description>其中记录了python跟别的语言不一样的一些基础知识点 布尔类型 True False 除法 / 默认的除法是精确除法 // 才是通常的取商的整数部分 字符(类似C的ASCI</description>
+    </item>
+    
+  </channel>
+</rss>

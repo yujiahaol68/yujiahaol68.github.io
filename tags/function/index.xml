@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Function on NEXT IS WHAT ?</title>
+    <link>/tags/function/</link>
+    <description>Recent content in Function on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 12 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/function/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>php处理html字符串</title>
+      <link>/blog/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Sat, 12 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用 需要用到的函数： str_replace() 字符串替换</description>
+    </item>
+    
+  </channel>
+</rss>

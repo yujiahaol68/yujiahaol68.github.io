@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Css on NEXT IS WHAT ?</title>
+    <link>/tags/css/</link>
+    <description>Recent content in Css on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/css/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Sass之CSS模块化</title>
+      <link>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</link>
+      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</guid>
+      <description>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C</description>
+    </item>
+    
+    <item>
+      <title>Sass语法点总结</title>
+      <link>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</guid>
+      <description>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值; 常用关键词 @import 引入sass模块</description>
+    </item>
+    
+    <item>
+      <title>CSS 学习笔记01 wrapper class实现居中</title>
+      <link>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-01-wrapper-class/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-01-wrapper-class/</guid>
+      <description>div内容居中 &amp;lt;!-- DESKTOP NAVIGATION --&amp;gt; &amp;lt;nav class=&amp;quot;top-bar&amp;quot;&amp;gt; &amp;lt;div class=&amp;quot;wrap&amp;quot;&amp;gt; &amp;lt;div class=&amp;quot;top-bar-left&amp;quot;&amp;gt; &amp;lt;h3&amp;gt;site title&amp;lt;/h3&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;quot;top-bar-right&amp;quot;&amp;gt; &amp;lt;ul class=&amp;quot;menu&amp;quot;&amp;gt; &amp;lt;li&amp;gt;&amp;lt;input type=&amp;quot;search&amp;quot; placeholder=&amp;quot;Search&amp;quot;&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;button type=&amp;quot;button&amp;quot; class=&amp;quot;button&amp;quot;&amp;gt;Search&amp;lt;/button&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/nav&amp;gt; .wrap{ width: 90%; margin: 0 auto; max-width: 1000px; } 1.用百分号的好处就是能够实时计算 2.margin用于</description>
+    </item>
+    
+    <item>
+      <title>CSS 学习笔记03 按钮Full Height全高度实现</title>
+      <link>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003-%E6%8C%89%E9%92%AEfull-height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003-%E6%8C%89%E9%92%AEfull-height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</guid>
+      <description>nav a.button.alert{ background-color: #e83a37; font-size: 1.1rem; line-height: 60px; padding-top: 0px; padding-bottom: 0px; } line-height 保证居中 接着将padding-top和buttom设置为0即可</description>
+    </item>
+    
+    <item>
+      <title>CSS学习笔记02 nav上下居中</title>
+      <link>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-02-nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-02-nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</guid>
+      <description>CSS学习笔记 02 nav上下居中 .nav-desktop{ background-color: #e83a37; font-size: 18px; padding-top: 0px; padding-bottom: 0px; height: 60px; } .menu-text { line-height: 60px; padding: 0px; } 只需要调整line-height与nav导航栏的高度一致，将paddin</description>
+    </item>
+    
+    <item>
+      <title>CSS学习笔记04 背景</title>
+      <link>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004-%E8%83%8C%E6%99%AF/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004-%E8%83%8C%E6%99%AF/</guid>
+      <description>透明背景 nav { background-color: black; } .menu { background-color: transparent; } 设置透明 这样就使得菜单的颜色与导航栏的颜色一致 背景加亮凸显文字 .menu &amp;gt; li &amp;gt; a:hover { background-color: rgba(255,255,255, 0.1); } 0.1代表透明度为百分之十</description>
+    </item>
+    
+    <item>
+      <title>CSS学习笔记05 图片放大特效</title>
+      <link>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</guid>
+      <description>.img-zoom-in img { transition:all .2s ease-in-out; } //记得加上浏览器前缀或者自动补全prefix .img-zoom-in:hover img { transform: scale(1.1); } .post-thumb { overflow: hidden; } //防止图片爆出外层div</description>
+    </item>
+    
+  </channel>
+</rss>

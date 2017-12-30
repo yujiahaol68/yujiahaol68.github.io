@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mongoose on NEXT IS WHAT ?</title>
+    <link>/tags/mongoose/</link>
+    <description>Recent content in Mongoose on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/mongoose/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>mongoose下的promise技巧</title>
+      <link>/blog/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/</guid>
+      <description>在Promise大行其道的世界里，使用promise可谓是家常便饭了，写一个漂亮的promise极其重要 本文将会基于Express环境实战m</description>
+    </item>
+    
+  </channel>
+</rss>

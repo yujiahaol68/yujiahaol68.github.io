@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Node on NEXT IS WHAT ?</title>
+    <link>/categories/node/</link>
+    <description>Recent content in Node on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/node/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>一文讲透koa-源码剖析</title>
+      <link>/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</link>
+      <pubDate>Tue, 17 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</guid>
+      <description>前言 本文从头开始由浅入深剖析现在十分流行的koa框架的核心源码，适合已经熟练掌握koa框架使用的开发人员阅读 核心机制 现在，让我们从头开始看看</description>
+    </item>
+    
+    <item>
+      <title>用supertest进行API测试</title>
+      <link>/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/</guid>
+      <description>在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是mocha和chai， 然后我们应该有相配合的请求模块来帮</description>
+    </item>
+    
+    <item>
+      <title>最精简restful实现</title>
+      <link>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Wed, 12 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &amp;quot;Node should test in action&amp;quot; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &amp;quot;Pratice node every day&amp;quot; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case</description>
+    </item>
+    
+    <item>
+      <title>Express下多次callback引发的问题</title>
+      <link>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 23 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>错误结果 Error: Can&amp;rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，</description>
+    </item>
+    
+  </channel>
+</rss>

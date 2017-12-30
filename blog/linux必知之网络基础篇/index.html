@@ -1,0 +1,1247 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>Linux必知之网络基础篇</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        
+
+
+        
+            <meta name="author" content="Tecker.Yu">
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Linux必知之网络基础篇"/>
+<meta name="twitter:description" content="基本层次结构 网络层 当每个主机连接到一个子网的时候，其在子网中就会有一个IP地址，这个IP地址应该是唯一的但是在专用网络和NAT的情况中， 会有"/>
+
+        <meta property="og:title" content="Linux必知之网络基础篇" />
+<meta property="og:description" content="基本层次结构 网络层 当每个主机连接到一个子网的时候，其在子网中就会有一个IP地址，这个IP地址应该是唯一的但是在专用网络和NAT的情况中， 会有" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/" />
+
+
+
+<meta property="article:published_time" content="2017-10-31T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-31T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="Linux必知之网络基础篇">
+<meta itemprop="description" content="基本层次结构 网络层 当每个主机连接到一个子网的时候，其在子网中就会有一个IP地址，这个IP地址应该是唯一的但是在专用网络和NAT的情况中， 会有">
+
+
+<meta itemprop="datePublished" content="2017-10-31T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-31T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1769">
+
+
+
+<meta itemprop="keywords" content="linux,运维," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-11-04'>
+                                    November 4, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-30'>
+                                    October 30, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-17'>
+                                    October 17, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&text=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&title=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&title=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&title=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&description=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2017-10-31'>
+            October 31, 2017</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>4 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&text=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&title=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&title=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&title=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f&description=Linux%e5%bf%85%e7%9f%a5%e4%b9%8b%e7%bd%91%e7%bb%9c%e5%9f%ba%e7%a1%80%e7%af%87" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2flinux%25E5%25BF%2585%25E7%259F%25A5%25E4%25B9%258B%25E7%25BD%2591%25E7%25BB%259C%25E5%259F%25BA%25E7%25A1%2580%25E7%25AF%2587%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
+  
+
+  
+
+  <div id="content">
+    
+
+<h2 id="基本层次结构">基本层次结构</h2>
+
+
+
+
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+    
+
+    
+        <p><span class="image center">
+            <img src="/img/2017/10/InternetLayers.png" alt="InternetLayers">
+        </span></p>
+    
+
+
+
+<h2 id="网络层">网络层</h2>
+
+<p>当每个主机连接到一个子网的时候，其在子网中就会有一个IP地址，这个IP地址应该是唯一的但是在专用网络和NAT的情况中，
+会有多个IP地址</p>
+
+<p>查看地址：<code>ipconfig</code></p>
+
+<p><strong>inet addr</strong>: IP地址</p>
+
+<p><strong>Mask</strong>: 子网掩码，定义了IP地址的所属</p>
+
+<p>将它们分别写成四个八位二进制数，每位进行对应，将IP中与掩码的1对应的位加粗，剩余未加粗的是可以变动的，从而可以发现子网之中IP的共用IP前缀</p>
+
+<p>如：</p>
+
+<pre><code>255.255.255.0
+11111111 11111111 11111111 00000000
+子网内的IP的前三位都是相同的，很容易推出子网中其他的IP
+</code></pre>
+
+<p><strong>路由表</strong></p>
+
+<pre><code>$ route -n
+</code></pre>
+
+<pre><code>Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.135.0.1      0.0.0.0         UG    0      0        0 eth0
+10.135.0.0      0.0.0.0         255.255.192.0   U     0      0        0 eth0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0
+</code></pre>
+
+<p>0.0.0.0 是默认路由，能匹配互联网中的所有IP</p>
+
+<p><strong>Destination</strong> 表示前缀</p>
+
+<p><strong>Gateway</strong> 默认网关列，如果目标地址没有匹配其他网络，那就是将信息从默认网关中发出</p>
+
+<p><strong>Flags</strong>的U表示该路由是可活动的可以直接访问，有G的表示需要通过Gateway才可以访问</p>
+
+<h2 id="数据包追踪">数据包追踪</h2>
+
+<p>常用: <code>ping</code> <code>traceroute</code></p>
+
+<p><strong>ping</strong>用于检测是否有丢包和是否能快速响应</p>
+
+<p><strong>traceroute</strong>能显示数据包到目标主机所经过的路由</p>
+
+<h2 id="host-和-dns">host 和 DNS</h2>
+
+<p>使用 <code>host</code>+域名的命令可以使用系统自带的DNS库找到域名的IP</p>
+
+<p>过程如下：</p>
+
+<ol>
+<li>查询函数位于系统共享库</li>
+<li>根据规则查找，一般是先检查 <code>/etc/hosts</code> 文件中的重写（解释了localhost）</li>
+<li>若没有，守护进程（常见是dnsmasq和nscd）会对DNS查询请求进行拦截，如果命中缓存，则返回</li>
+<li>如还没有，则会找到配置好的DNS服务器IP，发送查询请求</li>
+<li>DNS服务器收到后返回域名对应的IP给应用</li>
+</ol>
+
+<h2 id="物理层">物理层</h2>
+
+<p>基本概念</p>
+
+<ul>
+<li>MAC硬件地址（介质访问控制）</li>
+<li>以太网以<strong>帧</strong>的形式发送信息，帧里除了实际数据还有发送者和接受者的MAC地址</li>
+<li>以太网会有不同的类型，那么在网络层的路由器会将其先解包，然后再重新封装发给目标</li>
+<li>内核的网络接口沟通了物理层和网络层，这个接口将IP地址和硬件标识对应起来</li>
+</ul>
+
+<p>查看或配置网络接口</p>
+
+<pre><code>$ ifconfig
+</code></pre>
+
+<p>输出的左面是接口名称，右边是配置以及统计信息</p>
+
+<p><strong>eth0</strong>: 计算机第一块以太网网卡</p>
+
+<p><strong>lo</strong>: 虚拟的网络接口，全名<code>loopback</code>，指向自己，数据发送到lo时内核只会将其重新包装，并通过lo回复</p>
+
+<h2 id="网络配置管理器">网络配置管理器</h2>
+
+<p>守护进程 <strong>NetworkManager</strong> 维护网络和连接的信息和配置，在图形界面中的桌面网络连接设置其实就是与这个进程来交互的</p>
+
+<h2 id="dhcp-动态主机配置协议">DHCP 动态主机配置协议</h2>
+
+<p>用过校园网的朋友们应该都十分清楚，每次都需要登录客户端进行验证，然后就能够动态地获取到IP，DNS，子网掩码等相关的网络配置，
+通常路由器承担了DHCP服务器的角色，其管理和分配其下的连接主机的网络配置，这样就避免了IP冲突或网络变更所带来的影响，主机只向DHCP服务器临时租用IP，
+到期之后DHCP服务器可以要求更新配置</p>
+
+<h2 id="传输层">传输层</h2>
+
+<p>传输层的协议使得网络层的包与应用层的需求无缝连接，其中包含有TCP和UDP协议</p>
+
+<p>查看机器上的连接</p>
+
+<pre><code>$ netstat -nt
+</code></pre>
+
+<p>建立本地和远端机器的TCP连接，本机进程会使用一个端口向远端的公共端口（通常是80）发送一些特殊的数据包，这个过程是我们所熟知的TCP握手连接，这里不进行详细展开，
+在远端的机器也会启动一个进程来监听这个公共端口，监听方就被成为服务器</p>
+
+<p>而UDP则简单得多，它默认本机与服务器是通路，不会进行校验，直接发送</p>
+
+<p>查看公认端口的数字: <code>/etc/services</code></p>
+
+<p>好处：使得进程处理发送和接收更加容易，就像处理文件的输出流和输入流那样，同时这一层也做到了包与数据流之间的转换和包的数据校验纠正工作</p>
+
+<h2 id="ip伪装">IP伪装</h2>
+
+<p>使用<strong>NAT</strong>将IP分享给整个私有网络，使得路由器可以作为中介去访问远程主机而远程却只知道它与路由器建立了连接</p>
+
+<p>大致过程如下：</p>
+
+<ol>
+<li>私有网络里的主机要与外界通信，请求会经过路由器</li>
+<li>路由器拦截请求，然后自身启动请求去连接目标</li>
+<li>连接成功后伪造连接已建立的信息返回给网络里的主机然后作为本机和远程的中介</li>
+</ol>
+
+<h2 id="防火墙">防火墙</h2>
+
+<p>可以在下面的几个场景下设置检查点：</p>
+
+<ul>
+<li>接收数据包时</li>
+<li>发送数据包时</li>
+<li>将数据包转发到其他主机或网关时</li>
+</ul>
+
+<p>防火墙的策略配置：详情见 <code>iptables</code></p>
+
+<h2 id="应用层">应用层</h2>
+
+<p>服务器并不区分发给操作系统的报头和内容，区分只发生于用户空间的服务器程序</p>
+
+<p>多数的网络服务器都是多进程的，至少有一个进程会监听网络端口，接收到一个新的连接时就<strong>fork()</strong>一个新的子进程来处理连接，
+个别的高性能服务器会提前<strong>fork()</strong>出辅助进程的来高效处理连接，连接终止，子进程也就终止</p>
+
+<p>这里列举一些常用的诊断命令：</p>
+
+<ul>
+<li>netstat</li>
+<li>lsof</li>
+<li>tcpdump</li>
+</ul>
+
+<p><strong>RPC（远程程序调用）</strong>：通过本地程序调用远程程序（使用程序标识符来区分），让远程返回结果或信息，有些监控系统会用到</p>
+
+<p><strong>参考资料</strong></p>
+
+<p>《精通Linux》第二版</p>
+
+  </div>
+
+  <footer>
+    <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/linux'>Linux</a></li>
+    
+</ul>
+
+  </footer>
+
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/"
+                class="button big previous">Linux日常之进程内存篇</a></li>
+    
+
+    
+        <li><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/"
+                class="button big next">SQL基础简明总结</a></li>
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
+              </h3>
+              
+              <time class="published" datetime='2017-11-04'>
+                November 4, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-30'>
+                October 30, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-17'>
+                October 17, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">Linux</a>
+                <span style="float:right;">8</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">6</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">Node</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">Vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">Java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">Machine Learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">PHP</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">Tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">TypeScript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2017
+        
+          NEXT IS WHAT ?
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

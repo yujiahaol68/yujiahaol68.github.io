@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Express on NEXT IS WHAT ?</title>
+    <link>/tags/express/</link>
+    <description>Recent content in Express on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/express/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>用supertest进行API测试</title>
+      <link>/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/</guid>
+      <description>在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是mocha和chai， 然后我们应该有相配合的请求模块来帮</description>
+    </item>
+    
+    <item>
+      <title>Express下多次callback引发的问题</title>
+      <link>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 23 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>错误结果 Error: Can&amp;rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，</description>
+    </item>
+    
+  </channel>
+</rss>

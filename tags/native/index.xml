@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Native on NEXT IS WHAT ?</title>
+    <link>/tags/native/</link>
+    <description>Recent content in Native on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 12 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/native/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>最精简restful实现</title>
+      <link>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Wed, 12 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &amp;quot;Node should test in action&amp;quot; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &amp;quot;Pratice node every day&amp;quot; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case</description>
+    </item>
+    
+  </channel>
+</rss>

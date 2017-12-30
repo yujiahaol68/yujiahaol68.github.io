@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Laravel on NEXT IS WHAT ?</title>
+    <link>/tags/laravel/</link>
+    <description>Recent content in Laravel on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Feb 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/laravel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Laravel 5 常用帮助函数</title>
+      <link>/blog/laravel-5-%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-5-%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</guid>
+      <description>1.app() 用于快速生成对应命名空间下的类的实例 $faker = app(Faker\Generator::class); //生成了一个Faker的生成器实例 2.str_random() 用于快速生成限定范围内的随机字符串 $password = str_random(10); //生成10位随机</description>
+    </item>
+    
+    <item>
+      <title>Laravel5 新手填坑指南</title>
+      <link>/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</guid>
+      <description>浏览器篇 开发浏览器: Chorme（不用解释） 注意事项： 一定要先清缓存！清缓存！清缓存！ 重要的说三遍。 环境配置篇 开发环境： Mac/Linux (少很多麻烦) 首选</description>
+    </item>
+    
+    <item>
+      <title>Laravel学习笔记</title>
+      <link>/blog/laravel-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>常用函数： compact(&amp;lsquo;变量1&amp;rsquo;,&amp;lsquo;变量2&amp;rsquo;) 类似于es6 的简写，会生成类似于[&#39;nam</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ThinkPHP on NEXT IS WHAT ?</title>
+    <link>/tags/thinkphp/</link>
+    <description>Recent content in ThinkPHP on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 04 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/thinkphp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TP常用函数总结</title>
+      <link>/blog/tp%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/tp%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</guid>
+      <description>I函数 用途：获取输入数据，例如表单的接收，API的GET接收参数 定义: I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;) 用法：I(&#39;get</description>
+    </item>
+    
+  </channel>
+</rss>

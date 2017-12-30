@@ -1,0 +1,1215 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>python 语法基础</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        
+
+
+        
+            <meta name="author" content="Tecker.Yu">
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="python 语法基础"/>
+<meta name="twitter:description" content="其中记录了python跟别的语言不一样的一些基础知识点 布尔类型 True False 除法 / 默认的除法是精确除法 // 才是通常的取商的整数部分 字符(类似C的ASCI"/>
+
+        <meta property="og:title" content="python 语法基础" />
+<meta property="og:description" content="其中记录了python跟别的语言不一样的一些基础知识点 布尔类型 True False 除法 / 默认的除法是精确除法 // 才是通常的取商的整数部分 字符(类似C的ASCI" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/" />
+
+
+
+<meta property="article:published_time" content="2017-04-11T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-04-11T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="python 语法基础">
+<meta itemprop="description" content="其中记录了python跟别的语言不一样的一些基础知识点 布尔类型 True False 除法 / 默认的除法是精确除法 // 才是通常的取商的整数部分 字符(类似C的ASCI">
+
+
+<meta itemprop="datePublished" content="2017-04-11T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-04-11T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="859">
+
+
+
+<meta itemprop="keywords" content="python," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-11-04'>
+                                    November 4, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-30'>
+                                    October 30, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-17'>
+                                    October 17, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&text=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&title=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&title=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&title=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&description=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/">python 语法基础</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2017-04-11'>
+            April 11, 2017</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>2 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&text=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&title=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&title=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&title=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f&description=python%20%e8%af%ad%e6%b3%95%e5%9f%ba%e7%a1%80" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fpython-%25E8%25AF%25AD%25E6%25B3%2595%25E5%259F%25BA%25E7%25A1%2580%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
+  
+
+  
+
+  <div id="content">
+    
+
+<h4 id="其中记录了python跟别的语言不一样的一些基础知识点">其中记录了python跟别的语言不一样的一些基础知识点</h4>
+
+<h4 id="布尔类型">布尔类型</h4>
+
+<p><code>True</code></p>
+
+<p><code>False</code></p>
+
+<h4 id="除法">除法</h4>
+
+<p><code>/</code> 默认的除法是精确除法</p>
+
+<p><code>//</code> 才是通常的取商的整数部分</p>
+
+<h4 id="字符-类似c的ascii码">字符(类似C的ASCII码)</h4>
+
+<p><code>ord()</code> 字符对应编码</p>
+
+<p><code>chr()</code> 编码转字符</p>
+
+<p><code>'aaa'.encode('utf-8')</code> 转成对应编码形式的<code>bytes</code></p>
+
+<p><code>'aaa'.decode('utf-8')</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
+
+<h4 id="格式化输出">格式化输出</h4>
+
+<pre><code class="language-python">r = 18.0555
+'%.2f%%' %r
+# '18.06%'
+</code></pre>
+
+<h4 id="数据类型之list-类比数组">数据类型之list(类比数组)</h4>
+
+<p>获取<code>list</code>元素个数<code>len(变量名)</code></p>
+
+<p>访问元素下标为负表示都是第几个元素</p>
+
+<p>末尾添加元素 <code>vary.append(...)</code></p>
+
+<p>插入指定位置 <code>vary.insert(1, 'Jack')</code></p>
+
+<p>末尾元素去除 <code>vary.pop()</code></p>
+
+<p>去除指定位置 <code>vary.pop(2)</code></p>
+
+<p>元素之间的数据类型可不同</p>
+
+<h4 id="数据类型之tuple元组">数据类型之tuple元组</h4>
+
+<p>与<code>list</code>相比这样定义出来的数组内的元素是不可直接变的，数据更加安全</p>
+
+<p>间接改变的原理：<code>tuple是保持元素的指向不变，指向的内容是可能可变的，例如元素是list</code></p>
+
+<pre><code class="language-python">t = ('A', 'B', 'C')
+</code></pre>
+
+<h4 id="if语句">if语句</h4>
+
+<p><code>:</code> 替代花括号块</p>
+
+<p><code>elif</code> 等价于其他语言的 <code>else if</code></p>
+
+<h4 id="循环">循环</h4>
+
+<p><code>for-in</code> 循环 <code>for x in ...:</code></p>
+
+<p><code>continue</code> 打破当前循环进入下一次循环</p>
+
+<p><code>break</code> 退出循环体</p>
+
+<h4 id="dict-键值对">dict 键值对</h4>
+
+<pre><code class="language-python">d = {'A':11,'B':22,'C':33}
+d['B']
+# 22
+</code></pre>
+
+<p>找不到<code>key</code>时会报错，所以查<code>key</code>之前要判断一下<code>key in d</code>的返回值再查找</p>
+
+<p>或者</p>
+
+<p><code>d.get('B', -1)</code> 第二个参数指定了找不到时返回的值</p>
+
+<p><code>dict</code> 中的<code>key</code>不可变</p>
+
+<p>删除 <code>d.pop(key)</code></p>
+
+<h4 id="set-key的集合">set key的集合</h4>
+
+<p>初始化需传入一个<code>list</code>，传入的元素不能有重复的</p>
+
+<pre><code class="language-python">s = set([5,5,6,7,7,6,7])
+# {5, 6, 7}
+</code></pre>
+
+<p>添加 <code>add(key)</code></p>
+
+<p>删除 <code>remove(key)</code></p>
+
+<h4 id="字符串对象">字符串对象</h4>
+
+<p><code>str.remove('a', 'A')</code>将<code>a</code>替换成<code>A</code>但是方法会返回一个新的串，原来的<code>str</code>不可变！</p>
+
+<h4 id="基本函数">基本函数</h4>
+
+<p><code>abs()</code></p>
+
+<p><code>max()</code> 可以放任意个参数只返回最大</p>
+
+<p><code>a = abs</code> 给<code>abs</code>函数引用发给<code>a</code>，调用<code>a()</code>效果一样</p>
+
+<h4 id="类型转换">类型转换</h4>
+
+<p><code>int(要转换的变量)</code></p>
+
+<p>其他类似</p>
+
+<h4 id="定义函数">定义函数</h4>
+
+<p><code>def</code> 替代<code>function</code></p>
+
+<h4 id="缩进体置空">缩进体置空</h4>
+
+<p><code>pass</code></p>
+
+<h4 id="函数返回值">函数返回值</h4>
+
+<p>居然可以有多个!! 我的三观&hellip;</p>
+
+<pre><code class="language-python">def goBack(x,y)
+	return x,y
+
+a,b = goBack(1,2) 
+</code></pre>
+
+<p>原因：返回的是<code>tuple</code></p>
+
+<h4 id="类型检查">类型检查</h4>
+
+<pre><code class="language-python">def goBack(x,y)
+	if isinstance(x, (int, float)):
+		return x,y
+# 允许int和float类型
+</code></pre>
+
+<h4 id="参数">参数</h4>
+
+<pre><code class="language-python">def power(x, n=2):
+# n默认值为2
+</code></pre>
+
+<p><code>默认参数必须指向不变对象</code></p>
+
+<p>参数可以是 <code>list</code> 或者 <code>tuble</code>，利用可变参数</p>
+
+<p>可变参数 <code>def calc(*numbers):</code> 多参数自动组装成<code>tuple</code></p>
+
+<p>关键字参数 <code>def person(name, age, **kw):</code> 方便扩展函数的参数</p>
+
+<p><code>参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数</code></p>
+
+<h4 id="尾递归优化递归函数">尾递归优化递归函数</h4>
+
+<p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></p>
+
+<p>注意：标准解释器并不支持这种用法</p>
+
+  </div>
+
+  <footer>
+    <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/python'>python</a></li>
+    
+</ul>
+
+  </footer>
+
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A6%82%E5%BF%B5/"
+                class="button big previous">机器学习的常用概念</a></li>
+    
+
+    
+        <li><a href="/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/"
+                class="button big next">最精简restful实现</a></li>
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
+              </h3>
+              
+              <time class="published" datetime='2017-11-04'>
+                November 4, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-30'>
+                October 30, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-17'>
+                October 17, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">Linux</a>
+                <span style="float:right;">8</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">6</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">Node</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">Vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">Java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">Machine Learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">PHP</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">Tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">TypeScript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2017
+        
+          NEXT IS WHAT ?
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

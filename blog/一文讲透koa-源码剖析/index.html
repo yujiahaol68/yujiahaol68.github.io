@@ -1,0 +1,1360 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>一文讲透koa-源码剖析</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        
+
+
+        
+            <meta name="author" content="Tecker.Yu">
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="一文讲透koa-源码剖析"/>
+<meta name="twitter:description" content="前言 本文从头开始由浅入深剖析现在十分流行的koa框架的核心源码，适合已经熟练掌握koa框架使用的开发人员阅读 核心机制 现在，让我们从头开始看看"/>
+
+        <meta property="og:title" content="一文讲透koa-源码剖析" />
+<meta property="og:description" content="前言 本文从头开始由浅入深剖析现在十分流行的koa框架的核心源码，适合已经熟练掌握koa框架使用的开发人员阅读 核心机制 现在，让我们从头开始看看" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" />
+
+
+
+<meta property="article:published_time" content="2017-10-17T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-17T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="一文讲透koa-源码剖析">
+<meta itemprop="description" content="前言 本文从头开始由浅入深剖析现在十分流行的koa框架的核心源码，适合已经熟练掌握koa框架使用的开发人员阅读 核心机制 现在，让我们从头开始看看">
+
+
+<meta itemprop="datePublished" content="2017-10-17T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-17T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2443">
+
+
+
+<meta itemprop="keywords" content="源码分析,node,koa," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-11-04'>
+                                    November 4, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-30'>
+                                    October 30, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-17'>
+                                    October 17, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&text=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&title=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&title=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&title=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&description=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2017-10-17'>
+            October 17, 2017</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>5 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&text=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&title=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&title=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&title=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f&description=%e4%b8%80%e6%96%87%e8%ae%b2%e9%80%8fkoa-%e6%ba%90%e7%a0%81%e5%89%96%e6%9e%90" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2f%25E4%25B8%2580%25E6%2596%2587%25E8%25AE%25B2%25E9%2580%258Fkoa-%25E6%25BA%2590%25E7%25A0%2581%25E5%2589%2596%25E6%259E%2590%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
+  
+
+  
+
+  <div id="content">
+    
+
+<h2 id="前言">前言</h2>
+
+<p>本文从头开始由浅入深剖析现在十分流行的koa框架的核心源码，适合已经熟练掌握koa框架使用的开发人员阅读</p>
+
+<h2 id="核心机制">核心机制</h2>
+
+<p>现在，让我们从头开始看看koa的内部究竟做了些什么？</p>
+
+<pre><code class="language-javascript">// usage
+const app = new Koa()
+</code></pre>
+
+<pre><code class="language-javascript">// source code
+constructor() {
+	super();
+	
+	this.proxy = false;
+	this.middleware = [];
+	this.subdomainOffset = 2;
+	this.env = process.env.NODE_ENV || 'development';
+	this.context = Object.create(context);
+	this.request = Object.create(request);
+	this.response = Object.create(response);
+}
+</code></pre>
+
+<p>这就是一切的起源，<code>Koa</code> 类的实例从此诞生，继承自 <code>Events</code>，可得知其子类拥有处理异步事件的能力，然而<code>Koa</code>如何处理，现在还不得而知，先打个问号。但创建实例的过程中，可得知有三个对象作为实例的属性被初始化，分别为 <code>context</code> <code>request</code> <code>response</code>，还有我们非常熟悉的存放所有全局中间件的数组<code>middleware</code></p>
+
+<h3 id="koa-class-图示">koa class 图示</h3>
+
+
+
+
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+    
+
+    
+        <p><span class="image center">
+            <img src="/img/2017/10/koa.png" alt="koa">
+        </span></p>
+    
+
+
+
+<pre><code class="language-javascript">// usage 
+app.use(async (ctx, next) =&gt; {
+	// 中间件函数
+});
+</code></pre>
+
+<p>当调用use方法时，在确认它是<code>async</code>函数的情况下，通过<code>push</code>操作，这个函数会被追加到<code>middleware</code>数组中</p>
+
+<pre><code class="language-javascript">use(fn) {
+	// 类型检查...
+	this.middleware.push(fn);
+	return this;
+}
+</code></pre>
+
+<p>此时我们已经有了处理的操作，但是<code>koa</code>还并没有真正的跑起来</p>
+
+<pre><code class="language-javascript">app.listen(3000);
+</code></pre>
+
+<p>可以说当开启<code>http</code>服务器的时候，<code>koa</code>才真正能够开始处理我们的<code>http</code>请求，那么这样一个简洁的调用背后具体究竟做了什么呢？</p>
+
+<pre><code class="language-javascript">const server = http.createServer(this.callback());
+return server.listen(...args);
+</code></pre>
+
+<p><code>koa</code> 使用了 <code>node</code> 的原生 <code>http</code>包来创建<code>http服务</code>,所有的秘密都藏匿在 <code>callback()</code> 这个方法中</p>
+
+<pre><code class="language-javascript">// source code
+const fn = compose(this.middleware);
+...
+return fn(ctx).then(handleResponse).catch(onerror);
+</code></pre>
+
+<p><code>koa</code> 自身还依赖于 <code>koa-compose</code> 模块，从 <code>koa</code>对于 <code>fn</code> 的使用情况来看，<code>middleware</code> 应该是被封装成了一个叫做 <code>fn</code> 的对象，通过传入 <code>context</code> 对象来返回一个 <code>Promise</code></p>
+
+<p>现在，深入 <code>koa-compose</code> 模块来看看它又对我们的中间件数组做了什么。</p>
+
+<pre><code class="language-javascript">// source code
+return function (context, next) {
+  // last called middleware #
+  let index = -1
+  return dispatch(0)
+  function dispatch (i) {
+    if (i &lt;= index) return Promise.reject(new Error('next() called multiple times'))
+    index = i
+    let fn = middleware[i]
+    if (i === middleware.length) fn = next
+    if (!fn) return Promise.resolve()	// 递归结束
+    try {
+      return Promise.resolve(fn(context, function next () {
+        return dispatch(i + 1)	// 递归调用dispatch
+      }))
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  }
+}
+</code></pre>
+
+<p>里面的闭包看起来很眼熟是吗？再对比一下</p>
+
+<pre><code class="language-javascript">// usage 
+app.use(async (ctx, next) =&gt; {
+	// 中间件函数
+});
+</code></pre>
+
+<p>这里的 <code>Promise.resolve(fn(..))</code> 帮助我们异步执行的中间件函数，这里的<code>next</code>函数就解释了为什么<code>Koa</code>的中间件调用是递归执行的，它递归调用了 <code>dispatch</code> 函数来遍历数组中的，同时，所有的中间件函数享有同一个 <code>ctx</code>，再回顾一次外部</p>
+
+<pre><code class="language-javascript">const handleRequest = (req, res) =&gt; {
+  res.statusCode = 404;
+  const ctx = this.createContext(req, res);
+  const onerror = err =&gt; ctx.onerror(err);
+  const handleResponse = () =&gt; respond(ctx);
+  onFinished(res, onerror);
+  return fn(ctx).then(handleResponse).catch(onerror);
+};
+
+return handleRequest;
+</code></pre>
+
+<p><code>context</code> 使用node原生的 <code>http</code> 的监听回调函数中的 <code>req</code> <code>res</code> 来进行进一步的封装，意味着对于每一个 <code>http</code> 请求，<code>koa</code>都会创建一个 <code>context</code> 并共享给所有的全局中间件使用，当所有的中间件执行完过后，会将最后要返回的所有数据统一再交还给 <code>res</code> 进行返回，所以我们在每一个中间件中才能够从 <code>ctx</code> 中取得自己所需要的 <code>req</code> 中的数据进行处理，最后 <code>ctx</code> 再把要返回的 <code>body</code> 给原生的 <code>res</code> 进行返回</p>
+
+<p>每一个请求都有唯一一个 <code>context</code> 对象，所有的关于请求和返回的东西都统一放在里面</p>
+
+<p><code>createContext</code> 方法将 <code>req</code> <code>res</code> 进一步封装</p>
+
+<pre><code class="language-javascript">// source code
+const context = Object.create(this.context); // 创建一个对象，使之拥有context的原型方法，后面以此类推
+const request = context.request = Object.create(this.request);
+const response = context.response = Object.create(this.response);
+
+context.app = request.app = response.app = this;
+context.req = request.req = response.req = req;
+context.res = request.res = response.res = res;
+request.ctx = response.ctx = context;
+request.response = response;
+response.request = request;
+</code></pre>
+
+<p>本着一个请求一个<code>context</code>的原则，<code>context</code> 必须是作为一个临时对象而存在，所有的东西都必须封进一个对象中，因此 <code>app</code> <code>req</code> <code>res</code> 三个属性就此诞生，但不知道大家是否有一个疑问，为什么 <code>app</code> <code>req</code> <code>res</code> 也同时被封在了 <code>request</code> 和 <code>response</code> 里 ？</p>
+
+<p>使他们同时共享同一个 <code>app</code> <code>req</code> <code>res</code> 和 <code>ctx</code>，是为了将处理职责进行转移，客户从外部访问，他们只需要一个 <code>ctx</code> 即可获得所有 <code>koa</code> 提供的数据和方法，而 <code>koa</code> 会继续将这些职责进行进一步的划分，比如 <code>request</code> 是用来进一步封装 <code>req</code> 的，<code>response</code> 是用来进一步封装 <code>res</code>的，这样职责得到了分散，降低了耦合，同时共享所有资源使得整个 <code>context</code> 具有了高内聚的性质，内部元素互相都能够访问得到</p>
+
+<pre><code>// source code
+context.state = {};
+</code></pre>
+
+<p>看得出来，其中的 <code>state</code> 就是专门负责保存单个请求状态的空对象，用户可以根据自己的需要来管理里面的内容</p>
+
+<pre><code>// source code
+const ctx = this.createContext(req, res);
+const onerror = err =&gt; ctx.onerror(err);
+</code></pre>
+
+<p>这个巨大的 <code>ctx</code> 被创建出来的时候在一开始就立马挂载了错误监听器，但在 <code>createContext</code> 中并没有发现这个<code>onerror</code>方法，应该属于其中一个模块的原型方法，经过一番搜索，发现它位于 <code>context.js</code> 这个文件下，这个文件定义了所有的默认 <code>context</code> 对象具有的原型方法</p>
+
+<pre><code class="language-javascript">// application.js
+// handleRequest()
+const onerror = err =&gt; ctx.onerror(err);
+onFinished(res, onerror);
+return fn(ctx).then(handleResponse).catch(onerror);
+</code></pre>
+
+<p>异步函数运行过程中如果有异常抛出且内部没有自行捕获异常的话， <code>koa</code> 会统一使用 <code>Promise</code> 的<code>catch</code> 语句来进行错误处理，用一个图来表示的话那就是这样</p>
+
+<h3 id="koa-请求处理流程图">koa 请求处理流程图</h3>
+
+
+
+
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+    
+
+    
+        <p><span class="image center">
+            <img src="/img/2017/10/koa-request-process.png" alt="koa-request-process">
+        </span></p>
+    
+
+
+
+<p>到这里我们应该也不难解开本文开头时我们心中的一个疑问，那就是为什么要继承 <code>Events</code>，其实就是为了使用 <code>node</code> 自带的事件监听器来监听一些事件，例如目前所知的 <code>error</code> ，来解耦错误处理这一块的功能</p>
+
+<p>全局的错误处理函数</p>
+
+<pre><code class="language-javascript">// source code
+// application.js
+
+onerror(err) {
+  assert(err instanceof Error, `non-error thrown: ${err}`);
+
+  if (404 == err.status || err.expose) return;
+  if (this.silent) return;
+
+  const msg = err.stack || err.toString();
+  console.error();
+  console.error(msg.replace(/^/gm, '  '));
+  console.error();
+}
+</code></pre>
+
+<p><code>Koa</code> 的内部核心处理流程已经梳理完毕，现在我们再进入内部模块一探究竟</p>
+
+<h2 id="request-模块">request 模块</h2>
+
+<p>大量的 <code>getter</code> <code>setter</code> 充分提取出 <code>node</code> <code>http</code> 所提供的有用的请求相关的属性，还有一些必要的 <code>helper</code> 函数这里不再赘述，API文档中几乎所有的 <code>ctx.req</code> 下的属性都在其下提供，值得一提的是其中的 <code>this</code> ，头疼的 <code>this</code> , 这一块的代码用了大量的 <code>this.req</code> 的方式来访问node原生提供的 http 请求信息(因为我们把 node 的<code>req</code>赋给了<code>context</code>)，当在 <code>koa</code> 外部进行使用时我们是通过 <code>ctx.req.propertyName</code> 的形式 &hellip; 没错，我想你也发现了，我们需要绑定我们的 <code>this</code> 使之指向的是 <code>ctx.req</code>，所以在 <code>context.js</code> 模块中使用了代理来将 <code>this</code> 进行正确的绑定，前文提到的使这些模块能够相互访问的赋值代码其实也一定程度减少了<code>this</code>的麻烦事</p>
+
+<pre><code class="language-javascript">// 详见 delegates 包
+// https://github.com/tj/node-delegates
+
+// Koa context.js
+delegate(proto, 'request')
+  .method('acceptsLanguages')
+  .method('acceptsEncodings')
+  .access('query')
+  .access('path')
+  .access('url')
+  .getter('origin')
+
+// delegates 的内部核心实现，通过apply来重新绑定this
+proto[name] = function(){
+  return this[target][name].apply(this[target], arguments);
+};
+</code></pre>
+
+<h2 id="response-模块">response 模块</h2>
+
+<p><code>response.js</code> 的内部也同 <code>request.js</code> 中类似，值得一提的是 <code>writable</code> 这个getter，如果请求已经得到相应，那么返回 <code>true</code>，其中读取的值是 <code>this.res.finished</code>，许多的报错中我们常常会碰到关于尝试重复写入响应头 <code>header</code> 的错误，这个错误的来源即使是 <code>on-finished</code> 这个包，当结束响应的时候此包能够执行一个回调来保存此请求的状态于 <code>res</code></p>
+
+<h2 id="response-helper-函数">response helper 函数</h2>
+
+<p>koa有一个统一的响应函数位于 <code>application.js</code> 的末尾，专门负责处理 <code>ctx.body</code> <code>ctx.status</code> 来进行请求响应</p>
+
+<pre><code class="language-javascript">// responses
+if (Buffer.isBuffer(body)) return res.end(body);
+if ('string' == typeof body) return res.end(body);
+if (body instanceof Stream) return body.pipe(res);
+
+// body: json
+body = JSON.stringify(body);
+if (!res.headersSent) {
+  ctx.length = Buffer.byteLength(body);
+}
+res.end(body);
+</code></pre>
+
+<p>值得注意的是返回的body支持 <code>Buffer</code> <code>string</code> 流，以及最常见的 <code>json</code></p>
+
+<h3 id="全文完">全文完</h3>
+
+<p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
+
+<p>联系方式：tecker_yuknigh@163.com</p>
+
+  </div>
+
+  <footer>
+    <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/node'>Node</a></li>
+    
+</ul>
+
+  </footer>
+
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A6%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E8%B7%B5-typescript%E5%AE%9E%E7%8E%B0/"
+                class="button big previous">常见设计模式概要及其实践-TypeScript实现</a></li>
+    
+
+    
+        <li><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/"
+                class="button big next">Linux日常之cron篇</a></li>
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
+              </h3>
+              
+              <time class="published" datetime='2017-11-04'>
+                November 4, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-30'>
+                October 30, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-17'>
+                October 17, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">Linux</a>
+                <span style="float:right;">8</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">6</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">Node</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">Vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">Java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">Machine Learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">PHP</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">Tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">TypeScript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2017
+        
+          NEXT IS WHAT ?
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

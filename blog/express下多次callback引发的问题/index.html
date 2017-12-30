@@ -1,0 +1,1121 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>Express下多次callback引发的问题</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        
+
+
+        
+            <meta name="author" content="Tecker.Yu">
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Express下多次callback引发的问题"/>
+<meta name="twitter:description" content="错误结果 Error: Can&rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，"/>
+
+        <meta property="og:title" content="Express下多次callback引发的问题" />
+<meta property="og:description" content="错误结果 Error: Can&rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/" />
+
+
+
+<meta property="article:published_time" content="2017-03-23T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-03-23T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="Express下多次callback引发的问题">
+<meta itemprop="description" content="错误结果 Error: Can&rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，">
+
+
+<meta itemprop="datePublished" content="2017-03-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-03-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="852">
+
+
+
+<meta itemprop="keywords" content="node,Express,问题总结,异步,Debug," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-11-04'>
+                                    November 4, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-30'>
+                                    October 30, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-17'>
+                                    October 17, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&text=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&title=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&title=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&title=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&description=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/">Express下多次callback引发的问题</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2017-03-23'>
+            March 23, 2017</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>2 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&text=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&title=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&title=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&title=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f&description=Express%e4%b8%8b%e5%a4%9a%e6%ac%a1callback%e5%bc%95%e5%8f%91%e7%9a%84%e9%97%ae%e9%a2%98" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fexpress%25E4%25B8%258B%25E5%25A4%259A%25E6%25AC%25A1callback%25E5%25BC%2595%25E5%258F%2591%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
+  
+
+  
+
+  <div id="content">
+    
+
+<h3 id="错误结果">错误结果</h3>
+
+<blockquote>
+<p>Error: Can&rsquo;t render headers after they are sent to the client.</p>
+
+<p>错误：当响应头被发回客户端时不能被正确渲染！</p>
+</blockquote>
+
+<h3 id="出现场景">出现场景</h3>
+
+<blockquote>
+<p>Express环境下使用mongoose model 进行模糊查询时，需要用ORM进行至少一次至多两次的查询，查询用的都是Promise进行的异步操作</p>
+</blockquote>
+
+<h3 id="问题排查">问题排查</h3>
+
+<ul>
+<li><p><strong>响应头的设置出现了冲突</strong></p></li>
+
+<li><p>是<code>res.send(docs)</code>出错</p></li>
+
+<li><p><strong>调试时移除了其中一个<code>Promise</code>查询，错误消失</strong></p></li>
+
+<li><p>问题出在<code>Promise</code>上</p></li>
+</ul>
+
+<h3 id="问题分析">问题分析</h3>
+
+<p><strong>为什么连续的两个<code>Promise</code>回调会最终导致响应头渲染冲突?</strong></p>
+
+<p>渲染冲突出现在错误的顶部，跟错误抛出的顺序有关，这与<code>Express</code>自带的<code>res</code>对象有关，而<code>res</code>又继承自<code>node.js</code>原生的<code>http.ServerResponse</code> 类，在<code>res</code>调用<code>res.writeHead(statusCode)</code>写入响应头的状态码之前，我们可以尽情的写入响应头的头信息，在一个<code>res.send(docs)</code>中，应该包含着以下几步，有的是<code>exprerss</code>自己的，有的则是属于<code>node</code>原生<code>http</code>模块的</p>
+
+<p><strong>按以下顺序开始运行:</strong></p>
+
+<blockquote>
+<p>res.writeContinue()</p>
+
+<p>res.statusCode = 404</p>
+
+<p>res.setHeader(name, value)</p>
+
+<p>res.getHeader(name)</p>
+
+<p>res.removeHeader(name)</p>
+
+<p>res.header(key[, val]) (Express only)</p>
+
+<p>res.charset = &lsquo;utf-8&rsquo; (Express only)</p>
+
+<p>res.contentType(type) (Express only)</p>
+
+<p>res.send([body]) (Express only)</p>
+</blockquote>
+
+<p>最后我们的查询数据是以响应内容中的<code>body</code>的形式返回给客户端的，当要进行<code>send</code>的时候，<code>node</code>自带的函数就会先运行，当然运行第一个<code>Promise</code>的时候是没有问题的，问题在于:<strong><code>send</code>本身并不能中断当前执行的任务</strong>，只要还没有<code>return</code>，代码仍然会继续运行，这也恰恰印证了<code>node</code>的异步非阻塞IO的特性，即便是第一个<code>Promise</code>执行时，并不会阻塞第二个<code>Promise</code>的继续执行，如果第一个<code>Promise</code>的<code>res.send</code>已经执行，当第二个<code>Promise</code>被执行时，执行至第三步，也就是设置响应头的时候原先的响应头信息依然存在，触犯了<strong><code>node</code></strong>中不能重复设置响应头信息的规定，所以<code>node</code>先抛错，这一切看起来也就顺其自然了</p>
+
+<h3 id="all-in-all-解决方案呢">All in all 解决方案呢？</h3>
+
+<ul>
+<li>避免使用多次<code>send</code>,多次设置响应头就会出现此错误</li>
+<li>谨慎使用异步<code>Promise</code>，可以考虑<code>Promise</code>嵌套<strong>（推荐）</strong></li>
+<li><code>send</code>之前记得加上<code>return</code>让后面的代码不会运行，但这个方法不好难以控制，当异步操作写在一起的时候，谁知道会是哪一个家伙先结束呢？
+
+
+
+
+
+
+
+
+<br /></li>
+</ul>
+
+  </div>
+
+  <footer>
+    <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/node'>Node</a></li>
+    
+</ul>
+
+  </footer>
+
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/centos-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/"
+                class="button big previous">CentOS 7 升级最新版本git</a></li>
+    
+
+    
+        <li><a href="/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                class="button big next">Linux WEB基础 学习笔记</a></li>
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
+              </h3>
+              
+              <time class="published" datetime='2017-11-04'>
+                November 4, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-30'>
+                October 30, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-17'>
+                October 17, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">Linux</a>
+                <span style="float:right;">8</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">6</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">Node</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">Vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">Java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">Machine Learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">PHP</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">Tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">TypeScript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2017
+        
+          NEXT IS WHAT ?
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="https://cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

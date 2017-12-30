@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning on NEXT IS WHAT ?</title>
+    <link>/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>机器学习的常用概念</title>
+      <link>/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A6%82%E5%BF%B5/</link>
+      <pubDate>Sat, 08 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A6%82%E5%BF%B5/</guid>
+      <description>特征(属性) 通常是训练样本集的列，可看作是每个列的列名，比如区分鸟的品种可以用体重，后背颜色此类的特征来加以区分 特征实例 某一特征列其中的数据</description>
+    </item>
+    
+  </channel>
+</rss>

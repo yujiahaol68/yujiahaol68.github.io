@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DB on NEXT IS WHAT ?</title>
+    <link>/tags/db/</link>
+    <description>Recent content in DB on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/db/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SQL基础简明总结</title>
+      <link>/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 04 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/</guid>
+      <description>Inner Join 只含有关联的行 SELECT field1, RTRIM(field2) AS f2 FROM table_one INNER JOIN table_two ON table_one.table_two_id = table_two.id GROUP BY field1, f2 HAVING COUNT(table_two.credit) &amp;gt; 2 WHERE condition1 AND condition2 AND field1 LIKE &#39;%@hotmail.com&#39; ORDER BY field3; Self Join 可用于替代子查询 SELECT c1.cust_id, c1.cust_name, c1.cust_contact FROM customers AS c1, customers AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact =</description>
+    </item>
+    
+  </channel>
+</rss>

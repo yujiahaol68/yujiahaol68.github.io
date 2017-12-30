@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NEXT IS WHAT ?</title>
+    <link>/</link>
+    <description>Recent content on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SQL基础简明总结</title>
+      <link>/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 04 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/</guid>
+      <description>Inner Join 只含有关联的行 SELECT field1, RTRIM(field2) AS f2 FROM table_one INNER JOIN table_two ON table_one.table_two_id = table_two.id GROUP BY field1, f2 HAVING COUNT(table_two.credit) &amp;gt; 2 WHERE condition1 AND condition2 AND field1 LIKE &#39;%@hotmail.com&#39; ORDER BY field3; Self Join 可用于替代子查询 SELECT c1.cust_id, c1.cust_name, c1.cust_contact FROM customers AS c1, customers AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact =</description>
+    </item>
+    
+    <item>
+      <title>Linux必知之网络基础篇</title>
+      <link>/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/</guid>
+      <description>基本层次结构 网络层 当每个主机连接到一个子网的时候，其在子网中就会有一个IP地址，这个IP地址应该是唯一的但是在专用网络和NAT的情况中， 会有</description>
+    </item>
+    
+    <item>
+      <title>Linux日常之进程内存篇</title>
+      <link>/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/</guid>
+      <description>基本概念 内核：运行于硬件之上，是操作系统的核心，运行于内存中 进程：计算机中运行的所有程序，并由内核统一管理，这些进程组成了用户空间 用户进程：</description>
+    </item>
+    
+    <item>
+      <title>Linux日常之cron篇</title>
+      <link>/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/</link>
+      <pubDate>Mon, 30 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/</guid>
+      <description>cron 能够让我们创建 linux 的定时任务，是系统的内置服务，通过加入自己的配置来达到在某时间段重复执行任务的目的 crontab 通过执行这个命令，我们可以将我们的 crontab 文</description>
+    </item>
+    
+    <item>
+      <title>一文讲透koa-源码剖析</title>
+      <link>/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</link>
+      <pubDate>Tue, 17 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</guid>
+      <description>前言 本文从头开始由浅入深剖析现在十分流行的koa框架的核心源码，适合已经熟练掌握koa框架使用的开发人员阅读 核心机制 现在，让我们从头开始看看</description>
+    </item>
+    
+    <item>
+      <title>常见设计模式概要及其实践-TypeScript实现</title>
+      <link>/blog/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A6%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E8%B7%B5-typescript%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A6%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E8%B7%B5-typescript%E5%AE%9E%E7%8E%B0/</guid>
+      <description>若有不足或纰漏，欢迎指教 前言: 得益于TypeScript强大灵活的OOP语法，使得在js中使用经典且可靠的OOP设计模式变成了现实，虽然有</description>
+    </item>
+    
+    <item>
+      <title>使用sftp搭建本地快速部署环境</title>
+      <link>/blog/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</guid>
+      <description>准备 首先，我们要确保sshd也就是我们的ssh服务处于运行状态之中，下面以centos为例来讲解搭建的过程。 必要的包: openssh-clients openssh-server 运行下面的命令以确</description>
+    </item>
+    
+    <item>
+      <title>Fancy App 1</title>
+      <link>/itemized/item1/</link>
+      <pubDate>Thu, 22 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/itemized/item1/</guid>
+      <description> App 1 </description>
+    </item>
+    
+    <item>
+      <title>Fancy App 2</title>
+      <link>/itemized/item2/</link>
+      <pubDate>Thu, 22 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/itemized/item2/</guid>
+      <description> App 2 </description>
+    </item>
+    
+    <item>
+      <title>Fancy App 3</title>
+      <link>/itemized/item3/</link>
+      <pubDate>Thu, 22 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/itemized/item3/</guid>
+      <description> App 3 </description>
+    </item>
+    
+    <item>
+      <title>Fancy App 4</title>
+      <link>/itemized/item4/</link>
+      <pubDate>Thu, 22 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/itemized/item4/</guid>
+      <description> App 4 </description>
+    </item>
+    
+    <item>
+      <title>centOS下的node部署环境搭建</title>
+      <link>/blog/centos%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Thu, 08 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/centos%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <description>本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程 node的安装过程详情 其他的直接上亲自实践过的安装命令以及需要注意的地方，习惯用英文注释，部分重点</description>
+    </item>
+    
+    <item>
+      <title>mongoose下的promise技巧</title>
+      <link>/blog/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/</guid>
+      <description>在Promise大行其道的世界里，使用promise可谓是家常便饭了，写一个漂亮的promise极其重要 本文将会基于Express环境实战m</description>
+    </item>
+    
+    <item>
+      <title>用supertest进行API测试</title>
+      <link>/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/</guid>
+      <description>在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是mocha和chai， 然后我们应该有相配合的请求模块来帮</description>
+    </item>
+    
+    <item>
+      <title>最精简restful实现</title>
+      <link>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Wed, 12 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &amp;quot;Node should test in action&amp;quot; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &amp;quot;Pratice node every day&amp;quot; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case</description>
+    </item>
+    
+    <item>
+      <title>python 语法基础</title>
+      <link>/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/</guid>
+      <description>其中记录了python跟别的语言不一样的一些基础知识点 布尔类型 True False 除法 / 默认的除法是精确除法 // 才是通常的取商的整数部分 字符(类似C的ASCI</description>
+    </item>
+    
+    <item>
+      <title>机器学习的常用概念</title>
+      <link>/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A6%82%E5%BF%B5/</link>
+      <pubDate>Sat, 08 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A6%82%E5%BF%B5/</guid>
+      <description>特征(属性) 通常是训练样本集的列，可看作是每个列的列名，比如区分鸟的品种可以用体重，后背颜色此类的特征来加以区分 特征实例 某一特征列其中的数据</description>
+    </item>
+    
+    <item>
+      <title>Linux WEB基础 学习笔记</title>
+      <link>/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>系统版本选择 根据不同发行版本的特性 red hat 企业（付费） ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备 debian 稳定可靠，但更新周期长 Mint 台式机用户并支持专利性</description>
+    </item>
+    
+    <item>
+      <title>Express下多次callback引发的问题</title>
+      <link>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 23 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>错误结果 Error: Can&amp;rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，</description>
+    </item>
+    
+    <item>
+      <title>CentOS 7 升级最新版本git</title>
+      <link>/blog/centos-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/</link>
+      <pubDate>Sat, 11 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/centos-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/</guid>
+      <description>准备工作: CentOS 上的最新git版本也只有1.8.3，就想试着装上最新的版本，没想到差点玩脱，全当记录一次冒险经历 Development tools 没装的要装上，不然GCC编译</description>
+    </item>
+    
+    <item>
+      <title>vue-router 快速入门</title>
+      <link>/blog/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>配置路由 $ npm install vue-router --save routes.js import Home from &#39;./pages/Home.vue&#39; import Gifs from &#39;./pages/Gifs.vue&#39; import User from &#39;./pages/User.vue&#39; export const routes = [ { path: &#39;&#39;, component: Home }, { path: &#39;/gifs&#39;, component: Gifs }, { path: &#39;/user/:id&#39;, component: User } //指定路由和对应要渲染的组件 //404的path</description>
+    </item>
+    
+    <item>
+      <title>vuex快速入门</title>
+      <link>/blog/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 08 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>基本用途： 将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了props传值的链式响应的代码冗余 给状态配以公用方法，将状</description>
+    </item>
+    
+    <item>
+      <title>Laravel 5 常用帮助函数</title>
+      <link>/blog/laravel-5-%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-5-%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</guid>
+      <description>1.app() 用于快速生成对应命名空间下的类的实例 $faker = app(Faker\Generator::class); //生成了一个Faker的生成器实例 2.str_random() 用于快速生成限定范围内的随机字符串 $password = str_random(10); //生成10位随机</description>
+    </item>
+    
+    <item>
+      <title>Laravel5 新手填坑指南</title>
+      <link>/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</guid>
+      <description>浏览器篇 开发浏览器: Chorme（不用解释） 注意事项： 一定要先清缓存！清缓存！清缓存！ 重要的说三遍。 环境配置篇 开发环境： Mac/Linux (少很多麻烦) 首选</description>
+    </item>
+    
+    <item>
+      <title>Laravel学习笔记</title>
+      <link>/blog/laravel-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>常用函数： compact(&amp;lsquo;变量1&amp;rsquo;,&amp;lsquo;变量2&amp;rsquo;) 类似于es6 的简写，会生成类似于[&#39;nam</description>
+    </item>
+    
+    <item>
+      <title>Vue 学习总结</title>
+      <link>/blog/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>##将数据渲染进DOM元素 &amp;#123;&amp;#123;message&amp;#125;&amp;#125; v-bind:属性= (也可写作 :属性=) ##常用语句 判断 v-if 循环 v-for=&amp;quot;todo in todos&amp;quot; 按钮 v-on:click=&amp;quot;函数名</description>
+    </item>
+    
+    <item>
+      <title>Sass之CSS模块化</title>
+      <link>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</link>
+      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</guid>
+      <description>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C</description>
+    </item>
+    
+    <item>
+      <title>Sass语法点总结</title>
+      <link>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</guid>
+      <description>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值; 常用关键词 @import 引入sass模块</description>
+    </item>
+    
+    <item>
+      <title>php数组常用方法详解</title>
+      <link>/blog/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid>
+      <description>众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法 我们先建立一个对象</description>
+    </item>
+    
+    <item>
+      <title>gulp.js简易入门指南</title>
+      <link>/blog/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Sun, 20 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</guid>
+      <description>gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直</description>
+    </item>
+    
+    <item>
+      <title>php处理html字符串</title>
+      <link>/blog/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Sat, 12 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用 需要用到的函数： str_replace() 字符串替换</description>
+    </item>
+    
+    <item>
+      <title>UNIX时间戳与time()算时间差</title>
+      <link>/blog/unix%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</link>
+      <pubDate>Sat, 05 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/unix%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</guid>
+      <description>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案 需要用到的函数 getdate(unix数字</description>
+    </item>
+    
+    <item>
+      <title>TP常用函数总结</title>
+      <link>/blog/tp%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/tp%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</guid>
+      <description>I函数 用途：获取输入数据，例如表单的接收，API的GET接收参数 定义: I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;) 用法：I(&#39;get</description>
+    </item>
+    
+    <item>
+      <title>夹杂数字字母大小写的字符串按字典排序方法</title>
+      <link>/blog/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/</guid>
+      <description>核心步骤概要 过滤 过滤数字等特殊符号，只剩下字母 这里要用到String类自带的replaceAll方法以及表达式进行过滤 分割 将字符串进行单字符</description>
+    </item>
+    
+    <item>
+      <title>CSS 学习笔记01 wrapper class实现居中</title>
+      <link>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-01-wrapper-class/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-01-wrapper-class/</guid>
+      <description>div内容居中 &amp;lt;!-- DESKTOP NAVIGATION --&amp;gt; &amp;lt;nav class=&amp;quot;top-bar&amp;quot;&amp;gt; &amp;lt;div class=&amp;quot;wrap&amp;quot;&amp;gt; &amp;lt;div class=&amp;quot;top-bar-left&amp;quot;&amp;gt; &amp;lt;h3&amp;gt;site title&amp;lt;/h3&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;quot;top-bar-right&amp;quot;&amp;gt; &amp;lt;ul class=&amp;quot;menu&amp;quot;&amp;gt; &amp;lt;li&amp;gt;&amp;lt;input type=&amp;quot;search&amp;quot; placeholder=&amp;quot;Search&amp;quot;&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;button type=&amp;quot;button&amp;quot; class=&amp;quot;button&amp;quot;&amp;gt;Search&amp;lt;/button&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/nav&amp;gt; .wrap{ width: 90%; margin: 0 auto; max-width: 1000px; } 1.用百分号的好处就是能够实时计算 2.margin用于</description>
+    </item>
+    
+    <item>
+      <title>CSS 学习笔记03 按钮Full Height全高度实现</title>
+      <link>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003-%E6%8C%89%E9%92%AEfull-height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003-%E6%8C%89%E9%92%AEfull-height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/</guid>
+      <description>nav a.button.alert{ background-color: #e83a37; font-size: 1.1rem; line-height: 60px; padding-top: 0px; padding-bottom: 0px; } line-height 保证居中 接着将padding-top和buttom设置为0即可</description>
+    </item>
+    
+    <item>
+      <title>CSS学习笔记02 nav上下居中</title>
+      <link>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-02-nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-02-nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/</guid>
+      <description>CSS学习笔记 02 nav上下居中 .nav-desktop{ background-color: #e83a37; font-size: 18px; padding-top: 0px; padding-bottom: 0px; height: 60px; } .menu-text { line-height: 60px; padding: 0px; } 只需要调整line-height与nav导航栏的高度一致，将paddin</description>
+    </item>
+    
+    <item>
+      <title>CSS学习笔记04 背景</title>
+      <link>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004-%E8%83%8C%E6%99%AF/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004-%E8%83%8C%E6%99%AF/</guid>
+      <description>透明背景 nav { background-color: black; } .menu { background-color: transparent; } 设置透明 这样就使得菜单的颜色与导航栏的颜色一致 背景加亮凸显文字 .menu &amp;gt; li &amp;gt; a:hover { background-color: rgba(255,255,255, 0.1); } 0.1代表透明度为百分之十</description>
+    </item>
+    
+    <item>
+      <title>CSS学习笔记05 图片放大特效</title>
+      <link>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</link>
+      <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/</guid>
+      <description>.img-zoom-in img { transition:all .2s ease-in-out; } //记得加上浏览器前缀或者自动补全prefix .img-zoom-in:hover img { transform: scale(1.1); } .post-thumb { overflow: hidden; } //防止图片爆出外层div</description>
+    </item>
+    
+  </channel>
+</rss>

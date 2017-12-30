@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web on NEXT IS WHAT ?</title>
+    <link>/tags/web/</link>
+    <description>Recent content in Web on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用sftp搭建本地快速部署环境</title>
+      <link>/blog/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</guid>
+      <description>准备 首先，我们要确保sshd也就是我们的ssh服务处于运行状态之中，下面以centos为例来讲解搭建的过程。 必要的包: openssh-clients openssh-server 运行下面的命令以确</description>
+    </item>
+    
+    <item>
+      <title>Linux WEB基础 学习笔记</title>
+      <link>/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>系统版本选择 根据不同发行版本的特性 red hat 企业（付费） ubuntu 跨设备：服务器，台式，笔记本，嵌入式设备 debian 稳定可靠，但更新周期长 Mint 台式机用户并支持专利性</description>
+    </item>
+    
+  </channel>
+</rss>

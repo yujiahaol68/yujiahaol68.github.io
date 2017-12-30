@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sass on NEXT IS WHAT ?</title>
+    <link>/tags/sass/</link>
+    <description>Recent content in Sass on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/sass/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Sass之CSS模块化</title>
+      <link>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</link>
+      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</guid>
+      <description>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C</description>
+    </item>
+    
+    <item>
+      <title>Sass语法点总结</title>
+      <link>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</guid>
+      <description>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值; 常用关键词 @import 引入sass模块</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on NEXT IS WHAT ?</title>
+    <link>/categories/php/</link>
+    <description>Recent content in Php on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Feb 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Laravel 5 常用帮助函数</title>
+      <link>/blog/laravel-5-%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-5-%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/</guid>
+      <description>1.app() 用于快速生成对应命名空间下的类的实例 $faker = app(Faker\Generator::class); //生成了一个Faker的生成器实例 2.str_random() 用于快速生成限定范围内的随机字符串 $password = str_random(10); //生成10位随机</description>
+    </item>
+    
+    <item>
+      <title>Laravel5 新手填坑指南</title>
+      <link>/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/</guid>
+      <description>浏览器篇 开发浏览器: Chorme（不用解释） 注意事项： 一定要先清缓存！清缓存！清缓存！ 重要的说三遍。 环境配置篇 开发环境： Mac/Linux (少很多麻烦) 首选</description>
+    </item>
+    
+    <item>
+      <title>php数组常用方法详解</title>
+      <link>/blog/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid>
+      <description>众所周知，php的数组可谓是相当强大，很大一部分原因是其数组的方法非常的多而且都非常好用，下面将介绍一些非常实用的数组方法 我们先建立一个对象</description>
+    </item>
+    
+    <item>
+      <title>php处理html字符串</title>
+      <link>/blog/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Sat, 12 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/php%E5%A4%84%E7%90%86html%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用 需要用到的函数： str_replace() 字符串替换</description>
+    </item>
+    
+    <item>
+      <title>UNIX时间戳与time()算时间差</title>
+      <link>/blog/unix%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</link>
+      <pubDate>Sat, 05 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/unix%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/</guid>
+      <description>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案 需要用到的函数 getdate(unix数字</description>
+    </item>
+    
+    <item>
+      <title>TP常用函数总结</title>
+      <link>/blog/tp%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/tp%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</guid>
+      <description>I函数 用途：获取输入数据，例如表单的接收，API的GET接收参数 定义: I(&#39;接收的数据&#39;，&#39;默认值&#39;,&#39;接收数据的类型&#39;) 用法：I(&#39;get</description>
+    </item>
+    
+  </channel>
+</rss>

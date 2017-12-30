@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vue on NEXT IS WHAT ?</title>
+    <link>/tags/vue/</link>
+    <description>Recent content in Vue on NEXT IS WHAT ?</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Mar 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/vue/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>vue-router 快速入门</title>
+      <link>/blog/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>配置路由 $ npm install vue-router --save routes.js import Home from &#39;./pages/Home.vue&#39; import Gifs from &#39;./pages/Gifs.vue&#39; import User from &#39;./pages/User.vue&#39; export const routes = [ { path: &#39;&#39;, component: Home }, { path: &#39;/gifs&#39;, component: Gifs }, { path: &#39;/user/:id&#39;, component: User } //指定路由和对应要渲染的组件 //404的path</description>
+    </item>
+    
+    <item>
+      <title>vuex快速入门</title>
+      <link>/blog/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 08 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>基本用途： 将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了props传值的链式响应的代码冗余 给状态配以公用方法，将状</description>
+    </item>
+    
+    <item>
+      <title>Vue 学习总结</title>
+      <link>/blog/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>##将数据渲染进DOM元素 &amp;#123;&amp;#123;message&amp;#125;&amp;#125; v-bind:属性= (也可写作 :属性=) ##常用语句 判断 v-if 循环 v-for=&amp;quot;todo in todos&amp;quot; 按钮 v-on:click=&amp;quot;函数名</description>
+    </item>
+    
+  </channel>
+</rss>
