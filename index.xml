@@ -17,7 +17,7 @@
       <pubDate>Sat, 04 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/</guid>
-      <description>Inner Join 只含有关联的行 SELECT field1, RTRIM(field2) AS f2 FROM table_one INNER JOIN table_two ON table_one.table_two_id = table_two.id GROUP BY field1, f2 HAVING COUNT(table_two.credit) &amp;gt; 2 WHERE condition1 AND condition2 AND field1 LIKE &#39;%@hotmail.com&#39; ORDER BY field3; Self Join 可用于替代子查询 SELECT c1.cust_id, c1.cust_name, c1.cust_contact FROM customers AS c1, customers AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact =</description>
+      <description>Inner Join 只含有关联的行 SELECT field1, RTRIM(field2) AS f2 FROM table_one INNER JOIN table_two ON table_one.table_two_id = table_two.id GROUP BY field1, f2 AVING COUNT(table_two.credit) &amp;gt; 2 WHERE condition1 AND condition2 AND field1 LIKE &#39;%@hotmail.com&#39; ORDER BY field3; Self Join 可用于替代子查询 SELECT c1.cust_id, c1.cust_name, c1.cust_contact FROM customers AS c1, customers AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact =</description>
     </item>
     
     <item>
@@ -116,7 +116,7 @@
       <pubDate>Thu, 08 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/centos%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
-      <description>本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程 node的安装过程详情 其他的直接上亲自实践过的安装命令以及需要注意的地方，习惯用英文注释，部分重点</description>
+      <description>本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程 node的安装过程详情 其他的直接上亲自实践过的安装命令以及需要注意的地方，习惯用英文注释，部分重点已</description>
     </item>
     
     <item>
