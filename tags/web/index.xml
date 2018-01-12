@@ -6,10 +6,19 @@
     <description>Recent content in Web on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/web/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux必知之网络基础篇</title>
+      <link>/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/</guid>
+      <description>基本层次结构 网络层 当每个主机连接到一个子网的时候，其在子网中就会有一个IP地址，这个IP地址应该是唯一的但是在专用网络和NAT的情况中， 会有</description>
+    </item>
     
     <item>
       <title>使用sftp搭建本地快速部署环境</title>
