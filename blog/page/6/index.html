@@ -16,7 +16,7 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="generator" content="Hugo 0.32.4" />
+        <meta name="generator" content="Hugo 0.33" />
         
 
 
@@ -42,7 +42,7 @@
 
 
 
-<meta property="og:updated_time" content="2016-11-20T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2016-11-27T00:00:00&#43;00:00"/>
 
 
 
@@ -240,6 +240,18 @@ ga('send', 'pageview');
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/">使用tensorflow的Object Detection API做物体识别</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-02-06'>
+                                    February 6, 2018</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
                                 
                                 <time class="published" datetime=
@@ -286,18 +298,6 @@ ga('send', 'pageview');
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2017-10-17'>
-                                    October 17, 2017</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -316,6 +316,99 @@ ga('send', 'pageview');
     
     <div id="main">
         
+        
+            <article class="post">
+  <header>
+    <div class="title">
+        
+            <h2><a href="/blog/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/">php数组常用方法详解</a></h2>
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2016-11-27'>
+            November 27, 2016</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>2 minute read</p>
+        
+        
+    </div>
+</header>
+
+  
+
+  
+  <pre><code class="language-php">class Post
+{
+	public $title;
+	public $published;
+	public $auth;
+
+	function __construct($title,$auth,$published)
+	{
+		$this-&gt;title = $title;
+		$this-&gt;published = $published;
+		$this-&gt;auth = $auth;
+	}
+}
+
+$posts = [
+	new Post('first','jm',true),
+	new Post('second','vm',true),
+	new Post('third','cm',true),
+	new Post('fourth','em',false)
+
+];
+</code></pre>
+
+<ol>
+<li><code>array_filter</code> 数组过滤器</li>
+</ol>
+
+<p>可以写成闭包的形式，那样当数组被遍历的时候每一个元素就会执行该方法，将符合条件的元素return回来，然后就组成了新的数组,如果键的值为空，那么这个键将不会被保存在
+新的数组里</p>
+  <footer>
+    <ul class="actions">
+      <li><a href="/blog/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/" class="button big">Continue Reading</a></li>
+    </ul>
+  <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/php'>php</a></li>
+    
+</ul>
+
+  </footer>
+</article>
+
         
             <article class="post">
   <header>
@@ -583,71 +676,6 @@ ga('send', 'pageview');
 </article>
 
         
-            <article class="post">
-  <header>
-    <div class="title">
-        
-            <h2><a href="/blog/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/">夹杂数字字母大小写的字符串按字典排序方法</a></h2>
-        
-        
-    </div>
-    <div class="meta">
-        
-
-        <time class="published"
-            datetime='2016-11-04'>
-            November 4, 2016</time>
-        <span class="author">Tecker.Yu</span>
-        
-            <p>3 minute read</p>
-        
-        
-    </div>
-</header>
-
-  
-
-  
-  <p>过滤数字等特殊符号，只剩下字母</p>
-  <footer>
-    <ul class="actions">
-      <li><a href="/blog/%E5%A4%B9%E6%9D%82%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/" class="button big">Continue Reading</a></li>
-    </ul>
-  <ul class="stats">
-    
-        
-
-        
-        
-            <li>
-                
-                
-                    
-
-                    
-
-                    
-                        <i class="fa fa-sitemap">&nbsp;</i>
-                    
-
-                    
-                        Category
-                    
-                
-            </li>
-        
-    
-
-    
-    
-        <li><a href='/categories/java'>Java</a></li>
-    
-</ul>
-
-  </footer>
-</article>
-
-        
 
         
 <ul class="actions pagination">
@@ -788,6 +816,20 @@ ga('send', 'pageview');
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/">使用tensorflow的Object Detection API做物体识别</a>
+              </h3>
+              
+              <time class="published" datetime='2018-02-06'>
+                February 6, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
               </h3>
               
@@ -835,20 +877,6 @@ ga('send', 'pageview');
               
               <time class="published" datetime='2017-10-30'>
                 October 30, 2017
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a>
-              </h3>
-              
-              <time class="published" datetime='2017-10-17'>
-                October 17, 2017
               </time>
             </header>
             
@@ -953,6 +981,17 @@ ga('send', 'pageview');
             <header>
               
                 <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/deep-learning/">Deep Learning</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1119,7 +1158,7 @@ ga('send', 'pageview');
     
     <p class="copyright">
       
-        &copy; 2017
+        &copy; 2018
         
           Tecker Yu
         

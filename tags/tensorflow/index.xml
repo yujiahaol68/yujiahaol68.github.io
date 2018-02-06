@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tensorflow on Runtime: out of memory</title>
+    <link>/tags/tensorflow/</link>
+    <description>Recent content in Tensorflow on Runtime: out of memory</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用tensorflow的Object Detection API做物体识别</title>
+      <link>/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/</link>
+      <pubDate>Tue, 06 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/</guid>
+      <description>学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训</description>
+    </item>
+    
+  </channel>
+</rss>

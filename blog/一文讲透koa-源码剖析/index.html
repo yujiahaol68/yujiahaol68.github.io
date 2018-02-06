@@ -10,7 +10,7 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="generator" content="Hugo 0.32.4" />
+        <meta name="generator" content="Hugo 0.33" />
         
 
 
@@ -252,6 +252,18 @@ ga('send', 'pageview');
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/">使用tensorflow的Object Detection API做物体识别</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-02-06'>
+                                    February 6, 2018</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
                                 
                                 <time class="published" datetime=
@@ -293,18 +305,6 @@ ga('send', 'pageview');
                                 <time class="published" datetime=
                                     '2017-10-30'>
                                     October 30, 2017</time>
-                            </header>
-                            
-
-                        </article>
-                
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2017-10-17'>
-                                    October 17, 2017</time>
                             </header>
                             
 
@@ -522,7 +522,7 @@ const app = new Koa()
 <pre><code class="language-javascript">// source code
 constructor() {
 	super();
-	
+
 	this.proxy = false;
 	this.middleware = [];
 	this.subdomainOffset = 2;
@@ -586,9 +586,9 @@ app.use(async (ctx, next) =&gt; {
 <p>当调用use方法时，在确认它是<code>async</code>函数的情况下，通过<code>push</code>操作，这个函数会被追加到<code>middleware</code>数组中</p>
 
 <pre><code class="language-javascript">use(fn) {
-	// 类型检查...
-	this.middleware.push(fn);
-	return this;
+    // 类型检查...
+    this.middleware.push(fn);
+    return this;
 }
 </code></pre>
 
@@ -639,9 +639,9 @@ return function (context, next) {
 
 <p>里面的闭包看起来很眼熟是吗？再对比一下</p>
 
-<pre><code class="language-javascript">// usage 
+<pre><code class="language-javascript">// usage
 app.use(async (ctx, next) =&gt; {
-	// 中间件函数
+    // 中间件函数
 });
 </code></pre>
 
@@ -682,13 +682,13 @@ response.request = request;
 
 <p>使他们同时共享同一个 <code>app</code> <code>req</code> <code>res</code> 和 <code>ctx</code>，是为了将处理职责进行转移，客户从外部访问，他们只需要一个 <code>ctx</code> 即可获得所有 <code>koa</code> 提供的数据和方法，而 <code>koa</code> 会继续将这些职责进行进一步的划分，比如 <code>request</code> 是用来进一步封装 <code>req</code> 的，<code>response</code> 是用来进一步封装 <code>res</code>的，这样职责得到了分散，降低了耦合，同时共享所有资源使得整个 <code>context</code> 具有了高内聚的性质，内部元素互相都能够访问得到</p>
 
-<pre><code>// source code
+<pre><code class="language-javascript">// source code
 context.state = {};
 </code></pre>
 
 <p>看得出来，其中的 <code>state</code> 就是专门负责保存单个请求状态的空对象，用户可以根据自己的需要来管理里面的内容</p>
 
-<pre><code>// source code
+<pre><code class="language-javascript">// source code
 const ctx = this.createContext(req, res);
 const onerror = err =&gt; ctx.onerror(err);
 </code></pre>
@@ -819,6 +819,8 @@ res.end(body);
 
 <p>联系方式：tecker_yuknigh@163.com</p>
 
+
+    <img src="http://ojt3x01ru.bkt.clouddn.com/image/me/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
   </div>
 
   <footer>
@@ -1020,6 +1022,20 @@ res.end(body);
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/">使用tensorflow的Object Detection API做物体识别</a>
+              </h3>
+              
+              <time class="published" datetime='2018-02-06'>
+                February 6, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
               </h3>
               
@@ -1067,20 +1083,6 @@ res.end(body);
               
               <time class="published" datetime='2017-10-30'>
                 October 30, 2017
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">一文讲透koa-源码剖析</a>
-              </h3>
-              
-              <time class="published" datetime='2017-10-17'>
-                October 17, 2017
               </time>
             </header>
             
@@ -1185,6 +1187,17 @@ res.end(body);
             <header>
               
                 <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/deep-learning/">Deep Learning</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1351,7 +1364,7 @@ res.end(body);
     
     <p class="copyright">
       
-        &copy; 2017
+        &copy; 2018
         
           Tecker Yu
         

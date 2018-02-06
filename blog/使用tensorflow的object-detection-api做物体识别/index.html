@@ -1,0 +1,1371 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>使用tensorflow的Object Detection API做物体识别</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.33" />
+        
+
+
+        
+        <link rel="icon shortcut" type="image/ico" href="http://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png">
+        <link rel="icon" sizes="192x192" href="http://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png">
+        <link rel="apple-touch-icon" href="http://ojt3x01ru.bkt.clouddn.com/image/blog/cover.png">
+
+        
+            <meta name="author" content="Tecker.Yu">
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="使用tensorflow的Object Detection API做物体识别"/>
+<meta name="twitter:description" content="学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训"/>
+
+        <meta property="og:title" content="使用tensorflow的Object Detection API做物体识别" />
+<meta property="og:description" content="学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/" />
+
+
+
+<meta property="article:published_time" content="2018-02-06T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-02-06T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="使用tensorflow的Object Detection API做物体识别">
+<meta itemprop="description" content="学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训">
+
+
+<meta itemprop="datePublished" content="2018-02-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-02-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1905">
+
+
+
+<meta itemprop="keywords" content="tensorflow," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-111736395-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/itemized/">
+                            <i class="fa fa-list">&nbsp;</i>Itemized
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/contact/">
+                            <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/itemized/">
+                            <h3>
+                                <i class="fa fa-list">&nbsp;</i>Itemized
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/contact/">
+                            <h3>
+                                <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/">使用tensorflow的Object Detection API做物体识别</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-02-06'>
+                                    February 6, 2018</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-11-04'>
+                                    November 4, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-31'>
+                                    October 31, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2017-10-30'>
+                                    October 30, 2017</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&text=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&title=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&title=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&title=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&description=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/">使用tensorflow的Object Detection API做物体识别</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2018-02-06'>
+            February 6, 2018</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>4 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&text=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&title=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&title=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&title=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f&description=%e4%bd%bf%e7%94%a8tensorflow%e7%9a%84Object%20Detection%20API%e5%81%9a%e7%89%a9%e4%bd%93%e8%af%86%e5%88%ab" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2f%25E4%25BD%25BF%25E7%2594%25A8tensorflow%25E7%259A%2584object-detection-api%25E5%2581%259A%25E7%2589%25A9%25E4%25BD%2593%25E8%25AF%2586%25E5%2588%25AB%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
+  
+
+  
+
+  <div id="content">
+    
+
+<p>学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训练</p>
+
+<p><a href="https://github.com/yujiahaol68/tensorflow-tangerine-detection">完整代码</a></p>
+
+<h1 id="环境准备">环境准备</h1>
+
+<ul>
+<li>Win10</li>
+<li>一张优秀的显卡（尤其显存要大，最低要求 2G）</li>
+<li>Anaconda</li>
+<li>tensorflow 1.5</li>
+<li>python 3.5</li>
+<li>CUDA 9.0.167 （目前官网的文档可能还是8.0，但亲测 import 寻找的是 9.0 的 dll 文件）</li>
+<li>cuDNN 7.0.5</li>
+<li>protoc <a href="https://github.com/google/protobuf/releases">3.5.1</a></li>
+</ul>
+
+<p>环境的配置刚开始是比较顺利的，安装了 <strong>Anaconda</strong> 的话，按照官网的说明可以专门创建一个名为 tensorflow 的 py 环境出来专门用于训练，这也是笔者所推崇的，安装完 tensorflow GPU 的版本，接着就把 <strong>CUDA</strong> 和 <strong>cuDNN</strong> 也装了，CUDA 安装目录下的 <code>bin</code> 和 <code>libnvvp</code> 目录都要添加进系统环境变量中， cuDNN 中的 <code>cuda</code> 目录建议解压放置到系统盘根目录并把其下的 <code>bin</code> 目录也添加进环境变量中</p>
+
+<p>为了使用 Object Detection 包，我们必须把 proto 文件手动编译成 python 脚本，将 <a href="https://github.com/tensorflow/models">tensorflow/models</a> 整个下载下来，编译用到的工具为 protoc，下载对应系统的压缩包，解压到系统盘，把其下的 <code>bin</code> 目录添加进环境变量，编译的步骤跟随 <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md">安装文档</a>， win 下记得把 <code>models</code> 目录和 <code>models/slim</code> 目录都添加进环境变量中，编译成功后运行测试脚本确保 Object Detection 可用，至此 Object Detection 相关的包就处于可用的状态了</p>
+
+<p>注意：如果还是提示找不到对应模块的话，需要在 对应环境的 <em>site-packages</em> 目录下加入一个 <code>tensorflow_model.pth</code> 文件，内容如下</p>
+
+<pre><code>第一行是 research 的路径
+第二行是 slim 的路径
+</code></pre>
+
+<h1 id="制作训练集">制作训练集</h1>
+
+<ul>
+<li>爬取柑橘的相关图片（其他物体类似）</li>
+</ul>
+
+<p>此步略，自己爬可以，在百度图片搜索结果页右键另存为网页也可以，获取数据不是本文讨论的重点</p>
+
+<ul>
+<li>手动裁剪图片</li>
+</ul>
+
+<p>一方面减小体积，另一方面尽量显示出特征主体，注意主体也不能过大，最好留有一部分背景，没有进行严格的验证</p>
+
+<ul>
+<li>给图片打 Label</li>
+</ul>
+
+<p>win 环境下可以使用 <a href="https://github.com/tzutalin/labelImg">labelimg</a> 给图片的局部加上分类标签来制作我们的数据集，如果是用 mac 的话可以尝试一款名为 <a href="https://rectlabel.com/">rectlabel</a> 的付费 app ，能对图片的分类特征进行更精细的框选，效果应该更好，支持输出 PASCAL VOC 格式的图片标记</p>
+
+<h1 id="生成-tfrecord-文件">生成 TFRecord 文件</h1>
+
+<p>我们的图片和 labelimg 生成的分类注解 xml 文件应该按如下方式放置</p>
+
+<pre><code>Project
+.
+├── annotations
+│   ├── xmls
+│   │   ├── tangerine_1.xml
+│   │   └── tangerine_2.xml
+│   └── trainval.txt
+│
+├── images
+│   └── tangerine_1.jpg
+│   └── tangerine_2.jpg
+├── data
+│   └── tangerine_label_map.pbtxt
+
+</code></pre>
+
+<p>因为本文使用 labelimg 进行的图片特征标记已经符合 Oxford pet dataset 的格式，所以笔者直接使用的是 models 目录中自带的 <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/dataset_tools/create_pet_tf_record.py">转换脚本</a> 来将我们自己制作的数据集转换成文档所要求的 TFRecord 文件，将输出的文件名称分别改为 <code>tangerine_train.record</code> 和 <code>tangerine_val.record</code>，运行转换脚本， 参数 <code>data_dir</code> 也就是上图目录树中 <code>Project</code> 的目录，<code>output_dir</code> 是输出目录， <code>label_map_path</code> 也就是我们 <code>tangerine_label_map.pbtxt</code> 的文件路径，脚本默认是使用 30% 的图片数据作为测试集，可根据自身情况进行修改</p>
+
+<p>留意目录树的童鞋可能会发现，<code>annotations</code> 目录下还有一个 <code>trainval.txt</code> 文件，因为 object detection 需要读取其中的每一行来去读取相应的 xml 文件，然后根据 xml 中的 filename 和 path 标签内容再去读取相应的 jpg 图片。因此，我们需要把所有的 xml 文件名称（不含扩展名）以一个文件一行的形式，写入 <code>trainval.txt</code> 并保证它放在目录树所示位置，每个 xml 文件中的 filename 标签内容也必须修改为带扩展名的形式，这里我自行编写了一些脚本专门用于批量进行自动修改</p>
+
+<p>使用说明：</p>
+
+<ul>
+<li>clean_data.py 用于将同一个目录下的图片和xml文件重命名成规整的名字</li>
+<li>gen_trainval.py 用于生成 <code>trainval.txt</code> 文件</li>
+<li>xml_modify.py 用于修改 xml 文件的部分内容使得 <code>create_tangerine_tf_record.py</code> 能够顺利通过里面提供的标识找到图片并生成 TFRecord</li>
+</ul>
+
+<p>使用详情请阅读代码注释</p>
+
+<h1 id="选择模型及修改对应配置文件">选择模型及修改对应配置文件</h1>
+
+<p>本文使用的模型为 coco数据集的 <code>faster_rcnn_resnet101</code> 模型，想要使用预训练的模型我们需要将模型的压缩包下载下来，将里面前缀为 <code>model.ckpt</code> 的文件解压到我们的 <code>Project/training</code> 目录下， <code>faster_rcnn_resnet101_coco.config</code> 是对应的模型文件，在里面把对应的 <code>PATH_TO_BE_CONFIGURED</code> 的部分自行进行修改，训练的时候 tensorflow 会通过读取配置文件的形式去读取对应的模型文件，训练集测试集和 label ，如果需要修改训练步数减少训练时间可以修改 <code>num_steps</code></p>
+
+<h1 id="模型训练及效果查看">模型训练及效果查看</h1>
+
+<p>训练命令</p>
+
+<pre><code># 在 research 目录下
+$ python object_detection/train.py --logtostderr --pipeline_config_path=E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --train_dir=E:/DL/tangerine-recognition/training
+</code></pre>
+
+<p>开启 tensorboard 看训练时损失函数的变化情况</p>
+
+<pre><code>$ tensorboard --logdir=E:/DL/tangerine-recognition/training --port=6006 --host=localhost
+# 访问 localhost:6006
+</code></pre>
+
+<p>开启 tensorboard 看模型在测试集上的效果</p>
+
+<pre><code># 在 research 目录下
+$ python object_detection/eval.py --logtostderr --pipeline_config_path=E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --eval_dir=E:/DL/tangerine-recognition/eval --checkpoint_dir=E:/DL/tangerine-recognition/training
+
+$ tensorboard --logdir=E:/DL/tangerine-recognition/eval --port=6006 --host=localhost
+
+# 访问 localhost:6006，右上角选择 image
+</code></pre>
+
+
+
+
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+    
+
+    
+        <p><span class="image center">
+            <img src="/img/2018/02/tensorboard.png" alt="tensorboard">
+        </span></p>
+    
+
+
+
+<h1 id="导出训练好的模型">导出训练好的模型</h1>
+
+<pre><code># 在 research 目录下
+$ python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --trained_checkpoint_prefix E:/DL/tangerine-recognition/training/model.ckpt-{设置的步数} --output_directory E:/DL/tangerine-recognition/training/result
+</code></pre>
+
+<p>在 result 目录下就能看到我们的 <code>frozen_inference_graph.pb</code> 可用于生产部署的图模型了</p>
+
+<h1 id="使用-python-调用已训练的模型进行识别">使用 python 调用已训练的模型进行识别</h1>
+
+<pre><code class="language-python"># demo.py
+import cv2
+import numpy as np
+import tensorflow as tf
+from object_detection.utils import label_map_util
+from object_detection.utils import visualization_utils as vis_util
+
+
+class TOD(object):
+    def __init__(self):
+        self.PATH_TO_CKPT = 'E:\\DL\\tangerine-recognition\\training\\result\\frozen_inference_graph.pb'
+        self.PATH_TO_LABELS = 'E:\\DL\\tangerine-recognition\\tangerine_label_map.pbtxt'
+        self.NUM_CLASSES = 1
+        self.detection_graph = self._load_model()
+        self.category_index = self._load_label_map()
+
+    def _load_model(self):
+        detection_graph = tf.Graph()
+        with detection_graph.as_default():
+            od_graph_def = tf.GraphDef()
+            with tf.gfile.GFile(self.PATH_TO_CKPT, 'rb') as fid:
+                serialized_graph = fid.read()
+                od_graph_def.ParseFromString(serialized_graph)
+                tf.import_graph_def(od_graph_def, name='')
+        return detection_graph
+
+    def _load_label_map(self):
+        label_map = label_map_util.load_labelmap(self.PATH_TO_LABELS)
+        categories = label_map_util.convert_label_map_to_categories(label_map,
+                                                                    max_num_classes=self.NUM_CLASSES,
+                                                                    use_display_name=True)
+        category_index = label_map_util.create_category_index(categories)
+        return category_index
+
+    def detect(self, image):
+        with self.detection_graph.as_default():
+            with tf.Session(graph=self.detection_graph) as sess:
+                # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
+                image_np_expanded = np.expand_dims(image, axis=0)
+                image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
+                boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
+                scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
+                classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
+                num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
+                # Actual detection.
+                (boxes, scores, classes, num_detections) = sess.run(
+                    [boxes, scores, classes, num_detections],
+                    feed_dict={image_tensor: image_np_expanded})
+                # Visualization of the results of a detection.
+                vis_util.visualize_boxes_and_labels_on_image_array(
+                    image,
+                    np.squeeze(boxes),
+                    np.squeeze(classes).astype(np.int32),
+                    np.squeeze(scores),
+                    self.category_index,
+                    use_normalized_coordinates=True,
+                    line_thickness=8)
+
+        cv2.namedWindow(&quot;detection&quot;, cv2.WINDOW_NORMAL)
+        cv2.imshow(&quot;detection&quot;, image)
+        cv2.waitKey(0)
+
+if __name__ == '__main__':
+    image = cv2.imread('image.jpg')
+    detecotr = TOD()
+    detecotr.detect(image)
+</code></pre>
+
+<p>最终效果</p>
+
+
+
+
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+    
+
+    
+        <p><span class="image center">
+            <img src="/img/2018/02/individualImage.png" alt="demo-result">
+        </span></p>
+    
+
+
+
+<h1 id="参考资料">参考资料</h1>
+
+<ul>
+<li><p><a href="https://towardsdatascience.com/building-a-toy-detector-with-tensorflow-object-detection-api-63c0fdf2ac95">building-a-toy-detector-with-tensorflow-object-detection-api</a></p></li>
+
+<li><p><a href="https://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9">how-to-train-your-own-object-detector-with-tensorflows-object-detector-api</a></p></li>
+
+<li><p><a href="https://blog.algorithmia.com/deep-dive-into-object-detection-with-open-images-using-tensorflow/">Deep Dive into Object Detection with Open Images, using Tensorflow</a></p></li>
+</ul>
+
+<p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
+
+<p>联系方式：tecker_yuknigh@163.com</p>
+
+
+    <img src="http://ojt3x01ru.bkt.clouddn.com/image/me/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
+  </div>
+
+  <footer>
+    <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/deep-learning'>Deep Learning</a></li>
+    
+</ul>
+
+  </footer>
+
+</article>
+
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/"
+                class="button big previous">SQL基础简明总结</a></li>
+    
+
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/%E4%BD%BF%E7%94%A8tensorflow%E7%9A%84object-detection-api%E5%81%9A%E7%89%A9%E4%BD%93%E8%AF%86%E5%88%AB/">使用tensorflow的Object Detection API做物体识别</a>
+              </h3>
+              
+              <time class="published" datetime='2018-02-06'>
+                February 6, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a>
+              </h3>
+              
+              <time class="published" datetime='2017-11-04'>
+                November 4, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8B%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%AF%87/">Linux日常之进程内存篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-31'>
+                October 31, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/linux%E6%97%A5%E5%B8%B8%E4%B9%8Bcron%E7%AF%87/">Linux日常之cron篇</a>
+              </h3>
+              
+              <time class="published" datetime='2017-10-30'>
+                October 30, 2017
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">linux</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">node</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">Vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">DataBase</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/deep-learning/">Deep Learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">Java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">Machine Learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">Tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">TypeScript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2018
+        
+          Tecker Yu
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
