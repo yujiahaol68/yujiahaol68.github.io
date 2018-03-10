@@ -6,10 +6,19 @@
     <description>Recent content on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go下解析XML文档时的编码问题</title>
+      <link>/blog/go%E4%B8%8B%E8%A7%A3%E6%9E%90xml%E6%96%87%E6%A1%A3%E6%97%B6%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 10 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/go%E4%B8%8B%E8%A7%A3%E6%9E%90xml%E6%96%87%E6%A1%A3%E6%97%B6%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</guid>
+      <description>最近在弄一些 RSS 解析的东西，记录一下如何解析非UTF-8编码 XML 文档，直接上代码 package rss_test import ( &amp;quot;bytes&amp;quot; &amp;quot;encoding/xml&amp;quot; &amp;quot;fmt&amp;quot; &amp;quot;io&amp;quot; &amp;quot;testing&amp;quot; &amp;quot;github.com/yujiahaol68/rossy/rss&amp;quot; &amp;quot;golang.org/x/net/html/charset&amp;quot; ) func Test_notUTF8(t *testing.T) { r := rss.New() // 注意不要使用 xml.Unmarshal() 这个方法，</description>
+    </item>
     
     <item>
       <title>使用tensorflow的Object Detection API做物体识别</title>
