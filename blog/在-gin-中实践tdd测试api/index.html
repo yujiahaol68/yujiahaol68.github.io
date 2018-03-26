@@ -1,17 +1,11 @@
-
-
-
-    
-
-
-
-
 <!DOCTYPE HTML>
 
 <html>
     <head>
         
-            <title>Web - Runtime: out of memory</title>
+            
+                <title>在 Gin 中实践TDD测试API</title>
+            
         
 
         <meta charset="utf-8" />
@@ -26,6 +20,8 @@
         <link rel="apple-touch-icon" href="/img/main/favicon.png">
 
         
+            <meta name="author" content="Tecker Yu">
+        
         
             
                 <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
@@ -33,17 +29,20 @@
         
 
         <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Web"/>
-<meta name="twitter:description" content="Tecker.Yu tech blog. Powered by Hugo"/>
+<meta name="twitter:title" content="在 Gin 中实践TDD测试API"/>
+<meta name="twitter:description" content="如果这篇文章能够从此让你放下手中的快递员，从此开始做一个 TDD First 的 programmer ，那么本文的目的也就达到了 Why TDD is so important? TDD 的重要性最直接的体现就是 No guessing 和 Robu"/>
 
-        <meta property="og:title" content="Web" />
-<meta property="og:description" content="Tecker.Yu tech blog. Powered by Hugo" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/web/" />
+        <meta property="og:title" content="在 Gin 中实践TDD测试API" />
+<meta property="og:description" content="如果这篇文章能够从此让你放下手中的快递员，从此开始做一个 TDD First 的 programmer ，那么本文的目的也就达到了 Why TDD is so important? TDD 的重要性最直接的体现就是 No guessing 和 Robu" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/%E5%9C%A8-gin-%E4%B8%AD%E5%AE%9E%E8%B7%B5tdd%E6%B5%8B%E8%AF%95api/" />
 
 
 
-<meta property="og:updated_time" content="2017-10-31T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-03-26T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-03-26T00:00:00&#43;00:00"/>
+
 
 
 
@@ -55,9 +54,17 @@
 
 
         
-<meta itemprop="name" content="Web">
-<meta itemprop="description" content="Tecker.Yu tech blog. Powered by Hugo">
+<meta itemprop="name" content="在 Gin 中实践TDD测试API">
+<meta itemprop="description" content="如果这篇文章能够从此让你放下手中的快递员，从此开始做一个 TDD First 的 programmer ，那么本文的目的也就达到了 Why TDD is so important? TDD 的重要性最直接的体现就是 No guessing 和 Robu">
 
+
+<meta itemprop="datePublished" content="2018-03-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-03-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1321">
+
+
+
+<meta itemprop="keywords" content="," />
 
         
 
@@ -106,9 +113,10 @@ ga('send', 'pageview');
       <div id="wrapper">
 
     
+    
 <header id="header">
     
-      <h1><a href="/">tags</a></h1>
+      <h1><a href="/">blog</a></h1>
     
 
     <nav class="links">
@@ -154,6 +162,10 @@ ga('send', 'pageview');
     </nav>
     <nav class="main">
         <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
             
             <li class="search">
                 <a class="fa-search" href="#search">Search</a>
@@ -323,15 +335,92 @@ ga('send', 'pageview');
         
 </section>
 
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&text=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&title=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&title=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&title=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&description=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
     
     <div id="main">
         
         
-            <article class="post">
+        <article class="post">
   <header>
     <div class="title">
         
-            <h2><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/">Linux必知之网络基础篇</a></h2>
+            <h1><a href="/blog/%E5%9C%A8-gin-%E4%B8%AD%E5%AE%9E%E8%B7%B5tdd%E6%B5%8B%E8%AF%95api/">在 Gin 中实践TDD测试API</a></h1>
+            
         
         
     </div>
@@ -339,160 +428,256 @@ ga('send', 'pageview');
         
 
         <time class="published"
-            datetime='2017-10-31'>
-            October 31, 2017</time>
-        <span class="author">Tecker.Yu</span>
+            datetime='2018-03-26'>
+            March 26, 2018</time>
+        <span class="author">Tecker Yu</span>
         
-            <p>4 minute read</p>
-        
-        
-    </div>
-</header>
-
-  
-
-  
-  <p><span class="image center">
-            <img src="/img/2017/10/InternetLayers.png" alt="InternetLayers">
-        </span></p>
-  <footer>
-    <ul class="actions">
-      <li><a href="/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/" class="button big">Continue Reading</a></li>
-    </ul>
-  <ul class="stats">
-    
-        
-
-        
-        
-            <li>
-                
-                
-                    
-
-                    
-
-                    
-                        <i class="fa fa-sitemap">&nbsp;</i>
-                    
-
-                    
-                        Category
-                    
-                
-            </li>
-        
-    
-
-    
-    
-        <li><a href='/categories/linux'>linux</a></li>
-    
-</ul>
-
-  </footer>
-</article>
-
-        
-            <article class="post">
-  <header>
-    <div class="title">
-        
-            <h2><a href="/blog/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/">使用sftp搭建本地快速部署环境</a></h2>
-        
-        
-    </div>
-    <div class="meta">
-        
-
-        <time class="published"
-            datetime='2017-09-10'>
-            September 10, 2017</time>
-        <span class="author">Tecker.Yu</span>
-        
-            <p>2 minute read</p>
+            <p>3 minute read</p>
         
         
     </div>
 </header>
 
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&text=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&title=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&title=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&title=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f&description=%e5%9c%a8%20Gin%20%e4%b8%ad%e5%ae%9e%e8%b7%b5TDD%e6%b5%8b%e8%af%95API" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2f%25E5%259C%25A8-gin-%25E4%25B8%25AD%25E5%25AE%259E%25E8%25B7%25B5tdd%25E6%25B5%258B%25E8%25AF%2595api%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
   
 
   
-  <p>首先，我们要确保<code>sshd</code>也就是我们的ssh服务处于运行状态之中，下面以centos为例来讲解搭建的过程。</p>
-  <footer>
-    <ul class="actions">
-      <li><a href="/blog/%E4%BD%BF%E7%94%A8sftp%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/" class="button big">Continue Reading</a></li>
-    </ul>
-  <ul class="stats">
-    
-        
 
-        
-        
-            <li>
-                
-                
-                    
-
-                    
-
-                    
-                        <i class="fa fa-sitemap">&nbsp;</i>
-                    
-
-                    
-                        Category
-                    
-                
-            </li>
-        
+  <div id="content">
     
 
-    
-    
-        <li><a href='/categories/linux'>linux</a></li>
-    
-</ul>
+<p>如果这篇文章能够从此让你放下手中的快递员，从此开始做一个 TDD First 的 programmer ，那么本文的目的也就达到了</p>
 
-  </footer>
-</article>
+<h1 id="why-tdd-is-so-important">Why TDD is so important?</h1>
 
-        
-            <article class="post">
-  <header>
-    <div class="title">
-        
-            <h2><a href="/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Linux WEB基础 学习笔记</a></h2>
-        
-        
-    </div>
-    <div class="meta">
-        
+<p>TDD 的重要性最直接的体现就是 No guessing 和 Robust，一切都在测试的意料之中，同时也确保你自己考虑清楚了所有的情况。而不是直接将你的代码或API接口
+丢给测试人员，然后根据反馈再继续修改，这样一来一回实际上十分降低效率，那么当我们意识到这一点时，为什么我们不能自己先将大部分的BUG利用测试事先发现并改掉呢？</p>
 
-        <time class="published"
-            datetime='2017-03-29'>
-            March 29, 2017</time>
-        <span class="author">Tecker.Yu</span>
-        
-            <p>4 minute read</p>
-        
-        
-    </div>
-</header>
+<p>其次，当系统的规模不断变大，新的功能不断加入进来，这时系统的单元测试有利于我们进行系统的重构，通过代码覆盖率定位到死代码（Dead Code），通过查看调用次数将一些
+已经非常健壮的代码独立成包或 module，实现增量编译等，在避免臃肿，加快构建速度等改善系统腐化的问题中，测试绝对是功不可没。</p>
 
-  
+<h1 id="tdd-can-effect-code-quality">TDD can effect code quality</h1>
 
-  
-  <pre><code class="language-bash">pwd
+<p>优先编写可测试的类或函数会极大地影响你的代码风格，TDD First 的程序员首先思考的应该是，这个函数的依赖（parameters）是什么？对象实例，基础类型，还是接口？
+什么样的函数才是容易测试的？这里就不得不提及 Clean Code 的一句名言</p>
+
+<blockquote>
+<p>Function should do one thing. They should do it well and do it only</p>
+</blockquote>
+
+<p>当你<strong>愿意主动去写测试</strong>的时候，你就越希望这些函数是像这样的，无形之中告诉了你的目标函数的模样。有点抽象，但句句重点。简单来说，一个工程的构建通常都是自底向上的，
+越是灵活的系统切分的粒度应当是越细的，就像搭积木一样，从与数据库直接打交道的<code>数据层</code>，到持久化的 <code>service层</code> ，基于 RESTful 的 Controller <code>控制层</code>，校验及权限控制，路由层，日志管理
+监控等，越高层级的操作越是依赖于低一层级的操作，因此自顶向下对代码健壮性的要求也是越高的。从测试的角度上来看，自底向上看，越是这些细粒度的函数责任越重大，这个层级的测试也是最容易写的，
+因为它们正是我们说的那种只做一件事的函数。</p>
+
+<h1 id="tdd-decrease-bug">TDD decrease BUG</h1>
+
+<p>试想一下这两种控制器函数</p>
+
+<pre><code class="language-go">func (ctrl *UserController) Register(user *entity.User) {
+    // validate user
+    // code ....
+    // code ....
+    // insert into DB
+    // code ....
+    // code ....
+    // err handle
+    // code ....
+    // code ....
+    // response
+}
 </code></pre>
 
-<p><strong>返回当前的目录位置</strong></p>
+<pre><code class="language-go">func (ctrl *UserController) Register(user *entity.User) {
+    // ... validate.NewUser(user)
+    // err handle ...
+    // ... services.AddNewUser(user)
+    // err handle ...
+    // response ...
+}
+</code></pre>
+
+<p>前一种函数并没有做到 Do one thing，整个函数体十分臃肿，出现 BUG 的可能也越多；第二种控制器函数非常简短，而且基本上在干着一件事，处理错误并将错误响应，倘若校验层和服务层的函数都是经过测试的，
+那么在控制器出现问题的可能性又降低了一个数量级</p>
+
+<h1 id="tdd-is-actually-faster">TDD is actually faster</h1>
+
+<p>Talk is cheap, show me the code</p>
+
+<p>举一个大多数后端开发人员都要写的 end-to-end 测试，以 gin 框架构建的 API 为例， POST json 然后验证返回的 json</p>
+
+<p>准备工作：</p>
+
+<pre><code class="language-go">func toReader(t interface{}) *bytes.Reader {
+    b, _ := json.Marshal(t)
+    return bytes.NewReader(b)
+}
+
+func toStruct(r *httptest.ResponseRecorder, t interface{}) error {
+    resp := r.Result()
+    body, _ := ioutil.ReadAll(resp.Body)
+    return json.Unmarshal(body, t)
+}
+
+func makeJSONReq(method, path string, data interface{}) *http.Request {
+    req, _ := http.NewRequest(method, path, toReader(data))
+    req.Header.Add(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    req.Header.Add(&quot;Accept&quot;, &quot;application/json&quot;)
+    return req
+}
+</code></pre>
+
+<p>这些小的通用函数可以封装成测试套件或工具包</p>
+
+<p>对其中一个API接口进行测试：</p>
+
+<pre><code class="language-go">package api_test
+
+import (
+    &quot;bytes&quot;
+    &quot;encoding/json&quot;
+    &quot;log&quot;
+    &quot;net/http&quot;
+    &quot;net/http/httptest&quot;
+    &quot;os&quot;
+    &quot;testing&quot;
+
+    &quot;github.com/stretchr/testify/assert&quot;
+    &quot;github.com/yujiahaol68/rossy/app/model/checkpoint&quot;
+
+    &quot;github.com/gin-gonic/gin&quot;
+
+    &quot;github.com/yujiahaol68/rossy/app/database&quot;
+    &quot;github.com/yujiahaol68/rossy/app/routers/api&quot;
+)
+
+var router = gin.Default()
+
+func setup() error {
+    api.Router(router)
+    return database.OpenForTest()
+}
+
+func TestMain(m *testing.M) {
+    err := setup()
+    if err != nil {
+        log.Fatal(err)
+        os.Exit(1)
+    }
+    defer database.Teardown()
+
+    code := m.Run()
+    os.Exit(code)
+}
+
+func Test_Source(t *testing.T) {
+    t.Log(&quot;POST: /api/source&quot;)
+    check := checkpoint.PostSource{&quot;http://www.infoq.com/cn/feed&quot;, 2}
+
+    w := httptest.NewRecorder()
+    req := makeJSONReq(&quot;POST&quot;, &quot;/api/source/&quot;, &amp;check)
+    router.ServeHTTP(w, req)
+
+    var end endpoint.PostSource
+    err := toStruct(w, &amp;end)
+    if err != nil {
+        t.Fatal(err)
+    }
+
+    assert.Equal(t, http.StatusCreated, end.Code)
+}
+</code></pre>
+
+<p>实际要写的测试用例非常短小，如果用 vscode 的话不用离开编辑器就能运行测试。同时对于较大的系统，也不用等所有路由都装载过后再来测试，大大减少启动的等待时间</p>
+
+<p>将视图层分成 <code>checkpoint</code> 和 <code>endpoint</code> 两层分别表示输入的 json 和 返回的 json 对应的 struct 描述，对于复杂的 input 还能考虑 mock struct，
+好处多多，请立即开始你的 TDD 之旅吧！</p>
+
+<p>更多的测试实践可以参考<a href="https://github.com/yujiahaol68/rossy/app">我的示例项目</a></p>
+
+<p>如有错误，不胜指教。</p>
+
+<p>本人大学生，求 Golang后端暑假实习，地点深圳。有兴趣的可以与我联系：</p>
+
+<p>Tecker_yuKnigh@163.com</p>
+
+
+    <img src="/img/main/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
+  </div>
+
   <footer>
-    <ul class="actions">
-      <li><a href="/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="button big">Continue Reading</a></li>
-    </ul>
-  <ul class="stats">
+    <ul class="stats">
     
         
 
@@ -519,25 +704,47 @@ ga('send', 'pageview');
 
     
     
-        <li><a href='/categories/linux'>linux</a></li>
+        <li><a href='/categories/go'>Go</a></li>
     
 </ul>
 
   </footer>
+
 </article>
 
-        
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
 
-        
+
 <ul class="actions pagination">
     
-        <li><a href="#" class="disabled button big previous">Previous Page</a></li>
+        <li><a href="/blog/go%E4%B8%8B%E8%A7%A3%E6%9E%90xml%E6%96%87%E6%A1%A3%E6%97%B6%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/"
+                class="button big previous">Go下解析XML文档时的编码问题</a></li>
     
 
     
-        <li><a href="#" class="disabled button big next">Next Page</a></li>
-    
 </ul>
+
 
     </div>
     
@@ -561,7 +768,7 @@ ga('send', 'pageview');
       <ul class="icons">
         
           <li>
-            <a href="/tags/web/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
@@ -931,7 +1138,7 @@ ga('send', 'pageview');
       <ul class="icons">
         
           <li>
-            <a href="/tags/web/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
