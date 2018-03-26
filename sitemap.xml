@@ -218,14 +218,14 @@
   </url>
   
   <url>
-    <loc>/tags/</loc>
-    <lastmod>2018-03-26T00:00:00+00:00</lastmod>
+    <loc>/categories/</loc>
+    <lastmod>2017-06-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2017-06-22T00:00:00+00:00</lastmod>
+    <loc>/tags/</loc>
+    <lastmod>2018-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -270,13 +270,13 @@
   </url>
   
   <url>
-    <loc>/tags/css/</loc>
+    <loc>/categories/css/</loc>
     <lastmod>2016-12-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/css/</loc>
+    <loc>/tags/css/</loc>
     <lastmod>2016-12-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -366,13 +366,13 @@
   </url>
   
   <url>
-    <loc>/tags/java/</loc>
+    <loc>/categories/java/</loc>
     <lastmod>2016-11-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/java/</loc>
+    <loc>/tags/java/</loc>
     <lastmod>2016-11-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -390,25 +390,25 @@
   </url>
   
   <url>
-    <loc>/tags/linux/</loc>
-    <lastmod>2017-10-31T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/linux/</loc>
     <lastmod>2017-10-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/machine-learning/</loc>
-    <lastmod>2017-04-08T00:00:00+00:00</lastmod>
+    <loc>/tags/linux/</loc>
+    <lastmod>2017-10-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/machine-learning/</loc>
+    <lastmod>2017-04-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/machine-learning/</loc>
     <lastmod>2017-04-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -426,13 +426,13 @@
   </url>
   
   <url>
-    <loc>/tags/node/</loc>
+    <loc>/categories/node/</loc>
     <lastmod>2017-10-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/node/</loc>
+    <loc>/tags/node/</loc>
     <lastmod>2017-10-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -444,13 +444,13 @@
   </url>
   
   <url>
-    <loc>/tags/php/</loc>
+    <loc>/categories/php/</loc>
     <lastmod>2017-02-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/php/</loc>
+    <loc>/tags/php/</loc>
     <lastmod>2017-02-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -462,13 +462,13 @@
   </url>
   
   <url>
-    <loc>/tags/python/</loc>
+    <loc>/categories/python/</loc>
     <lastmod>2017-04-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/python/</loc>
+    <loc>/tags/python/</loc>
     <lastmod>2017-04-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -540,25 +540,25 @@
   </url>
   
   <url>
-    <loc>/tags/typescript/</loc>
-    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/typescript/</loc>
     <lastmod>2017-10-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/vue/</loc>
-    <lastmod>2017-03-01T00:00:00+00:00</lastmod>
+    <loc>/tags/typescript/</loc>
+    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/vue/</loc>
+    <lastmod>2017-03-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/vue/</loc>
     <lastmod>2017-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
