@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>0交换排序 Google笔试题</title>
+      <link>/blog/0%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F-google%E7%AC%94%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 29 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/0%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F-google%E7%AC%94%E8%AF%95%E9%A2%98/</guid>
+      <description>题目: 长度为n的数组乱序存放着0至n-1，现在只能进行0与其他数的交换，请排序这个数组 package main import &amp;quot;fmt&amp;quot; func main() { s := []int{3, 5, 4, 0, 1, 2, 6} for _, v := range s { fmt.Printf(&amp;quot;%d &amp;quot;, v) }</description>
+    </item>
     
     <item>
       <title>在 Gin 中实践TDD测试API</title>
