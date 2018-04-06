@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/%E5%88%86%E5%B8%83%E5%BC%8F%E5%88%9D%E6%8E%A2-distributed-101/</loc>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/0%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F-google%E7%AC%94%E8%AF%95%E9%A2%98/</loc>
     <lastmod>2018-03-29T00:00:00+00:00</lastmod>
   </url>
@@ -224,7 +229,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -248,7 +253,7 @@
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2018-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -492,7 +497,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -516,7 +521,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -577,6 +582,12 @@
   <url>
     <loc>/tags/web/</loc>
     <lastmod>2017-10-31T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/%E5%88%86%E5%B8%83%E5%BC%8F/</loc>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
