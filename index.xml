@@ -6,10 +6,19 @@
     <description>Recent content on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>LeetCode题解:最长回文串之manacher算法</title>
+      <link>/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/</guid>
+      <description>manacher 俗称马拉车算法，也是本文的主角，是一种能够将最长回文串的求解复杂度降低到 O(N) 的一种高效算法， 当我第一次见到求解最长回文串的题目时，首先采用的</description>
+    </item>
     
     <item>
       <title>无缓冲通道引发的BUG</title>

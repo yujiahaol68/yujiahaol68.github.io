@@ -4,7 +4,7 @@
     <head>
         
             
-                <title>CSS学习笔记04 背景</title>
+                <title>LeetCode题解:最长回文串之manacher算法</title>
             
         
 
@@ -20,7 +20,7 @@
         <link rel="apple-touch-icon" href="/img/main/favicon.png">
 
         
-            <meta name="author" content="Tecker.Yu">
+            <meta name="author" content="Tecker Yu">
         
         
             
@@ -29,19 +29,19 @@
         
 
         <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="CSS学习笔记04 背景"/>
-<meta name="twitter:description" content="透明背景 nav { background-color: black; } .menu { background-color: transparent; } 设置透明 这样就使得菜单的颜色与导航栏的颜色一致 背景加亮凸显文字 .menu &gt; li &gt; a:hover { background-color: rgba(255,255,255, 0.1); } 0.1代表透明度为百分之十"/>
+<meta name="twitter:title" content="LeetCode题解:最长回文串之manacher算法"/>
+<meta name="twitter:description" content="manacher 俗称马拉车算法，也是本文的主角，是一种能够将最长回文串的求解复杂度降低到 O(N) 的一种高效算法， 当我第一次见到求解最长回文串的题目时，首先采用的"/>
 
-        <meta property="og:title" content="CSS学习笔记04 背景" />
-<meta property="og:description" content="透明背景 nav { background-color: black; } .menu { background-color: transparent; } 设置透明 这样就使得菜单的颜色与导航栏的颜色一致 背景加亮凸显文字 .menu &gt; li &gt; a:hover { background-color: rgba(255,255,255, 0.1); } 0.1代表透明度为百分之十" />
+        <meta property="og:title" content="LeetCode题解:最长回文串之manacher算法" />
+<meta property="og:description" content="manacher 俗称马拉车算法，也是本文的主角，是一种能够将最长回文串的求解复杂度降低到 O(N) 的一种高效算法， 当我第一次见到求解最长回文串的题目时，首先采用的" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004-%E8%83%8C%E6%99%AF/" />
+<meta property="og:url" content="/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/" />
 
 
 
-<meta property="article:published_time" content="2016-11-01T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-04-17T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2016-11-01T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-04-17T00:00:00&#43;00:00"/>
 
 
 
@@ -54,17 +54,17 @@
 
 
         
-<meta itemprop="name" content="CSS学习笔记04 背景">
-<meta itemprop="description" content="透明背景 nav { background-color: black; } .menu { background-color: transparent; } 设置透明 这样就使得菜单的颜色与导航栏的颜色一致 背景加亮凸显文字 .menu &gt; li &gt; a:hover { background-color: rgba(255,255,255, 0.1); } 0.1代表透明度为百分之十">
+<meta itemprop="name" content="LeetCode题解:最长回文串之manacher算法">
+<meta itemprop="description" content="manacher 俗称马拉车算法，也是本文的主角，是一种能够将最长回文串的求解复杂度降低到 O(N) 的一种高效算法， 当我第一次见到求解最长回文串的题目时，首先采用的">
 
 
-<meta itemprop="datePublished" content="2016-11-01T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2016-11-01T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="68">
+<meta itemprop="datePublished" content="2018-04-17T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-04-17T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="720">
 
 
 
-<meta itemprop="keywords" content="css," />
+<meta itemprop="keywords" content="," />
 
         
 
@@ -345,7 +345,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&text=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af&via=" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&text=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95&via=" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -353,7 +353,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -361,7 +361,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -369,7 +369,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&title=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&title=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -377,7 +377,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&title=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&title=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -385,7 +385,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&title=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&title=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -393,7 +393,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&description=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&description=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -401,7 +401,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -419,7 +419,7 @@ ga('send', 'pageview');
   <header>
     <div class="title">
         
-            <h1><a href="/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004-%E8%83%8C%E6%99%AF/">CSS学习笔记04 背景</a></h1>
+            <h1><a href="/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/">LeetCode题解:最长回文串之manacher算法</a></h1>
             
         
         
@@ -428,11 +428,11 @@ ga('send', 'pageview');
         
 
         <time class="published"
-            datetime='2016-11-01'>
-            November 1, 2016</time>
-        <span class="author">Tecker.Yu</span>
+            datetime='2018-04-17'>
+            April 17, 2018</time>
+        <span class="author">Tecker Yu</span>
         
-            <p>1 minute read</p>
+            <p>2 minute read</p>
         
         
     </div>
@@ -446,7 +446,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&text=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af&via=" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&text=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95&via=" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -454,7 +454,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -462,7 +462,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -470,7 +470,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&title=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&title=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -478,7 +478,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&title=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&title=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -486,7 +486,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&title=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&title=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -494,7 +494,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f&description=CSS%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b004%20%e8%83%8c%e6%99%af" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f&description=LeetCode%e9%a2%98%e8%a7%a3%3a%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e4%b8%b2%e4%b9%8bmanacher%e7%ae%97%e6%b3%95" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -502,7 +502,7 @@ ga('send', 'pageview');
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fcss%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B004-%25E8%2583%258C%25E6%2599%25AF%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fleetcode%25E9%25A2%2598%25E8%25A7%25A3%25E6%259C%2580%25E9%2595%25BF%25E5%259B%259E%25E6%2596%2587%25E4%25B8%25B2%25E4%25B9%258Bmanacher%25E7%25AE%2597%25E6%25B3%2595%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -515,31 +515,96 @@ ga('send', 'pageview');
   
 
   <div id="content">
-    
+    <p>manacher 俗称马拉车算法，也是本文的主角，是一种能够将最长回文串的求解复杂度降低到 O(N) 的一种高效算法，
+当我第一次见到求解最长回文串的题目时，首先采用的就是暴力解法，O(N^2$) 复杂度遍历所有可能的串，然后再用 O(N) 的时间来求回文串的最大长度，使用 map 存储各个下标对的回文情况尽管能减少一部分计算，
+但是显然这种方式时间复杂度过高，部分 case 容易超时</p>
 
-<h4 id="透明背景">透明背景</h4>
+<p>这种算法的大概思路如下：</p>
 
-<pre><code class="language-css">nav {
-	background-color: black;
+<ul>
+<li>通过插入一些符号简化奇偶个数和边界对判断回文串的干扰</li>
+<li>中心点的整个边界(除去中心点)的一半恰好等于中心点的最大回文串长度</li>
+<li>利用大回文串边界内的位置的最大回文串个数以大中心点对称的规律大大简化计算量</li>
+</ul>
+
+<p>本人使用 Go 语言实现上述算法
+详细代码如下：</p>
+
+<pre><code class="language-go">// LeetCode No.5 Longest Palindromic Substring
+func longestPalindrome(s string) string {
+    // 方便我们后面直接使用切片操作获得结果
+    origin := []byte(s)
+
+    // 一个字母不考虑回文
+    if len(origin) == 1 {
+        return s
+    }
+
+    var maxCenterIndex int
+
+    bs := process(s)
+    p := make([]int, len(bs))
+
+    c := 0
+    r := 0
+
+    for i:=1;i&lt;len(bs)-1;i++{
+        // mirror 是 i 以 c 为对称轴的对称下标
+        mirror := 2*c-i
+
+        // 当有右边界的时候
+        if r &gt; i {
+            // 边界不越过大回文串的串中心的最大回文串长度与对称位置的最大回文串长度相等
+            if r-i &gt; p[mirror] {
+                p[i] = p[mirror]
+            } else {
+                // 边界越过时 i 位置的最大回文串长度至少等于 i 到边界的长度
+                p[i] = r-i
+            }
+        }
+
+        // 计算位置 i 的最大回文串长度，之前的计算 p[i] 的步骤节省了大量的回文比较
+        // 注意 +1 和 -1 除去自己与自身相比较的情况
+        for bs[p[i]+i+1] == bs[i-p[i]-1] {
+            p[i]++
+        }
+
+        // 边界扩大的时候重新计算中心点
+        if i+p[i] &gt; r {
+            r = i+p[i]
+            c = i
+        }
+
+        // 每一轮计算都能得到以 bs[i] 为中心的最大回文串长度，这里我们维护一个最大的即可
+        if p[maxCenterIndex] &lt; p[i] {
+            maxCenterIndex = i
+        }
+    }
+
+    mx := p[maxCenterIndex]
+
+    // 由中间串的中心位置计算源串的起始位置
+    startIndex := (maxCenterIndex - 1) / 2 - mx/2
+    endIndex := startIndex + mx
+    return string(origin[startIndex:endIndex])
 }
 
-.menu {
-	background-color: transparent;
+// 使用 buffer 高效处理原串，目的是处理掉原串奇偶个数以及边界带来的问题，使算法的实现更加简洁
+// eg: input - &quot;abcabc&quot; -&gt; output - &quot;^#a#b#c#a#b#c#$&quot;
+// ps: Go 1.10 版本已支持 stringBuilder
+func process(s string) []byte {
+    bs := []byte(s)
+    var buffer bytes.Buffer
+    buffer.WriteString(&quot;^&quot;)
+    for _,b := range bs {
+        buffer.WriteString(&quot;#&quot;)
+        buffer.WriteByte(b)
+    }
+    buffer.WriteString(&quot;#$&quot;)
+    return buffer.Bytes()
 }
+
 </code></pre>
-
-<h5 id="设置透明">设置透明</h5>
-
-<h5 id="这样就使得菜单的颜色与导航栏的颜色一致">这样就使得菜单的颜色与导航栏的颜色一致</h5>
-
-<h4 id="背景加亮凸显文字">背景加亮凸显文字</h4>
-
-<pre><code class="language-css">.menu &gt; li &gt; a:hover {
-	background-color: rgba(255,255,255, 0.1);
-}
-</code></pre>
-
-<h5 id="0-1代表透明度为百分之十">0.1代表透明度为百分之十</h5>
 
 
     <img src="/img/main/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
@@ -573,7 +638,7 @@ ga('send', 'pageview');
 
     
     
-        <li><a href='/categories/css'>css</a></li>
+        <li><a href='/categories/%E7%AE%97%E6%B3%95'>算法</a></li>
     
 </ul>
 
@@ -607,13 +672,10 @@ ga('send', 'pageview');
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E5%9B%BE%E7%89%87%E6%94%BE%E5%A4%A7%E7%89%B9%E6%95%88/"
-                class="button big previous">CSS学习笔记05 图片放大特效</a></li>
+        <li><a href="/blog/%E6%97%A0%E7%BC%93%E5%86%B2%E9%80%9A%E9%81%93%E5%BC%95%E5%8F%91%E7%9A%84bug/"
+                class="button big previous">无缓冲通道引发的BUG</a></li>
     
 
-    
-        <li><a href="/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-02-nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/"
-                class="button big next">CSS学习笔记02 nav上下居中</a></li>
     
 </ul>
 
