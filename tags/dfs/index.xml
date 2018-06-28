@@ -17,7 +17,7 @@
       <pubDate>Thu, 28 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-1979-red-and-black/</guid>
-      <description>涉及知识点：DFS solution #include &amp;lt;cstdio&amp;gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; //printf(&amp;quot;In x:%d y:%d\n&amp;quot;, x,y); res++; for (int i=0;i&amp;lt;4;i++) { int new_x = x + sh_x[i]; int new_y = y + sh_y[i]; if (new_x</description>
+      <description>涉及知识点：DFS solution #include &amp;lt;cstdio&amp;gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res++; for (int i=0;i&amp;lt;4;i++) { int new_x = x + sh_x[i]; int new_y = y + sh_y[i]; if (new_x &amp;gt;= 0 &amp;amp;&amp;amp; new_x</description>
     </item>
     
   </channel>
