@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>通过Go HTTP Client的报错看标准库https请求</title>
+      <link>/blog/%E9%80%9A%E8%BF%87go-http-client%E7%9A%84%E6%8A%A5%E9%94%99%E7%9C%8B%E6%A0%87%E5%87%86%E5%BA%93https%E8%AF%B7%E6%B1%82/</link>
+      <pubDate>Thu, 28 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E9%80%9A%E8%BF%87go-http-client%E7%9A%84%E6%8A%A5%E9%94%99%E7%9C%8B%E6%A0%87%E5%87%86%E5%BA%93https%E8%AF%B7%E6%B1%82/</guid>
+      <description>在用 Go 自带的 http client 进行默认 Get 操作的时候，发现如下错误 x509: certificate signed by unknown authority 这个报错来自 crypto/x509 中关于证书签名的验证 负责验证证书的方法签名 func (c *Certificate) Verify(opts VerifyOptions) (chains [][]*Certificate, err error) 关于</description>
+    </item>
+    
+    <item>
       <title>AC之路 序</title>
       <link>/blog/ac%E4%B9%8B%E8%B7%AF-%E5%BA%8F/</link>
       <pubDate>Wed, 27 Jun 2018 00:00:00 +0000</pubDate>
