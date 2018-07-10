@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>贪心 on Runtime: out of memory</title>
+    <link>/tags/%E8%B4%AA%E5%BF%83/</link>
+    <description>Recent content in 贪心 on Runtime: out of memory</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E8%B4%AA%E5%BF%83/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>poj 3040 Allowance</title>
+      <link>/blog/poj-3040-allowance/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poj-3040-allowance/</guid>
+      <description>知识点： 贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;limits&amp;gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;amp;a, const Coin &amp;amp;b) { return a.d &amp;gt; b.d; } vector&amp;lt;Coin&amp;gt; v; int N, C; int need_count[20]; int main() { scanf(&amp;quot;%d %d&amp;quot;, &amp;amp;N, &amp;amp;C); int res = 0; for(int i=0;i&amp;lt;N;i++) { struct Coin c;</description>
+    </item>
+    
+  </channel>
+</rss>

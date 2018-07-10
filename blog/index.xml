@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>poj 3040 Allowance</title>
+      <link>/blog/poj-3040-allowance/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poj-3040-allowance/</guid>
+      <description>知识点： 贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;limits&amp;gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;amp;a, const Coin &amp;amp;b) { return a.d &amp;gt; b.d; } vector&amp;lt;Coin&amp;gt; v; int N, C; int need_count[20]; int main() { scanf(&amp;quot;%d %d&amp;quot;, &amp;amp;N, &amp;amp;C); int res = 0; for(int i=0;i&amp;lt;N;i++) { struct Coin c;</description>
+    </item>
     
     <item>
       <title>POJ 1979 Red and Black</title>
@@ -17,7 +26,7 @@
       <pubDate>Thu, 28 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-1979-red-and-black/</guid>
-      <description>涉及知识点：DFS solution #include &amp;lt;cstdio&amp;gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res++; for (int i=0;i&amp;lt;4;i++) { int new_x = x + sh_x[i]; int new_y = y + sh_y[i]; if (new_x &amp;gt;= 0 &amp;amp;&amp;amp; new_x</description>
+      <description>知识点：DFS solution #include &amp;lt;cstdio&amp;gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res++; for (int i=0;i&amp;lt;4;i++) { int new_x = x + sh_x[i]; int new_y = y + sh_y[i]; if (new_x &amp;gt;= 0 &amp;amp;&amp;amp; new_x &amp;lt;W &amp;amp;&amp;amp;</description>
     </item>
     
     <item>

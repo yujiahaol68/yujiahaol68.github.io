@@ -10,7 +10,7 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="generator" content="Hugo 0.42.1" />
+        <meta name="generator" content="Hugo 0.42.2" />
         
 
 
@@ -30,10 +30,10 @@
 
         <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="POJ 1979 Red and Black"/>
-<meta name="twitter:description" content="涉及知识点：DFS solution #include &lt;cstdio&gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res&#43;&#43;; for (int i=0;i&lt;4;i&#43;&#43;) { int new_x = x &#43; sh_x[i]; int new_y = y &#43; sh_y[i]; if (new_x &gt;= 0 &amp;&amp; new_x"/>
+<meta name="twitter:description" content="知识点：DFS solution #include &lt;cstdio&gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res&#43;&#43;; for (int i=0;i&lt;4;i&#43;&#43;) { int new_x = x &#43; sh_x[i]; int new_y = y &#43; sh_y[i]; if (new_x &gt;= 0 &amp;&amp; new_x &lt;W &amp;&amp;"/>
 
         <meta property="og:title" content="POJ 1979 Red and Black" />
-<meta property="og:description" content="涉及知识点：DFS solution #include &lt;cstdio&gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res&#43;&#43;; for (int i=0;i&lt;4;i&#43;&#43;) { int new_x = x &#43; sh_x[i]; int new_y = y &#43; sh_y[i]; if (new_x &gt;= 0 &amp;&amp; new_x" />
+<meta property="og:description" content="知识点：DFS solution #include &lt;cstdio&gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res&#43;&#43;; for (int i=0;i&lt;4;i&#43;&#43;) { int new_x = x &#43; sh_x[i]; int new_y = y &#43; sh_y[i]; if (new_x &gt;= 0 &amp;&amp; new_x &lt;W &amp;&amp;" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/poj-1979-red-and-black/" />
 
@@ -55,12 +55,12 @@
 
         
 <meta itemprop="name" content="POJ 1979 Red and Black">
-<meta itemprop="description" content="涉及知识点：DFS solution #include &lt;cstdio&gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res&#43;&#43;; for (int i=0;i&lt;4;i&#43;&#43;) { int new_x = x &#43; sh_x[i]; int new_y = y &#43; sh_y[i]; if (new_x &gt;= 0 &amp;&amp; new_x">
+<meta itemprop="description" content="知识点：DFS solution #include &lt;cstdio&gt; int W, H; char tile[25][25]; int pos_x, pos_y; int sh_x[4] = {0, 0, -1, 1}; int sh_y[4] = {1, -1, 0, 0}; int res = 0; void solve(int x, int y) { tile[y][x] = &#39;#&#39;; res&#43;&#43;; for (int i=0;i&lt;4;i&#43;&#43;) { int new_x = x &#43; sh_x[i]; int new_y = y &#43; sh_y[i]; if (new_x &gt;= 0 &amp;&amp; new_x &lt;W &amp;&amp;">
 
 
 <meta itemprop="datePublished" content="2018-06-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-06-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="163">
+<meta itemprop="wordCount" content="161">
 
 
 
@@ -156,6 +156,12 @@ if (!doNotTrack) {
                 </li>
             
                 <li>
+                    <a href="/reading/">
+                            <i class="fa fa-bookmark-o">&nbsp;</i>Reading
+                    </a>
+                </li>
+            
+                <li>
                     <a href="/contact/">
                             <i class="fa fa-envelope-o">&nbsp;</i>Contact
                     </a>
@@ -240,6 +246,14 @@ if (!doNotTrack) {
                     </li>
                 
                     <li>
+                        <a href="/reading/">
+                            <h3>
+                                <i class="fa fa-bookmark-o">&nbsp;</i>Reading
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
                         <a href="/contact/">
                             <h3>
                                 <i class="fa fa-envelope-o">&nbsp;</i>Contact
@@ -262,6 +276,18 @@ if (!doNotTrack) {
                     
                 
 
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/poj-3040-allowance/">poj 3040 Allowance</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-07-10'>
+                                    July 10, 2018</time>
+                            </header>
+                            
+
+                        </article>
                 
                         <article class="mini-post">
                             <header>
@@ -306,18 +332,6 @@ if (!doNotTrack) {
                                 <time class="published" datetime=
                                     '2018-04-17'>
                                     April 17, 2018</time>
-                            </header>
-                            
-
-                        </article>
-                
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/%E6%97%A0%E7%BC%93%E5%86%B2%E9%80%9A%E9%81%93%E5%BC%95%E5%8F%91%E7%9A%84bug/">无缓冲通道引发的BUG</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2018-04-11'>
-                                    April 11, 2018</time>
                             </header>
                             
 
@@ -520,7 +534,7 @@ if (!doNotTrack) {
   <div id="content">
     
 
-<p>涉及知识点：DFS</p>
+<p>知识点：DFS</p>
 
 <h1 id="solution">solution</h1>
 
@@ -655,6 +669,9 @@ int main()
     
 
     
+        <li><a href="/blog/poj-3040-allowance/"
+                class="button big next">poj 3040 Allowance</a></li>
+    
 </ul>
 
 
@@ -784,6 +801,20 @@ int main()
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/poj-3040-allowance/">poj 3040 Allowance</a>
+              </h3>
+              
+              <time class="published" datetime='2018-07-10'>
+                July 10, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/poj-1979-red-and-black/">POJ 1979 Red and Black</a>
               </h3>
               
@@ -831,20 +862,6 @@ int main()
               
               <time class="published" datetime='2018-04-17'>
                 April 17, 2018
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/%E6%97%A0%E7%BC%93%E5%86%B2%E9%80%9A%E9%81%93%E5%BC%95%E5%8F%91%E7%9A%84bug/">无缓冲通道引发的BUG</a>
-              </h3>
-              
-              <time class="published" datetime='2018-04-11'>
-                April 11, 2018
               </time>
             </header>
             
@@ -948,7 +965,7 @@ int main()
           <article>
             <header>
               
-                <a href="/categories/vue/">Vue</a>
+                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">AC之路</a>
                 <span style="float:right;">3</span>
               
             </header>
@@ -959,8 +976,8 @@ int main()
           <article>
             <header>
               
-                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">AC之路</a>
-                <span style="float:right;">2</span>
+                <a href="/categories/vue/">Vue</a>
+                <span style="float:right;">3</span>
               
             </header>
           </article>
