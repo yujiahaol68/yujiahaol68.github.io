@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/poj-1017-packets/</loc>
+    <lastmod>2018-07-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/poj-3040-allowance/</loc>
     <lastmod>2018-07-10T00:00:00+00:00</lastmod>
   </url>
@@ -264,7 +269,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-06-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -568,7 +573,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-06-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
