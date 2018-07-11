@@ -4,7 +4,7 @@
     <head>
         
             
-                <title>AC之路 序</title>
+                <title>Poj 3262 Protecting the Flowers</title>
             
         
 
@@ -29,19 +29,19 @@
         
 
         <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="AC之路 序"/>
-<meta name="twitter:description" content="不知不觉就要到大三了，也玩过很多东西，但总感觉缺乏新的挑战，到达了一个瓶颈。 于是想要隐居深山，闭关修炼，回到计算机的本源，更多跟深地去死磕自"/>
+<meta name="twitter:title" content="Poj 3262 Protecting the Flowers"/>
+<meta name="twitter:description" content="原题地址 知识点：贪心 解题报告 #include &lt;cstdio&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;vector&gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成"/>
 
-        <meta property="og:title" content="AC之路 序" />
-<meta property="og:description" content="不知不觉就要到大三了，也玩过很多东西，但总感觉缺乏新的挑战，到达了一个瓶颈。 于是想要隐居深山，闭关修炼，回到计算机的本源，更多跟深地去死磕自" />
+        <meta property="og:title" content="Poj 3262 Protecting the Flowers" />
+<meta property="og:description" content="原题地址 知识点：贪心 解题报告 #include &lt;cstdio&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;vector&gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/ac%E4%B9%8B%E8%B7%AF-%E5%BA%8F/" />
+<meta property="og:url" content="/blog/poj-3262-protecting-the-flowers/" />
 
 
 
-<meta property="article:published_time" content="2018-06-27T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-07-11T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2018-06-27T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-07-11T00:00:00&#43;00:00"/>
 
 
 
@@ -54,17 +54,17 @@
 
 
         
-<meta itemprop="name" content="AC之路 序">
-<meta itemprop="description" content="不知不觉就要到大三了，也玩过很多东西，但总感觉缺乏新的挑战，到达了一个瓶颈。 于是想要隐居深山，闭关修炼，回到计算机的本源，更多跟深地去死磕自">
+<meta itemprop="name" content="Poj 3262 Protecting the Flowers">
+<meta itemprop="description" content="原题地址 知识点：贪心 解题报告 #include &lt;cstdio&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;vector&gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成">
 
 
-<meta itemprop="datePublished" content="2018-06-27T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-06-27T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="298">
+<meta itemprop="datePublished" content="2018-07-11T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-07-11T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="153">
 
 
 
-<meta itemprop="keywords" content="," />
+<meta itemprop="keywords" content="贪心," />
 
         
 
@@ -362,7 +362,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&text=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f&via=" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&text=Poj%203262%20Protecting%20the%20Flowers&via=" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -370,7 +370,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -378,7 +378,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpoj-3262-protecting-the-flowers%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -386,7 +386,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&title=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&title=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -394,7 +394,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&title=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&title=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -402,7 +402,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&title=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&title=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -410,7 +410,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&description=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&description=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -418,7 +418,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fpoj-3262-protecting-the-flowers%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -436,7 +436,7 @@ if (!doNotTrack) {
   <header>
     <div class="title">
         
-            <h1><a href="/blog/ac%E4%B9%8B%E8%B7%AF-%E5%BA%8F/">AC之路 序</a></h1>
+            <h1><a href="/blog/poj-3262-protecting-the-flowers/">Poj 3262 Protecting the Flowers</a></h1>
             
         
         
@@ -445,8 +445,8 @@ if (!doNotTrack) {
         
 
         <time class="published"
-            datetime='2018-06-27'>
-            June 27, 2018</time>
+            datetime='2018-07-11'>
+            July 11, 2018</time>
         <span class="author">Tecker Yu</span>
         
             <p>1 minute read</p>
@@ -463,7 +463,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&text=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f&via=" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&text=Poj%203262%20Protecting%20the%20Flowers&via=" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -471,7 +471,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -479,7 +479,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpoj-3262-protecting-the-flowers%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -487,7 +487,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&title=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&title=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -495,7 +495,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&title=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&title=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -503,7 +503,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&title=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&title=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -511,7 +511,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f&description=AC%e4%b9%8b%e8%b7%af%20%e5%ba%8f" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpoj-3262-protecting-the-flowers%2f&description=Poj%203262%20Protecting%20the%20Flowers" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -519,7 +519,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fac%25E4%25B9%258B%25E8%25B7%25AF-%25E5%25BA%258F%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fpoj-3262-protecting-the-flowers%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -532,17 +532,60 @@ if (!doNotTrack) {
   
 
   <div id="content">
-    <p>不知不觉就要到大三了，也玩过很多东西，但总感觉缺乏新的挑战，到达了一个瓶颈。</p>
+    
 
-<p>于是想要隐居深山，闭关修炼，回到计算机的本源，更多跟深地去死磕自己从前从来没有好好去探索的CS领域，SO HERE I AM，</p>
+<p><a href="http://poj.org/problem?id=3262">原题地址</a></p>
 
-<p>本系列算是对自己在算法领域学习深造的一个记录吧。我始终认为现代的优秀工程师应该是全能型的，对不同的技术都能够触类旁通，</p>
+<h2 id="知识点-贪心">知识点：贪心</h2>
 
-<p>不过前提是要对整个计算机自顶向下都要有着自己一套体系的认识，简单来讲就是走一遍 Learning CS: the hard way 路线。</p>
+<h2 id="解题报告">解题报告</h2>
 
-<p>算法，作为优秀工程师的核心竞争力之一，是不能被忽视的，本系列会从《挑战程序设计竞赛》这本入门书的习题开始，记录我个人的算法学习经历，</p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
 
-<p>目的并非走 ACM 路线，而是通过刷题来强化算法和数据结构方面的知识。</p>
+using namespace std;
+
+struct P {
+  int t, d;
+};
+
+// 贪心使得代价最小
+// cost = 2 * T * (total - D)
+// 因此 D越大，T越小越好
+// 重点：转换成 D / T 越大越好
+bool cmp(const P &amp;a, const P &amp;b) {
+  return b.d * a.t &lt; a.d * b.t;
+}
+
+vector&lt;P&gt; v;
+
+int N;
+
+int main() {
+  scanf(&quot;%d&quot;, &amp;N);
+  int i, total;
+  total = 0;
+  for(i=0;i&lt;N;++i) {
+    struct P p;
+    scanf(&quot;%d %d&quot;, &amp;p.t, &amp;p.d);
+    v.push_back(p);
+    total += p.d;
+  }
+
+  sort(v.begin(), v.end(), cmp);  
+  unsigned long long res = 0;
+  for(i=0;i&lt;N;++i) {
+    total -= v[i].d;
+    res += total * v[i].t * 2;
+  }
+
+  cout &lt;&lt; res &lt;&lt; endl;
+  return 0;
+}
+
+</code></pre>
 
 
     <img src="/img/main/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
@@ -610,13 +653,10 @@ if (!doNotTrack) {
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/"
-                class="button big previous">LeetCode题解:最长回文串之manacher算法</a></li>
+        <li><a href="/blog/poj-1017-packets/"
+                class="button big previous">poj 1017 Packets</a></li>
     
 
-    
-        <li><a href="/blog/%E9%80%9A%E8%BF%87go-http-client%E7%9A%84%E6%8A%A5%E9%94%99%E7%9C%8B%E6%A0%87%E5%87%86%E5%BA%93https%E8%AF%B7%E6%B1%82/"
-                class="button big next">通过Go HTTP Client的报错看标准库https请求</a></li>
     
 </ul>
 
