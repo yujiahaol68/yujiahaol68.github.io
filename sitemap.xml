@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/blog/poj-3176-cow-bowling/</loc>
+    <lastmod>2018-07-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/poj-1017-packets/</loc>
     <lastmod>2018-07-10T00:00:00+00:00</lastmod>
   </url>
@@ -351,6 +356,12 @@
   <url>
     <loc>/tags/dfs/</loc>
     <lastmod>2018-06-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/dp/</loc>
+    <lastmod>2018-07-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
