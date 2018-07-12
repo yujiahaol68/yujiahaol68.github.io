@@ -6,10 +6,19 @@
     <description>Recent content in DP on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/dp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>poj 2229 Sumsets</title>
+      <link>/blog/poj-2229-sumsets/</link>
+      <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poj-2229-sumsets/</guid>
+      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;string.h&amp;gt; int sum; int d[1000001]; int main() { scanf(&amp;quot;%d&amp;quot;, &amp;amp;sum); int i; // 初始化唯一确定方案数，d[1] 为 1 表示 1 的分解方案只有 1 种 d[1] = 1; for(i=2;i&amp;lt;=sum;++i) { // 找规律，当</description>
+    </item>
     
     <item>
       <title>poj 3176 Cow Bowling</title>
