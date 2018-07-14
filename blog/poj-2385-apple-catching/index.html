@@ -4,7 +4,7 @@
     <head>
         
             
-                <title>Sass之CSS模块化</title>
+                <title>poj 2385 Apple Catching 0ms</title>
             
         
 
@@ -20,7 +20,7 @@
         <link rel="apple-touch-icon" href="/img/main/favicon.png">
 
         
-            <meta name="author" content="Tecker.Yu">
+            <meta name="author" content="Tecker Yu">
         
         
             
@@ -29,19 +29,19 @@
         
 
         <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Sass之CSS模块化"/>
-<meta name="twitter:description" content="一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C"/>
+<meta name="twitter:title" content="poj 2385 Apple Catching 0ms"/>
+<meta name="twitter:description" content="原题地址 知识点：DP 解题报告 #include &lt;cstdio&gt; #include &lt;algorithm&gt; #include &lt;iostream&gt; using namespace std; // j部分定义成 31 时不行？ 向前计算的时候有移动 0，..., 30次，共 31 个状态，因此要定义成 32 // d"/>
 
-        <meta property="og:title" content="Sass之CSS模块化" />
-<meta property="og:description" content="一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C" />
+        <meta property="og:title" content="poj 2385 Apple Catching 0ms" />
+<meta property="og:description" content="原题地址 知识点：DP 解题报告 #include &lt;cstdio&gt; #include &lt;algorithm&gt; #include &lt;iostream&gt; using namespace std; // j部分定义成 31 时不行？ 向前计算的时候有移动 0，..., 30次，共 31 个状态，因此要定义成 32 // d" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/" />
+<meta property="og:url" content="/blog/poj-2385-apple-catching/" />
 
 
 
-<meta property="article:published_time" content="2016-12-03T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-07-14T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2016-12-03T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-07-14T00:00:00&#43;00:00"/>
 
 
 
@@ -54,17 +54,17 @@
 
 
         
-<meta itemprop="name" content="Sass之CSS模块化">
-<meta itemprop="description" content="一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C">
+<meta itemprop="name" content="poj 2385 Apple Catching 0ms">
+<meta itemprop="description" content="原题地址 知识点：DP 解题报告 #include &lt;cstdio&gt; #include &lt;algorithm&gt; #include &lt;iostream&gt; using namespace std; // j部分定义成 31 时不行？ 向前计算的时候有移动 0，..., 30次，共 31 个状态，因此要定义成 32 // d">
 
 
-<meta itemprop="datePublished" content="2016-12-03T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2016-12-03T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="220">
+<meta itemprop="datePublished" content="2018-07-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-07-14T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="260">
 
 
 
-<meta itemprop="keywords" content="css,Sass," />
+<meta itemprop="keywords" content="DP," />
 
         
 
@@ -362,7 +362,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&text=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96&via=" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fpoj-2385-apple-catching%2f&text=poj%202385%20Apple%20Catching%200ms&via=" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -370,7 +370,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fpoj-2385-apple-catching%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -378,7 +378,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpoj-2385-apple-catching%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -386,7 +386,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&title=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fpoj-2385-apple-catching%2f&title=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -394,7 +394,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&title=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpoj-2385-apple-catching%2f&title=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -402,7 +402,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&title=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpoj-2385-apple-catching%2f&title=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -410,7 +410,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&description=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpoj-2385-apple-catching%2f&description=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -418,7 +418,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fpoj-2385-apple-catching%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -436,7 +436,7 @@ if (!doNotTrack) {
   <header>
     <div class="title">
         
-            <h1><a href="/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/">Sass之CSS模块化</a></h1>
+            <h1><a href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></h1>
             
         
         
@@ -445,9 +445,9 @@ if (!doNotTrack) {
         
 
         <time class="published"
-            datetime='2016-12-03'>
-            December 3, 2016</time>
-        <span class="author">Tecker.Yu</span>
+            datetime='2018-07-14'>
+            July 14, 2018</time>
+        <span class="author">Tecker Yu</span>
         
             <p>1 minute read</p>
         
@@ -463,7 +463,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&text=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96&via=" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fpoj-2385-apple-catching%2f&text=poj%202385%20Apple%20Catching%200ms&via=" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -471,7 +471,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fpoj-2385-apple-catching%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -479,7 +479,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpoj-2385-apple-catching%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -487,7 +487,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&title=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fpoj-2385-apple-catching%2f&title=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -495,7 +495,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&title=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpoj-2385-apple-catching%2f&title=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -503,7 +503,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&title=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpoj-2385-apple-catching%2f&title=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -511,7 +511,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f&description=Sass%e4%b9%8bCSS%e6%a8%a1%e5%9d%97%e5%8c%96" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpoj-2385-apple-catching%2f&description=poj%202385%20Apple%20Catching%200ms" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -519,7 +519,7 @@ if (!doNotTrack) {
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Tecker.Yu&body=%2fblog%2fsass%25E4%25B9%258Bcss%25E6%25A8%25A1%25E5%259D%2597%25E5%258C%2596%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fpoj-2385-apple-catching%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -534,43 +534,61 @@ if (!doNotTrack) {
   <div id="content">
     
 
-<p>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的CSS模块，app.scss中进行import</p>
+<p><a href="http://poj.org/problem?id=2385">原题地址</a></p>
 
-<p><code>@import 'partials/temp;'</code></p>
+<h2 id="知识点-dp">知识点：DP</h2>
 
-<p>partials文件夹中的模块scss文件最前面必须加上下划线 _</p>
+<h2 id="解题报告">解题报告</h2>
 
-<p>使得sass在监听并编译成css的时候能够将模块编译到一起而不是生成多个css文件</p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
 
-<h2 id="css模块常用目录结构">CSS模块常用目录结构</h2>
+using namespace std;
 
-<h4 id="第一种方式">第一种方式</h4>
+// j部分定义成 31 时不行？ 向前计算的时候有移动 0，..., 30次，共 31 个状态，因此要定义成 32
+// d[第i+1分钟][已经移动j次][位于第mov(j)+1棵树] 暴力搜索出结果
+int d[1000][32][2];
+int T, W;
+int apple[1000];
 
-<ol>
-<li>base 基本样式
+// 因为已知 j 的时候我们已经能够直接算出 k，因此可以直接移除 k 层不必要的循环，使得整个算法更快
+int mov(int a) {
+  if ((a &amp; 0x1) == 0) return 0;
+  return 1;
+}
 
-<ul>
-<li>variable 变量</li>
-<li>typography</li>
-<li>base 例如:wrapper居中CSS</li>
-</ul></li>
-<li>layout       布局
+int main() {
+  scanf(&quot;%d %d&quot;, &amp;T, &amp;W);
+  int i, j, k;
+  for(i=0;i&lt;T;++i) {
+    scanf(&quot;%d&quot;, &amp;apple[i]);
+    apple[i]--;
+  }
+  if (apple[0] == 0) {
+    d[0][0][0] = 1;
+    d[0][1][1] = 0;
+  } else {
+    d[0][0][0] = 0;
+    d[0][1][1] = 1;
+  }
 
-<ul>
-<li>nav<br /></li>
-<li>hero<br /></li>
-<li>footer<br /></li>
-<li>layout</li>
-</ul></li>
-<li>component    组件
+  for(i=0;i&lt;T-1;++i) {
+    for(j=0;j&lt;=W;++j) {
+      if (mov(j) == apple[i+1]) {
+        d[i+1][j][mov(j)] = max(d[i+1][j][mov(j)], d[i][j][mov(j)] + 1);
+        d[i+1][j+1][mov(j+1)] = max(d[i+1][j+1][mov(j+1)], d[i][j][mov(j)]);
+      } else {
+        d[i+1][j+1][mov(j+1)] = max(d[i+1][j+1][mov(j+1)], d[i][j][mov(j)] + 1);
+        d[i+1][j][mov(j)] = max(d[i+1][j][mov(j)], d[i][j][mov(j)]);
+      }
+    }
+  }
+  cout &lt;&lt; *max_element(d[T-1][0], d[T-1][0] + 2*(W+1)) &lt;&lt; endl;
+  return 0;
+}
 
-<ul>
-<li>button</li>
-<li>schedule
-<br />
-<br /></li>
-</ul></li>
-</ol>
+</code></pre>
 
 
     <img src="/img/main/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
@@ -604,7 +622,7 @@ if (!doNotTrack) {
 
     
     
-        <li><a href='/categories/css'>css</a></li>
+        <li><a href='/categories/ac%E4%B9%8B%E8%B7%AF'>AC之路</a></li>
     
 </ul>
 
@@ -638,13 +656,10 @@ if (!doNotTrack) {
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/"
-                class="button big previous">Sass语法点总结</a></li>
+        <li><a href="/blog/poj-2229-sumsets/"
+                class="button big previous">poj 2229 Sumsets</a></li>
     
 
-    
-        <li><a href="/blog/vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-                class="button big next">Vue 学习总结</a></li>
     
 </ul>
 

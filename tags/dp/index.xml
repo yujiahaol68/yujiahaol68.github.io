@@ -6,10 +6,19 @@
     <description>Recent content in DP on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/dp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>poj 2385 Apple Catching 0ms</title>
+      <link>/blog/poj-2385-apple-catching/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poj-2385-apple-catching/</guid>
+      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;iostream&amp;gt; using namespace std; // j部分定义成 31 时不行？ 向前计算的时候有移动 0，..., 30次，共 31 个状态，因此要定义成 32 // d</description>
+    </item>
     
     <item>
       <title>poj 2229 Sumsets</title>
