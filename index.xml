@@ -6,10 +6,19 @@
     <description>Recent content on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>poj 3616 Milking Time</title>
+      <link>/blog/poj-3616-milking-time/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poj-3616-milking-time/</guid>
+      <description>原题地址 知识点：权值区间DP 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; using namespace std; struct P { int start, end, e; }; bool cmp(const P &amp;amp;a, const P &amp;amp;b) { return a.start &amp;lt; b.start; } int N, M, R; struct P a[1002]; int dp[1002]; int main() { scanf(&amp;quot;%d %d %d&amp;quot;, &amp;amp;N, &amp;amp;M, &amp;amp;R); int i,</description>
+    </item>
     
     <item>
       <title>poj 2385 Apple Catching 0ms</title>

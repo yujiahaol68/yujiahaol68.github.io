@@ -1,17 +1,11 @@
-
-
-
-    
-
-
-
-
 <!DOCTYPE HTML>
 
 <html>
     <head>
         
-            <title>Python - Runtime: out of memory</title>
+            
+                <title>poj 3616 Milking Time</title>
+            
         
 
         <meta charset="utf-8" />
@@ -26,6 +20,8 @@
         <link rel="apple-touch-icon" href="/img/main/favicon.png">
 
         
+            <meta name="author" content="Tecker Yu">
+        
         
             
                 <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
@@ -33,17 +29,20 @@
         
 
         <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Python"/>
-<meta name="twitter:description" content="Tecker.Yu tech blog. Powered by Hugo"/>
+<meta name="twitter:title" content="poj 3616 Milking Time"/>
+<meta name="twitter:description" content="原题地址 知识点：权值区间DP 解题报告 #include &lt;cstdio&gt; #include &lt;algorithm&gt; #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std; struct P { int start, end, e; }; bool cmp(const P &amp;a, const P &amp;b) { return a.start &lt; b.start; } int N, M, R; struct P a[1002]; int dp[1002]; int main() { scanf(&quot;%d %d %d&quot;, &amp;N, &amp;M, &amp;R); int i,"/>
 
-        <meta property="og:title" content="Python" />
-<meta property="og:description" content="Tecker.Yu tech blog. Powered by Hugo" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/python/" />
+        <meta property="og:title" content="poj 3616 Milking Time" />
+<meta property="og:description" content="原题地址 知识点：权值区间DP 解题报告 #include &lt;cstdio&gt; #include &lt;algorithm&gt; #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std; struct P { int start, end, e; }; bool cmp(const P &amp;a, const P &amp;b) { return a.start &lt; b.start; } int N, M, R; struct P a[1002]; int dp[1002]; int main() { scanf(&quot;%d %d %d&quot;, &amp;N, &amp;M, &amp;R); int i," />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/poj-3616-milking-time/" />
 
 
 
-<meta property="og:updated_time" content="2017-04-11T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-07-29T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-07-29T00:00:00&#43;00:00"/>
+
 
 
 
@@ -55,9 +54,17 @@
 
 
         
-<meta itemprop="name" content="Python">
-<meta itemprop="description" content="Tecker.Yu tech blog. Powered by Hugo">
+<meta itemprop="name" content="poj 3616 Milking Time">
+<meta itemprop="description" content="原题地址 知识点：权值区间DP 解题报告 #include &lt;cstdio&gt; #include &lt;algorithm&gt; #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std; struct P { int start, end, e; }; bool cmp(const P &amp;a, const P &amp;b) { return a.start &lt; b.start; } int N, M, R; struct P a[1002]; int dp[1002]; int main() { scanf(&quot;%d %d %d&quot;, &amp;N, &amp;M, &amp;R); int i,">
 
+
+<meta itemprop="datePublished" content="2018-07-29T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-07-29T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="153">
+
+
+
+<meta itemprop="keywords" content="DP," />
 
         
 
@@ -109,9 +116,10 @@ if (!doNotTrack) {
       <div id="wrapper">
 
     
+    
 <header id="header">
     
-      <h1><a href="/">tags</a></h1>
+      <h1><a href="/">blog</a></h1>
     
 
     <nav class="links">
@@ -163,6 +171,10 @@ if (!doNotTrack) {
     </nav>
     <nav class="main">
         <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
             
             <li class="search">
                 <a class="fa-search" href="#search">Search</a>
@@ -340,15 +352,92 @@ if (!doNotTrack) {
         
 </section>
 
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fpoj-3616-milking-time%2f&text=poj%203616%20Milking%20Time&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fpoj-3616-milking-time%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpoj-3616-milking-time%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fpoj-3616-milking-time%2f&title=poj%203616%20Milking%20Time" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpoj-3616-milking-time%2f&title=poj%203616%20Milking%20Time" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpoj-3616-milking-time%2f&title=poj%203616%20Milking%20Time" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpoj-3616-milking-time%2f&description=poj%203616%20Milking%20Time" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fpoj-3616-milking-time%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
     
     <div id="main">
         
         
-            <article class="post">
+        <article class="post">
   <header>
     <div class="title">
         
-            <h2><a href="/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/">python 语法基础</a></h2>
+            <h1><a href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></h1>
+            
         
         
     </div>
@@ -356,25 +445,152 @@ if (!doNotTrack) {
         
 
         <time class="published"
-            datetime='2017-04-11'>
-            April 11, 2017</time>
-        <span class="author">Tecker.Yu</span>
+            datetime='2018-07-29'>
+            July 29, 2018</time>
+        <span class="author">Tecker Yu</span>
         
-            <p>2 minute read</p>
+            <p>1 minute read</p>
         
         
     </div>
 </header>
 
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fpoj-3616-milking-time%2f&text=poj%203616%20Milking%20Time&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fpoj-3616-milking-time%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fpoj-3616-milking-time%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fpoj-3616-milking-time%2f&title=poj%203616%20Milking%20Time" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fpoj-3616-milking-time%2f&title=poj%203616%20Milking%20Time" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fpoj-3616-milking-time%2f&title=poj%203616%20Milking%20Time" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fpoj-3616-milking-time%2f&description=poj%203616%20Milking%20Time" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fpoj-3616-milking-time%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
   
 
   
-  <p><code>True</code></p>
+
+  <div id="content">
+    
+
+<p><a href="http://poj.org/problem?id=3616">原题地址</a></p>
+
+<h2 id="知识点-权值区间dp">知识点：权值区间DP</h2>
+
+<h2 id="解题报告">解题报告</h2>
+
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+struct P {
+  int start, end, e;
+};
+
+bool cmp(const P &amp;a, const P &amp;b) {
+  return a.start &lt; b.start;
+}
+
+int N, M, R;
+struct P a[1002];
+int dp[1002];
+
+int main() {
+  scanf(&quot;%d %d %d&quot;, &amp;N, &amp;M, &amp;R);
+  int i, j;
+  for(i=0;i&lt;M;i++) {
+    struct P p;
+    scanf(&quot;%d %d %d&quot;, &amp;p.start, &amp;p.end, &amp;p.e);
+    // 化成带权值的区间 DP
+    p.end += R;
+    a[i] = p;
+  }
+
+  sort(a, a+M, cmp);
+  for(i=0;i&lt;M;++i) {
+    dp[i] = a[i].e;
+    for(j=0;j&lt;i;++j) {
+      // 把当前时间段允许的之前的时间段都选一遍并取最大值
+      if (a[j].end &lt;= a[i].start) dp[i] = max(dp[i], dp[j]+a[i].e);
+    }
+  }
+
+  cout &lt;&lt; *max_element(dp, dp+M) &lt;&lt; endl;
+  return 0;
+}
+
+</code></pre>
+
+
+    <img src="/img/main/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
+  </div>
+
   <footer>
-    <ul class="actions">
-      <li><a href="/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/" class="button big">Continue Reading</a></li>
-    </ul>
-  <ul class="stats">
+    <ul class="stats">
     
         
 
@@ -401,25 +617,47 @@ if (!doNotTrack) {
 
     
     
-        <li><a href='/categories/python'>python</a></li>
+        <li><a href='/categories/ac%E4%B9%8B%E8%B7%AF'>AC之路</a></li>
     
 </ul>
 
   </footer>
+
 </article>
 
-        
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "teckerblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
 
-        
+
 <ul class="actions pagination">
     
-        <li><a href="#" class="disabled button big previous">Previous Page</a></li>
+        <li><a href="/blog/poj-2385-apple-catching/"
+                class="button big previous">poj 2385 Apple Catching 0ms</a></li>
     
 
     
-        <li><a href="#" class="disabled button big next">Next Page</a></li>
-    
 </ul>
+
 
     </div>
     
@@ -443,7 +681,7 @@ if (!doNotTrack) {
       <ul class="icons">
         
           <li>
-            <a href="/tags/python/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
@@ -846,7 +1084,7 @@ if (!doNotTrack) {
       <ul class="icons">
         
           <li>
-            <a href="/tags/python/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href="" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
