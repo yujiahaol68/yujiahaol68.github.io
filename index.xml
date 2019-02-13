@@ -6,10 +6,19 @@
     <description>Recent content on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Leetcode 985. Sum of Even Numbers After Queries</title>
+      <link>/blog/leetcode-985.-sum-of-even-numbers-after-queries/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/leetcode-985.-sum-of-even-numbers-after-queries/</guid>
+      <description>题目描述 时间复杂度：O(N) 空间复杂度：O(1) // Author: Tecker // 176ms, 28.7MB; beat 96.40%, 100% class Solution { public: vector&amp;lt;int&amp;gt; sumEvenAfterQueries(vector&amp;lt;int&amp;gt;&amp;amp; A, vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt;&amp;amp; queries) { vector&amp;lt;int&amp;gt; res(A.size(), 0); int sum=0; A[queries[0][1]]+=queries[0][0]; for(int &amp;amp;num : A) { if (num%2==0) sum+=num; } res[0]=sum; for(int i=1;i&amp;lt;queries.size();++i) { int val=queries[i][0]; int idx=queries[i][1]; int tmp =</description>
+    </item>
     
     <item>
       <title>poj 3616 Milking Time</title>
