@@ -6,10 +6,19 @@
     <description>Recent content on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Leetcode 989. Add to Array-Form of Integer</title>
+      <link>/blog/leetcode-989.-add-to-array-form-of-integer/</link>
+      <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/leetcode-989.-add-to-array-form-of-integer/</guid>
+      <description>题目描述 For a non-negative integer X, the array-form of X is an array of its digits in left to right order. For example, if X = 1231, then the array form is [1,2,3,1] Given the array-form A of a non-negative integer X, return the array-form of the integer X+K. // Author: Tecker // date: 2019.2.14 // 132ms, 13.3MB beat 99.19%, 100.00% // time: O(N), space: O(1) or</description>
+    </item>
     
     <item>
       <title>Leetcode 985. Sum of Even Numbers After Queries</title>
