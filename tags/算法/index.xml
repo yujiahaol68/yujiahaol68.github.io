@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Runtime: out of memory</title>
+    <link>/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Runtime: out of memory</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode 989. Add to Array-Form of Integer</title>
+      <link>/blog/leetcode-989.-add-to-array-form-of-integer/</link>
+      <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/leetcode-989.-add-to-array-form-of-integer/</guid>
+      <description>题目描述 For a non-negative integer X, the array-form of X is an array of its digits in left to right order. For example, if X = 1231, then the array form is [1,2,3,1] Given the array-form A of a non-negative integer X, return the array-form of the integer X+K. // Author: Tecker // date: 2019.2.14 // 132ms, 13.3MB beat 99.19%, 100.00% // time: O(N), space: O(1) or</description>
+    </item>
+    
+    <item>
+      <title>Leetcode 985. Sum of Even Numbers After Queries</title>
+      <link>/blog/leetcode-985.-sum-of-even-numbers-after-queries/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/leetcode-985.-sum-of-even-numbers-after-queries/</guid>
+      <description>题目描述 时间复杂度：O(N) 空间复杂度：O(1) // Author: Tecker // 176ms, 28.7MB; beat 96.40%, 100% class Solution { public: vector&amp;lt;int&amp;gt; sumEvenAfterQueries(vector&amp;lt;int&amp;gt;&amp;amp; A, vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt;&amp;amp; queries) { vector&amp;lt;int&amp;gt; res(A.size(), 0); int sum=0; A[queries[0][1]]+=queries[0][0]; for(int &amp;amp;num : A) { if (num%2==0) sum+=num; } res[0]=sum; for(int i=1;i&amp;lt;queries.size();++i) { int val=queries[i][0]; int idx=queries[i][1]; int tmp =</description>
+    </item>
+    
+    <item>
+      <title>poj 1017 Packets</title>
+      <link>/blog/poj-1017-packets/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poj-1017-packets/</guid>
+      <description>知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; int square[7]; // 解法：每次都先放最大 int solve() { int res = 0; // 6x6 直接成一块 res += square[6]; // 5x5 先成一块，再补 1x1 res += square[5]; square[1] -= 11 * square[5]; // 4x4 先成一块，然</description>
+    </item>
+    
+    <item>
+      <title>LeetCode题解:最长回文串之manacher算法</title>
+      <link>/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/</guid>
+      <description>manacher 俗称马拉车算法，也是本文的主角，是一种能够将最长回文串的求解复杂度降低到 O(N) 的一种高效算法， 当我第一次见到求解最长回文串的题目时，首先采用的</description>
+    </item>
+    
+    <item>
+      <title>0交换排序 Google笔试题</title>
+      <link>/blog/0%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F-google%E7%AC%94%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 29 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/0%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F-google%E7%AC%94%E8%AF%95%E9%A2%98/</guid>
+      <description>题目: 长度为n的数组乱序存放着0至n-1，现在只能进行0与其他数的交换，请排序这个数组 package main import &amp;quot;fmt&amp;quot; func main() { s := []int{3, 5, 4, 0, 1, 2, 6} for _, v := range s { fmt.Printf(&amp;quot;%d &amp;quot;, v) }</description>
+    </item>
+    
+  </channel>
+</rss>

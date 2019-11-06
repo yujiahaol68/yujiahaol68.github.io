@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>分布式 on Runtime: out of memory</title>
+    <link>/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</link>
+    <description>Recent content in 分布式 on Runtime: out of memory</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 06 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>分布式初探 Distributed 101</title>
+      <link>/blog/%E5%88%86%E5%B8%83%E5%BC%8F%E5%88%9D%E6%8E%A2-distributed-101/</link>
+      <pubDate>Fri, 06 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E5%88%86%E5%B8%83%E5%BC%8F%E5%88%9D%E6%8E%A2-distributed-101/</guid>
+      <description>什么是分布式系统？ 使用多机来处理单机相同问题的系统 多点存储，多点计算 为什么需要分布式系统？ 解决日益增长的存储资源和计算资源占用的问题，分散系</description>
+    </item>
+    
+  </channel>
+</rss>

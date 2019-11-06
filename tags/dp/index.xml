@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>DP on Runtime: out of memory</title>
     <link>/tags/dp/</link>
     <description>Recent content in DP on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-cn</language>
     <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/dp/index.xml" rel="self" type="application/rss+xml" />

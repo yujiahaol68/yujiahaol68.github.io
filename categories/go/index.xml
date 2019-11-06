@@ -1,15 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on Runtime: out of memory</title>
     <link>/categories/go/</link>
     <description>Recent content in Go on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 28 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 06 Nov 2019 09:20:41 +0800</lastBuildDate>
     
 	<atom:link href="/categories/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go中反序列化后的类型转换问题记录</title>
+      <link>/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Wed, 06 Nov 2019 09:20:41 +0800</pubDate>
+      
+      <guid>/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</guid>
+      <description>在 Go 语言的世界中，类型转换基本上都是很显式的，但最近在编写 web 后台的时候需要进行 context 之间的共享传值，常常就会出现 interface{} 的转换， 最常见的做法就是进行 type</description>
+    </item>
     
     <item>
       <title>通过Go HTTP Client的报错看标准库https请求</title>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>框架 on Runtime: out of memory</title>
+    <link>/tags/%E6%A1%86%E6%9E%B6/</link>
+    <description>Recent content in 框架 on Runtime: out of memory</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 26 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在 Gin 中实践TDD测试API</title>
+      <link>/blog/%E5%9C%A8-gin-%E4%B8%AD%E5%AE%9E%E8%B7%B5tdd%E6%B5%8B%E8%AF%95api/</link>
+      <pubDate>Mon, 26 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/%E5%9C%A8-gin-%E4%B8%AD%E5%AE%9E%E8%B7%B5tdd%E6%B5%8B%E8%AF%95api/</guid>
+      <description>如果这篇文章能够从此让你放下手中的快递员，从此开始做一个 TDD First 的 programmer ，那么本文的目的也就达到了 Why TDD is so important? TDD 的重要性最直接的体现就是 No guessing 和 Robu</description>
+    </item>
+    
+  </channel>
+</rss>
