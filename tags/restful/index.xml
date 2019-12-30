@@ -17,7 +17,7 @@
       <pubDate>Wed, 12 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</guid>
-      <description>Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &amp;quot;Node should test in action&amp;quot; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &amp;quot;Pratice node every day&amp;quot; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case</description>
+      <description>Time is short. Just show me the code! var http = require(&amp;#39;http&amp;#39;); var url = require(&amp;#39;url&amp;#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &amp;#34;Node should test in action&amp;#34; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &amp;#34;Pratice node every day&amp;#34; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case</description>
     </item>
     
   </channel>

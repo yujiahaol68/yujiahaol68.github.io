@@ -72,145 +72,104 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#常用函数">常用函数：</a></li>
-<li><a href="#常见问题">常见问题</a></li>
-<li><a href="#技巧提点">技巧提点</a></li>
-<li><a href="#关于blade">关于Blade</a></li>
-<li><a href="#model">Model</a></li>
-<li><a href="#controller">Controller</a></li>
-<li><a href="#session-会话">Session 会话</a></li>
-<li><a href="#auth-认证系统">Auth 认证系统</a></li>
-<li><a href="#中间件的使用">中间件的使用</a></li>
-<li><a href="#授权策略">授权策略</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#heading">常用函数：</a></li>
+        <li><a href="#heading-1">常见问题</a></li>
+        <li><a href="#heading-2">技巧提点</a></li>
+        <li><a href="#blade">关于Blade</a></li>
+        <li><a href="#model">Model</a></li>
+        <li><a href="#controller">Controller</a></li>
+        <li><a href="#session-">Session 会话</a></li>
+        <li><a href="#auth-">Auth 认证系统</a></li>
+        <li><a href="#heading-3">中间件的使用</a></li>
+        <li><a href="#heading-4">授权策略</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<h3 id="常用函数">常用函数：</h3>
-
+			<h3 id="heading">常用函数：</h3>
 <ul>
-<li>compact(&lsquo;变量1&rsquo;,&lsquo;变量2&rsquo;)<br /></li>
+<li>compact(&lsquo;变量1&rsquo;,&lsquo;变量2&rsquo;)</li>
 </ul>
-
 <p>类似于es6 的简写，会生成类似于<code>['name' =&gt; $name]</code>的键值对</p>
-
 <ul>
 <li>dd(变量)</li>
 </ul>
-
 <p>程序运行到此处终止并输出变量的值</p>
-
 <ul>
-<li><p>Tinker 助手</p>
-
-<pre><code class="language-bash">php artisan tinker
-</code></pre>
-
-<pre><code class="language-bash">&gt;&gt;&gt; App\Model::pluck('body');
+<li>Tinker 助手</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">php artisan tinker
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt;&gt;&gt; App<span style="color:#ae81ff">\M</span>odel::pluck<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;body&#39;</span><span style="color:#f92672">)</span>;
 //只取出此字段
-&gt;&gt;&gt; App\Model::where('id', '&gt;=', 2)-&gt;get();
-&gt;&gt;&gt; App\Model::all();
-&gt;&gt;&gt; App\Model::first();
-</code></pre></li>
-
-<li><p><code>request()-&gt;all()</code></p></li>
-
-<li><p><code>request(['title', 'body'])</code></p></li>
+&gt;&gt;&gt; App<span style="color:#ae81ff">\M</span>odel::where<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;id&#39;</span>, <span style="color:#e6db74">&#39;&gt;=&#39;</span>, 2<span style="color:#f92672">)</span>-&gt;get<span style="color:#f92672">(</span><span style="color:#f92672">)</span>;
+&gt;&gt;&gt; App<span style="color:#ae81ff">\M</span>odel::all<span style="color:#f92672">(</span><span style="color:#f92672">)</span>;
+&gt;&gt;&gt; App<span style="color:#ae81ff">\M</span>odel::first<span style="color:#f92672">(</span><span style="color:#f92672">)</span>;
+</code></pre></div><ul>
+<li><code>request()-&gt;all()</code></li>
+<li><code>request(['title', 'body'])</code></li>
 </ul>
-
 <p>获取所有的post数据</p>
-
 <p>只获取title和body</p>
-
-<h3 id="常见问题">常见问题</h3>
-
+<h3 id="heading-1">常见问题</h3>
 <ul>
-<li><p>删除文件
-删除完<code>migration</code>文件之后都要清除Composer中自动加载的记录，刷新自动加载记录</p>
-
-<pre><code class="language-bash">$ composer dump-autoload
-</code></pre></li>
+<li>删除文件
+删除完<code>migration</code>文件之后都要清除Composer中自动加载的记录，刷新自动加载记录</li>
 </ul>
-
-<h3 id="技巧提点">技巧提点</h3>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ composer dump-autoload
+</code></pre></div><h3 id="heading-2">技巧提点</h3>
 <ul>
 <li>进一步封装查询语句</li>
 </ul>
-
 <p>Model.php</p>
-
-<pre><code class="language-php">public function scopeIncompleted($query, $val)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">public function scopeIncompleted($query, $val)
 {
-	return $query-&gt;where('completed', 0)-&gt;get();
+	return $query-&gt;where(&#39;completed&#39;, 0)-&gt;get();
 	//将查询语句进行封装，调用时相当于静态方法
 	//Model::incompleted();
 }
-</code></pre>
+</code></pre></div><ul>
+<li>Model与路由的绑定</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">	Route::get(&#39;/tasks/{thetask}&#39;, &#39;TasksController@show&#39;);
 
-<ul>
-<li><p>Model与路由的绑定</p>
-
-<pre><code class="language-php">	Route::get('/tasks/{thetask}', 'TasksController@show');
-
-public function show(Task $thetask)
-{
-	return view('tasks.show', compact('thetask'));
-}
+    public function show(Task $thetask)
+    {
+    	return view(&#39;tasks.show&#39;, compact(&#39;thetask&#39;));
+    }
 
 //路由中括号内的参数名必须与Controller中的接收参数的变量名字一致，类型是Model对象
-</code></pre></li>
-
-<li><p>命名规则</p></li>
+</code></pre></div><ul>
+<li>命名规则</li>
 </ul>
-
 <p>controller =&gt; PostsController
 Model =&gt; Post
 migration =&gt; create_posts_table</p>
-
 <ul>
-<li><p>RESTFul</p>
-
-<pre><code class="language-bash">$ php artisan make:Controller TasksController -r
-</code></pre></li>
+<li>RESTFul</li>
 </ul>
-
-<p>创建一个resourceful controller</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ php artisan make:Controller TasksController -r
+</code></pre></div><p>创建一个resourceful controller</p>
 <ul>
 <li>文件路径更改</li>
 </ul>
-
 <p>与其相关的命名空间，包括文件本身的命名空间都需要进行修改！</p>
-
 <ul>
-<li><p>快速查看所有的路由</p>
-
-<pre><code class="language-bash">$ php artisan route:list
-</code></pre></li>
-
-<li><p>重定向返回至上一次请求尝试访问的页面</p>
-
-<pre><code class="language-php">return redirect()-&gt;intended(route('users.show', [Auth::user()]));
-</code></pre></li>
+<li>快速查看所有的路由</li>
 </ul>
-
-<h3 id="关于blade">关于Blade</h3>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ php artisan route:list
+</code></pre></div><ul>
+<li>重定向返回至上一次请求尝试访问的页面</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">return redirect()-&gt;intended(route(&#39;users.show&#39;, [Auth::user()]));
+</code></pre></div><h3 id="blade">关于Blade</h3>
 <p><code>@yield('title', 'Sample')</code></p>
-
 <p>声明title变量及其默认值</p>
-
 <pre><code>@yield('content')
 // content区域
 
@@ -218,125 +177,87 @@ migration =&gt; create_posts_table</p>
 @section('content')
 // 内容将会被插入布局模板中
 @stop
-</code></pre>
-
-<p><code>@yield</code> 用于定义</p>
-
+</code></pre><p><code>@yield</code> 用于定义</p>
 <p><code>@section</code> 用于插入值</p>
-
 <p><code>@include('shared.user_info', ['user' =&gt; $user])</code></p>
-
 <p>给局部视图传参数</p>
-
 <p><code>old('name名称')</code></p>
-
 <p>辅助函数显示旧的输入数据</p>
-
 <h3 id="model">Model</h3>
-
 <ul>
 <li>每一个Model内部都有三个属性</li>
 </ul>
-
 <p><code>$table</code> <code>$fillable</code> <code>$hidden</code></p>
-
 <p>指明交互的数据表名称，能进行更新的字段，JSON形式显示时隐藏的字段</p>
-
 <h3 id="controller">Controller</h3>
-
 <ul>
 <li>每一个controller中都有一个<code>validator</code>，可以用来验证字段</li>
 </ul>
-
-<h3 id="session-会话">Session 会话</h3>
-
+<h3 id="session-">Session 会话</h3>
 <ol>
 <li>创建会话实例</li>
 </ol>
-
 <p><code>session()-&gt;flash('success', '欢迎，您将在这里开启一段新的旅程~');</code></p>
-
 <p>flash方法使得会话缓存只在下一次请求中有效，第一个参数是键名，第二个参数是键值</p>
-
-<ol>
+<ol start="2">
 <li>访问会话实例</li>
 </ol>
-
 <p><code>session()-&gt;get('success')</code></p>
-
-<h3 id="auth-认证系统">Auth 认证系统</h3>
-
+<h3 id="auth-">Auth 认证系统</h3>
 <p><code>Auth::attempt()</code>尝试登陆</p>
-
 <p><code>Auth::user()</code>当前登录实例</p>
-
 <p><code>Auth::check()</code> 是否已经登录</p>
-
 <p>API:</p>
-
 <p><code>bool attempt(array $credentials = array(), bool $remember = false)</code></p>
-
 <p>第二个参数用来开发记住密码</p>
-
-<h3 id="中间件的使用">中间件的使用</h3>
-
+<h3 id="heading-3">中间件的使用</h3>
 <ul>
-<li><p>在用户控制器构造方法中应用中间件</p>
-
-<pre><code class="language-php">public function __construct()
-{
-    $this-&gt;middleware('auth', [            
-        'only' =&gt; ['edit', 'update']
-    ]);
-}
-</code></pre></li>
-
-<li><p><code>Authenticate.php</code>中进行重定向</p>
-
-<pre><code class="language-php">public function handle($request, Closure $next)
-{
-    if ($this-&gt;auth-&gt;guest()) {
-        if ($request-&gt;ajax()) {
-            return response('Unauthorized.', 401);
-        } else {
-            return redirect()-&gt;guest('login');
-        }
+<li>在用户控制器构造方法中应用中间件</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    public function __construct()
+    {
+        $this-&gt;middleware(&#39;auth&#39;, [            
+            &#39;only&#39; =&gt; [&#39;edit&#39;, &#39;update&#39;]
+        ]);
     }
-
-    return $next($request);
-}
-</code></pre></li>
+</code></pre></div><ul>
+<li><code>Authenticate.php</code>中进行重定向</li>
 </ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    public function handle($request, Closure $next)
+    {
+        if ($this-&gt;auth-&gt;guest()) {
+            if ($request-&gt;ajax()) {
+                return response(&#39;Unauthorized.&#39;, 401);
+            } else {
+                return redirect()-&gt;guest(&#39;login&#39;);
+            }
+        }
 
-<h3 id="授权策略">授权策略</h3>
-
+        return $next($request);
+    }
+</code></pre></div><h3 id="heading-4">授权策略</h3>
 <p>已登录的用户之间的权限控制</p>
-
 <ul>
-<li><p>创建Policy文件并创建用户比对方法</p>
-
-<pre><code class="language-php">public function update(User $currentUser, User $user)
-{
-    return $currentUser-&gt;id === $user-&gt;id;
-}
-</code></pre></li>
-
-<li><p>在<code>AuthServiceProvider</code>中进行授权策略的配置，将用户模型指定授权策略</p>
-
-<pre><code class="language-php">protected $policies = [
-    'App\Model' =&gt; 'App\Policies\ModelPolicy',
-    User::class =&gt; UserPolicy::class
-    //全路径匹配
-];
-</code></pre></li>
-
-<li><p>将查询时返回的User实例发送给授权策略进行比较</p>
-
-<pre><code class="language-php">$user = User::findOrFail($id);
-$this-&gt;authorize('update', $user);
-</code></pre></li>
+<li>创建Policy文件并创建用户比对方法</li>
 </ul>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    public function update(User $currentUser, User $user)
+    {
+        return $currentUser-&gt;id === $user-&gt;id;
+    }
+</code></pre></div><ul>
+<li>在<code>AuthServiceProvider</code>中进行授权策略的配置，将用户模型指定授权策略</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    protected $policies = [
+        &#39;App\Model&#39; =&gt; &#39;App\Policies\ModelPolicy&#39;,
+        User::class =&gt; UserPolicy::class
+        //全路径匹配
+    ];
+</code></pre></div><ul>
+<li>将查询时返回的User实例发送给授权策略进行比较</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">   $user = User::findOrFail($id);
+   $this-&gt;authorize(&#39;update&#39;, $user);
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -386,11 +307,11 @@ $this-&gt;authorize('update', $user);
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -465,6 +386,7 @@ $this-&gt;authorize('update', $user);
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

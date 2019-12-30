@@ -72,96 +72,89 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程">本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程</a>
-<ul>
-<li><a href="#最后使用pm2进行node项目的管理-包括简单的监控">最后使用pm2进行node项目的管理，包括简单的监控</a></li>
-<li><a href="#附上腾讯云主机在生产环境下的安全组配置">附上腾讯云主机在生产环境下的安全组配置</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#-nginxnodemongodbredis-">本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程</a>
+      <ul>
+        <li><a href="#pm2node">最后使用pm2进行node项目的管理，包括简单的监控</a></li>
+        <li><a href="#heading">附上腾讯云主机在生产环境下的安全组配置</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<h2 id="本文实践的是单机搭建-nginx-node-mongodb-redis-流行组合的具体过程">本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程</h2>
-
+			<h2 id="-nginxnodemongodbredis-">本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程</h2>
 <p><a href="https://jp.godaddy.com/help/set-up-nodejs-application-for-production-centos-17354">node的安装过程详情</a></p>
-
 <p>其他的直接上亲自实践过的安装命令以及需要注意的地方，习惯用英文注释，部分重点已用中文指出</p>
-
-<pre><code class="language-bash">#!/bin/bash
-#update software
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span><span style="color:#75715e">#update software</span>
 sudo yum update -y
-#back to root dir
+<span style="color:#75715e">#back to root dir</span>
 cd ~
-#Nginx
+<span style="color:#75715e">#Nginx</span>
 sudo yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
-#If pcre
+<span style="color:#75715e">#If pcre</span>
 rpm -qa pcre
-#yes download nginx stable version
+<span style="color:#75715e">#yes download nginx stable version</span>
 wget http://nginx.org/download/nginx-1.12.0.tar.gz
 tar zxvf nginx-1.12.0.tar.gz
-#switch to root for mkdir
+<span style="color:#75715e">#switch to root for mkdir</span>
 su root
 cd nginx-1.12.0
-./configure &amp;&amp; make &amp;&amp; make install
-cd ~ &amp;&amp; exit
+./configure <span style="color:#f92672">&amp;&amp;</span> make <span style="color:#f92672">&amp;&amp;</span> make install
+cd ~ <span style="color:#f92672">&amp;&amp;</span> exit
 rm -rf nginx-1.12.0
 rm nginx-1.12.0.tar.gz
-#start nginx
-#access public IP should success
+<span style="color:#75715e">#start nginx</span>
+<span style="color:#75715e">#access public IP should success</span>
 /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-#self-start config
+<span style="color:#75715e">#self-start config</span>
 sudo vi /lib/systemd/system/nginx.service
-#content
-:'
-[Unit]
-Description=nginx
-After=network.target
-[Service]
-Type=forking
-ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-ExecReload=/usr/local/nginx/sbin/nginx -s reload
-ExecStop=/usr/local/nginx/sbin/nginx -s quit
-PrivateTmp=true
-[Install]
-WantedBy=multi-user.target
-'
+<span style="color:#75715e">#content</span>
+:<span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">[Unit]
+</span><span style="color:#e6db74">Description=nginx
+</span><span style="color:#e6db74">After=network.target
+</span><span style="color:#e6db74">[Service]
+</span><span style="color:#e6db74">Type=forking
+</span><span style="color:#e6db74">ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+</span><span style="color:#e6db74">ExecReload=/usr/local/nginx/sbin/nginx -s reload
+</span><span style="color:#e6db74">ExecStop=/usr/local/nginx/sbin/nginx -s quit
+</span><span style="color:#e6db74">PrivateTmp=true
+</span><span style="color:#e6db74">[Install]
+</span><span style="color:#e6db74">WantedBy=multi-user.target
+</span><span style="color:#e6db74">&#39;</span>
 systemctl start nginx.service
 systemctl enable nginx.service
-#check if running
-systemctl list-units --type=service
+<span style="color:#75715e">#check if running</span>
+systemctl list-units --type<span style="color:#f92672">=</span>service
 
-#Mongodb
+<span style="color:#75715e">#Mongodb</span>
 sudo vi /etc/yum.repos.d/mongodb-org-3.4.repo
 
-#https://docs.mongodb.com/master/tutorial/install-mongodb-on-red-hat/
-#content
-:'
-[mongodb-org-3.4]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.4/x86_64/
-gpgcheck=1
-enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
-'
+<span style="color:#75715e">#https://docs.mongodb.com/master/tutorial/install-mongodb-on-red-hat/</span>
+<span style="color:#75715e">#content</span>
+:<span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">[mongodb-org-3.4]
+</span><span style="color:#e6db74">name=MongoDB Repository
+</span><span style="color:#e6db74">baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.4/x86_64/
+</span><span style="color:#e6db74">gpgcheck=1
+</span><span style="color:#e6db74">enabled=1
+</span><span style="color:#e6db74">gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
+</span><span style="color:#e6db74">&#39;</span>
 
-#yum install mongodb
+<span style="color:#75715e">#yum install mongodb</span>
 sudo yum -y install mongodb-org
-#start mongodb(default it can self-start when booting)
+<span style="color:#75715e">#start mongodb(default it can self-start when booting)</span>
 sudo service mongod start
-#self-start
+<span style="color:#75715e">#self-start</span>
 sudo chkconfig mongod on
 
-#pm2 install
+<span style="color:#75715e">#pm2 install</span>
 sudo cnpm i pm2 -g
 
-#redis
+<span style="color:#75715e">#redis</span>
 wget http://download.redis.io/releases/redis-3.2.9.tar.gz
 su root
 tar xzf redis-3.2.9.tar.gz
@@ -174,140 +167,133 @@ mkdir -p /var/lib/redis/6379
 cp redis.conf /etc/redis/6379.conf
 
 vi /etc/redis/6379.conf
-:'
-daemonize yes
-logfile /var/log/redis_6379.log
-dir /var/lib/redis/6379
-'
+:<span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">daemonize yes
+</span><span style="color:#e6db74">logfile /var/log/redis_6379.log
+</span><span style="color:#e6db74">dir /var/lib/redis/6379
+</span><span style="color:#e6db74">&#39;</span>
 
 cp utils/redis_init_script /etc/init.d/redis
 
 vi /lib/systemd/system/redis.service
-#content
-:'
-[Unit]
-Description=Redis on port 6379
-[Service]
-Type=forking
-ExecStart=/etc/init.d/redis_6379 start
-ExecStop=/etc/init.d/redis_6379 stop
-[Install]
-WantedBy=multi-user.target
-
-vm.overcommit_memory = 1
-net.core.somaxconn=512
-'
+<span style="color:#75715e">#content</span>
+:<span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">[Unit]
+</span><span style="color:#e6db74">Description=Redis on port 6379
+</span><span style="color:#e6db74">[Service]
+</span><span style="color:#e6db74">Type=forking
+</span><span style="color:#e6db74">ExecStart=/etc/init.d/redis_6379 start
+</span><span style="color:#e6db74">ExecStop=/etc/init.d/redis_6379 stop
+</span><span style="color:#e6db74">[Install]
+</span><span style="color:#e6db74">WantedBy=multi-user.target
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">vm.overcommit_memory = 1
+</span><span style="color:#e6db74">net.core.somaxconn=512
+</span><span style="color:#e6db74">&#39;</span>
 systemctl start redis.service
 systemctl enable redis.service
 
-cd .. &amp;&amp; cd .. &amp;&amp; rm -rf redis-3.2.9 redis-3.2.9.tar.gz
+cd .. <span style="color:#f92672">&amp;&amp;</span> cd .. <span style="color:#f92672">&amp;&amp;</span> rm -rf redis-3.2.9 redis-3.2.9.tar.gz
 
-#kernel config
-sysctl -w vm.overcommit_memory=1
-sysctl -w net.core.somaxconn=512
+<span style="color:#75715e">#kernel config</span>
+sysctl -w vm.overcommit_memory<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+sysctl -w net.core.somaxconn<span style="color:#f92672">=</span><span style="color:#ae81ff">512</span>
 echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled
 
-#booting shell
+<span style="color:#75715e">#booting shell</span>
 echo never &gt;&gt; /sys/kernel/mm/transparent_hugepage/enabled
 echo never &gt;&gt; /sys/kernel/mm/transparent_hugepage/defrag
 systemctl restart mongod.service
 
-#nginx conf ( Remember to configure user !!!)
-#nginx 配置内容经优化（踩过的坑，最顶部的注释要去掉替换成对应的用户名，否则会无文件权限！！）
-#其中含负载均衡及反向代理的配置，模仿着配置好就行
-:'
-#user userName
+<span style="color:#75715e">#nginx conf ( Remember to configure user !!!)</span>
+<span style="color:#75715e">#nginx 配置内容经优化（踩过的坑，最顶部的注释要去掉替换成对应的用户名，否则会无文件权限！！）</span>
+<span style="color:#75715e">#其中含负载均衡及反向代理的配置，模仿着配置好就行</span>
+:<span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">#user userName
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">http {
+</span><span style="color:#e6db74">    client_header_buffer_size 3k;
+</span><span style="color:#e6db74">    client_max_body_size 2m;
+</span><span style="color:#e6db74">    client_body_buffer_size 7k;
+</span><span style="color:#e6db74">    large_client_header_buffers 2 1k;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    client_body_timeout   32;
+</span><span style="color:#e6db74">    client_header_timeout 32;
+</span><span style="color:#e6db74">    reset_timedout_connection on;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    open_file_cache max=200000 inactive=20s;
+</span><span style="color:#e6db74">    open_file_cache_valid 30s;
+</span><span style="color:#e6db74">    open_file_cache_min_uses 2;
+</span><span style="color:#e6db74">    open_file_cache_errors on;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    tcp_nopush on;
+</span><span style="color:#e6db74">    tcp_nodelay on;
+</span><span style="color:#e6db74">    types_hash_max_size 2048;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    gzip on;
+</span><span style="color:#e6db74">    gzip_disable &#34;MSIE [1-6]\.&#34;;
+</span><span style="color:#e6db74">    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+</span><span style="color:#e6db74">    types_hash_max_size 2048;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># 负载均衡
+</span><span style="color:#e6db74">upstream pro_name {
+</span><span style="color:#e6db74">    server 127.0.0.1:3000;
+</span><span style="color:#e6db74">#   balanceServer ip2;
+</span><span style="color:#e6db74">#   balanceServer ip3;
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">server {
+</span><span style="color:#e6db74">    listen 80;
+</span><span style="color:#e6db74">    server_name pro_name;
+</span><span style="color:#e6db74">    charset utf-8;
+</span><span style="color:#e6db74">    access_log /var/log/nginx/app.log;
+</span><span style="color:#e6db74">    root /home/.../code/...;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    location ~ /api/ {
+</span><span style="color:#e6db74">        proxy_pass http://pro_name;
+</span><span style="color:#e6db74">    	proxy_redirect off;
+</span><span style="color:#e6db74">    	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span><span style="color:#e6db74">    	proxy_set_header Host $http_host;
+</span><span style="color:#e6db74">    	proxy_set_header X-NginX-Proxy true;
+</span><span style="color:#e6db74">    	proxy_http_version 1.1;
+</span><span style="color:#e6db74">    	proxy_read_timeout 7s;
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    location ~ /.ht {
+</span><span style="color:#e6db74">        deny all;
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    location ~* \.(css|js|gif|jpe?g|png|ico)$ {
+</span><span style="color:#e6db74">        root /home/.../code/...;
+</span><span style="color:#e6db74">        expires 168h;
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    location / {
+</span><span style="color:#e6db74">        index  index.html index.htm;
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">&#39;</span>
 
-http {
-    client_header_buffer_size 3k;
-    client_max_body_size 2m;
-    client_body_buffer_size 7k;
-    large_client_header_buffers 2 1k;
+<span style="color:#75715e">#实用nginx命令，养成好习惯</span>
+<span style="color:#75715e">#everytime save change of .conf</span>
+/usr/local/nginx/sbin/nginx -t  <span style="color:#75715e">#Check Syntax</span>
+/usr/local/nginx/sbin/nginx -s reload <span style="color:#75715e">#Smooth reload nginx</span>
 
-    client_body_timeout   32;
-    client_header_timeout 32;
-    reset_timedout_connection on;
-
-    open_file_cache max=200000 inactive=20s;
-    open_file_cache_valid 30s;
-    open_file_cache_min_uses 2;
-    open_file_cache_errors on;
-
-    tcp_nopush on;
-    tcp_nodelay on;
-    types_hash_max_size 2048;
-
-    gzip on;
-    gzip_disable &quot;MSIE [1-6]\.&quot;;
-    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-    types_hash_max_size 2048;
-
-}
-
-# 负载均衡
-upstream pro_name {
-    server 127.0.0.1:3000;
-#   balanceServer ip2;
-#   balanceServer ip3;
-}
-
-server {
-    listen 80;
-    server_name pro_name;
-    charset utf-8;
-    access_log /var/log/nginx/app.log;
-    root /home/.../code/...;
-
-
-
-    location ~ /api/ {
-        proxy_pass http://pro_name;
-    	proxy_redirect off;
-    	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    	proxy_set_header Host $http_host;
-    	proxy_set_header X-NginX-Proxy true;
-    	proxy_http_version 1.1;
-    	proxy_read_timeout 7s;
-    }
-
-    location ~ /.ht {
-        deny all;
-    }
-
-    location ~* \.(css|js|gif|jpe?g|png|ico)$ {
-        root /home/.../code/...;
-        expires 168h;
-    }
-
-    location / {
-        index  index.html index.htm;
-    }
-
-
-}
-'
-
-#实用nginx命令，养成好习惯
-#everytime save change of .conf
-/usr/local/nginx/sbin/nginx -t  #Check Syntax
-/usr/local/nginx/sbin/nginx -s reload #Smooth reload nginx
-
-#nginx optimize
-sysctl -w net.core.somaxconn=1024
-</code></pre>
-
-<h3 id="最后使用pm2进行node项目的管理-包括简单的监控">最后使用pm2进行node项目的管理，包括简单的监控</h3>
-
+<span style="color:#75715e">#nginx optimize</span>
+sysctl -w net.core.somaxconn<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>
+</code></pre></div><h3 id="pm2node">最后使用pm2进行node项目的管理，包括简单的监控</h3>
 <p>详情请见</p>
-
 <p><a href="http://pm2.keymetrics.io/">pm2进程管理</a></p>
-
 <p><a href="https://keymetrics.io/">keymetrics监控项目</a></p>
-
-<h3 id="附上腾讯云主机在生产环境下的安全组配置">附上腾讯云主机在生产环境下的安全组配置</h3>
-
-<p><img src="/img/cent1.png" alt="config1" />
-<img src="/img/cent2/png" alt="config2" /></p>
+<h3 id="heading">附上腾讯云主机在生产环境下的安全组配置</h3>
+<p><img src="/img/cent1.png" alt="config1">
+<img src="/img/cent2/png" alt="config2"></p>
 
 		</div>
 		<footer class="post__footer">
@@ -360,11 +346,11 @@ sysctl -w net.core.somaxconn=1024
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -439,6 +425,7 @@ sysctl -w net.core.somaxconn=1024
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

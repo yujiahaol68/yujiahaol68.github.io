@@ -72,420 +72,367 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#关于-x509">关于 x509</a></li>
-<li><a href="#https-连接的建立">https 连接的建立</a></li>
-<li><a href="#关于-tls-会话">关于 TLS 会话</a></li>
-<li><a href="#客户端握手过程">客户端握手过程</a>
-<ul>
-<li><a href="#参考资料">参考资料</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#-x509">关于 x509</a></li>
+        <li><a href="#https-">https 连接的建立</a></li>
+        <li><a href="#-tls-">关于 TLS 会话</a></li>
+        <li><a href="#heading">客户端握手过程</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<p>在用 Go 自带的 http client 进行默认 Get 操作的时候，发现如下错误</p>
-
-<pre><code class="language-shell">x509: certificate signed by unknown authority
-</code></pre>
-
-<p>这个报错来自 <code>crypto/x509</code> 中关于证书签名的验证</p>
-
+			<p>在用 Go 自带的 http client 进行默认 Get 操作的时候，发现如下错误</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">x509: certificate signed by unknown authority
+</code></pre></div><p>这个报错来自 <code>crypto/x509</code> 中关于证书签名的验证</p>
 <p>负责验证证书的方法签名</p>
-
-<pre><code class="language-go">func (c *Certificate) Verify(opts VerifyOptions) (chains [][]*Certificate, err error)
-</code></pre>
-
-<h3 id="关于-x509">关于 x509</h3>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>) <span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">opts</span> <span style="color:#a6e22e">VerifyOptions</span>) (<span style="color:#a6e22e">chains</span> [][]<span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>)
+</code></pre></div><h3 id="-x509">关于 x509</h3>
 <p>这是一种自签名证书，x509证书中包含着一个证书链 (Certificate Chain)，包含根证书，中间证书即CA证书，和用户证书。根证书因为需要预装在用户系统中，因此引入中间证书
 来更好地普及和扩展证书，因此当系统要验证一个证书是否为合法时的思路就是，先验证中间证书，根据中间证书得到颁发这个中间证书的根证书签名(有可能还是中间证书，因此要一直向上寻找到根证书)，然后再通过系统内置的根证书进行验证，如果通过，则由此CA证书颁发的用户证书为可信的有效证书，否则为无效</p>
-
 <p>继续阅读源码</p>
-
 <p>Go 在验证的时候在 <code>crypto/x509</code> 中实现了关于证书链构建与验证</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 当前证书不是根证书时开始 DFS 构建证书链
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>) <span style="color:#a6e22e">buildChains</span>(<span style="color:#a6e22e">cache</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>][][]<span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>, <span style="color:#a6e22e">currentChain</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">VerifyOptions</span>) (<span style="color:#a6e22e">chains</span> [][]<span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+    <span style="color:#75715e">// 查找当前中间证书证书的根，也就是当前证书的根颁发者
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">possibleRoots</span>, <span style="color:#a6e22e">failedRoot</span>, <span style="color:#a6e22e">rootErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">Roots</span>.<span style="color:#a6e22e">findVerifiedParents</span>(<span style="color:#a6e22e">c</span>)
+<span style="color:#a6e22e">nextRoot</span>:
+    <span style="color:#75715e">// 遍历每个可能的根证书颁发者
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">rootNum</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">possibleRoots</span> {
+        <span style="color:#75715e">// 拿到颁发者的证书
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">root</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">Roots</span>.<span style="color:#a6e22e">certs</span>[<span style="color:#a6e22e">rootNum</span>]
 
-<pre><code class="language-go">// 当前证书不是根证书时开始 DFS 构建证书链
-func (c *Certificate) buildChains(cache map[int][][]*Certificate, currentChain []*Certificate, opts *VerifyOptions) (chains [][]*Certificate, err error) {
-    // 查找当前中间证书证书的根，也就是当前证书的根颁发者
-    possibleRoots, failedRoot, rootErr := opts.Roots.findVerifiedParents(c)
-nextRoot:
-    // 遍历每个可能的根证书颁发者
-    for _, rootNum := range possibleRoots {
-        // 拿到颁发者的证书
-        root := opts.Roots.certs[rootNum]
-
-        for _, cert := range currentChain {
-            if cert.Equal(root) {
-                // 在已有证书链中，不需要验证
-                continue nextRoot
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">cert</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">currentChain</span> {
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">cert</span>.<span style="color:#a6e22e">Equal</span>(<span style="color:#a6e22e">root</span>) {
+                <span style="color:#75715e">// 在已有证书链中，不需要验证
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">continue</span> <span style="color:#a6e22e">nextRoot</span>
             }
         }
 
-        // 不在已有证书链中，需要验证是否为根证书
-        err = root.isValid(rootCertificate, currentChain, opts)
-        // 即便验证有错误，依然继续后面的验证，因为颁发者只是可能为链的根证书
-        if err != nil {
-            continue
+        <span style="color:#75715e">// 不在已有证书链中，需要验证是否为根证书
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">root</span>.<span style="color:#a6e22e">isValid</span>(<span style="color:#a6e22e">rootCertificate</span>, <span style="color:#a6e22e">currentChain</span>, <span style="color:#a6e22e">opts</span>)
+        <span style="color:#75715e">// 即便验证有错误，依然继续后面的验证，因为颁发者只是可能为链的根证书
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">continue</span>
         }
-        // 找到根，将根证书添加到已有链中，并添加到 chains，最后验证 chains 的长度来确定是否成功构建了到跟的证书链
-        // appendToFreshChain 将现有链进行复制，容量+1，用来存放 root 证书
-        chains = append(chains, appendToFreshChain(currentChain, root))
+        <span style="color:#75715e">// 找到根，将根证书添加到已有链中，并添加到 chains，最后验证 chains 的长度来确定是否成功构建了到跟的证书链
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// appendToFreshChain 将现有链进行复制，容量+1，用来存放 root 证书
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">chains</span> = append(<span style="color:#a6e22e">chains</span>, <span style="color:#a6e22e">appendToFreshChain</span>(<span style="color:#a6e22e">currentChain</span>, <span style="color:#a6e22e">root</span>))
     }
 
-    // 查找当前证书可能的中间证书颁发者
-    possibleIntermediates, failedIntermediate, intermediateErr := opts.Intermediates.findVerifiedParents(c)
-nextIntermediate:
-    // 查找中间证书与查找根证书类似
-    for _, intermediateNum := range possibleIntermediates {
-        intermediate := opts.Intermediates.certs[intermediateNum]
-        for _, cert := range currentChain {
-            if cert.Equal(intermediate) {
-                continue nextIntermediate
+    <span style="color:#75715e">// 查找当前证书可能的中间证书颁发者
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">possibleIntermediates</span>, <span style="color:#a6e22e">failedIntermediate</span>, <span style="color:#a6e22e">intermediateErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">Intermediates</span>.<span style="color:#a6e22e">findVerifiedParents</span>(<span style="color:#a6e22e">c</span>)
+<span style="color:#a6e22e">nextIntermediate</span>:
+    <span style="color:#75715e">// 查找中间证书与查找根证书类似
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">intermediateNum</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">possibleIntermediates</span> {
+        <span style="color:#a6e22e">intermediate</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">Intermediates</span>.<span style="color:#a6e22e">certs</span>[<span style="color:#a6e22e">intermediateNum</span>]
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">cert</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">currentChain</span> {
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">cert</span>.<span style="color:#a6e22e">Equal</span>(<span style="color:#a6e22e">intermediate</span>) {
+                <span style="color:#66d9ef">continue</span> <span style="color:#a6e22e">nextIntermediate</span>
             }
         }
-        err = intermediate.isValid(intermediateCertificate, currentChain, opts)
-        if err != nil {
-            continue
+        <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">intermediate</span>.<span style="color:#a6e22e">isValid</span>(<span style="color:#a6e22e">intermediateCertificate</span>, <span style="color:#a6e22e">currentChain</span>, <span style="color:#a6e22e">opts</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">continue</span>
         }
-        var childChains [][]*Certificate
-        childChains, ok := cache[intermediateNum]
-        if !ok {
-            // 深度搜索当前中间证书的上游构建证书链
-            childChains, err = intermediate.buildChains(cache, appendToFreshChain(currentChain, intermediate), opts)
-            // cache 用于记忆已构建的中间证书链
-            cache[intermediateNum] = childChains
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">childChains</span> [][]<span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>
+        <span style="color:#a6e22e">childChains</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">cache</span>[<span style="color:#a6e22e">intermediateNum</span>]
+        <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+            <span style="color:#75715e">// 深度搜索当前中间证书的上游构建证书链
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">childChains</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">intermediate</span>.<span style="color:#a6e22e">buildChains</span>(<span style="color:#a6e22e">cache</span>, <span style="color:#a6e22e">appendToFreshChain</span>(<span style="color:#a6e22e">currentChain</span>, <span style="color:#a6e22e">intermediate</span>), <span style="color:#a6e22e">opts</span>)
+            <span style="color:#75715e">// cache 用于记忆已构建的中间证书链
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">cache</span>[<span style="color:#a6e22e">intermediateNum</span>] = <span style="color:#a6e22e">childChains</span>
         }
-        // 添加含有中间证书的链到 chains 构成完整的从根开始的证书链
-        chains = append(chains, childChains...)
+        <span style="color:#75715e">// 添加含有中间证书的链到 chains 构成完整的从根开始的证书链
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">chains</span> = append(<span style="color:#a6e22e">chains</span>, <span style="color:#a6e22e">childChains</span><span style="color:#f92672">...</span>)
     }
 
-    // 构建结束，证书链构建成功，有且只有唯一的一条经验证的证书链
-    if len(chains) &gt; 0 {
-        err = nil
+    <span style="color:#75715e">// 构建结束，证书链构建成功，有且只有唯一的一条经验证的证书链
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">chains</span>) &gt; <span style="color:#ae81ff">0</span> {
+        <span style="color:#a6e22e">err</span> = <span style="color:#66d9ef">nil</span>
     }
 
-    // 证书链构建失败，错误未知
-    if len(chains) == 0 &amp;&amp; err == nil {
-        hintErr := rootErr
-        hintCert := failedRoot
-        if hintErr == nil {
-            hintErr = intermediateErr
-            hintCert = failedIntermediate
+    <span style="color:#75715e">// 证书链构建失败，错误未知
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">chains</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">hintErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rootErr</span>
+        <span style="color:#a6e22e">hintCert</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">failedRoot</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hintErr</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#a6e22e">hintErr</span> = <span style="color:#a6e22e">intermediateErr</span>
+            <span style="color:#a6e22e">hintCert</span> = <span style="color:#a6e22e">failedIntermediate</span>
         }
-        // 上文提到的报错的来源
-        err = UnknownAuthorityError{c, hintErr, hintCert}
+        <span style="color:#75715e">// 上文提到的报错的来源
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">UnknownAuthorityError</span>{<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">hintErr</span>, <span style="color:#a6e22e">hintCert</span>}
     }
 
-    // error 已经用命名返回变量err捕捉，直接回传即可
-    return
+    <span style="color:#75715e">// error 已经用命名返回变量err捕捉，直接回传即可
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span>
 }
-</code></pre>
-
-<p>好了，现在我们知道这个错误的产生，源于无法构建有效的证书链</p>
-
+</code></pre></div><p>好了，现在我们知道这个错误的产生，源于无法构建有效的证书链</p>
 <p>那么，这与 http client 有什么联系？我们顺藤摸瓜继续往上看</p>
-
 <p>分别在 <code>crypto/tls</code> 的 <code>handshake_client.go</code> 和 <code>handshake_server.go</code> 中都有出现验证证书的过程</p>
-
-<pre><code class="language-go">// client
-c.verifiedChains, err = certs[0].Verify(opts)
-// server
-chains, err := certs[0].Verify(opts)
-</code></pre>
-
-<p>这就不得不再次复习一下 <code>https</code> 连接建立的过程了</p>
-
-<h3 id="https-连接的建立">https 连接的建立</h3>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// client
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">verifiedChains</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">certs</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">opts</span>)
+<span style="color:#75715e">// server
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">chains</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">certs</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">opts</span>)
+</code></pre></div><p>这就不得不再次复习一下 <code>https</code> 连接建立的过程了</p>
+<h3 id="https-">https 连接的建立</h3>
 <p>SSL或TLS握手示意图</p>
-
-<p><img src="/img/ssl-handshake.gif" alt="httpsHandshake" /></p>
-
+<p><img src="/img/ssl-handshake.gif" alt="httpsHandshake"></p>
 <p>通过图我们可以直观地看到在步骤3和步骤6的时候，会发生证书的验证，在 Go 的 http client中，显然是使用 <code>handshake_client.go</code> 中的
- <code>Verify</code> 来验证服务器的证书</p>
-
-<pre><code class="language-go">func (c *Conn) Handshake() error {
-    // 当前连接的握手必须互斥，因此这里加了锁
-    c.handshakeMutex.Lock()
-    defer c.handshakeMutex.Unlock()
-    if err := c.handshakeErr; err != nil {
-        return err
+<code>Verify</code> 来验证服务器的证书</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span>) <span style="color:#a6e22e">Handshake</span>() <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// 当前连接的握手必须互斥，因此这里加了锁
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeMutex</span>.<span style="color:#a6e22e">Lock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeMutex</span>.<span style="color:#a6e22e">Unlock</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeErr</span>; <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
     }
-    if c.handshakeComplete {
-        return nil
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeComplete</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
     }
-    c.in.Lock()
-    defer c.in.Unlock()
-    if c.isClient {
-        // 是客户端的握手
-        c.handshakeErr = c.clientHandshake()
-    } else {
-        // 是服务端握手
-        c.handshakeErr = c.serverHandshake()
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">in</span>.<span style="color:#a6e22e">Lock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">in</span>.<span style="color:#a6e22e">Unlock</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isClient</span> {
+        <span style="color:#75715e">// 是客户端的握手
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeErr</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">clientHandshake</span>()
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#75715e">// 是服务端握手
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeErr</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">serverHandshake</span>()
     }
-    if c.handshakeErr == nil {
-        c.handshakes++
-    } else {
-        // If an error occurred during the hadshake try to flush the
-        // alert that might be left in the buffer.
-        c.flush()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeErr</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakes</span><span style="color:#f92672">++</span>
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#75715e">// If an error occurred during the hadshake try to flush the
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// alert that might be left in the buffer.
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">flush</span>()
     }
-    if c.handshakeErr == nil &amp;&amp; !c.handshakeComplete {
-        panic(&quot;handshake should have had a result.&quot;)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeErr</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeComplete</span> {
+        panic(<span style="color:#e6db74">&#34;handshake should have had a result.&#34;</span>)
     }
-    return c.handshakeErr
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeErr</span>
 }
-</code></pre>
-
-<p>从 <code>conn.go</code> 的源码中我们可以发现使用 <code>isClient</code> 属性来区分是客户端握手还是服务端的握手。在开发环境中，可能我们需要临时使用自己的自签名证书来进行 https 通信，
+</code></pre></div><p>从 <code>conn.go</code> 的源码中我们可以发现使用 <code>isClient</code> 属性来区分是客户端握手还是服务端的握手。在开发环境中，可能我们需要临时使用自己的自签名证书来进行 https 通信，
 如何跳过这个验证证书的过程呢？我们接着 <code>clientHandshake()</code> 往下看</p>
-
-<h3 id="关于-tls-会话">关于 TLS 会话</h3>
-
+<h3 id="-tls-">关于 TLS 会话</h3>
 <p>当然，我们不能每次建立 https 通信的时候都重新握一次手，因此通过为 <code>https</code> 引入状态将 <code>TLS</code> 握手状态在用会话记录下来，能够大大减少服务器的压力,
 早期的 <code>TLS</code> 会使用 <code>Session ID</code> 来记录，因为负载均衡的存在，事实上只有第一次握手时被分配到的物理机器上才有客户端 <code>Session ID</code> 的记录，当第二次访问的时候，
 我们并不能指望负载均衡算法能够再次将请求分配给同一台物理机器，其中一种解决方案是负责握手的服务器将 <code>Session ID</code> 存储到 <code>redis</code> 或者 <code>memcached</code> 集, 当第二次访问的时候
 统一去查询缓存，但让服务器在一段时间记住状态可能会暴露潜在的扩展性问题。于是，<code>TLS v1.2</code> 引入了会话凭证 (session ticket) ，将会话状态的存储交给客户端，第一次握手结束时，
 服务器会下发经过会话密钥 (Session key) 加密的会话凭证，之前会话的相关状态都会保存在会话凭证中并由客户端保存，当第二次进行握手的时候，客户端需要将本地缓存的会话凭证包含在客户端握手消息中，
 只要服务器能够共享同一会话密钥，那么这台服务器就能够解密得到之前的会话状态，因为会话密钥不具备向前安全性，因此需要定期轮换更新密钥</p>
-
-<h3 id="客户端握手过程">客户端握手过程</h3>
-
-<pre><code class="language-go">func (c *Conn) clientHandshake() error {
-    if c.config == nil {
-        // 没有传入自定义的client设置，则使用默认设置
-        c.config = defaultConfig()
+<h3 id="heading">客户端握手过程</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span>) <span style="color:#a6e22e">clientHandshake</span>() <span style="color:#66d9ef">error</span> {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#75715e">// 没有传入自定义的client设置，则使用默认设置
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span> = <span style="color:#a6e22e">defaultConfig</span>()
     }
-    // 可能是首次握手，因此相关的会话状态需要更新
-    c.didResume = false
-    // 构造 Client Hello 报文消息
-    hello, err := makeClientHello(c.config)
-    if err != nil {
-        return err
+    <span style="color:#75715e">// 可能是首次握手，因此相关的会话状态需要更新
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">didResume</span> = <span style="color:#66d9ef">false</span>
+    <span style="color:#75715e">// 构造 Client Hello 报文消息
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">hello</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">makeClientHello</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
     }
-    if c.handshakes &gt; 0 {
-        hello.secureRenegotiation = c.clientFinished[:]
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakes</span> &gt; <span style="color:#ae81ff">0</span> {
+        <span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">secureRenegotiation</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">clientFinished</span>[:]
     }
-    var session *ClientSessionState
-    var cacheKey string
-    sessionCache := c.config.ClientSessionCache
-    // 检查是否支持会话凭证
-    if c.config.SessionTicketsDisabled {
-        sessionCache = nil
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">session</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ClientSessionState</span>
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">cacheKey</span> <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">sessionCache</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">ClientSessionCache</span>
+    <span style="color:#75715e">// 检查是否支持会话凭证
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">SessionTicketsDisabled</span> {
+        <span style="color:#a6e22e">sessionCache</span> = <span style="color:#66d9ef">nil</span>
     }
-    if sessionCache != nil {
-        hello.ticketSupported = true
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">sessionCache</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">ticketSupported</span> = <span style="color:#66d9ef">true</span>
     }
-    // 如果已经保存了会话凭证，且处于最开始的 &quot;Client Hello&quot; 阶段，如果处于发送客户凭证(step 5)的阶段，则跳过会话恢复
-    if sessionCache != nil &amp;&amp; c.handshakes == 0 {
-        // 尝试得到先前 TLS 的会话状态
-        cacheKey = clientSessionCacheKey(c.conn.RemoteAddr(), c.config)
-        candidateSession, ok := sessionCache.Get(cacheKey)
-        if ok {
-            // 检查之前会话使用的加密组件是否能继续延用
-            cipherSuiteOk := false
-            for _, id := range hello.cipherSuites {
-                if id == candidateSession.cipherSuite {
-                    cipherSuiteOk = true
-                    break
+    <span style="color:#75715e">// 如果已经保存了会话凭证，且处于最开始的 &#34;Client Hello&#34; 阶段，如果处于发送客户凭证(step 5)的阶段，则跳过会话恢复
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">sessionCache</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakes</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#75715e">// 尝试得到先前 TLS 的会话状态
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">cacheKey</span> = <span style="color:#a6e22e">clientSessionCacheKey</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">RemoteAddr</span>(), <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>)
+        <span style="color:#a6e22e">candidateSession</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sessionCache</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">cacheKey</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+            <span style="color:#75715e">// 检查之前会话使用的加密组件是否能继续延用
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">cipherSuiteOk</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
+            <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">id</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">cipherSuites</span> {
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">id</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">candidateSession</span>.<span style="color:#a6e22e">cipherSuite</span> {
+                    <span style="color:#a6e22e">cipherSuiteOk</span> = <span style="color:#66d9ef">true</span>
+                    <span style="color:#66d9ef">break</span>
                 }
             }
-            versOk := candidateSession.vers &gt;= c.config.minVersion() &amp;&amp;
-                candidateSession.vers &lt;= c.config.maxVersion()
-            if versOk &amp;&amp; cipherSuiteOk {
-                session = candidateSession
+            <span style="color:#a6e22e">versOk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">candidateSession</span>.<span style="color:#a6e22e">vers</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">minVersion</span>() <span style="color:#f92672">&amp;&amp;</span>
+                <span style="color:#a6e22e">candidateSession</span>.<span style="color:#a6e22e">vers</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">maxVersion</span>()
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">versOk</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">cipherSuiteOk</span> {
+                <span style="color:#a6e22e">session</span> = <span style="color:#a6e22e">candidateSession</span>
             }
         }
     }
-    if session != nil
-        hello.sessionTicket = session.sessionTicket
-        // 生成随机的 session ID，如果服务器拒绝了客户端的会话凭证并触发一次完整的握手，那么我们可以通过这个 ID 探知此服务器是否支持会话恢复
-        hello.sessionId = make([]byte, 16)
-        if _, err := io.ReadFull(c.config.rand(), hello.sessionId); err != nil {
-            return errors.New(&quot;tls: short read from Rand: &quot; + err.Error())
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">session</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span>
+        <span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">sessionTicket</span> = <span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">sessionTicket</span>
+        <span style="color:#75715e">// 生成随机的 session ID，如果服务器拒绝了客户端的会话凭证并触发一次完整的握手，那么我们可以通过这个 ID 探知此服务器是否支持会话恢复
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">sessionId</span> = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">16</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">ReadFull</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">rand</span>(), <span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">sessionId</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;tls: short read from Rand: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
         }
     }
-    hs := &amp;clientHandshakeState{
-        c:       c,
-        hello:   hello,
-        session: session,
+    <span style="color:#a6e22e">hs</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">clientHandshakeState</span>{
+        <span style="color:#a6e22e">c</span>:       <span style="color:#a6e22e">c</span>,
+        <span style="color:#a6e22e">hello</span>:   <span style="color:#a6e22e">hello</span>,
+        <span style="color:#a6e22e">session</span>: <span style="color:#a6e22e">session</span>,
     }
-    // 这里正式开始进行握手
-    if err = hs.handshake(); err != nil {
-        return err
+    <span style="color:#75715e">// 这里正式开始进行握手
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">handshake</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
     }
-    // 如果成功完成握手，服务器下发了新的会话凭证，那么则更新本地缓存的会话凭证
-    if sessionCache != nil &amp;&amp; hs.session != nil &amp;&amp; session != hs.session {
-        sessionCache.Put(cacheKey, hs.session)
+    <span style="color:#75715e">// 如果成功完成握手，服务器下发了新的会话凭证，那么则更新本地缓存的会话凭证
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">sessionCache</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">session</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">session</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">session</span> {
+        <span style="color:#a6e22e">sessionCache</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">cacheKey</span>, <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">session</span>)
     }
-    return nil
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 }
-</code></pre>
-
-<p>如果是客户端类型的握手，那么客户端会发出 <code>Client Hello</code> 的报文给服务端</p>
-
-<pre><code class="language-go">func (hs *clientHandshakeState) handshake() error {
-    c := hs.c
-    // 发送 ClientHello 报文
-    if _, err := c.writeRecord(recordTypeHandshake, hs.hello.marshal()); err != nil {
-        return err
+</code></pre></div><p>如果是客户端类型的握手，那么客户端会发出 <code>Client Hello</code> 的报文给服务端</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">hs</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">clientHandshakeState</span>) <span style="color:#a6e22e">handshake</span>() <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">c</span>
+    <span style="color:#75715e">// 发送 ClientHello 报文
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">writeRecord</span>(<span style="color:#a6e22e">recordTypeHandshake</span>, <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">marshal</span>()); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
     }
-    msg, err := c.readHandshake()
-    if err != nil {
-        return err
+    <span style="color:#a6e22e">msg</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">readHandshake</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
     }
-    var ok bool
-    if hs.serverHello, ok = msg.(*serverHelloMsg); !ok {
-        c.sendAlert(alertUnexpectedMessage)
-        return unexpectedMessageError(hs.serverHello, msg)
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ok</span> <span style="color:#66d9ef">bool</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">serverHello</span>, <span style="color:#a6e22e">ok</span> = <span style="color:#a6e22e">msg</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">serverHelloMsg</span>); !<span style="color:#a6e22e">ok</span> {
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">sendAlert</span>(<span style="color:#a6e22e">alertUnexpectedMessage</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">unexpectedMessageError</span>(<span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">serverHello</span>, <span style="color:#a6e22e">msg</span>)
     }
-    // ...
-    // 解析服务端发回的 ServerHello 报文
-    isResume, err := hs.processServerHello()
-    if err != nil {
-        return err
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 解析服务端发回的 ServerHello 报文
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">isResume</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">processServerHello</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
     }
 
-    if isResume {
-        // 恢复已有的会话状态，不需要继续进行握手
-        if err := hs.establishKeys(); err != nil {
-            return err
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">isResume</span> {
+        <span style="color:#75715e">// 恢复已有的会话状态，不需要继续进行握手
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">establishKeys</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        if err := hs.readSessionTicket(); err != nil {
-            return err
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">readSessionTicket</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        if err := hs.readFinished(c.serverFinished[:]); err != nil {
-            return err
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">readFinished</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">serverFinished</span>[:]); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        c.clientFinishedIsFirst = false
-        if err := hs.sendFinished(c.clientFinished[:]); err != nil {
-            return err
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">clientFinishedIsFirst</span> = <span style="color:#66d9ef">false</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">sendFinished</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">clientFinished</span>[:]); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        if _, err := c.flush(); err != nil {
-            return err
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">flush</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-    } else {
-        // 首次握手，继续完成完整的握手，从服务端的报文中解析获取证书凭证
-        if err := hs.doFullHandshake(); err != nil {
-            return err
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#75715e">// 首次握手，继续完成完整的握手，从服务端的报文中解析获取证书凭证
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">doFullHandshake</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        if err := hs.establishKeys(); err != nil {
-            return err
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">establishKeys</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        if err := hs.sendFinished(c.clientFinished[:]); err != nil {
-            return err
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">sendFinished</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">clientFinished</span>[:]); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        if _, err := c.flush(); err != nil {
-            return err
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">flush</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        c.clientFinishedIsFirst = true
-        // 拿到会话凭证，下次请求就不需要完整的走一遍握手了
-        if err := hs.readSessionTicket(); err != nil {
-            return err
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">clientFinishedIsFirst</span> = <span style="color:#66d9ef">true</span>
+        <span style="color:#75715e">// 拿到会话凭证，下次请求就不需要完整的走一遍握手了
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">readSessionTicket</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
-        if err := hs.readFinished(c.serverFinished[:]); err != nil {
-            return err
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">readFinished</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">serverFinished</span>[:]); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
         }
     }
-    c.ekm = ekmFromMasterSecret(c.vers, hs.suite, hs.masterSecret, hs.hello.random, hs.serverHello.random)
-    c.didResume = isResume
-    c.handshakeComplete = true
-    return nil
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ekm</span> = <span style="color:#a6e22e">ekmFromMasterSecret</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">vers</span>, <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">suite</span>, <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">masterSecret</span>, <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">random</span>, <span style="color:#a6e22e">hs</span>.<span style="color:#a6e22e">serverHello</span>.<span style="color:#a6e22e">random</span>)
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">didResume</span> = <span style="color:#a6e22e">isResume</span>
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakeComplete</span> = <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 }
-</code></pre>
-
-<p>现在思路逐渐清晰，如果想要跳过证书验证的步骤，使用自签名的证书，只需要跳过第一次完整握手时验证证书凭证即可</p>
-
+</code></pre></div><p>现在思路逐渐清晰，如果想要跳过证书验证的步骤，使用自签名的证书，只需要跳过第一次完整握手时验证证书凭证即可</p>
 <p>从 <code>hs.doFullHandshake()</code> 继续往下看</p>
-
-<pre><code class="language-go">func (hs *clientHandshakeState) doFullHandshake() error {
-    // 检查报文中包含的证书内容
-    // ...
-    if c.handshakes == 0 {
-        // 初次握手，需要验证服务端证书
-        certs := make([]*x509.Certificate, len(certMsg.certificates))
-        for i, asn1Data := range certMsg.certificates {
-            cert, err := x509.ParseCertificate(asn1Data)
-            if err != nil {
-                c.sendAlert(alertBadCertificate)
-                return errors.New(&quot;tls: failed to parse certificate from server: &quot; + err.Error())
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">hs</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">clientHandshakeState</span>) <span style="color:#a6e22e">doFullHandshake</span>() <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// 检查报文中包含的证书内容
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">handshakes</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#75715e">// 初次握手，需要验证服务端证书
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">certs</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">x509</span>.<span style="color:#a6e22e">Certificate</span>, len(<span style="color:#a6e22e">certMsg</span>.<span style="color:#a6e22e">certificates</span>))
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">asn1Data</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">certMsg</span>.<span style="color:#a6e22e">certificates</span> {
+            <span style="color:#a6e22e">cert</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x509</span>.<span style="color:#a6e22e">ParseCertificate</span>(<span style="color:#a6e22e">asn1Data</span>)
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">sendAlert</span>(<span style="color:#a6e22e">alertBadCertificate</span>)
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;tls: failed to parse certificate from server: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
             }
-            certs[i] = cert
+            <span style="color:#a6e22e">certs</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">cert</span>
         }
-        // 重点：只需通过修改 config 即可跳过这个验证步骤!!
-        if !c.config.InsecureSkipVerify {
-            opts := x509.VerifyOptions{
-                Roots:         c.config.RootCAs,
-                CurrentTime:   c.config.time(),
-                DNSName:       c.config.ServerName,
-                Intermediates: x509.NewCertPool(),
+        <span style="color:#75715e">// 重点：只需通过修改 config 即可跳过这个验证步骤!!
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">InsecureSkipVerify</span> {
+            <span style="color:#a6e22e">opts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x509</span>.<span style="color:#a6e22e">VerifyOptions</span>{
+                <span style="color:#a6e22e">Roots</span>:         <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">RootCAs</span>,
+                <span style="color:#a6e22e">CurrentTime</span>:   <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">time</span>(),
+                <span style="color:#a6e22e">DNSName</span>:       <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span>.<span style="color:#a6e22e">ServerName</span>,
+                <span style="color:#a6e22e">Intermediates</span>: <span style="color:#a6e22e">x509</span>.<span style="color:#a6e22e">NewCertPool</span>(),
             }
-            for i, cert := range certs {
-                if i == 0 {
-                    continue
+            <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">cert</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">certs</span> {
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+                    <span style="color:#66d9ef">continue</span>
                 }
-                opts.Intermediates.AddCert(cert)
+                <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">Intermediates</span>.<span style="color:#a6e22e">AddCert</span>(<span style="color:#a6e22e">cert</span>)
             }
-            // 这个是我们想跳过的步骤
-            c.verifiedChains, err = certs[0].Verify(opts)
-            if err != nil {
-                c.sendAlert(alertBadCertificate)
-                return err
+            <span style="color:#75715e">// 这个是我们想跳过的步骤
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">verifiedChains</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">certs</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">opts</span>)
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">sendAlert</span>(<span style="color:#a6e22e">alertBadCertificate</span>)
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
             }
         }
     }
-    // ...
-}
-</code></pre>
-
-<p>最后，我们只需要几行代码配置一下我们的 HTTP Client 即可跳过证书的验证</p>
-
-<pre><code class="language-go">var (
-    once     sync.Once
-    instance *http.Client
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>最后，我们只需要几行代码配置一下我们的 HTTP Client 即可跳过证书的验证</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> (
+    <span style="color:#a6e22e">once</span>     <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Once</span>
+    <span style="color:#a6e22e">instance</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>
 )
 
-func New() *http.Client {
-    once.Do(func() {
-        tr := &amp;http.Transport{
-            // 简单配置一下
-            TLSClientConfig: &amp;tls.Config{InsecureSkipVerify: true},
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span> {
+    <span style="color:#a6e22e">once</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
+        <span style="color:#a6e22e">tr</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Transport</span>{
+            <span style="color:#75715e">// 简单配置一下
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">TLSClientConfig</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tls</span>.<span style="color:#a6e22e">Config</span>{<span style="color:#a6e22e">InsecureSkipVerify</span>: <span style="color:#66d9ef">true</span>},
         }
-        instance = &amp;http.Client{
-            Timeout:   8 * time.Second,
-            Transport: tr,
+        <span style="color:#a6e22e">instance</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
+            <span style="color:#a6e22e">Timeout</span>:   <span style="color:#ae81ff">8</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+            <span style="color:#a6e22e">Transport</span>: <span style="color:#a6e22e">tr</span>,
         }
     })
-    return instance
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">instance</span>
 }
-</code></pre>
-
-<p>如果想要区分生产环境和开发环境，只需要简单用 <code>go build</code> 在编译时区分一下环境即可</p>
-
+</code></pre></div><p>如果想要区分生产环境和开发环境，只需要简单用 <code>go build</code> 在编译时区分一下环境即可</p>
 <p>通过一个报错追根溯源，借机将 https 的请求过程在标准库源码的基础上又复习了一遍，可谓收获颇丰，
 如有疏忽，恳请各位大佬指正。</p>
-
-<h4 id="参考资料">参考资料</h4>
-
+<h4 id="heading-1">参考资料</h4>
 <ul>
 <li><a href="https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10660_.htm">An overview of the SSL or TLS handshake</a></li>
 <li><a href="https://blog.cloudflare.com/tls-session-resumption-full-speed-and-secure/">TLS Session Resumption</a></li>
 <li><a href="https://book.douban.com/subject/25863515/">图解HTTP</a></li>
 </ul>
-
 <p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
-
-<p>联系方式：tecker_yuknigh@163.com</p>
+<p>联系方式：tecker_<a href="mailto:yuknigh@163.com">yuknigh@163.com</a></p>
 
 		</div>
 		<footer class="post__footer">
@@ -536,11 +483,11 @@ func New() *http.Client {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -615,6 +562,7 @@ func New() *http.Client {
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

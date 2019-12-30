@@ -71,101 +71,96 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
-		
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>manacher 俗称马拉车算法，也是本文的主角，是一种能够将最长回文串的求解复杂度降低到 O(N) 的一种高效算法，
 当我第一次见到求解最长回文串的题目时，首先采用的就是暴力解法，O(N平方) 复杂度遍历所有可能的串，然后再用 O(N) 的时间来求回文串的最大长度，使用 map 存储各个下标对的回文情况尽管能减少一部分计算，
 但是显然这种方式时间复杂度过高，部分 case 容易超时</p>
-
 <p>这种算法的大概思路如下：</p>
-
 <ul>
 <li>通过插入一些符号简化奇偶个数和边界对判断回文串的干扰</li>
 <li>中心点的整个边界(除去中心点)的一半恰好等于中心点的最大回文串长度</li>
 <li>利用大回文串边界内的位置的最大回文串个数以大中心点对称的规律大大简化计算量</li>
 </ul>
-
 <p>本人使用 Go 语言实现上述算法
 详细代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// LeetCode No.5 Longest Palindromic Substring
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">longestPalindrome</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+    <span style="color:#75715e">// 方便我们后面直接使用切片操作获得结果
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">origin</span> <span style="color:#f92672">:=</span> []byte(<span style="color:#a6e22e">s</span>)
 
-<pre><code class="language-go">// LeetCode No.5 Longest Palindromic Substring
-func longestPalindrome(s string) string {
-    // 方便我们后面直接使用切片操作获得结果
-    origin := []byte(s)
-
-    // 一个字母不考虑回文
-    if len(origin) == 1 {
-        return s
+    <span style="color:#75715e">// 一个字母不考虑回文
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">origin</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>
     }
 
-    var maxCenterIndex int
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">maxCenterIndex</span> <span style="color:#66d9ef">int</span>
 
-    bs := process(s)
-    p := make([]int, len(bs))
+    <span style="color:#a6e22e">bs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">process</span>(<span style="color:#a6e22e">s</span>)
+    <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">int</span>, len(<span style="color:#a6e22e">bs</span>))
 
-    c := 0
-    r := 0
+    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
 
-    for i:=1;i&lt;len(bs)-1;i++{
-        // mirror 是 i 以 c 为对称轴的对称下标
-        mirror := 2*c-i
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">:=</span><span style="color:#ae81ff">1</span>;<span style="color:#a6e22e">i</span>&lt;len(<span style="color:#a6e22e">bs</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>{
+        <span style="color:#75715e">// mirror 是 i 以 c 为对称轴的对称下标
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">mirror</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span><span style="color:#a6e22e">c</span><span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>
 
-        // 当有右边界的时候
-        if r &gt; i {
-            // 边界不越过大回文串的串中心的最大回文串长度与对称位置的最大回文串长度相等
-            if r-i &gt; p[mirror] {
-                p[i] = p[mirror]
-            } else {
-                // 边界越过时 i 位置的最大回文串长度至少等于 i 到边界的长度
-                p[i] = r-i
+        <span style="color:#75715e">// 当有右边界的时候
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span> &gt; <span style="color:#a6e22e">i</span> {
+            <span style="color:#75715e">// 边界不越过大回文串的串中心的最大回文串长度与对称位置的最大回文串长度相等
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span><span style="color:#f92672">-</span><span style="color:#a6e22e">i</span> &gt; <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">mirror</span>] {
+                <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">mirror</span>]
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#75715e">// 边界越过时 i 位置的最大回文串长度至少等于 i 到边界的长度
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">r</span><span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>
             }
         }
 
-        // 计算位置 i 的最大回文串长度，之前的计算 p[i] 的步骤节省了大量的回文比较
-        // 注意 +1 和 -1 除去自己与自身相比较的情况
-        for bs[p[i]+i+1] == bs[i-p[i]-1] {
-            p[i]++
+        <span style="color:#75715e">// 计算位置 i 的最大回文串长度，之前的计算 p[i] 的步骤节省了大量的回文比较
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 注意 +1 和 -1 除去自己与自身相比较的情况
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">bs</span>[<span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>]<span style="color:#f92672">+</span><span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#a6e22e">bs</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">-</span><span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] {
+            <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>]<span style="color:#f92672">++</span>
         }
 
-        // 边界扩大的时候重新计算中心点
-        if i+p[i] &gt; r {
-            r = i+p[i]
-            c = i
+        <span style="color:#75715e">// 边界扩大的时候重新计算中心点
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>] &gt; <span style="color:#a6e22e">r</span> {
+            <span style="color:#a6e22e">r</span> = <span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>]
+            <span style="color:#a6e22e">c</span> = <span style="color:#a6e22e">i</span>
         }
 
-        // 每一轮计算都能得到以 bs[i] 为中心的最大回文串长度，这里我们维护一个最大的即可
-        if p[maxCenterIndex] &lt; p[i] {
-            maxCenterIndex = i
+        <span style="color:#75715e">// 每一轮计算都能得到以 bs[i] 为中心的最大回文串长度，这里我们维护一个最大的即可
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">maxCenterIndex</span>] &lt; <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>] {
+            <span style="color:#a6e22e">maxCenterIndex</span> = <span style="color:#a6e22e">i</span>
         }
     }
 
-    mx := p[maxCenterIndex]
+    <span style="color:#a6e22e">mx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">maxCenterIndex</span>]
 
-    // 由中间串的中心位置计算源串的起始位置
-    startIndex := (maxCenterIndex - 1) / 2 - mx/2
-    endIndex := startIndex + mx
-    return string(origin[startIndex:endIndex])
+    <span style="color:#75715e">// 由中间串的中心位置计算源串的起始位置
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">startIndex</span> <span style="color:#f92672">:=</span> (<span style="color:#a6e22e">maxCenterIndex</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">mx</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+    <span style="color:#a6e22e">endIndex</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">startIndex</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">mx</span>
+    <span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">origin</span>[<span style="color:#a6e22e">startIndex</span>:<span style="color:#a6e22e">endIndex</span>])
 }
 
-// 使用 buffer 高效处理原串，目的是处理掉原串奇偶个数以及边界带来的问题，使算法的实现更加简洁
-// eg: input - &quot;abcabc&quot; -&gt; output - &quot;^#a#b#c#a#b#c#$&quot;
-// ps: Go 1.10 版本已支持 stringBuilder
-func process(s string) []byte {
-    bs := []byte(s)
-    var buffer bytes.Buffer
-    buffer.WriteString(&quot;^&quot;)
-    for _,b := range bs {
-        buffer.WriteString(&quot;#&quot;)
-        buffer.WriteByte(b)
+<span style="color:#75715e">// 使用 buffer 高效处理原串，目的是处理掉原串奇偶个数以及边界带来的问题，使算法的实现更加简洁
+</span><span style="color:#75715e"></span><span style="color:#75715e">// eg: input - &#34;abcabc&#34; -&gt; output - &#34;^#a#b#c#a#b#c#$&#34;
+</span><span style="color:#75715e"></span><span style="color:#75715e">// ps: Go 1.10 版本已支持 stringBuilder
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">process</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>) []<span style="color:#66d9ef">byte</span> {
+    <span style="color:#a6e22e">bs</span> <span style="color:#f92672">:=</span> []byte(<span style="color:#a6e22e">s</span>)
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">buffer</span> <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">Buffer</span>
+    <span style="color:#a6e22e">buffer</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#e6db74">&#34;^&#34;</span>)
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>,<span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">bs</span> {
+        <span style="color:#a6e22e">buffer</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#e6db74">&#34;#&#34;</span>)
+        <span style="color:#a6e22e">buffer</span>.<span style="color:#a6e22e">WriteByte</span>(<span style="color:#a6e22e">b</span>)
     }
-    buffer.WriteString(&quot;#$&quot;)
-    return buffer.Bytes()
+    <span style="color:#a6e22e">buffer</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#e6db74">&#34;#$&#34;</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">buffer</span>.<span style="color:#a6e22e">Bytes</span>()
 }
 
-</code></pre>
-
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -214,11 +209,11 @@ func process(s string) []byte {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -293,6 +288,7 @@ func process(s string) []byte {
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

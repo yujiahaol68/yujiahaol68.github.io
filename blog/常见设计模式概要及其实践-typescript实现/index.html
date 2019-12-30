@@ -72,74 +72,34 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#前言">前言:</a></li>
-<li><a href="#基本设计原则">基本设计原则：</a></li>
-<li><a href="#策略模式-strategy-pattern">策略模式 Strategy pattern</a>
-<ul>
-<li><a href="#优点">优点：</a></li>
-</ul></li>
-<li><a href="#观察者模式-observer-pattern">观察者模式 Observer pattern</a>
-<ul>
-<li><a href="#核心步骤">核心步骤：</a></li>
-</ul></li>
-<li><a href="#装饰者模式-decorator-pattern">装饰者模式 Decorator pattern</a>
-<ul>
-<li><a href="#核心步骤-1">核心步骤：</a></li>
-<li><a href="#缺点">缺点：</a></li>
-</ul></li>
-<li><a href="#工厂模式-factory-pattern">工厂模式 Factory pattern</a>
-<ul>
-<li><a href="#核心要点">核心要点</a></li>
-<li><a href="#抽象工厂-abstract-factory">抽象工厂 Abstract Factory</a></li>
-</ul></li>
-<li><a href="#单例模式-singleton-pattern">单例模式 Singleton pattern</a>
-<ul>
-<li><a href="#核心要点-1">核心要点：</a></li>
-</ul></li>
-<li><a href="#命令模式-command-pattern">命令模式 Command pattern</a>
-<ul>
-<li><a href="#核心步骤-2">核心步骤：</a></li>
-</ul></li>
-<li><a href="#适配器模式-adapter-pattern">适配器模式 Adapter pattern</a>
-<ul>
-<li><a href="#核心要点-2">核心要点：</a></li>
-</ul></li>
-<li><a href="#外观模式-facade-pattern">外观模式 Facade pattern</a>
-<ul>
-<li><a href="#核心要点-3">核心要点：</a></li>
-</ul></li>
-<li><a href="#模板方法模式-template-method-pattern">模板方法模式 Template Method pattern</a>
-<ul>
-<li><a href="#核心要点-4">核心要点：</a></li>
-<li><a href="#常见应用场景">常见应用场景:</a></li>
-</ul></li>
-<li><a href="#总结-踩蛋">总结（踩蛋）</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#heading">前言:</a></li>
+        <li><a href="#heading-1">基本设计原则：</a></li>
+        <li><a href="#-strategy-pattern">策略模式 Strategy pattern</a></li>
+        <li><a href="#-observer-pattern">观察者模式 Observer pattern</a></li>
+        <li><a href="#-decorator-pattern">装饰者模式 Decorator pattern</a></li>
+        <li><a href="#-factory-pattern">工厂模式 Factory pattern</a></li>
+        <li><a href="#-singleton-pattern">单例模式 Singleton pattern</a></li>
+        <li><a href="#-command-pattern">命令模式 Command pattern</a></li>
+        <li><a href="#-adapter-pattern">适配器模式 Adapter pattern</a></li>
+        <li><a href="#-facade-pattern">外观模式 Facade pattern</a></li>
+        <li><a href="#-template-method-pattern">模板方法模式 Template Method pattern</a></li>
+        <li><a href="#heading-13">总结（踩蛋）</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<p>若有不足或纰漏，欢迎指教</p>
-
-<h3 id="前言">前言:</h3>
-
+			<p>若有不足或纰漏，欢迎指教</p>
+<h3 id="heading">前言:</h3>
 <p>得益于TypeScript强大灵活的OOP语法，使得在js中使用经典且可靠的OOP设计模式变成了现实，虽然有的公司已经在大规模地使用TS进行中大型项目的开发，但极少有项目真正充分发挥了TS健全的OO语法优势，Java like 的OOP语法使其在思想上与Java的设计模式几乎无异，本文选取了一些常见且重要的设计模式进行提炼总结，避免探讨OOP与函数式编程孰优孰劣，模式的具体实现均采用TS进行编写，文末有彩蛋哦。</p>
-
 <p>本文所有实战代码示例的<a href="https://github.com/yujiahaol68/design-pattern-learning-ts">GitHub仓库地址</a>，欢迎Star</p>
-
 <p>使用设计模式的意义：库与框架无法帮助我们将应用组织成容易了解，容易维护，具有弹性的架构，所以需要设计模式</p>
-
-<h3 id="基本设计原则">基本设计原则：</h3>
-
+<h3 id="heading-1">基本设计原则：</h3>
 <ul>
 <li>封装变化</li>
 <li>多用组合，少用继承</li>
@@ -157,133 +117,73 @@ if (!doNotTrack) {
 <li>一个职责只指派给一个类，当它被设计成支持一组相关功能时，就具有了高内聚</li>
 <li>上述所有的原则并非工程中的金科玉律，实际情况需要我们不断地平衡和取舍</li>
 </ul>
-
-<h3 id="策略模式-strategy-pattern">策略模式 Strategy pattern</h3>
-
+<h3 id="-strategy-pattern">策略模式 Strategy pattern</h3>
 <p>核心步骤是把类1中多变的不同种行为委托封装进一个个的行为类中，行为类1.2.3..将实现各自的同一接口的不同变种并以属性的形式存在于各个类1的相似类中，使算法变化独立于使用算法的客户</p>
-
-<h4 id="优点">优点：</h4>
-
+<h4 id="heading-2">优点：</h4>
 <ol>
 <li>可以随时扩充新的行为</li>
 <li>同一个类可以通过setter动态地改变它的行为</li>
 </ol>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/strategy/main.ts">Strategy</a></p>
-
-<h3 id="观察者模式-observer-pattern">观察者模式 Observer pattern</h3>
-
+<h3 id="-observer-pattern">观察者模式 Observer pattern</h3>
 <p>用于更好描述对象之间一对多的关系，当多个对象（观察者）依赖于一个对象（主题）的状态变化时，观察者模式可以帮助我们进行状态分发，将更新发送到各个观察者中，并使这两者松耦合</p>
-
-<h4 id="核心步骤">核心步骤：</h4>
-
+<h4 id="heading-3">核心步骤：</h4>
 <p>主题类实现Observable接口，类中实现了对观察者的管理和对是否推送数据的判断，观察者类实现Observer接口，实现其中包含update方法供主题类调用，当注册新的观察者时，主题对象会将观察者对象存在观察者数组中，推送数据时遍历数组调用update方法，将数据传入其观察者对象中</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/observer/main.ts">Observer</a></p>
-
-<h3 id="装饰者模式-decorator-pattern">装饰者模式 Decorator pattern</h3>
-
+<h3 id="-decorator-pattern">装饰者模式 Decorator pattern</h3>
 <p>动态的赋予已有对象新的职责，比继承更具弹性，其中有使用到继承，但只是利用继承来达到类型匹配超类而不获得行为，行为来自于装饰者和基础组件或与其它装饰者的组合。</p>
-
 <p>作为设计模式届的多米诺，每个新的被装饰者都不仅包含着上一个装饰者的状态而且还可以扩展自己的属性，通过共同的超类使得状态的共性得以保存且能够进行向上层级的链式调用，可以近似看做子类递归调用父类，使用此模式可以很好的替代继承</p>
-
-<h4 id="核心步骤-1">核心步骤：</h4>
-
+<h4 id="heading-4">核心步骤：</h4>
 <p>被装饰类统一派生自一个超抽象类A获得其类型，装饰抽象类B继承A，并在构造函数中保存A类型的对象的所有状态，每一个新的装饰者包装上一次的被装饰者，被装饰类在被装饰之后仍可不断地被扩展</p>
-
-<h4 id="缺点">缺点：</h4>
-
+<h4 id="heading-5">缺点：</h4>
 <p>客户代码不能依赖特殊类型，会出现许多小对象，过度使用会导致程序复杂</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/decorator/main.ts">Decorator</a></p>
-
-<h3 id="工厂模式-factory-pattern">工厂模式 Factory pattern</h3>
-
+<h3 id="-factory-pattern">工厂模式 Factory pattern</h3>
 <p>制造对象和解决耦合的好办法，严格来讲这并非一种模式而是一种编码习惯，将派生类的实例化封装在工厂类的静态方法中，抽象工厂方法可以让子类自行决定制造方式，在外部我们调用的抽象方法具有很大的弹性，实现可以不用绑定具体的类，这就得到了另外一个好处：使得超类和子类对象的代码解耦。而且能够将实例化延迟至子类中进行</p>
-
-<h4 id="核心要点">核心要点</h4>
-
+<h4 id="heading-6">核心要点</h4>
 <p>对需要弹性的方法使用抽象工厂方法来替代，想要使得产品可定制，可以将产品类定义成抽象类并提供一些默认的属性和方法或抽象方法，派生类可以自行进行覆盖重写或自行实现，不同的工厂类可以隐藏不同的产品的制造细节但却保留着相同的制作流程</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/factory/simple.ts">Simple Factory</a></p>
-
-<h4 id="抽象工厂-abstract-factory">抽象工厂 Abstract Factory</h4>
-
+<h4 id="-abstract-factory">抽象工厂 Abstract Factory</h4>
 <p>不同的工厂类实现同一抽象工厂接口制造相似的产品，相似的产品再依赖于产品共同的接口来使得客户无须关心实际产出的具体产品就能使用</p>
-
 <p>二者区别在于工厂方法委托子类来实例化对象，而抽象工厂建立了产品与客户的接口契约，两者都可以把客户从具体产品中解耦出来</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/factory/abstract.ts">Abstract Factory</a></p>
-
-<h3 id="单例模式-singleton-pattern">单例模式 Singleton pattern</h3>
-
+<h3 id="-singleton-pattern">单例模式 Singleton pattern</h3>
 <p>实例化唯一一个对象，提供一个全局访问点，所有设计模式中最简单但非常实用且用途广泛</p>
-
-<h4 id="核心要点-1">核心要点：</h4>
-
+<h4 id="heading-7">核心要点：</h4>
 <p>把一个静态私有变量确立为唯一的实例，外部通过静态方法访问这个唯一的实例，并把构造函数设为私有</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/singleton/main.ts">Singleton</a></p>
-
-<h3 id="命令模式-command-pattern">命令模式 Command pattern</h3>
-
+<h3 id="-command-pattern">命令模式 Command pattern</h3>
 <p>封装请求引入中间代理对象，将动作的请求者从动作的执行者中解耦出来，常用于工作队列或大型数据结构的操作记录以及事务处理</p>
-
-<h4 id="核心步骤-2">核心步骤：</h4>
-
+<h4 id="heading-8">核心步骤：</h4>
 <p>具体任务执行细节封装于Command接口的execute方法的实现中，然后将实现接口的类的实例传递给它的客户，再由客户通过调用其execute方法来执行</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/command/main.ts">Command</a></p>
-
-<h3 id="适配器模式-adapter-pattern">适配器模式 Adapter pattern</h3>
-
+<h3 id="-adapter-pattern">适配器模式 Adapter pattern</h3>
 <p>包装某些接口以实现不同的目的，转换接口使其能被其他的对象使用，改变接口符合客户的期望</p>
-
-<h4 id="核心要点-2">核心要点：</h4>
-
+<h4 id="heading-9">核心要点：</h4>
 <p>对象适配器类实现目标接口并在其中调用待适配的对象的对应方法，使得在客户代码不变的前提下可以调用不同接口的对象</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/adapter/main.ts">Adapter</a></p>
-
-<h3 id="外观模式-facade-pattern">外观模式 Facade pattern</h3>
-
+<h3 id="-facade-pattern">外观模式 Facade pattern</h3>
 <p>使用外观类Facade简化接口，封装复杂的子系统，并暴露出更少的更简单的接口，打造更高层的功能，针对外观编程可以使得客户与子系统的组件解耦</p>
-
-<h4 id="核心要点-3">核心要点：</h4>
-
+<h4 id="heading-10">核心要点：</h4>
 <p>构造Facade类的时候集合子系统的各个组件对象，暴露出的接口提供更直接更高层的操作，契合最少知识原则</p>
-
 <p>e.g: <a href="https://github.com/yujiahaol68/design-pattern-learning-ts/blob/master/facade/main.ts">Facade</a></p>
-
-<h3 id="模板方法模式-template-method-pattern">模板方法模式 Template Method pattern</h3>
-
+<h3 id="-template-method-pattern">模板方法模式 Template Method pattern</h3>
 <p>这种封装方式可以使得子类在任何时候都可以将自己挂载进运算里，模板方法定义了一个算法步骤，并允许子类为其中的部分步骤提供自己的实现</p>
-
-<h4 id="核心要点-4">核心要点：</h4>
-
+<h4 id="heading-11">核心要点：</h4>
 <p>将相同的步骤抽离出来在抽象类中实现，不同的步骤在子类之中分别实现（父类中以抽象方法的形式存在），子类通过调用同一个模板方法去实现各自的功能（功能有部分不同，但单从模板方法中无法得知，因为被统一抽象了）。模板方法中可以加入钩子方法，提供默认的实现或留空以供子类进行覆盖，通过条件进行流程控制我们可以大大增加算法的灵活性，钩子方法通常是算法当中可选的一部分</p>
-
-<h4 id="常见应用场景">常见应用场景:</h4>
-
+<h4 id="heading-12">常见应用场景:</h4>
 <p>对象排序的时候对象需要先实现一个比较方法</p>
-
-<h3 id="总结-踩蛋">总结（踩蛋）</h3>
-
+<h3 id="heading-13">总结（踩蛋）</h3>
 <p>如果看到这里时，你仍然觉得这么多的模式使你头晕脑胀更别说应用的话，请收下这几枚硬干货：</p>
-
 <ul>
 <li>计算机科学领域的任何问题, 都可以通过添加一个中间层来解决，几乎所有的设计模式都遵循了这个原则来应对变化增加弹性或进行扩展</li>
 <li>抽象与复用是核心需求，摸石们都为了满足这两点而不断地努力着</li>
 <li>没有完美的模式能够完美应对所有的变化</li>
 </ul>
-
 <p>最后，希望你能够将模式多多应用到业务或编写框架中，尽最大努力编写出干净，可扩展，易维护的架构。</p>
-
 <p><strong>参考资料:</strong> 《HeadFirst设计模式中文版》2007年第一版</p>
-
 <p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
-
-<p>联系方式：tecker_yuknigh@163.com</p>
+<p>联系方式：tecker_<a href="mailto:yuknigh@163.com">yuknigh@163.com</a></p>
 
 		</div>
 		<footer class="post__footer">
@@ -335,11 +235,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -414,6 +314,7 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

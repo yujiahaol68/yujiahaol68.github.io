@@ -17,7 +17,7 @@
       <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/vue-router-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
-      <description>配置路由 $ npm install vue-router --save routes.js import Home from &#39;./pages/Home.vue&#39; import Gifs from &#39;./pages/Gifs.vue&#39; import User from &#39;./pages/User.vue&#39; export const routes = [ { path: &#39;&#39;, component: Home }, { path: &#39;/gifs&#39;, component: Gifs }, { path: &#39;/user/:id&#39;, component: User } //指定路由和对应要渲染的组件 //404的path</description>
+      <description>配置路由 $ npm install vue-router --save routes.js import Home from &amp;#39;./pages/Home.vue&amp;#39; import Gifs from &amp;#39;./pages/Gifs.vue&amp;#39; import User from &amp;#39;./pages/User.vue&amp;#39; export const routes = [ { path: &amp;#39;&amp;#39;, component: Home }, { path: &amp;#39;/gifs&amp;#39;, component: Gifs }, { path: &amp;#39;/user/:id&amp;#39;, component: User } //指定路由和对应要渲染的组件 //404的path</description>
     </item>
     
   </channel>

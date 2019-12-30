@@ -72,81 +72,70 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#收获">收获</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#heading">收获</a></li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<p><a href="https://leetcode.com/problems/add-to-array-form-of-integer">题目描述</a></p>
-
+			<p><a href="https://leetcode.com/problems/add-to-array-form-of-integer">题目描述</a></p>
 <p>For a non-negative integer X, the array-form of X is an array of its digits in left to right order.  For example, if X = 1231, then the array form is <code>[1,2,3,1]</code></p>
-
 <p>Given the array-form A of a non-negative integer X, return the array-form of the integer X+K.</p>
-
-<pre><code class="language-c++">// Author: Tecker
-// date: 2019.2.14
-// 132ms, 13.3MB beat 99.19%, 100.00%
-// time: O(N), space: O(1) or O(len(K))
-class Solution {
-public:
-    vector&lt;int&gt; addToArrayForm(vector&lt;int&gt;&amp; A, int K) {
-        // 如果 A 代表的数字比 K 小(K 最大10000)
-        if (A.size()&lt;5) {
-            int t=1;
-            int sum=0;
-            for(int i=A.size()-1;i&gt;=0;--i) {
-                sum+=A[i]*t;
-                t*=10;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// Author: Tecker
+</span><span style="color:#75715e"></span><span style="color:#75715e">// date: 2019.2.14
+</span><span style="color:#75715e"></span><span style="color:#75715e">// 132ms, 13.3MB beat 99.19%, 100.00%
+</span><span style="color:#75715e"></span><span style="color:#75715e">// time: O(N), space: O(1) or O(len(K))
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> addToArrayForm(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&amp;</span> A, <span style="color:#66d9ef">int</span> K) {
+        <span style="color:#75715e">// 如果 A 代表的数字比 K 小(K 最大10000)
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (A.size()<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">5</span>) {
+            <span style="color:#66d9ef">int</span> t<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+            <span style="color:#66d9ef">int</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>A.size()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;<span style="color:#f92672">-</span><span style="color:#f92672">-</span>i) {
+                sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>A[i]<span style="color:#f92672">*</span>t;
+                t<span style="color:#f92672">*</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>;
             }
-            // 直接转换相加，然后对 A 原地修改返回
-            sum+=K;
-            if (sum==0) return vector&lt;int&gt;{0};
+            <span style="color:#75715e">// 直接转换相加，然后对 A 原地修改返回
+</span><span style="color:#75715e"></span>            sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>K;
+            <span style="color:#66d9ef">if</span> (sum<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>{<span style="color:#ae81ff">0</span>};
 
-            // 先向后插入低到高位再反转
-            int pos=0;
-            while(sum!=0) {
-                if (pos&gt;=A.size())
-                    A.push_back(sum%10);
-                else
-                    A[pos]=sum%10;
-                sum/=10;
-                ++pos;
+            <span style="color:#75715e">// 先向后插入低到高位再反转
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> pos<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+            <span style="color:#66d9ef">while</span>(sum<span style="color:#f92672">!</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) {
+                <span style="color:#66d9ef">if</span> (pos<span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span>A.size())
+                    A.push_back(sum<span style="color:#f92672">%</span><span style="color:#ae81ff">10</span>);
+                <span style="color:#66d9ef">else</span>
+                    A[pos]<span style="color:#f92672">=</span>sum<span style="color:#f92672">%</span><span style="color:#ae81ff">10</span>;
+                sum<span style="color:#f92672">/</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>;
+                <span style="color:#f92672">+</span><span style="color:#f92672">+</span>pos;
             }
 
             reverse(A.begin(), A.end());
-            return A;
+            <span style="color:#66d9ef">return</span> A;
         }
 
-        // 直接将 K 加到最低位，然后向最高位不断推进
-        bool needMore = false;
-        for(int i=A.size()-1;i&gt;=0;--i) {
-            A[i]+=K;
-            if (A[i] &lt; 10) break;
-            if (i==0) needMore=true;
-            K=A[i]/10;
-            A[i]%=10;
+        <span style="color:#75715e">// 直接将 K 加到最低位，然后向最高位不断推进
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">bool</span> needMore <span style="color:#f92672">=</span> false;
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>A.size()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;<span style="color:#f92672">-</span><span style="color:#f92672">-</span>i) {
+            A[i]<span style="color:#f92672">+</span><span style="color:#f92672">=</span>K;
+            <span style="color:#66d9ef">if</span> (A[i] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">break</span>;
+            <span style="color:#66d9ef">if</span> (i<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) needMore<span style="color:#f92672">=</span>true;
+            K<span style="color:#f92672">=</span>A[i]<span style="color:#f92672">/</span><span style="color:#ae81ff">10</span>;
+            A[i]<span style="color:#f92672">%</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>;
         }
 
-        if (!needMore) return A;
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>needMore) <span style="color:#66d9ef">return</span> A;
 
-        // 前面要补1
+        <span style="color:#75715e">// 前面要补1
+</span><span style="color:#75715e"></span>        reverse(A.begin(), A.end());
+        A.push_back(<span style="color:#ae81ff">1</span>);
         reverse(A.begin(), A.end());
-        A.push_back(1);
-        reverse(A.begin(), A.end());
-        return A;
+        <span style="color:#66d9ef">return</span> A;
     }
 };
-</code></pre>
-
-<h2 id="收获">收获</h2>
-
+</code></pre></div><h2 id="heading">收获</h2>
 <p>向 vector 头原地插入元素可以先反转从尾部添加再反转</p>
 
 		</div>
@@ -197,11 +186,11 @@ public:
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -276,6 +265,7 @@ public:
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

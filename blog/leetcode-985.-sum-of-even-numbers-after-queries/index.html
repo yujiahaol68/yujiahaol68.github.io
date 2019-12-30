@@ -71,61 +71,53 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
-		
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p><a href="https://leetcode.com/problems/sum-of-even-numbers-after-queries">题目描述</a></p>
-
 <p>时间复杂度：O(N)</p>
-
 <p>空间复杂度：O(1)</p>
-
-<pre><code class="language-c++">// Author: Tecker
-// 176ms, 28.7MB; beat 96.40%, 100%
-class Solution {
-public:
-    vector&lt;int&gt; sumEvenAfterQueries(vector&lt;int&gt;&amp; A, vector&lt;vector&lt;int&gt; &gt;&amp; queries) {
-        vector&lt;int&gt; res(A.size(), 0);
-        int sum=0;
-        A[queries[0][1]]+=queries[0][0];
-        for(int &amp;num : A) {
-            if (num%2==0) sum+=num;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// Author: Tecker
+</span><span style="color:#75715e"></span><span style="color:#75715e">// 176ms, 28.7MB; beat 96.40%, 100%
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> sumEvenAfterQueries(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&amp;</span> A, vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span><span style="color:#f92672">&amp;</span> queries) {
+        vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> res(A.size(), <span style="color:#ae81ff">0</span>);
+        <span style="color:#66d9ef">int</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+        A[queries[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]]<span style="color:#f92672">+</span><span style="color:#f92672">=</span>queries[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>];
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>num : A) {
+            <span style="color:#66d9ef">if</span> (num<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>num;
         }
-        res[0]=sum;
-        for(int i=1;i&lt;queries.size();++i) {
-            int val=queries[i][0];
-            int idx=queries[i][1];
-            int tmp = A[idx];
-            A[idx]+=val;
-            if (isEven(tmp)) {
-                if (!isEven(A[idx]))
-                    sum-=tmp;
-                else
-                    sum+=val;
-            } else {
-                if (isEven(A[idx])) sum+=A[idx];
+        res[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span>sum;
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span>queries.size();<span style="color:#f92672">+</span><span style="color:#f92672">+</span>i) {
+            <span style="color:#66d9ef">int</span> val<span style="color:#f92672">=</span>queries[i][<span style="color:#ae81ff">0</span>];
+            <span style="color:#66d9ef">int</span> idx<span style="color:#f92672">=</span>queries[i][<span style="color:#ae81ff">1</span>];
+            <span style="color:#66d9ef">int</span> tmp <span style="color:#f92672">=</span> A[idx];
+            A[idx]<span style="color:#f92672">+</span><span style="color:#f92672">=</span>val;
+            <span style="color:#66d9ef">if</span> (isEven(tmp)) {
+                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>isEven(A[idx]))
+                    sum<span style="color:#f92672">-</span><span style="color:#f92672">=</span>tmp;
+                <span style="color:#66d9ef">else</span>
+                    sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>val;
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#66d9ef">if</span> (isEven(A[idx])) sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>A[idx];
             }
-            res[i]=sum;
+            res[i]<span style="color:#f92672">=</span>sum;
         }
-        return res;
+        <span style="color:#66d9ef">return</span> res;
     }
 
-private:
-    inline bool isEven(int a) {
-        return !(a &amp; 1);
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">bool</span> isEven(<span style="color:#66d9ef">int</span> a) {
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">!</span>(a <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>);
     }
 };
-</code></pre>
-
-<p>刚开始本来是想要用取模来做的，结果一不小心踩了大坑，以后要注意负数取模的正确计算方式</p>
-
-<pre><code class="language-c++">int mod(int x, int m) {
-    return (x%m + m)%m;
+</code></pre></div><p>刚开始本来是想要用取模来做的，结果一不小心踩了大坑，以后要注意负数取模的正确计算方式</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">mod</span>(<span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> m) {
+    <span style="color:#66d9ef">return</span> (x<span style="color:#f92672">%</span>m <span style="color:#f92672">+</span> m)<span style="color:#f92672">%</span>m;
 }
-</code></pre>
-
-<p>收获: 在不同的语言中，对负数执行取模运算，结果有可能会是不同的</p>
+</code></pre></div><p>收获: 在不同的语言中，对负数执行取模运算，结果有可能会是不同的</p>
 
 		</div>
 		<footer class="post__footer">
@@ -175,11 +167,11 @@ private:
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -254,6 +246,7 @@ private:
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

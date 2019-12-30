@@ -71,29 +71,13 @@ if (!doNotTrack) {
 <div class="post__toc toc">
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
-		<nav id="TableOfContents">
-<ul>
-<li><a href="#环境准备">环境准备</a></li>
-<li><a href="#制作训练集">制作训练集</a></li>
-<li><a href="#生成-tfrecord-文件">生成 TFRecord 文件</a></li>
-<li><a href="#选择模型及修改对应配置文件">选择模型及修改对应配置文件</a></li>
-<li><a href="#模型训练及效果查看">模型训练及效果查看</a></li>
-<li><a href="#导出训练好的模型">导出训练好的模型</a></li>
-<li><a href="#使用-python-调用已训练的模型进行识别">使用 python 调用已训练的模型进行识别</a></li>
-<li><a href="#参考资料">参考资料</a></li>
-</ul>
-</nav>
+		<nav id="TableOfContents"></nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<p>学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训练</p>
-
+			<p>学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训练</p>
 <p><a href="https://github.com/yujiahaol68/tensorflow-tangerine-detection">完整代码</a></p>
-
-<h1 id="环境准备">环境准备</h1>
-
+<h1 id="heading">环境准备</h1>
 <ul>
 <li>Win10</li>
 <li>一张优秀的显卡（尤其显存要大，最低要求 2G）</li>
@@ -104,41 +88,26 @@ if (!doNotTrack) {
 <li>cuDNN 7.0.5</li>
 <li>protoc <a href="https://github.com/google/protobuf/releases">3.5.1</a></li>
 </ul>
-
 <p>环境的配置刚开始是比较顺利的，安装了 <strong>Anaconda</strong> 的话，按照官网的说明可以专门创建一个名为 tensorflow 的 py 环境出来专门用于训练，这也是笔者所推崇的，安装完 tensorflow GPU 的版本，接着就把 <strong>CUDA</strong> 和 <strong>cuDNN</strong> 也装了，CUDA 安装目录下的 <code>bin</code> 和 <code>libnvvp</code> 目录都要添加进系统环境变量中， cuDNN 中的 <code>cuda</code> 目录建议解压放置到系统盘根目录并把其下的 <code>bin</code> 目录也添加进环境变量中</p>
-
 <p>为了使用 Object Detection 包，我们必须把 proto 文件手动编译成 python 脚本，将 <a href="https://github.com/tensorflow/models">tensorflow/models</a> 整个下载下来，编译用到的工具为 protoc，下载对应系统的压缩包，解压到系统盘，把其下的 <code>bin</code> 目录添加进环境变量，编译的步骤跟随 <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md">安装文档</a>， win 下记得把 <code>models</code> 目录和 <code>models/slim</code> 目录都添加进环境变量中，编译成功后运行测试脚本确保 Object Detection 可用，至此 Object Detection 相关的包就处于可用的状态了</p>
-
 <p>注意：如果还是提示找不到对应模块的话，需要在 对应环境的 <em>site-packages</em> 目录下加入一个 <code>tensorflow_model.pth</code> 文件，内容如下</p>
-
 <pre><code>第一行是 research 的路径
 第二行是 slim 的路径
-</code></pre>
-
-<h1 id="制作训练集">制作训练集</h1>
-
+</code></pre><h1 id="heading-1">制作训练集</h1>
 <ul>
 <li>爬取柑橘的相关图片（其他物体类似）</li>
 </ul>
-
 <p>此步略，自己爬可以，在百度图片搜索结果页右键另存为网页也可以，获取数据不是本文讨论的重点</p>
-
 <ul>
 <li>手动裁剪图片</li>
 </ul>
-
 <p>一方面减小体积，另一方面尽量显示出特征主体，注意主体也不能过大，最好留有一部分背景，没有进行严格的验证</p>
-
 <ul>
 <li>给图片打 Label</li>
 </ul>
-
 <p>win 环境下可以使用 <a href="https://github.com/tzutalin/labelImg">labelimg</a> 给图片的局部加上分类标签来制作我们的数据集，如果是用 mac 的话可以尝试一款名为 <a href="https://rectlabel.com/">rectlabel</a> 的付费 app ，能对图片的分类特征进行更精细的框选，效果应该更好，支持输出 PASCAL VOC 格式的图片标记</p>
-
-<h1 id="生成-tfrecord-文件">生成 TFRecord 文件</h1>
-
+<h1 id="-tfrecord-">生成 TFRecord 文件</h1>
 <p>我们的图片和 labelimg 生成的分类注解 xml 文件应该按如下方式放置</p>
-
 <pre><code>Project
 .
 ├── annotations
@@ -153,147 +122,119 @@ if (!doNotTrack) {
 ├── data
 │   └── tangerine_label_map.pbtxt
 
-</code></pre>
-
-<p>因为本文使用 labelimg 进行的图片特征标记已经符合 Oxford pet dataset 的格式，所以笔者直接使用的是 models 目录中自带的 <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/dataset_tools/create_pet_tf_record.py">转换脚本</a> 来将我们自己制作的数据集转换成文档所要求的 TFRecord 文件，将输出的文件名称分别改为 <code>tangerine_train.record</code> 和 <code>tangerine_val.record</code>，运行转换脚本， 参数 <code>data_dir</code> 也就是上图目录树中 <code>Project</code> 的目录，<code>output_dir</code> 是输出目录， <code>label_map_path</code> 也就是我们 <code>tangerine_label_map.pbtxt</code> 的文件路径，脚本默认是使用 30% 的图片数据作为测试集，可根据自身情况进行修改</p>
-
+</code></pre><p>因为本文使用 labelimg 进行的图片特征标记已经符合 Oxford pet dataset 的格式，所以笔者直接使用的是 models 目录中自带的 <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/dataset_tools/create_pet_tf_record.py">转换脚本</a> 来将我们自己制作的数据集转换成文档所要求的 TFRecord 文件，将输出的文件名称分别改为 <code>tangerine_train.record</code> 和 <code>tangerine_val.record</code>，运行转换脚本， 参数 <code>data_dir</code> 也就是上图目录树中 <code>Project</code> 的目录，<code>output_dir</code> 是输出目录， <code>label_map_path</code> 也就是我们 <code>tangerine_label_map.pbtxt</code> 的文件路径，脚本默认是使用 30% 的图片数据作为测试集，可根据自身情况进行修改</p>
 <p>留意目录树的童鞋可能会发现，<code>annotations</code> 目录下还有一个 <code>trainval.txt</code> 文件，因为 object detection 需要读取其中的每一行来去读取相应的 xml 文件，然后根据 xml 中的 filename 和 path 标签内容再去读取相应的 jpg 图片。因此，我们需要把所有的 xml 文件名称（不含扩展名）以一个文件一行的形式，写入 <code>trainval.txt</code> 并保证它放在目录树所示位置，每个 xml 文件中的 filename 标签内容也必须修改为带扩展名的形式，这里我自行编写了一些脚本专门用于批量进行自动修改</p>
-
 <p>使用说明：</p>
-
 <ul>
 <li>clean_data.py 用于将同一个目录下的图片和xml文件重命名成规整的名字</li>
 <li>gen_trainval.py 用于生成 <code>trainval.txt</code> 文件</li>
 <li>xml_modify.py 用于修改 xml 文件的部分内容使得 <code>create_tangerine_tf_record.py</code> 能够顺利通过里面提供的标识找到图片并生成 TFRecord</li>
 </ul>
-
 <p>使用详情请阅读代码注释</p>
-
-<h1 id="选择模型及修改对应配置文件">选择模型及修改对应配置文件</h1>
-
+<h1 id="heading-2">选择模型及修改对应配置文件</h1>
 <p>本文使用的模型为 coco数据集的 <code>faster_rcnn_resnet101</code> 模型，想要使用预训练的模型我们需要将模型的压缩包下载下来，将里面前缀为 <code>model.ckpt</code> 的文件解压到我们的 <code>Project/training</code> 目录下， <code>faster_rcnn_resnet101_coco.config</code> 是对应的模型文件，在里面把对应的 <code>PATH_TO_BE_CONFIGURED</code> 的部分自行进行修改，训练的时候 tensorflow 会通过读取配置文件的形式去读取对应的模型文件，训练集测试集和 label ，如果需要修改训练步数减少训练时间可以修改 <code>num_steps</code></p>
-
-<h1 id="模型训练及效果查看">模型训练及效果查看</h1>
-
+<h1 id="heading-3">模型训练及效果查看</h1>
 <p>训练命令</p>
-
 <pre><code># 在 research 目录下
 $ python object_detection/train.py --logtostderr --pipeline_config_path=E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --train_dir=E:/DL/tangerine-recognition/training
-</code></pre>
-
-<p>开启 tensorboard 看训练时损失函数的变化情况</p>
-
+</code></pre><p>开启 tensorboard 看训练时损失函数的变化情况</p>
 <pre><code>$ tensorboard --logdir=E:/DL/tangerine-recognition/training --port=6006 --host=localhost
 # 访问 localhost:6006
-</code></pre>
-
-<p>开启 tensorboard 看模型在测试集上的效果</p>
-
+</code></pre><p>开启 tensorboard 看模型在测试集上的效果</p>
 <pre><code># 在 research 目录下
 $ python object_detection/eval.py --logtostderr --pipeline_config_path=E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --eval_dir=E:/DL/tangerine-recognition/eval --checkpoint_dir=E:/DL/tangerine-recognition/training
 
 $ tensorboard --logdir=E:/DL/tangerine-recognition/eval --port=6006 --host=localhost
 
 # 访问 localhost:6006，右上角选择 image
-</code></pre>
-
-<p><img src="/img/tensorboard.png" alt="tensorboard" /></p>
-
-<h1 id="导出训练好的模型">导出训练好的模型</h1>
-
+</code></pre><p><img src="/img/tensorboard.png" alt="tensorboard"></p>
+<h1 id="heading-4">导出训练好的模型</h1>
 <pre><code># 在 research 目录下
 $ python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --trained_checkpoint_prefix E:/DL/tangerine-recognition/training/model.ckpt-{设置的步数} --output_directory E:/DL/tangerine-recognition/training/result
-</code></pre>
-
-<p>在 result 目录下就能看到我们的 <code>frozen_inference_graph.pb</code> 可用于生产部署的图模型了</p>
-
-<h1 id="使用-python-调用已训练的模型进行识别">使用 python 调用已训练的模型进行识别</h1>
-
-<pre><code class="language-python"># demo.py
-import cv2
-import numpy as np
-import tensorflow as tf
-from object_detection.utils import label_map_util
-from object_detection.utils import visualization_utils as vis_util
+</code></pre><p>在 result 目录下就能看到我们的 <code>frozen_inference_graph.pb</code> 可用于生产部署的图模型了</p>
+<h1 id="-python-">使用 python 调用已训练的模型进行识别</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># demo.py</span>
+<span style="color:#f92672">import</span> cv2
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+<span style="color:#f92672">from</span> object_detection.utils <span style="color:#f92672">import</span> label_map_util
+<span style="color:#f92672">from</span> object_detection.utils <span style="color:#f92672">import</span> visualization_utils <span style="color:#66d9ef">as</span> vis_util
 
 
-class TOD(object):
-    def __init__(self):
-        self.PATH_TO_CKPT = 'E:\\DL\\tangerine-recognition\\training\\result\\frozen_inference_graph.pb'
-        self.PATH_TO_LABELS = 'E:\\DL\\tangerine-recognition\\tangerine_label_map.pbtxt'
-        self.NUM_CLASSES = 1
-        self.detection_graph = self._load_model()
-        self.category_index = self._load_label_map()
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TOD</span>(object):
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>PATH_TO_CKPT <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">E:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">DL</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine-recognition</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">training</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">result</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">frozen_inference_graph.pb</span><span style="color:#e6db74">&#39;</span>
+        self<span style="color:#f92672">.</span>PATH_TO_LABELS <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">E:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">DL</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine-recognition</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine_label_map.pbtxt</span><span style="color:#e6db74">&#39;</span>
+        self<span style="color:#f92672">.</span>NUM_CLASSES <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+        self<span style="color:#f92672">.</span>detection_graph <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_load_model()
+        self<span style="color:#f92672">.</span>category_index <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_load_label_map()
 
-    def _load_model(self):
-        detection_graph = tf.Graph()
-        with detection_graph.as_default():
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(self.PATH_TO_CKPT, 'rb') as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
-                tf.import_graph_def(od_graph_def, name='')
-        return detection_graph
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_load_model</span>(self):
+        detection_graph <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Graph()
+        <span style="color:#66d9ef">with</span> detection_graph<span style="color:#f92672">.</span>as_default():
+            od_graph_def <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>GraphDef()
+            <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>gfile<span style="color:#f92672">.</span>GFile(self<span style="color:#f92672">.</span>PATH_TO_CKPT, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">rb</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">as</span> fid:
+                serialized_graph <span style="color:#f92672">=</span> fid<span style="color:#f92672">.</span>read()
+                od_graph_def<span style="color:#f92672">.</span>ParseFromString(serialized_graph)
+                tf<span style="color:#f92672">.</span>import_graph_def(od_graph_def, name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>)
+        <span style="color:#66d9ef">return</span> detection_graph
 
-    def _load_label_map(self):
-        label_map = label_map_util.load_labelmap(self.PATH_TO_LABELS)
-        categories = label_map_util.convert_label_map_to_categories(label_map,
-                                                                    max_num_classes=self.NUM_CLASSES,
-                                                                    use_display_name=True)
-        category_index = label_map_util.create_category_index(categories)
-        return category_index
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_load_label_map</span>(self):
+        label_map <span style="color:#f92672">=</span> label_map_util<span style="color:#f92672">.</span>load_labelmap(self<span style="color:#f92672">.</span>PATH_TO_LABELS)
+        categories <span style="color:#f92672">=</span> label_map_util<span style="color:#f92672">.</span>convert_label_map_to_categories(label_map,
+                                                                    max_num_classes<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>NUM_CLASSES,
+                                                                    use_display_name<span style="color:#f92672">=</span>True)
+        category_index <span style="color:#f92672">=</span> label_map_util<span style="color:#f92672">.</span>create_category_index(categories)
+        <span style="color:#66d9ef">return</span> category_index
 
-    def detect(self, image):
-        with self.detection_graph.as_default():
-            with tf.Session(graph=self.detection_graph) as sess:
-                # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
-                image_np_expanded = np.expand_dims(image, axis=0)
-                image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
-                boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
-                scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
-                classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
-                num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
-                # Actual detection.
-                (boxes, scores, classes, num_detections) = sess.run(
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">detect</span>(self, image):
+        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>as_default():
+            <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>Session(graph<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>detection_graph) <span style="color:#66d9ef">as</span> sess:
+                <span style="color:#75715e"># Expand dimensions since the model expects images to have shape: [1, None, None, 3]</span>
+                image_np_expanded <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>expand_dims(image, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+                image_tensor <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">image_tensor:0</span><span style="color:#e6db74">&#39;</span>)
+                boxes <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">detection_boxes:0</span><span style="color:#e6db74">&#39;</span>)
+                scores <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">detection_scores:0</span><span style="color:#e6db74">&#39;</span>)
+                classes <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">detection_classes:0</span><span style="color:#e6db74">&#39;</span>)
+                num_detections <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">num_detections:0</span><span style="color:#e6db74">&#39;</span>)
+                <span style="color:#75715e"># Actual detection.</span>
+                (boxes, scores, classes, num_detections) <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run(
                     [boxes, scores, classes, num_detections],
-                    feed_dict={image_tensor: image_np_expanded})
-                # Visualization of the results of a detection.
-                vis_util.visualize_boxes_and_labels_on_image_array(
+                    feed_dict<span style="color:#f92672">=</span>{image_tensor: image_np_expanded})
+                <span style="color:#75715e"># Visualization of the results of a detection.</span>
+                vis_util<span style="color:#f92672">.</span>visualize_boxes_and_labels_on_image_array(
                     image,
-                    np.squeeze(boxes),
-                    np.squeeze(classes).astype(np.int32),
-                    np.squeeze(scores),
-                    self.category_index,
-                    use_normalized_coordinates=True,
-                    line_thickness=8)
+                    np<span style="color:#f92672">.</span>squeeze(boxes),
+                    np<span style="color:#f92672">.</span>squeeze(classes)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>int32),
+                    np<span style="color:#f92672">.</span>squeeze(scores),
+                    self<span style="color:#f92672">.</span>category_index,
+                    use_normalized_coordinates<span style="color:#f92672">=</span>True,
+                    line_thickness<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>)
 
-        cv2.namedWindow(&quot;detection&quot;, cv2.WINDOW_NORMAL)
-        cv2.imshow(&quot;detection&quot;, image)
-        cv2.waitKey(0)
+        cv2<span style="color:#f92672">.</span>namedWindow(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">detection</span><span style="color:#e6db74">&#34;</span>, cv2<span style="color:#f92672">.</span>WINDOW_NORMAL)
+        cv2<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">detection</span><span style="color:#e6db74">&#34;</span>, image)
+        cv2<span style="color:#f92672">.</span>waitKey(<span style="color:#ae81ff">0</span>)
 
-if __name__ == '__main__':
-    image = cv2.imread('image.jpg')
-    detecotr = TOD()
-    detecotr.detect(image)
-</code></pre>
-
-<p>最终效果</p>
-
-<p><img src="/img/individualImage.png" alt="demo-result" /></p>
-
-<h1 id="参考资料">参考资料</h1>
-
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#39;</span>:
+    image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">image.jpg</span><span style="color:#e6db74">&#39;</span>)
+    detecotr <span style="color:#f92672">=</span> TOD()
+    detecotr<span style="color:#f92672">.</span>detect(image)
+</code></pre></div><p>最终效果</p>
+<p><img src="/img/individualImage.png" alt="demo-result"></p>
+<h1 id="heading-5">参考资料</h1>
 <ul>
-<li><p><a href="https://towardsdatascience.com/building-a-toy-detector-with-tensorflow-object-detection-api-63c0fdf2ac95">building-a-toy-detector-with-tensorflow-object-detection-api</a></p></li>
-
-<li><p><a href="https://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9">how-to-train-your-own-object-detector-with-tensorflows-object-detector-api</a></p></li>
-
-<li><p><a href="https://blog.algorithmia.com/deep-dive-into-object-detection-with-open-images-using-tensorflow/">Deep Dive into Object Detection with Open Images, using Tensorflow</a></p></li>
+<li>
+<p><a href="https://towardsdatascience.com/building-a-toy-detector-with-tensorflow-object-detection-api-63c0fdf2ac95">building-a-toy-detector-with-tensorflow-object-detection-api</a></p>
+</li>
+<li>
+<p><a href="https://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9">how-to-train-your-own-object-detector-with-tensorflows-object-detector-api</a></p>
+</li>
+<li>
+<p><a href="https://blog.algorithmia.com/deep-dive-into-object-detection-with-open-images-using-tensorflow/">Deep Dive into Object Detection with Open Images, using Tensorflow</a></p>
+</li>
 </ul>
-
 <p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
-
-<p>联系方式：tecker_yuknigh@163.com</p>
+<p>联系方式：tecker_<a href="mailto:yuknigh@163.com">yuknigh@163.com</a></p>
 
 		</div>
 		<footer class="post__footer">
@@ -343,11 +284,11 @@ if __name__ == '__main__':
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -422,6 +363,7 @@ if __name__ == '__main__':
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

@@ -65,127 +65,93 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/tools" rel="category">Tools</a></span>
 </div>
 <span class="meta__text">
-总计 987 字
+总计 1006 字
 </span></div>
 		</header>
 <div class="post__toc toc">
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#gulp简单来讲-是一个基于流的自动化构建工具-听起来有点奇怪-但是简单理解就是前端工程化工具-它的出现使得我们能够将一些操作或者处理工作直接交给工具去做-充分提高了开发的效率-基于流的意思是通过数据流的方式读取-处理然后再输出到文件">gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件</a></li>
-</ul></li>
-<li><a href="#准备工作">准备工作</a></li>
-<li><a href="#gulp能做得更多">gulp能做得更多</a>
-<ul>
-<li><a href="#管道理念">管道理念</a></li>
-<li><a href="#gulp管道的使用方法">gulp管道的使用方法</a></li>
-<li><a href="#添加gulp观察者以便对源文件的更改进行实时处理">添加gulp观察者以便对源文件的更改进行实时处理</a></li>
-<li><a href="#附">附：</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#heading">准备工作</a></li>
+        <li><a href="#gulp-1">gulp能做得更多</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<h4 id="gulp简单来讲-是一个基于流的自动化构建工具-听起来有点奇怪-但是简单理解就是前端工程化工具-它的出现使得我们能够将一些操作或者处理工作直接交给工具去做-充分提高了开发的效率-基于流的意思是通过数据流的方式读取-处理然后再输出到文件">gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件</h4>
-
-<!-- more -->
-
-<p>为什么需要gulp?
-* 模块化我们的html,css,js文件，使得项目的结构更加的清晰
-* 转译我们的模块文件（例如：js es6-&gt;es5 , panini-&gt;html ,Sass-&gt;css,）
-* 图片及css文件的压缩处理极大的提高网页性能
-* 解决各种浏览器兼容性问题
-* 基于管道思想的pipe多重处理，你可以自定义你想要的处理任务，一切交给gulp自动完成</p>
-
-<h3 id="准备工作">准备工作</h3>
-
+			<h4 id="gulp">gulp简单来讲，是一个基于流的自动化构建工具，听起来有点奇怪，但是简单理解就是前端工程化工具，它的出现使得我们能够将一些操作或者处理工作直接交给工具去做，充分提高了开发的效率，基于流的意思是通过数据流的方式读取，处理然后再输出到文件</h4>
+<!-- raw HTML omitted -->
+<p>为什么需要gulp?</p>
+<ul>
+<li>模块化我们的html,css,js文件，使得项目的结构更加的清晰</li>
+<li>转译我们的模块文件（例如：js es6-&gt;es5 , panini-&gt;html ,Sass-&gt;css,）</li>
+<li>图片及css文件的压缩处理极大的提高网页性能</li>
+<li>解决各种浏览器兼容性问题</li>
+<li>基于管道思想的pipe多重处理，你可以自定义你想要的处理任务，一切交给gulp自动完成</li>
+</ul>
+<h3 id="heading">准备工作</h3>
 <p>必备：npm包管理器</p>
-
 <p>流程：</p>
-
 <ol>
-<li><p>在项目目录下进行 npm init -y</p></li>
-
-<li><p>npm install gulp &ndash;save-dev 作为项目依赖安装</p></li>
-
-<li><p>项目根目录下新建文件gulpfile.js</p></li>
-
-<li><p>在gulpfile.js中写入你要gulp为你自动化处理的任务</p>
-
-<pre><code class="language-javascript">var gulp = require('gulp')     //请求gulp模块
-
-gulp.task('name', function(){   //给gulp的任务，任务名+任务会执行的函数
-//执行的任务
-})
-
-</code></pre></li>
+<li>
+<p>在项目目录下进行 npm init -y</p>
+</li>
+<li>
+<p>npm install gulp &ndash;save-dev 作为项目依赖安装</p>
+</li>
+<li>
+<p>项目根目录下新建文件gulpfile.js</p>
+</li>
+<li>
+<p>在gulpfile.js中写入你要gulp为你自动化处理的任务</p>
+</li>
 </ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">gulp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;gulp&#39;</span>)     <span style="color:#75715e">//请求gulp模块
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">task</span>(<span style="color:#e6db74">&#39;name&#39;</span>, <span style="color:#66d9ef">function</span>(){   <span style="color:#75715e">//给gulp的任务，任务名+任务会执行的函数
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//执行的任务
+</span><span style="color:#75715e"></span>})
 
-<p>命令行中执行gulp name的时候，gulp就会自动找到你自己定义的那个任务</p>
-
-<h3 id="gulp能做得更多">gulp能做得更多</h3>
-
-<h4 id="管道理念">管道理念</h4>
-
+</code></pre></div><p>命令行中执行gulp name的时候，gulp就会自动找到你自己定义的那个任务</p>
+<h3 id="gulp-1">gulp能做得更多</h3>
+<h4 id="heading-1">管道理念</h4>
 <p>简单来讲，你的任务一定会有源文件，管道相当于处理方法，管道可以接多条，管道的尽头就是输出文件</p>
-
 <p>我们有专门的文件夹来存放我们的源文件和输出文件，它们的目录分别为src和dist</p>
-
 <p>gulp本身也给我们提供了很多现成的管道，官网有许多的plugin可以用，上面都有示例代码</p>
-
 <p>我们可以用npm像安装模块一样把它们一一安装，在node中一切皆模块，npm可以快速的帮助我们运用这些已经写好的模块作为我们的一个个管道</p>
-
-<h4 id="gulp管道的使用方法">gulp管道的使用方法</h4>
-
+<h4 id="gulp-2">gulp管道的使用方法</h4>
 <p>这里以sass编译任务为例：</p>
-
-<pre><code class="language-javascript">var gulp = require('gulp')
-var sass = require('gulp-sass') //完整的模块名,请求模块
-
-gulp.task('sass', () =&gt; {   //注意node支持es6的语法
-    gulp.src('./src/源文件目录.sass')    //告诉gulp我们想要处理的文件
-        .pipe(sass())   //将sass处理方法封装成管道
-        //.pipe 处理1
-        //.pipe 处理2
-        .pipe(gulp.dest('./dist/css/'))     //最后将管道导向输出，也就是输出目录当中生成输出文件
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">gulp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;gulp&#39;</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sass</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;gulp-sass&#39;</span>) <span style="color:#75715e">//完整的模块名,请求模块
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">task</span>(<span style="color:#e6db74">&#39;sass&#39;</span>, () =&gt; {   <span style="color:#75715e">//注意node支持es6的语法
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">src</span>(<span style="color:#e6db74">&#39;./src/源文件目录.sass&#39;</span>)    <span style="color:#75715e">//告诉gulp我们想要处理的文件
+</span><span style="color:#75715e"></span>        .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">sass</span>())   <span style="color:#75715e">//将sass处理方法封装成管道
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//.pipe 处理1
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//.pipe 处理2
+</span><span style="color:#75715e"></span>        .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">dest</span>(<span style="color:#e6db74">&#39;./dist/css/&#39;</span>))     <span style="color:#75715e">//最后将管道导向输出，也就是输出目录当中生成输出文件
+</span><span style="color:#75715e"></span>})
+</code></pre></div><h4 id="gulp-3">添加gulp观察者以便对源文件的更改进行实时处理</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">task</span>(<span style="color:#e6db74">&#39;watch&#39;</span>,() =&gt; {
+    <span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">watch</span>(<span style="color:#e6db74">&#39;追踪更改的文件目录&#39;</span>,[<span style="color:#e6db74">&#39;每次更改保存就执行的task&#39;</span>])
 })
-</code></pre>
-
-<h4 id="添加gulp观察者以便对源文件的更改进行实时处理">添加gulp观察者以便对源文件的更改进行实时处理</h4>
-
-<pre><code class="language-javascript">gulp.task('watch',() =&gt; {
-    gulp.watch('追踪更改的文件目录',['每次更改保存就执行的task'])
-})
-</code></pre>
-
-<h4 id="附">附：</h4>
-
+</code></pre></div><h4 id="heading-2">附：</h4>
 <ul>
 <li>任务名若为default命令行中直接输入gulp就会立即执行</li>
 <li>gulp.task(&lsquo;default&rsquo;, [&lsquo;styles&rsquo;, &lsquo;jshint&rsquo;, &lsquo;watch&rsquo;])</li>
 </ul>
-
 <p>gulp可以进行多任务,让一个任务同时调用多个任务</p>
-
 <ul>
-<li><p>在指定目录中可以用*号和后缀匹配目录下的全部同类型文件</p>
-
-<pre><code class="language-javascript">gulp.src('js/**/*.js')
-</code></pre></li>
+<li>在指定目录中可以用*号和后缀匹配目录下的全部同类型文件</li>
 </ul>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">src</span>(<span style="color:#e6db74">&#39;js/**/*.js&#39;</span>)
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -237,11 +203,11 @@ gulp.task('sass', () =&gt; {   //注意node支持es6的语法
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -316,6 +282,7 @@ gulp.task('sass', () =&gt; {   //注意node支持es6的语法
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>并发编程 on Runtime: out of memory</title>
+    <link>/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+    <description>Recent content in 并发编程 on Runtime: out of memory</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 30 Dec 2019 10:42:32 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>理解 CPU Cache 对并发性能的影响</title>
+      <link>/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/</link>
+      <pubDate>Mon, 30 Dec 2019 10:42:32 +0800</pubDate>
+      
+      <guid>/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/</guid>
+      <description>一般来说每个 CPU 核有 L1 和 L2 缓存，L3是共享缓存 以缓存行为单位存储，通常是 64 字节为一行 这种利用局部性原理的缓存是数组访问比链表访问快的主要原因 伪</description>
+    </item>
+    
+  </channel>
+</rss>

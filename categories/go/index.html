@@ -11,8 +11,7 @@
 <meta property="og:description" content="一个纯粹的技术干货聚集地，里面包含着一个无聊人士的所思所想" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/categories/go/" />
-
-<meta property="og:updated_time" content="2019-11-06T09:20:41+08:00" />
+<meta property="og:updated_time" content="2019-12-30T10:42:32+08:00" />
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -55,6 +54,30 @@ if (!doNotTrack) {
 	<header class="main__header">
 		<h1 class="main__title">Go</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/" rel="bookmark">
+			理解 CPU Cache 对并发性能的影响
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-12-30T10:42:32">December 30, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/go" rel="category">Go</a></span>
+</div>
+<span class="meta__text">
+总计 461 字
+</span></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		一般来说每个 CPU 核有 L1 和 L2 缓存，L3是共享缓存 以缓存行为单位存储，通常是 64 字节为一行 这种利用局部性原理的缓存是数组访问比链表访问快的主要原因 伪
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="bookmark">
@@ -120,7 +143,7 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/go" rel="category">Go</a></span>
 </div>
 <span class="meta__text">
-总计 542 字
+总计 540 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
@@ -172,7 +195,7 @@ if (!doNotTrack) {
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		最近在弄一些 RSS 解析的东西，记录一下如何解析非UTF-8编码 XML 文档，直接上代码 package rss_test import ( &quot;bytes&quot; &quot;encoding/xml&quot; &quot;fmt&quot; &quot;io&quot; &quot;testing&quot; &quot;github.com/yujiahaol68/rossy/rss&quot; &quot;golang.org/x/net/html/charset&quot; ) func Test_notUTF8(t *testing.T) { r := rss.New() // 注意不要使用 xml.Unmarshal() 这个方法，
+		最近在弄一些 RSS 解析的东西，记录一下如何解析非UTF-8编码 XML 文档，直接上代码 package rss_test import ( &#34;bytes&#34; &#34;encoding/xml&#34; &#34;fmt&#34; &#34;io&#34; &#34;testing&#34; &#34;github.com/yujiahaol68/rossy/rss&#34; &#34;golang.org/x/net/html/charset&#34; ) func Test_notUTF8(t *testing.T) { r := rss.New() // 注意不要使用 xml.Unmarshal() 这个方法，
 	</div>
 </article>
 </main>
@@ -192,11 +215,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -271,6 +294,7 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

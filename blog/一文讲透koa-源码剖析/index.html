@@ -72,264 +72,190 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#前言">前言</a></li>
-<li><a href="#核心机制">核心机制</a>
-<ul>
-<li><a href="#koa-class-图示">koa class 图示</a></li>
-<li><a href="#koa-请求处理流程图">koa 请求处理流程图</a></li>
-</ul></li>
-<li><a href="#request-模块">request 模块</a></li>
-<li><a href="#response-模块">response 模块</a></li>
-<li><a href="#response-helper-函数">response helper 函数</a>
-<ul>
-<li><a href="#全文完">全文完</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#heading">前言</a></li>
+    <li><a href="#heading-1">核心机制</a>
+      <ul>
+        <li><a href="#koa-class-">koa class 图示</a></li>
+        <li><a href="#koa-">koa 请求处理流程图</a></li>
+      </ul>
+    </li>
+    <li><a href="#request-">request 模块</a></li>
+    <li><a href="#response-">response 模块</a></li>
+    <li><a href="#response-helper-">response helper 函数</a>
+      <ul>
+        <li><a href="#heading-2">全文完</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<h2 id="前言">前言</h2>
-
+			<h2 id="heading">前言</h2>
 <p>本文从头开始由浅入深剖析现在十分流行的koa框架的核心源码，适合已经熟练掌握koa框架使用的开发人员阅读</p>
-
-<h2 id="核心机制">核心机制</h2>
-
+<h2 id="heading-1">核心机制</h2>
 <p>现在，让我们从头开始看看koa的内部究竟做了些什么？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// usage
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Koa</span>()
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">constructor</span>() {
+	<span style="color:#66d9ef">super</span>();
 
-<pre><code class="language-javascript">// usage
-const app = new Koa()
-</code></pre>
-
-<pre><code class="language-javascript">// source code
-constructor() {
-	super();
-
-	this.proxy = false;
-	this.middleware = [];
-	this.subdomainOffset = 2;
-	this.env = process.env.NODE_ENV || 'development';
-	this.context = Object.create(context);
-	this.request = Object.create(request);
-	this.response = Object.create(response);
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">proxy</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">middleware</span> <span style="color:#f92672">=</span> [];
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">subdomainOffset</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">env</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">NODE_ENV</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#39;development&#39;</span>;
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">context</span>);
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">request</span>);
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">response</span>);
 }
-</code></pre>
-
-<p>这就是一切的起源，<code>Koa</code> 类的实例从此诞生，继承自 <code>Events</code>，可得知其子类拥有处理异步事件的能力，然而<code>Koa</code>如何处理，现在还不得而知，先打个问号。但创建实例的过程中，可得知有三个对象作为实例的属性被初始化，分别为 <code>context</code> <code>request</code> <code>response</code>，还有我们非常熟悉的存放所有全局中间件的数组<code>middleware</code></p>
-
-<h3 id="koa-class-图示">koa class 图示</h3>
-
-<p><img src="/img/koa.png" alt="koa" /></p>
-
-<pre><code class="language-javascript">// usage 
-app.use(async (ctx, next) =&gt; {
-	// 中间件函数
-});
-</code></pre>
-
-<p>当调用use方法时，在确认它是<code>async</code>函数的情况下，通过<code>push</code>操作，这个函数会被追加到<code>middleware</code>数组中</p>
-
-<pre><code class="language-javascript">use(fn) {
-    // 类型检查...
-    this.middleware.push(fn);
-    return this;
+</code></pre></div><p>这就是一切的起源，<code>Koa</code> 类的实例从此诞生，继承自 <code>Events</code>，可得知其子类拥有处理异步事件的能力，然而<code>Koa</code>如何处理，现在还不得而知，先打个问号。但创建实例的过程中，可得知有三个对象作为实例的属性被初始化，分别为 <code>context</code> <code>request</code> <code>response</code>，还有我们非常熟悉的存放所有全局中间件的数组<code>middleware</code></p>
+<h3 id="koa-class-">koa class 图示</h3>
+<p><img src="/img/koa.png" alt="koa"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// usage 
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">async</span> (<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">next</span>) =&gt; {
+	<span style="color:#75715e">// 中间件函数
+</span><span style="color:#75715e"></span>});
+</code></pre></div><p>当调用use方法时，在确认它是<code>async</code>函数的情况下，通过<code>push</code>操作，这个函数会被追加到<code>middleware</code>数组中</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">fn</span>) {
+    <span style="color:#75715e">// 类型检查...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">middleware</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">fn</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
 }
-</code></pre>
-
-<p>此时我们已经有了处理的操作，但是<code>koa</code>还并没有真正的跑起来</p>
-
-<pre><code class="language-javascript">app.listen(3000);
-</code></pre>
-
-<p>可以说当开启<code>http</code>服务器的时候，<code>koa</code>才真正能够开始处理我们的<code>http</code>请求，那么这样一个简洁的调用背后具体究竟做了什么呢？</p>
-
-<pre><code class="language-javascript">const server = http.createServer(this.callback());
-return server.listen(...args);
-</code></pre>
-
-<p><code>koa</code> 使用了 <code>node</code> 的原生 <code>http</code>包来创建<code>http服务</code>,所有的秘密都藏匿在 <code>callback()</code> 这个方法中</p>
-
-<pre><code class="language-javascript">// source code
-const fn = compose(this.middleware);
+</code></pre></div><p>此时我们已经有了处理的操作，但是<code>koa</code>还并没有真正的跑起来</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">3000</span>);
+</code></pre></div><p>可以说当开启<code>http</code>服务器的时候，<code>koa</code>才真正能够开始处理我们的<code>http</code>请求，那么这样一个简洁的调用背后具体究竟做了什么呢？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">server</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">createServer</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">callback</span>());
+<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">listen</span>(...<span style="color:#a6e22e">args</span>);
+</code></pre></div><p><code>koa</code> 使用了 <code>node</code> 的原生 <code>http</code>包来创建<code>http服务</code>,所有的秘密都藏匿在 <code>callback()</code> 这个方法中</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">compose</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">middleware</span>);
 ...
-return fn(ctx).then(handleResponse).catch(onerror);
-</code></pre>
-
-<p><code>koa</code> 自身还依赖于 <code>koa-compose</code> 模块，从 <code>koa</code>对于 <code>fn</code> 的使用情况来看，<code>middleware</code> 应该是被封装成了一个叫做 <code>fn</code> 的对象，通过传入 <code>context</code> 对象来返回一个 <code>Promise</code></p>
-
+<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>(<span style="color:#a6e22e">ctx</span>).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">handleResponse</span>).<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">onerror</span>);
+</code></pre></div><p><code>koa</code> 自身还依赖于 <code>koa-compose</code> 模块，从 <code>koa</code>对于 <code>fn</code> 的使用情况来看，<code>middleware</code> 应该是被封装成了一个叫做 <code>fn</code> 的对象，通过传入 <code>context</code> 对象来返回一个 <code>Promise</code></p>
 <p>现在，深入 <code>koa-compose</code> 模块来看看它又对我们的中间件数组做了什么。</p>
-
-<pre><code class="language-javascript">// source code
-return function (context, next) {
-  // last called middleware #
-  let index = -1
-  return dispatch(0)
-  function dispatch (i) {
-    if (i &lt;= index) return Promise.reject(new Error('next() called multiple times'))
-    index = i
-    let fn = middleware[i]
-    if (i === middleware.length) fn = next
-    if (!fn) return Promise.resolve()	// 递归结束
-    try {
-      return Promise.resolve(fn(context, function next () {
-        return dispatch(i + 1)	// 递归调用dispatch
-      }))
-    } catch (err) {
-      return Promise.reject(err)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">context</span>, <span style="color:#a6e22e">next</span>) {
+  <span style="color:#75715e">// last called middleware #
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">index</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">dispatch</span>(<span style="color:#ae81ff">0</span>)
+  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dispatch</span> (<span style="color:#a6e22e">i</span>) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">index</span>) <span style="color:#66d9ef">return</span> Promise.<span style="color:#a6e22e">reject</span>(<span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;next() called multiple times&#39;</span>))
+    <span style="color:#a6e22e">index</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span>
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">middleware</span>[<span style="color:#a6e22e">i</span>]
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">middleware</span>.<span style="color:#a6e22e">length</span>) <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">next</span>
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">fn</span>) <span style="color:#66d9ef">return</span> Promise.<span style="color:#a6e22e">resolve</span>()	<span style="color:#75715e">// 递归结束
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">try</span> {
+      <span style="color:#66d9ef">return</span> Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">fn</span>(<span style="color:#a6e22e">context</span>, <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">next</span> () {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">dispatch</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)	<span style="color:#75715e">// 递归调用dispatch
+</span><span style="color:#75715e"></span>      }))
+    } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">err</span>) {
+      <span style="color:#66d9ef">return</span> Promise.<span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>)
     }
   }
 }
-</code></pre>
-
-<p>里面的闭包看起来很眼熟是吗？再对比一下</p>
-
-<pre><code class="language-javascript">// usage
-app.use(async (ctx, next) =&gt; {
-    // 中间件函数
-});
-</code></pre>
-
-<p>这里的 <code>Promise.resolve(fn(..))</code> 帮助我们异步执行的中间件函数，这里的<code>next</code>函数就解释了为什么<code>Koa</code>的中间件调用是递归执行的，它递归调用了 <code>dispatch</code> 函数来遍历数组中的，同时，所有的中间件函数享有同一个 <code>ctx</code>，再回顾一次外部</p>
-
-<pre><code class="language-javascript">const handleRequest = (req, res) =&gt; {
-  res.statusCode = 404;
-  const ctx = this.createContext(req, res);
-  const onerror = err =&gt; ctx.onerror(err);
-  const handleResponse = () =&gt; respond(ctx);
-  onFinished(res, onerror);
-  return fn(ctx).then(handleResponse).catch(onerror);
+</code></pre></div><p>里面的闭包看起来很眼熟是吗？再对比一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// usage
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">async</span> (<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">next</span>) =&gt; {
+    <span style="color:#75715e">// 中间件函数
+</span><span style="color:#75715e"></span>});
+</code></pre></div><p>这里的 <code>Promise.resolve(fn(..))</code> 帮助我们异步执行的中间件函数，这里的<code>next</code>函数就解释了为什么<code>Koa</code>的中间件调用是递归执行的，它递归调用了 <code>dispatch</code> 函数来遍历数组中的，同时，所有的中间件函数享有同一个 <code>ctx</code>，再回顾一次外部</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">handleRequest</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+  <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">statusCode</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">404</span>;
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ctx</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">createContext</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>);
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onerror</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">onerror</span>(<span style="color:#a6e22e">err</span>);
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">handleResponse</span> <span style="color:#f92672">=</span> () =&gt; <span style="color:#a6e22e">respond</span>(<span style="color:#a6e22e">ctx</span>);
+  <span style="color:#a6e22e">onFinished</span>(<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">onerror</span>);
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>(<span style="color:#a6e22e">ctx</span>).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">handleResponse</span>).<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">onerror</span>);
 };
 
-return handleRequest;
-</code></pre>
-
-<p><code>context</code> 使用node原生的 <code>http</code> 的监听回调函数中的 <code>req</code> <code>res</code> 来进行进一步的封装，意味着对于每一个 <code>http</code> 请求，<code>koa</code>都会创建一个 <code>context</code> 并共享给所有的全局中间件使用，当所有的中间件执行完过后，会将最后要返回的所有数据统一再交还给 <code>res</code> 进行返回，所以我们在每一个中间件中才能够从 <code>ctx</code> 中取得自己所需要的 <code>req</code> 中的数据进行处理，最后 <code>ctx</code> 再把要返回的 <code>body</code> 给原生的 <code>res</code> 进行返回</p>
-
+<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">handleRequest</span>;
+</code></pre></div><p><code>context</code> 使用node原生的 <code>http</code> 的监听回调函数中的 <code>req</code> <code>res</code> 来进行进一步的封装，意味着对于每一个 <code>http</code> 请求，<code>koa</code>都会创建一个 <code>context</code> 并共享给所有的全局中间件使用，当所有的中间件执行完过后，会将最后要返回的所有数据统一再交还给 <code>res</code> 进行返回，所以我们在每一个中间件中才能够从 <code>ctx</code> 中取得自己所需要的 <code>req</code> 中的数据进行处理，最后 <code>ctx</code> 再把要返回的 <code>body</code> 给原生的 <code>res</code> 进行返回</p>
 <p>每一个请求都有唯一一个 <code>context</code> 对象，所有的关于请求和返回的东西都统一放在里面</p>
-
 <p><code>createContext</code> 方法将 <code>req</code> <code>res</code> 进一步封装</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">context</span>); <span style="color:#75715e">// 创建一个对象，使之拥有context的原型方法，后面以此类推
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">request</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">response</span>);
 
-<pre><code class="language-javascript">// source code
-const context = Object.create(this.context); // 创建一个对象，使之拥有context的原型方法，后面以此类推
-const request = context.request = Object.create(this.request);
-const response = context.response = Object.create(this.response);
-
-context.app = request.app = response.app = this;
-context.req = request.req = response.req = req;
-context.res = request.res = response.res = res;
-request.ctx = response.ctx = context;
-request.response = response;
-response.request = request;
-</code></pre>
-
-<p>本着一个请求一个<code>context</code>的原则，<code>context</code> 必须是作为一个临时对象而存在，所有的东西都必须封进一个对象中，因此 <code>app</code> <code>req</code> <code>res</code> 三个属性就此诞生，但不知道大家是否有一个疑问，为什么 <code>app</code> <code>req</code> <code>res</code> 也同时被封在了 <code>request</code> 和 <code>response</code> 里 ？</p>
-
+<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">req</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">req</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">req</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>;
+<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">res</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">res</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">res</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">res</span>;
+<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span>;
+<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>;
+<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">request</span>;
+</code></pre></div><p>本着一个请求一个<code>context</code>的原则，<code>context</code> 必须是作为一个临时对象而存在，所有的东西都必须封进一个对象中，因此 <code>app</code> <code>req</code> <code>res</code> 三个属性就此诞生，但不知道大家是否有一个疑问，为什么 <code>app</code> <code>req</code> <code>res</code> 也同时被封在了 <code>request</code> 和 <code>response</code> 里 ？</p>
 <p>使他们同时共享同一个 <code>app</code> <code>req</code> <code>res</code> 和 <code>ctx</code>，是为了将处理职责进行转移，客户从外部访问，他们只需要一个 <code>ctx</code> 即可获得所有 <code>koa</code> 提供的数据和方法，而 <code>koa</code> 会继续将这些职责进行进一步的划分，比如 <code>request</code> 是用来进一步封装 <code>req</code> 的，<code>response</code> 是用来进一步封装 <code>res</code>的，这样职责得到了分散，降低了耦合，同时共享所有资源使得整个 <code>context</code> 具有了高内聚的性质，内部元素互相都能够访问得到</p>
-
-<pre><code class="language-javascript">// source code
-context.state = {};
-</code></pre>
-
-<p>看得出来，其中的 <code>state</code> 就是专门负责保存单个请求状态的空对象，用户可以根据自己的需要来管理里面的内容</p>
-
-<pre><code class="language-javascript">// source code
-const ctx = this.createContext(req, res);
-const onerror = err =&gt; ctx.onerror(err);
-</code></pre>
-
-<p>这个巨大的 <code>ctx</code> 被创建出来的时候在一开始就立马挂载了错误监听器，但在 <code>createContext</code> 中并没有发现这个<code>onerror</code>方法，应该属于其中一个模块的原型方法，经过一番搜索，发现它位于 <code>context.js</code> 这个文件下，这个文件定义了所有的默认 <code>context</code> 对象具有的原型方法</p>
-
-<pre><code class="language-javascript">// application.js
-// handleRequest()
-const onerror = err =&gt; ctx.onerror(err);
-onFinished(res, onerror);
-return fn(ctx).then(handleResponse).catch(onerror);
-</code></pre>
-
-<p>异步函数运行过程中如果有异常抛出且内部没有自行捕获异常的话， <code>koa</code> 会统一使用 <code>Promise</code> 的<code>catch</code> 语句来进行错误处理，用一个图来表示的话那就是这样</p>
-
-<h3 id="koa-请求处理流程图">koa 请求处理流程图</h3>
-
-<p><img src="/img/koa-request-process.png" alt="koa-request-process" /></p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> {};
+</code></pre></div><p>看得出来，其中的 <code>state</code> 就是专门负责保存单个请求状态的空对象，用户可以根据自己的需要来管理里面的内容</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ctx</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">createContext</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onerror</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">onerror</span>(<span style="color:#a6e22e">err</span>);
+</code></pre></div><p>这个巨大的 <code>ctx</code> 被创建出来的时候在一开始就立马挂载了错误监听器，但在 <code>createContext</code> 中并没有发现这个<code>onerror</code>方法，应该属于其中一个模块的原型方法，经过一番搜索，发现它位于 <code>context.js</code> 这个文件下，这个文件定义了所有的默认 <code>context</code> 对象具有的原型方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// application.js
+</span><span style="color:#75715e"></span><span style="color:#75715e">// handleRequest()
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onerror</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">onerror</span>(<span style="color:#a6e22e">err</span>);
+<span style="color:#a6e22e">onFinished</span>(<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">onerror</span>);
+<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>(<span style="color:#a6e22e">ctx</span>).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">handleResponse</span>).<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">onerror</span>);
+</code></pre></div><p>异步函数运行过程中如果有异常抛出且内部没有自行捕获异常的话， <code>koa</code> 会统一使用 <code>Promise</code> 的<code>catch</code> 语句来进行错误处理，用一个图来表示的话那就是这样</p>
+<h3 id="koa-">koa 请求处理流程图</h3>
+<p><img src="/img/koa-request-process.png" alt="koa-request-process"></p>
 <p>到这里我们应该也不难解开本文开头时我们心中的一个疑问，那就是为什么要继承 <code>Events</code>，其实就是为了使用 <code>node</code> 自带的事件监听器来监听一些事件，例如目前所知的 <code>error</code> ，来解耦错误处理这一块的功能</p>
-
 <p>全局的错误处理函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
+</span><span style="color:#75715e"></span><span style="color:#75715e">// application.js
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">onerror</span>(<span style="color:#a6e22e">err</span>) {
+  <span style="color:#a6e22e">assert</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">instanceof</span> Error, <span style="color:#e6db74">`</span><span style="color:#e6db74">non-error thrown: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">err</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
 
-<pre><code class="language-javascript">// source code
-// application.js
+  <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">404</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">status</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">expose</span>) <span style="color:#66d9ef">return</span>;
+  <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">silent</span>) <span style="color:#66d9ef">return</span>;
 
-onerror(err) {
-  assert(err instanceof Error, `non-error thrown: ${err}`);
-
-  if (404 == err.status || err.expose) return;
-  if (this.silent) return;
-
-  const msg = err.stack || err.toString();
-  console.error();
-  console.error(msg.replace(/^/gm, '  '));
-  console.error();
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">stack</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">toString</span>();
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>();
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^/gm</span>, <span style="color:#e6db74">&#39;  &#39;</span>));
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>();
 }
-</code></pre>
-
-<p><code>Koa</code> 的内部核心处理流程已经梳理完毕，现在我们再进入内部模块一探究竟</p>
-
-<h2 id="request-模块">request 模块</h2>
-
+</code></pre></div><p><code>Koa</code> 的内部核心处理流程已经梳理完毕，现在我们再进入内部模块一探究竟</p>
+<h2 id="request-">request 模块</h2>
 <p>大量的 <code>getter</code> <code>setter</code> 充分提取出 <code>node</code> <code>http</code> 所提供的有用的请求相关的属性，还有一些必要的 <code>helper</code> 函数这里不再赘述，API文档中几乎所有的 <code>ctx.req</code> 下的属性都在其下提供，值得一提的是其中的 <code>this</code> ，头疼的 <code>this</code> , 这一块的代码用了大量的 <code>this.req</code> 的方式来访问node原生提供的 http 请求信息(因为我们把 node 的<code>req</code>赋给了<code>context</code>)，当在 <code>koa</code> 外部进行使用时我们是通过 <code>ctx.req.propertyName</code> 的形式 &hellip; 没错，我想你也发现了，我们需要绑定我们的 <code>this</code> 使之指向的是 <code>ctx.req</code>，所以在 <code>context.js</code> 模块中使用了代理来将 <code>this</code> 进行正确的绑定，前文提到的使这些模块能够相互访问的赋值代码其实也一定程度减少了<code>this</code>的麻烦事</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 详见 delegates 包
+</span><span style="color:#75715e"></span><span style="color:#75715e">// https://github.com/tj/node-delegates
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// Koa context.js
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">delegate</span>(<span style="color:#a6e22e">proto</span>, <span style="color:#e6db74">&#39;request&#39;</span>)
+  .<span style="color:#a6e22e">method</span>(<span style="color:#e6db74">&#39;acceptsLanguages&#39;</span>)
+  .<span style="color:#a6e22e">method</span>(<span style="color:#e6db74">&#39;acceptsEncodings&#39;</span>)
+  .<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#39;query&#39;</span>)
+  .<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#39;path&#39;</span>)
+  .<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#39;url&#39;</span>)
+  .<span style="color:#a6e22e">getter</span>(<span style="color:#e6db74">&#39;origin&#39;</span>)
 
-<pre><code class="language-javascript">// 详见 delegates 包
-// https://github.com/tj/node-delegates
-
-// Koa context.js
-delegate(proto, 'request')
-  .method('acceptsLanguages')
-  .method('acceptsEncodings')
-  .access('query')
-  .access('path')
-  .access('url')
-  .getter('origin')
-
-// delegates 的内部核心实现，通过apply来重新绑定this
-proto[name] = function(){
-  return this[target][name].apply(this[target], arguments);
+<span style="color:#75715e">// delegates 的内部核心实现，通过apply来重新绑定this
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">proto</span>[<span style="color:#a6e22e">name</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">target</span>][<span style="color:#a6e22e">name</span>].<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">target</span>], <span style="color:#a6e22e">arguments</span>);
 };
-</code></pre>
-
-<h2 id="response-模块">response 模块</h2>
-
+</code></pre></div><h2 id="response-">response 模块</h2>
 <p><code>response.js</code> 的内部也同 <code>request.js</code> 中类似，值得一提的是 <code>writable</code> 这个getter，如果请求已经得到相应，那么返回 <code>true</code>，其中读取的值是 <code>this.res.finished</code>，许多的报错中我们常常会碰到关于尝试重复写入响应头 <code>header</code> 的错误，这个错误的来源即使是 <code>on-finished</code> 这个包，当结束响应的时候此包能够执行一个回调来保存此请求的状态于 <code>res</code></p>
-
-<h2 id="response-helper-函数">response helper 函数</h2>
-
+<h2 id="response-helper-">response helper 函数</h2>
 <p>koa有一个统一的响应函数位于 <code>application.js</code> 的末尾，专门负责处理 <code>ctx.body</code> <code>ctx.status</code> 来进行请求响应</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// responses
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Buffer</span>.<span style="color:#a6e22e">isBuffer</span>(<span style="color:#a6e22e">body</span>)) <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#a6e22e">body</span>);
+<span style="color:#66d9ef">if</span> (<span style="color:#e6db74">&#39;string&#39;</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">body</span>) <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#a6e22e">body</span>);
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">body</span> <span style="color:#66d9ef">instanceof</span> <span style="color:#a6e22e">Stream</span>) <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">res</span>);
 
-<pre><code class="language-javascript">// responses
-if (Buffer.isBuffer(body)) return res.end(body);
-if ('string' == typeof body) return res.end(body);
-if (body instanceof Stream) return body.pipe(res);
-
-// body: json
-body = JSON.stringify(body);
-if (!res.headersSent) {
-  ctx.length = Buffer.byteLength(body);
+<span style="color:#75715e">// body: json
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">body</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">body</span>);
+<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">headersSent</span>) {
+  <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#a6e22e">byteLength</span>(<span style="color:#a6e22e">body</span>);
 }
-res.end(body);
-</code></pre>
-
-<p>值得注意的是返回的body支持 <code>Buffer</code> <code>string</code> 流，以及最常见的 <code>json</code></p>
-
-<h3 id="全文完">全文完</h3>
-
+<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#a6e22e">body</span>);
+</code></pre></div><p>值得注意的是返回的body支持 <code>Buffer</code> <code>string</code> 流，以及最常见的 <code>json</code></p>
+<h3 id="heading-2">全文完</h3>
 <p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
-
-<p>联系方式：tecker_yuknigh@163.com</p>
+<p>联系方式：tecker_<a href="mailto:yuknigh@163.com">yuknigh@163.com</a></p>
 
 		</div>
 		<footer class="post__footer">
@@ -381,11 +307,11 @@ res.end(body);
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -460,6 +386,7 @@ res.end(body);
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

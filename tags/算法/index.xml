@@ -35,7 +35,7 @@
       <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-1017-packets/</guid>
-      <description>知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; int square[7]; // 解法：每次都先放最大 int solve() { int res = 0; // 6x6 直接成一块 res += square[6]; // 5x5 先成一块，再补 1x1 res += square[5]; square[1] -= 11 * square[5]; // 4x4 先成一块，然</description>
+      <description>知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;algorithm&amp;gt; int square[7]; // 解法：每次都先放最大 int solve() { int res = 0; // 6x6 直接成一块 res += square[6]; // 5x5 先成一块，再补 1x1 res += square[5]; square[1] -= 11 * square[5]; // 4x4 先成一块，然后</description>
     </item>
     
     <item>
@@ -53,7 +53,7 @@
       <pubDate>Thu, 29 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/0%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F-google%E7%AC%94%E8%AF%95%E9%A2%98/</guid>
-      <description>题目: 长度为n的数组乱序存放着0至n-1，现在只能进行0与其他数的交换，请排序这个数组 package main import &amp;quot;fmt&amp;quot; func main() { s := []int{3, 5, 4, 0, 1, 2, 6} for _, v := range s { fmt.Printf(&amp;quot;%d &amp;quot;, v) }</description>
+      <description>题目: 长度为n的数组乱序存放着0至n-1，现在只能进行0与其他数的交换，请排序这个数组 package main import &amp;#34;fmt&amp;#34; func main() { s := []int{3, 5, 4, 0, 1, 2, 6} for _, v := range s { fmt.Printf(&amp;#34;%d &amp;#34;, v) }</description>
     </item>
     
   </channel>

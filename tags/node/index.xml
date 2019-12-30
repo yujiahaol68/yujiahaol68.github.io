@@ -53,7 +53,7 @@
       <pubDate>Wed, 12 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/</guid>
-      <description>Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &amp;quot;Node should test in action&amp;quot; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &amp;quot;Pratice node every day&amp;quot; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case</description>
+      <description>Time is short. Just show me the code! var http = require(&amp;#39;http&amp;#39;); var url = require(&amp;#39;url&amp;#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &amp;#34;Node should test in action&amp;#34; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &amp;#34;Pratice node every day&amp;#34; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case</description>
     </item>
     
     <item>
@@ -62,7 +62,7 @@
       <pubDate>Thu, 23 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
-      <description>错误结果 Error: Can&amp;rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，</description>
+      <description>错误结果 Error: Can&#39;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，</description>
     </item>
     
     <item>

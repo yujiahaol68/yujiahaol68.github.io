@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="最精简restful实现" />
-<meta property="og:description" content="Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &quot;Node should test in action&quot; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &quot;Pratice node every day&quot; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case" />
+<meta property="og:description" content="Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &#34;Node should test in action&#34; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &#34;Pratice node every day&#34; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/" />
 <meta property="article:published_time" content="2017-04-12T00:00:00+00:00" />
@@ -72,96 +72,90 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#time-is-short-just-show-me-the-code">Time is short. Just show me the code!</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#time-is-short-just-show-me-the-code">Time is short. Just show me the code!</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
+			<h3 id="time-is-short-just-show-me-the-code">Time is short. Just show me the code!</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">http</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;http&#39;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;url&#39;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">items</span> <span style="color:#f92672">=</span> [];
 
-<h3 id="time-is-short-just-show-me-the-code">Time is short. Just show me the code!</h3>
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">附上测试方法
+</span><span style="color:#75715e">curl -X GET http://localhost:3000
+</span><span style="color:#75715e">curl -X POST -d &#34;Node should test in action&#34; http://localhost:3000
+</span><span style="color:#75715e">curl -X DELETE http://localhost:3000/1
+</span><span style="color:#75715e">curl -X PUT -d &#34;Pratice node every day&#34; http://localhost:3000/1
+</span><span style="color:#75715e">*/</span>
 
-<pre><code class="language-javascript">var http = require('http');
-var url = require('url');
-var items = [];
-
-/*
-附上测试方法
-curl -X GET http://localhost:3000
-curl -X POST -d &quot;Node should test in action&quot; http://localhost:3000
-curl -X DELETE http://localhost:3000/1
-curl -X PUT -d &quot;Pratice node every day&quot; http://localhost:3000/1
-*/
-
-var server = http.createServer(function (req, res) {
-    // method include POST,GET,DELETE,PUT
-    switch (req.method) {
-        case 'POST':
-            var item = '';
-            // convert bytes to utf-8 encoding data
-            req.setEncoding('utf-8');
-            // listening data event, POST data will send to server by chunk (bytes array)
-            req.on('data', function(chunk) {
-                item +=chunk;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">server</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">createServer</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) {
+    <span style="color:#75715e">// method include POST,GET,DELETE,PUT
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">switch</span> (<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">method</span>) {
+        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;POST&#39;</span><span style="color:#f92672">:</span>
+            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+            <span style="color:#75715e">// convert bytes to utf-8 encoding data
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">setEncoding</span>(<span style="color:#e6db74">&#39;utf-8&#39;</span>);
+            <span style="color:#75715e">// listening data event, POST data will send to server by chunk (bytes array)
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;data&#39;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">chunk</span>) {
+                <span style="color:#a6e22e">item</span> <span style="color:#f92672">+=</span><span style="color:#a6e22e">chunk</span>;
             });
-            req.on('end', function() {
-                items.push(item);
-                res.end('OK\n');
+            <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;end&#39;</span>, <span style="color:#66d9ef">function</span>() {
+                <span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">item</span>);
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#e6db74">&#39;OK\n&#39;</span>);
             });
-            break;
-        case 'GET':
-            items.forEach(function(element, i) {
-                res.write(i + 1 + ') ' + element + '\n');
+            <span style="color:#66d9ef">break</span>;
+        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;GET&#39;</span><span style="color:#f92672">:</span>
+            <span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">element</span>, <span style="color:#a6e22e">i</span>) {
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;) &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\n&#39;</span>);
             });
-            res.end();
-            break;
-        case 'DELETE':
-            var path = url.parse(req.url).pathname;     //get string '/1'
-            var i = parseInt(path.slice(1), 10);    // convert String to Number
-            if(isNaN(i)) {
-                res.statusCode = 400;
-                res.end('Invalid item id');
-            } else if (!items[i]) {
-                res.statusCode = 404;
-                res.end('Item not found!');
-            } else {
-                items.splice(i, 1);
-                res.end('delete success!\n');
+            <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>();
+            <span style="color:#66d9ef">break</span>;
+        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;DELETE&#39;</span><span style="color:#f92672">:</span>
+            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">url</span>).<span style="color:#a6e22e">pathname</span>;     <span style="color:#75715e">//get string &#39;/1&#39;
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> parseInt(<span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">slice</span>(<span style="color:#ae81ff">1</span>), <span style="color:#ae81ff">10</span>);    <span style="color:#75715e">// convert String to Number
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span>(isNaN(<span style="color:#a6e22e">i</span>)) {
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">statusCode</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span>;
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#e6db74">&#39;Invalid item id&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">i</span>]) {
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">statusCode</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">404</span>;
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#e6db74">&#39;Item not found!&#39;</span>);
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">splice</span>(<span style="color:#a6e22e">i</span>, <span style="color:#ae81ff">1</span>);
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#e6db74">&#39;delete success!\n&#39;</span>);
             }
-            break;
-        case 'PUT':
-            var newItem = '';
-            var putPath = url.parse(req.url).pathname;
-            var j = parseInt(putPath.slice(1), 10);
-            if(isNaN(j)) {
-                res.statusCode = 400;
-                res.end('Invalid item id');
-            } else if (!items[j]) {
-                res.statusCode = 404;
-                res.end('item not found!');
-            } else {
-                req.on('data', function(chunk) {
-                    newItem += chunk;
+            <span style="color:#66d9ef">break</span>;
+        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;PUT&#39;</span><span style="color:#f92672">:</span>
+            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">newItem</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">putPath</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">url</span>).<span style="color:#a6e22e">pathname</span>;
+            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> parseInt(<span style="color:#a6e22e">putPath</span>.<span style="color:#a6e22e">slice</span>(<span style="color:#ae81ff">1</span>), <span style="color:#ae81ff">10</span>);
+            <span style="color:#66d9ef">if</span>(isNaN(<span style="color:#a6e22e">j</span>)) {
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">statusCode</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span>;
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#e6db74">&#39;Invalid item id&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">j</span>]) {
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">statusCode</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">404</span>;
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#e6db74">&#39;item not found!&#39;</span>);
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;data&#39;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">chunk</span>) {
+                    <span style="color:#a6e22e">newItem</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">chunk</span>;
                 });
-                items[j-1] = newItem;
-                res.end('update success!');                
+                <span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">j</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">newItem</span>;
+                <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">end</span>(<span style="color:#e6db74">&#39;update success!&#39;</span>);                
             }
-            break;
+            <span style="color:#66d9ef">break</span>;
     }
 });
 
-server.listen(3000);
+<span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">3000</span>);
 
-</code></pre>
-
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -212,11 +206,11 @@ server.listen(3000);
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -291,6 +285,7 @@ server.listen(3000);
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

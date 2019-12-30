@@ -65,92 +65,73 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/php" rel="category">php</a></span>
 </div>
 <span class="meta__text">
-总计 326 字
+总计 374 字
 </span></div>
 		</header>
 <div class="post__toc toc">
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#需要用到的函数">需要用到的函数</a>
-<ul>
-<li><a href="#getdate-unix数字时间戳">getdate(unix数字时间戳)</a></li>
-</ul></li>
-<li><a href="#time">time()</a>
-<ul>
-<li><a href="#现假设从mysql中获取到时间戳为-result">现假设从mysql中获取到时间戳为$result</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#heading">需要用到的函数</a></li>
+        <li><a href="#time">time()</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<p>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案</p>
-
-<h3 id="需要用到的函数">需要用到的函数</h3>
-
-<h4 id="getdate-unix数字时间戳">getdate(unix数字时间戳)</h4>
-
-<p>将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间
-<!-- More --></p>
-
+			<p>在mysql查询中我们经常会遇到UNIX时间戳的转换还有计算经过时间的问题，下面的我的一种解决方案</p>
+<h3 id="heading">需要用到的函数</h3>
+<h4 id="getdateunix">getdate(unix数字时间戳)</h4>
+<p>将时间戳数字转化为键值数组，使得我们可以轻易地分离想要进行判断的时间</p>
+<!-- raw HTML omitted -->
 <h3 id="time">time()</h3>
-
 <p>方便获取现在的时间</p>
-
-<h4 id="现假设从mysql中获取到时间戳为-result">现假设从mysql中获取到时间戳为$result</h4>
-
-<pre><code class="language-php">      		$date_time_array = getdate($result);
-		  	$hour = $date_time_array['hours'];
-			$min = $date_time_array['minutes'];
-			$second = $date_time_array['seconds'];
-			$month = $date_time_array['mon'];
-			$day = $date_time_array['mday'];
-			$year = $date_time_array['year'];
+<h4 id="mysqlresult">现假设从mysql中获取到时间戳为$result</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">      		$date_time_array = getdate($result);
+		  	$hour = $date_time_array[&#39;hours&#39;];
+			$min = $date_time_array[&#39;minutes&#39;];
+			$second = $date_time_array[&#39;seconds&#39;];
+			$month = $date_time_array[&#39;mon&#39;];
+			$day = $date_time_array[&#39;mday&#39;];
+			$year = $date_time_array[&#39;year&#39;];
 			$now_time_array = getdate(time());
-			if($year&lt;$now_time_array['year'])
+			if($year<span style="color:#960050;background-color:#1e0010">&lt;</span>$now_time_array[&#39;year&#39;])
 			{
-				$diff = $now_time_array['year']-$year;
-				$timediff = $diff.'年前';
+				$diff = $now_time_array[&#39;year&#39;]-$year;
+				$timediff = $diff.&#39;年前&#39;;
 			}
-			else if($month&lt;$now_time_array['mon'])
+			else if($month<span style="color:#960050;background-color:#1e0010">&lt;</span>$now_time_array[&#39;mon&#39;])
 			{
-				$diff = $now_time_array['mon']-$month;
-				$timediff = $diff.'月前';
+				$diff = $now_time_array[&#39;mon&#39;]-$month;
+				$timediff = $diff.&#39;月前&#39;;
 			}
-			else if($day&lt;$now_time_array['mday'])
+			else if($day<span style="color:#960050;background-color:#1e0010">&lt;</span>$now_time_array[&#39;mday&#39;])
 			{
-				$diff = $now_time_array['mday']-$day;
-				$timediff = $diff.'天前';
+				$diff = $now_time_array[&#39;mday&#39;]-$day;
+				$timediff = $diff.&#39;天前&#39;;
 			}
-			else if($hour&lt;$now_time_array['hours'])
+			else if($hour<span style="color:#960050;background-color:#1e0010">&lt;</span>$now_time_array[&#39;hours&#39;])
 			{
-				$diff = $now_time_array['hours']-$hour;
-				$timediff = $diff.'小时前';
+				$diff = $now_time_array[&#39;hours&#39;]-$hour;
+				$timediff = $diff.&#39;小时前&#39;;
 			}
-			else if($min&lt;$now_time_array['minutes'])
+			else if($min<span style="color:#960050;background-color:#1e0010">&lt;</span>$now_time_array[&#39;minutes&#39;])
 			{
-				$diff = $now_time_array['minutes']-$min;
-				$timediff = $diff.'分钟前';
+				$diff = $now_time_array[&#39;minutes&#39;]-$min;
+				$timediff = $diff.&#39;分钟前&#39;;
 			}
-			else if($second&lt;$now_time_array['seconds'])
+			else if($second<span style="color:#960050;background-color:#1e0010">&lt;</span>$now_time_array[&#39;seconds&#39;])
 			{
-				$diff = $now_time_array['seconds']-$second;
-				$timediff = $diff.'秒前';
+				$diff = $now_time_array[&#39;seconds&#39;]-$second;
+				$timediff = $diff.&#39;秒前&#39;;
 			}
 
-</code></pre>
-
-<p>循环嵌套顺序判断年月日时分秒，找到第一个不同项相减，就能够计算出数据的距今时间</p>
+</code></pre></div><p>循环嵌套顺序判断年月日时分秒，找到第一个不同项相减，就能够计算出数据的距今时间</p>
 
 		</div>
 		<footer class="post__footer">
@@ -200,11 +181,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -279,6 +260,7 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

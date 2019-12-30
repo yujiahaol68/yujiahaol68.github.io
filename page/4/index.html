@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zh-cn">
 <head>
-	<meta name="generator" content="Hugo 0.59.0" />
+	<meta name="generator" content="Hugo 0.62.0" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,8 +12,7 @@
 <meta property="og:description" content="一个纯粹的技术干货聚集地，里面包含着一个无聊人士的所思所想" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-
-<meta property="og:updated_time" content="2019-11-06T09:20:41+08:00" />
+<meta property="og:updated_time" content="2019-12-30T10:42:32+08:00" />
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -56,6 +55,30 @@ if (!doNotTrack) {
 	<article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/" rel="bookmark">
+			用supertest进行API测试
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2017-04-23T00:00:00">April 23, 2017</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/node" rel="category">node</a></span>
+</div>
+<span class="meta__text">
+总计 483 字
+</span></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		在node开发中，写完了API接口之后，往往都要进行测试，现在常用的测试模块一般都是mocha和chai， 然后我们应该有相配合的请求模块来帮
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/" rel="bookmark">
 			最精简restful实现
 			</a>
@@ -75,7 +98,7 @@ if (!doNotTrack) {
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		Time is short. Just show me the code! var http = require('http'); var url = require('url'); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &quot;Node should test in action&quot; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &quot;Pratice node every day&quot; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case
+		Time is short. Just show me the code! var http = require(&#39;http&#39;); var url = require(&#39;url&#39;); var items = []; /* 附上测试方法 curl -X GET http://localhost:3000 curl -X POST -d &#34;Node should test in action&#34; http://localhost:3000 curl -X DELETE http://localhost:3000/1 curl -X PUT -d &#34;Pratice node every day&#34; http://localhost:3000/1 */ var server = http.createServer(function (req, res) { // method include POST,GET,DELETE,PUT switch (req.method) { case
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -119,7 +142,7 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/machine-learning" rel="category">Machine Learning</a></span>
 </div>
 <span class="meta__text">
-总计 865 字
+总计 862 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
@@ -167,11 +190,11 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/node" rel="category">node</a></span>
 </div>
 <span class="meta__text">
-总计 892 字
+总计 896 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		错误结果 Error: Can&rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，
+		错误结果 Error: Can't render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -215,11 +238,11 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/vue" rel="category">Vue</a></span>
 </div>
 <span class="meta__text">
-总计 548 字
+总计 556 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		配置路由 $ npm install vue-router --save routes.js import Home from './pages/Home.vue' import Gifs from './pages/Gifs.vue' import User from './pages/User.vue' export const routes = [ { path: '', component: Home }, { path: '/gifs', component: Gifs }, { path: '/user/:id', component: User } //指定路由和对应要渲染的组件 //404的path
+		配置路由 $ npm install vue-router --save routes.js import Home from &#39;./pages/Home.vue&#39; import Gifs from &#39;./pages/Gifs.vue&#39; import User from &#39;./pages/User.vue&#39; export const routes = [ { path: &#39;&#39;, component: Home }, { path: &#39;/gifs&#39;, component: Gifs }, { path: &#39;/user/:id&#39;, component: User } //指定路由和对应要渲染的组件 //404的path
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -239,7 +262,7 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/vue" rel="category">Vue</a></span>
 </div>
 <span class="meta__text">
-总计 777 字
+总计 801 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
@@ -269,30 +292,6 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		1.app() 用于快速生成对应命名空间下的类的实例 $faker = app(Faker\Generator::class); //生成了一个Faker的生成器实例 2.str_random() 用于快速生成限定范围内的随机字符串 $password = str_random(10); //生成10位随机
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/" rel="bookmark">
-			Laravel5 新手填坑指南
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2017-02-03T00:00:00">February 03, 2017</time>
-</div>
-
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/php" rel="category">php</a></span>
-</div>
-<span class="meta__text">
-总计 906 字
-</span></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		浏览器篇 开发浏览器: Chorme（不用解释） 注意事项： 一定要先清缓存！清缓存！清缓存！ 重要的说三遍。 环境配置篇 开发环境： Mac/Linux (少很多麻烦) 首选
-	</div>
 </article>
 </main>
 
@@ -316,11 +315,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -395,6 +394,7 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

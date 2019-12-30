@@ -72,148 +72,99 @@ if (!doNotTrack) {
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#inner-join">Inner Join</a></li>
-<li><a href="#self-join">Self Join</a></li>
-<li><a href="#outer-join">Outer Join</a></li>
-<li><a href="#union">UNION</a></li>
-<li><a href="#insert-into">INSERT INTO</a></li>
-<li><a href="#表操作">表操作</a></li>
-<li><a href="#视图">视图</a></li>
-<li><a href="#事务">事务</a></li>
-<li><a href="#重要概念">重要概念</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#inner-join">Inner Join</a></li>
+    <li><a href="#self-join">Self Join</a></li>
+    <li><a href="#outer-join">Outer Join</a></li>
+    <li><a href="#union">UNION</a></li>
+    <li><a href="#insert-into">INSERT INTO</a></li>
+    <li><a href="#heading">表操作</a></li>
+    <li><a href="#heading-1">视图</a></li>
+    <li><a href="#heading-2">事务</a></li>
+    <li><a href="#heading-3">重要概念</a></li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
-
-<h2 id="inner-join">Inner Join</h2>
-
+			<h2 id="inner-join">Inner Join</h2>
 <p>只含有关联的行</p>
-
-<pre><code class="language-sql">SELECT field1, RTRIM(field2) AS f2
-FROM table_one INNER JOIN table_two
-ON table_one.table_two_id = table_two.id
-GROUP BY field1, f2
-AVING COUNT(table_two.credit) &gt; 2
-WHERE condition1 AND condition2 AND field1 LIKE '%@hotmail.com'
-ORDER BY field3;
-</code></pre>
-
-<h2 id="self-join">Self Join</h2>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> field1, RTRIM(field2) <span style="color:#66d9ef">AS</span> f2
+<span style="color:#66d9ef">FROM</span> table_one <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> table_two
+<span style="color:#66d9ef">ON</span> table_one.table_two_id <span style="color:#f92672">=</span> table_two.id
+<span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> field1, f2
+AVING <span style="color:#66d9ef">COUNT</span>(table_two.credit) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>
+<span style="color:#66d9ef">WHERE</span> condition1 <span style="color:#66d9ef">AND</span> condition2 <span style="color:#66d9ef">AND</span> field1 <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%@hotmail.com</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> field3;
+</code></pre></div><h2 id="self-join">Self Join</h2>
 <p>可用于替代子查询</p>
-
-<pre><code class="language-sql">SELECT c1.cust_id, c1.cust_name, c1.cust_contact
-FROM customers AS c1, customers AS c2
-WHERE c1.cust_name = c2.cust_name
-AND c2.cust_contact = 'Jim';
-</code></pre>
-
-<h2 id="outer-join">Outer Join</h2>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> c1.cust_id, c1.cust_name, c1.cust_contact
+<span style="color:#66d9ef">FROM</span> customers <span style="color:#66d9ef">AS</span> c1, customers <span style="color:#66d9ef">AS</span> c2
+<span style="color:#66d9ef">WHERE</span> c1.cust_name <span style="color:#f92672">=</span> c2.cust_name
+<span style="color:#66d9ef">AND</span> c2.cust_contact <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Jim</span><span style="color:#e6db74">&#39;</span>;
+</code></pre></div><h2 id="outer-join">Outer Join</h2>
 <p>包含没有关联行的行</p>
-
 <ul>
-<li><p><code>LEFT</code> 指的是 <code>OUTER JOIN</code> 左边的表选择所有行</p>
-
-<pre><code class="language-sql">SELECT customers.cust_id, orders.order_num
-FROM customers LEFT OUTER JOIN orders
-ON customers.cust_id = orders.cust_id;
-</code></pre></li>
+<li><code>LEFT</code> 指的是 <code>OUTER JOIN</code> 左边的表选择所有行</li>
 </ul>
-
-<h2 id="union">UNION</h2>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> customers.cust_id, orders.order_num
+<span style="color:#66d9ef">FROM</span> customers <span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">OUTER</span> <span style="color:#66d9ef">JOIN</span> orders
+<span style="color:#66d9ef">ON</span> customers.cust_id <span style="color:#f92672">=</span> orders.cust_id;
+</code></pre></div><h2 id="union">UNION</h2>
 <p>连接多个查询，但必须每个查询的列必须相同</p>
-
 <h2 id="insert-into">INSERT INTO</h2>
-
-<pre><code class="language-sql">INSERT INTO table1(
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> table1(
     field1,
     field2
 )
-VALUES('a', 2);
-</code></pre>
-
-<p><code>VALUES</code> 可替换为 <code>SELECT</code> 来插入检索的数据</p>
-
+<span style="color:#66d9ef">VALUES</span>(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">2</span>);
+</code></pre></div><p><code>VALUES</code> 可替换为 <code>SELECT</code> 来插入检索的数据</p>
 <p><code>SELECT INTO</code> 可用于从表中导出数据到另一个表中</p>
+<h2 id="heading">表操作</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> ...
+<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> ...
 
-<h2 id="表操作">表操作</h2>
-
-<pre><code class="language-sql">CREATE TABLE ...
-DROP TABLE ...
-
-ALTER TABLE table1
-ADD field CHAR(20)
-DROP COLUMN deletedField
-</code></pre>
-
-<h2 id="视图">视图</h2>
-
+<span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> table1
+<span style="color:#66d9ef">ADD</span> field CHAR(<span style="color:#ae81ff">20</span>)
+<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">COLUMN</span> deletedField
+</code></pre></div><h2 id="heading-1">视图</h2>
 <p>用于重用SQL语句，一般用于简化复杂的查询语句，或者是过滤数据</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">VIEW</span> cv <span style="color:#66d9ef">AS</span>
+<span style="color:#66d9ef">SELECT</span> ...
+<span style="color:#66d9ef">WHERE</span> ...
 
-<pre><code class="language-sql">CREATE VIEW cv AS
-SELECT ...
-WHERE ...
+<span style="color:#66d9ef">SELECT</span> field1, field2
+<span style="color:#66d9ef">FROM</span> cv
+<span style="color:#66d9ef">WHERE</span> ...
 
-SELECT field1, field2
-FROM cv
-WHERE ...
-
-- 两个where子句会自动组合
-</code></pre>
-
-<h2 id="事务">事务</h2>
-
+<span style="color:#f92672">-</span> <span style="color:#960050;background-color:#1e0010">两</span><span style="color:#960050;background-color:#1e0010">个</span>where子句会自动组合
+</code></pre></div><h2 id="heading-2">事务</h2>
 <p>批量的SQL语句要么全部执行，要么都不执行或回退到特定语句</p>
-
 <p>用于保证数据的完整性</p>
-
 <p>事务可用于管理增删改语句</p>
-
-<pre><code class="language-sql">START TRANSACTION
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">START</span> <span style="color:#66d9ef">TRANSACTION</span>
 ...
 SAVEPOINT delete1
 ...
-ROLLBACK TO delete1
-COMMIT;
+<span style="color:#66d9ef">ROLLBACK</span> <span style="color:#66d9ef">TO</span> delete1
+<span style="color:#66d9ef">COMMIT</span>;
 
-- 可以在想结束的地方COMMIT，判断是否出错来执行回退
-</code></pre>
-
-<h2 id="重要概念">重要概念</h2>
-
+<span style="color:#f92672">-</span> <span style="color:#960050;background-color:#1e0010">可</span><span style="color:#960050;background-color:#1e0010">以</span><span style="color:#960050;background-color:#1e0010">在</span><span style="color:#960050;background-color:#1e0010">想</span><span style="color:#960050;background-color:#1e0010">结</span><span style="color:#960050;background-color:#1e0010">束</span><span style="color:#960050;background-color:#1e0010">的</span><span style="color:#960050;background-color:#1e0010">地</span><span style="color:#960050;background-color:#1e0010">方</span><span style="color:#66d9ef">COMMIT</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#960050;background-color:#1e0010">判</span><span style="color:#960050;background-color:#1e0010">断</span><span style="color:#960050;background-color:#1e0010">是</span><span style="color:#960050;background-color:#1e0010">否</span><span style="color:#960050;background-color:#1e0010">出</span><span style="color:#960050;background-color:#1e0010">错</span><span style="color:#960050;background-color:#1e0010">来</span><span style="color:#960050;background-color:#1e0010">执</span><span style="color:#960050;background-color:#1e0010">行</span><span style="color:#960050;background-color:#1e0010">回</span><span style="color:#960050;background-color:#1e0010">退</span>
+</code></pre></div><h2 id="heading-3">重要概念</h2>
 <p><strong>主键</strong> 每行的唯一标示，值不能够重用，不允许为NULL，不允许用户修改，自动生成，关键词 <code>PRIMARY KEY</code></p>
-
 <p><strong>外键</strong> 确保与此列关联的另一表的列存在引用的值，否则会报错，关键词</p>
-
-<pre><code class="language-sql">- 定义中
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">-</span> <span style="color:#960050;background-color:#1e0010">定</span><span style="color:#960050;background-color:#1e0010">义</span><span style="color:#960050;background-color:#1e0010">中</span>
 REFERENCE table1 (field1)
-- 更改中
-ALTER TABLE table1
-ADD CONSTRAINT
-FOREIGN KEY (user_id) REFERENCES user (id)
-</code></pre>
-
-<p><strong>唯一约束</strong> 保证列中的值唯一，可包含NULL值，可修改可更新，使用关键词 <code>UNIQUE</code></p>
-
+<span style="color:#f92672">-</span> <span style="color:#960050;background-color:#1e0010">更</span><span style="color:#960050;background-color:#1e0010">改</span><span style="color:#960050;background-color:#1e0010">中</span>
+<span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> table1
+<span style="color:#66d9ef">ADD</span> <span style="color:#66d9ef">CONSTRAINT</span>
+<span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span> (user_id) <span style="color:#66d9ef">REFERENCES</span> <span style="color:#66d9ef">user</span> (id)
+</code></pre></div><p><strong>唯一约束</strong> 保证列中的值唯一，可包含NULL值，可修改可更新，使用关键词 <code>UNIQUE</code></p>
 <p><strong>检查约束</strong> 限定值的范围</p>
-
-<pre><code class="language-sql">ADD CONSTRAINT CHECK ( field &gt; 0 )
-</code></pre>
-
-<p><strong>索引</strong> 提前恰当的排序，当查找这个排好序的列时会非常快，主键数据本身就是排序的，提高查找性能，
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ADD</span> <span style="color:#66d9ef">CONSTRAINT</span> <span style="color:#66d9ef">CHECK</span> ( field <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> )
+</code></pre></div><p><strong>索引</strong> 提前恰当的排序，当查找这个排好序的列时会非常快，主键数据本身就是排序的，提高查找性能，
 却降低了增删改的性能，因为索引会在这些操作中动态更新索引</p>
-
 <p>关键词 <code>CREATE INDEX</code></p>
-
 <p><strong>触发器</strong> 关联特定表上的增删改操作，约束的性能更佳，使用前可以先考虑使用约束，能用于保持数据库的完整性</p>
 
 		</div>
@@ -266,11 +217,11 @@ FOREIGN KEY (user_id) REFERENCES user (id)
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -345,6 +296,7 @@ FOREIGN KEY (user_id) REFERENCES user (id)
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>

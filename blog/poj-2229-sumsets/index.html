@@ -8,7 +8,7 @@
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta property="og:title" content="poj 2229 Sumsets" />
-<meta property="og:description" content="原题地址 知识点：DP 解题报告 #include &lt;cstdio&gt; #include &lt;string.h&gt; int sum; int d[1000001]; int main() { scanf(&quot;%d&quot;, &amp;sum); int i; // 初始化唯一确定方案数，d[1] 为 1 表示 1 的分解方案只有 1 种 d[1] = 1; for(i=2;i&lt;=sum;&#43;&#43;i) { // 找规律，当" />
+<meta property="og:description" content="原题地址 知识点：DP 解题报告 #include &lt;cstdio&gt;#include &lt;string.h&gt; int sum; int d[1000001]; int main() { scanf(&#34;%d&#34;, &amp;sum); int i; // 初始化唯一确定方案数，d[1] 为 1 表示 1 的分解方案只有 1 种 d[1] = 1; for(i=2;i&lt;=sum;&#43;&#43;i) { // 找规律，当 i" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/poj-2229-sumsets/" />
 <meta property="article:published_time" content="2018-07-12T00:00:00+00:00" />
@@ -65,65 +65,54 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/ac%e4%b9%8b%e8%b7%af" rel="category">AC之路</a></span>
 </div>
 <span class="meta__text">
-总计 222 字
+总计 221 字
 </span></div>
 		</header>
 <div class="post__toc toc">
 	<div class="toc__title">目录</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#知识点-dp">知识点：DP</a></li>
-<li><a href="#解题报告">解题报告</a></li>
-<li><a href="#结语">结语</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#dp">知识点：DP</a></li>
+    <li><a href="#heading">解题报告</a></li>
+    <li><a href="#heading-1">结语</a></li>
+  </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
-			
+			<p><a href="http://poj.org/problem?id=2229">原题地址</a></p>
+<h2 id="dp">知识点：DP</h2>
+<h2 id="heading">解题报告</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> sum;
+<span style="color:#66d9ef">int</span> d[<span style="color:#ae81ff">1000001</span>];
 
-<p><a href="http://poj.org/problem?id=2229">原题地址</a></p>
-
-<h2 id="知识点-dp">知识点：DP</h2>
-
-<h2 id="解题报告">解题报告</h2>
-
-<pre><code class="language-c++">#include &lt;cstdio&gt;
-#include &lt;string.h&gt;
-
-int sum;
-int d[1000001];
-
-int main() {
-  scanf(&quot;%d&quot;, &amp;sum);
-  int i;
-  // 初始化唯一确定方案数，d[1] 为 1 表示 1 的分解方案只有 1 种
-  d[1] = 1;
-  for(i=2;i&lt;=sum;++i) {
-    // 找规律，当 i 为偶数的时候方案数为 i / 2 的方案数再加上 i-1的方案数
-    // 当 i 为偶数时才体现出 2 的幂之和，因为除了加 1 之外其余加的都是为偶数的2的n次幂，这个是重要的入手点
-    if ((i &amp; 0x1) == 0) {
-      d[i] = d[i/2];
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+  scanf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>sum);
+  <span style="color:#66d9ef">int</span> i;
+  <span style="color:#75715e">// 初始化唯一确定方案数，d[1] 为 1 表示 1 的分解方案只有 1 种
+</span><span style="color:#75715e"></span>  d[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;i<span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span>sum;<span style="color:#f92672">+</span><span style="color:#f92672">+</span>i) {
+    <span style="color:#75715e">// 找规律，当 i 为偶数的时候方案数为 i / 2 的方案数再加上 i-1的方案数
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当 i 为偶数时才体现出 2 的幂之和，因为除了加 1 之外其余加的都是为偶数的2的n次幂，这个是重要的入手点
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((i <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x1</span>) <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
+      d[i] <span style="color:#f92672">=</span> d[i<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>];
     }
-    // 不论奇偶都要加上他们前一个数的方案数
-    d[i] += d[i-1];
-    // WA 的时候仔细再看题目才发现要取一下模
-    d[i] %= 1000000000;
+    <span style="color:#75715e">// 不论奇偶都要加上他们前一个数的方案数
+</span><span style="color:#75715e"></span>    d[i] <span style="color:#f92672">+</span><span style="color:#f92672">=</span> d[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+    <span style="color:#75715e">// WA 的时候仔细再看题目才发现要取一下模
+</span><span style="color:#75715e"></span>    d[i] <span style="color:#f92672">%</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000000</span>;
   }
 
-  printf(&quot;%d\n&quot;, d[sum]);
+  printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, d[sum]);
 
-  return 0;
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 
-</code></pre>
-
-<h2 id="结语">结语</h2>
-
+</code></pre></div><h2 id="heading-1">结语</h2>
 <p>重点关注题目数字的特征</p>
 
 		</div>
@@ -174,11 +163,11 @@ int main() {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></li>
 		</ul>
 	</div>
 </div>
@@ -253,6 +242,7 @@ int main() {
 		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>
