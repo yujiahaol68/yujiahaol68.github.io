@@ -133,6 +133,30 @@ $ crontab -e // 更改并安装任务文件，进入编辑区，编辑完成保�
 	</div>
 </nav>
 
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
+
 
 			</div>
 			<aside class="sidebar"><div class="widget-search">
@@ -264,7 +288,7 @@ $ crontab -e // 更改并安装任务文件，进入编辑区，编辑完成保�
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

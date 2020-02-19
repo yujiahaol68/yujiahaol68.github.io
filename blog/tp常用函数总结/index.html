@@ -75,14 +75,14 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#i">I函数</a></li>
-        <li><a href="#d">D函数</a></li>
-        <li><a href="#m">M函数</a></li>
-        <li><a href="#u">U函数</a></li>
-        <li><a href="#e">E函数</a></li>
-        <li><a href="#f">F函数</a></li>
-        <li><a href="#s">S函数</a></li>
-        <li><a href="#t">T函数</a></li>
+        <li><a href="#i函数">I函数</a></li>
+        <li><a href="#d函数">D函数</a></li>
+        <li><a href="#m函数">M函数</a></li>
+        <li><a href="#u函数">U函数</a></li>
+        <li><a href="#e函数">E函数</a></li>
+        <li><a href="#f函数">F函数</a></li>
+        <li><a href="#s函数">S函数</a></li>
+        <li><a href="#t函数">T函数</a></li>
       </ul>
     </li>
   </ul>
@@ -90,34 +90,34 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h3 id="i">I函数</h3>
+			<h3 id="i函数">I函数</h3>
 <p>用途：获取输入数据，例如表单的接收，API的GET接收参数</p>
 <p>定义: <code>I('接收的数据'，'默认值','接收数据的类型')</code></p>
 <p>用法：<code>I('get.id',1,'int')</code></p>
 <!-- raw HTML omitted -->
 <p>好处：自动过滤输入，增加安全性，官方推荐</p>
-<h3 id="d">D函数</h3>
+<h3 id="d函数">D函数</h3>
 <p>用途：new出Model对象进行数据的增删改查，而且可以调用Model中的业务逻辑</p>
 <p>定义：<code>D('Model名')</code></p>
-<h3 id="m">M函数</h3>
+<h3 id="m函数">M函数</h3>
 <p>用途：可对Model对应的表进行基本的CURD操作，而且节约资源</p>
 <p>定义: <code>M('Model名')</code></p>
 <p>缺点：不能调用Model中的自定义业务逻辑</p>
-<h3 id="u">U函数</h3>
+<h3 id="u函数">U函数</h3>
 <p>用途：动态生成URL，是官方推荐的URL生成方式</p>
 <p>定义：<code>U('模块/控制器/操作')</code></p>
-<h3 id="e">E函数</h3>
+<h3 id="e函数">E函数</h3>
 <p>用途：用于错误调试，可以输出错误信息并中断操作</p>
 <p>用法：<code>E($msg)</code></p>
-<h3 id="f">F函数</h3>
+<h3 id="f函数">F函数</h3>
 <p>用途：建立快速缓存，为存储的数据带来更快的操作</p>
 <p>缓存Data：<code>F('data',$Data,保存目录(可选))</code></p>
 <p>获取：<code>F('data')</code></p>
 <p>删除: <code>F('data', NULL)</code></p>
 <p>查询缓存: <code>$Model-&gt;cache('data')-&gt;select()</code></p>
-<h3 id="s">S函数</h3>
+<h3 id="s函数">S函数</h3>
 <p>外部获取缓存内容：<code>$value = S('cache_name')</code></p>
-<h3 id="t">T函数</h3>
+<h3 id="t函数">T函数</h3>
 <p>专门用于获取模板的地址，用于display()中</p>
 <p>定义: <code>T(模块/主题/控制器/操作,视图分层)</code></p>
 
@@ -154,6 +154,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/unix%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8Etime-%E7%AE%97%E6%97%B6%E9%97%B4%E5%B7%AE/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">UNIX时间戳与time()算时间差</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -286,7 +310,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

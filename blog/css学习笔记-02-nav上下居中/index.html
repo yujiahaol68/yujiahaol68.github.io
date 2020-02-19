@@ -75,7 +75,7 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h1 id="css-02-nav">CSS学习笔记 02 nav上下居中</h1>
+			<h1 id="css学习笔记-02-nav上下居中">CSS学习笔记 02 nav上下居中</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css">.<span style="color:#a6e22e">nav-desktop</span>{
 	<span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#e83a37</span>;
 	<span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">18</span><span style="color:#66d9ef">px</span>;
@@ -125,6 +125,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003-%E6%8C%89%E9%92%AEfull-height%E5%85%A8%E9%AB%98%E5%BA%A6%E5%AE%9E%E7%8E%B0/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">CSS 学习笔记03 按钮Full Height全高度实现</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -257,7 +281,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

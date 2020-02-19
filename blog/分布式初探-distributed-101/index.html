@@ -73,17 +73,17 @@ if (!doNotTrack) {
 	<div class="toc__menu">
 		<nav id="TableOfContents">
   <ul>
-    <li><a href="#-scalability">扩展性 Scalability</a></li>
-    <li><a href="#-performance">性能 Performance</a></li>
-    <li><a href="#--availability-and-fault-tolerance">可用性 (容错性) Availability and Fault Tolerance</a></li>
+    <li><a href="#扩展性-scalability">扩展性 Scalability</a></li>
+    <li><a href="#性能-performance">性能 Performance</a></li>
+    <li><a href="#可用性-容错性-availability-and-fault-tolerance">可用性 (容错性) Availability and Fault Tolerance</a></li>
   </ul>
 
   <ul>
-    <li><a href="#heading-6">系统抽象与建模</a>
+    <li><a href="#系统抽象与建模">系统抽象与建模</a>
       <ul>
-        <li><a href="#-partition-and-replicate">设计精髓：分治和复制 Partition and replicate</a></li>
-        <li><a href="#heading-7">分治</a></li>
-        <li><a href="#heading-8">复制</a></li>
+        <li><a href="#设计精髓分治和复制-partition-and-replicate">设计精髓：分治和复制 Partition and replicate</a></li>
+        <li><a href="#分治">分治</a></li>
+        <li><a href="#复制">复制</a></li>
       </ul>
     </li>
   </ul>
@@ -91,28 +91,28 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h1 id="heading">什么是分布式系统？</h1>
+			<h1 id="什么是分布式系统">什么是分布式系统？</h1>
 <p>使用多机来处理单机相同问题的系统</p>
 <p>多点存储，多点计算</p>
-<h1 id="heading-1">为什么需要分布式系统？</h1>
+<h1 id="为什么需要分布式系统">为什么需要分布式系统？</h1>
 <p>解决日益增长的存储资源和计算资源占用的问题，分散系统压力</p>
-<h1 id="heading-2">分布式需要解决的三大问题</h1>
+<h1 id="分布式需要解决的三大问题">分布式需要解决的三大问题</h1>
 <ul>
 <li>存储</li>
 <li>传输(通信)</li>
 <li>计算</li>
 </ul>
-<h1 id="heading-3">分布式系统的目标</h1>
+<h1 id="分布式系统的目标">分布式系统的目标</h1>
 <p>能够通过购买 N 多硬件来应对 N 数量级增长的问题</p>
-<h1 id="heading-4">分布式系统的性质</h1>
-<h2 id="-scalability">扩展性 Scalability</h2>
+<h1 id="分布式系统的性质">分布式系统的性质</h1>
+<h2 id="扩展性-scalability">扩展性 Scalability</h2>
 <p>可分为三个维度：</p>
 <ul>
 <li>数量级扩展：节点的数量增加应该让整个系统线性提速，数据量的增加不应该增加延迟</li>
 <li>地理扩展：使用异地数据中心降低用户响应时间，合理处理跨数据中心的响应延迟</li>
 <li>调度扩展：增加更多的节点不应该增加整个系统管理的负担</li>
 </ul>
-<h2 id="-performance">性能 Performance</h2>
+<h2 id="性能-performance">性能 Performance</h2>
 <ul>
 <li>给定任务能够快速处理完成（低延迟）</li>
 <li>高吞吐量（任务处理率）</li>
@@ -122,14 +122,14 @@ if (!doNotTrack) {
 <p>延迟：指的是某事件发生直到其产生影响或可见时的那一段过程</p>
 <p>一个数据完全不发生改变的系统不应该有延迟问题</p>
 <p>理想状态下的最低延迟取决于信息所要经过的物理距离</p>
-<h2 id="--availability-and-fault-tolerance">可用性 (容错性) Availability and Fault Tolerance</h2>
+<h2 id="可用性-容错性-availability-and-fault-tolerance">可用性 (容错性) Availability and Fault Tolerance</h2>
 <p>分布式系统优于单机的一个点在于单机无法容错，要么成功，要么失败</p>
 <p>分布式系统可以容纳一群不可靠的组件，在顶层建立起一个可靠的系统</p>
 <p>毫无冗余的系统的可用性与其组件相同，含有冗余设计的系统可以容许部分失败因此具有高可用性</p>
 <p>可用性 = 在线时间 / (在线时间 + 死时间)</p>
 <p>容错：在错误发生时能够按<strong>设定好的方式</strong>继续工作的能力</p>
 <p>简而言之，我们无法容忍那些我们<strong>没有预知</strong>的错误</p>
-<h1 id="heading-5">分布式系统的限制</h1>
+<h1 id="分布式系统的限制">分布式系统的限制</h1>
 <p>物理上：</p>
 <ul>
 <li>节点的个数</li>
@@ -138,15 +138,15 @@ if (!doNotTrack) {
 <p>如果增加节点的个数：会降低系统的可用性，增加管理的开销，节点间通讯的开销会降低性能进而增加等待时间（与物理距离相关）</p>
 <p>性能与可用性可以使用系统对外部的保证（可靠性）来界定，这种保证是不同服务之间的协议，例如：在这个点写入的数据，在其他点读取的这个数据能有多快？写完的数据能不能保证被持久化？一个计算请求能在多长时间内返回结果？如果有组件失效，对整个系统会有什么样的影响？</p>
 <p>错误是不正确的行为，异常是未知的行为</p>
-<h2 id="heading-6">系统抽象与建模</h2>
+<h2 id="系统抽象与建模">系统抽象与建模</h2>
 <p>好的抽象使系统更容易理解</p>
 <p>对外隐藏细节的系统更加容易理解，但暴露更多细节的系统能够得到更好的优化</p>
 <p>理想的系统既有清晰的表达又满足业务需要</p>
-<h3 id="-partition-and-replicate">设计精髓：分治和复制 Partition and replicate</h3>
+<h3 id="设计精髓分治和复制-partition-and-replicate">设计精髓：分治和复制 Partition and replicate</h3>
 <p>对于一份数据集来说，它能够被分成多个小份以便分配到多个节点实现并行处理(分治)，也可以被复制或缓存到不同的节点以减少客户端和服务端之间的距离提高容错性。</p>
-<h3 id="heading-7">分治</h3>
+<h3 id="分治">分治</h3>
 <p>将数据分成不同且独立的子集，解决数据量的不断增长，提高了处理性能和可用性，分割的依据和访问数据的主要方式相关，要解决独立子集的一些问题（如不同子集间的低效访问）</p>
-<h3 id="heading-8">复制</h3>
+<h3 id="复制">复制</h3>
 <p>使新的计算资源应用到新的拷贝数据中，降低等待时间又增强了可用性</p>
 <p>复制可增强扩展性，性能和可靠性</p>
 <p>复制可以避免单点失败，加速计算，缓存IO提高吞吐</p>
@@ -155,7 +155,7 @@ if (!doNotTrack) {
 <li>集群数据同步（保持数据一致性）</li>
 </ul>
 <p>一致性模型的选择至关重要：强一致性的模型允许你的程序能够像对待一份数据那样去编程，而弱一致性的模型能带来更低的延迟和更高的可用性</p>
-<h4 id="heading-9">参考资料：</h4>
+<h4 id="参考资料">参考资料：</h4>
 <p><a href="http://book.mixu.net/distsys/">http://book.mixu.net/distsys/</a></p>
 
 		</div>
@@ -191,6 +191,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/%E6%97%A0%E7%BC%93%E5%86%B2%E9%80%9A%E9%81%93%E5%BC%95%E5%8F%91%E7%9A%84bug/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">无缓冲通道引发的BUG</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -323,7 +347,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

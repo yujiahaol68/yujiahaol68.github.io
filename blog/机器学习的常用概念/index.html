@@ -76,9 +76,9 @@ if (!doNotTrack) {
     <li>
       <ul>
         <li></li>
-        <li><a href="#heading-10">非监督学习</a></li>
-        <li><a href="#heading-13">浅谈算法的选择</a></li>
-        <li><a href="#heading-14">开发机器学习应用程序的大概步骤</a></li>
+        <li><a href="#非监督学习">非监督学习</a></li>
+        <li><a href="#浅谈算法的选择">浅谈算法的选择</a></li>
+        <li><a href="#开发机器学习应用程序的大概步骤">开发机器学习应用程序的大概步骤</a></li>
       </ul>
     </li>
   </ul>
@@ -86,21 +86,21 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h4 id="heading">特征(属性)</h4>
+			<h4 id="特征属性">特征(属性)</h4>
 <p>通常是训练样本集的列，可看作是每个列的列名，比如区分鸟的品种可以用体重，后背颜色此类的特征来加以区分</p>
-<h4 id="heading-1">特征实例</h4>
+<h4 id="特征实例">特征实例</h4>
 <p>某一特征列其中的数据</p>
-<h4 id="heading-2">特征的种类</h4>
+<h4 id="特征的种类">特征的种类</h4>
 <ul>
 <li>数值型</li>
 <li>二值型(类似布尔型)</li>
 <li>枚举类型(颜色色值)</li>
 </ul>
-<h4 id="heading-3">训练集</h4>
+<h4 id="训练集">训练集</h4>
 <p>训练集是用于训练机器学习算法的数据样本集合</p>
-<h4 id="heading-4">训练样本</h4>
+<h4 id="训练样本">训练样本</h4>
 <p>样本集的每一行就是一个训练样本</p>
-<h4 id="heading-5">目标变量</h4>
+<h4 id="目标变量">目标变量</h4>
 <p>机器学习算法的预测结果</p>
 <p>分类:</p>
 <ul>
@@ -109,7 +109,7 @@ if (!doNotTrack) {
 </ul>
 <p>训练样本集前必须要确定目标变量的值，比如根据鸟的身高，体重，颜色这些特征可以具体确定鸟的品种，品种就是目标变量，
 而品种的值就是具体的品种名称，也就是目标变量的值</p>
-<h4 id="heading-6">知识表示</h4>
+<h4 id="知识表示">知识表示</h4>
 <p>指展示机器分类的结果的工作</p>
 <p>形式包括：<code>规则集</code> <code>概率分布</code> <code>训练样本集中的实例</code></p>
 <h4 id="why">Why?</h4>
@@ -122,31 +122,31 @@ if (!doNotTrack) {
 <li>算法训练(学习如何分类)</li>
 <li>测试机器学习算法的效果</li>
 </ol>
-<h4 id="heading-7">如何测试算法的效果？</h4>
+<h4 id="如何测试算法的效果">如何测试算法的效果？</h4>
 <p>为了测试效果，通常会使用两套独立的样本集：<code>训练数据</code> 和 <code>测试数据</code></p>
 <p><em>机器学习另外一个重要的任务：回归</em></p>
 <p>主要用于预测数值型数据</p>
-<h4 id="heading-8">程序开始运行:</h4>
+<h4 id="程序开始运行">程序开始运行:</h4>
 <p>训练样本集提供目标变量 =&gt; 输入到算法 =&gt; 训练完成 =&gt; 输入测试数据(不包含目标变量) =&gt; 比较测试结果与实际目标变量的差别(回归拟合) =&gt; 得出算法的实际精确度</p>
-<h4 id="heading-9">监督学习与无监督学习</h4>
+<h4 id="监督学习与无监督学习">监督学习与无监督学习</h4>
 <p>监督学习指算法知道预测什么，也就是有明确的目标</p>
 <p>回归和分类都是属于监督学习</p>
 <p>与监督学习相比，无监督学习没有目标值</p>
-<h3 id="heading-10">非监督学习</h3>
+<h3 id="非监督学习">非监督学习</h3>
 <p>作用：</p>
 <ul>
 <li>减少数据特征的维度</li>
 </ul>
-<h4 id="heading-11">聚类(分析)</h4>
+<h4 id="聚类分析">聚类(分析)</h4>
 <p>把相似的对象通过静态分类的方法分成不同组别或者更多的子集，相当于是把一个训练集分成了多个训练集，每个新训练集中的数据的特征相似</p>
-<h4 id="heading-12">密度估计</h4>
+<h4 id="密度估计">密度估计</h4>
 <p>指寻找描述数据统计值的过程，可以理解为要得到关于描述数据的 <code>频率分布直方图</code>，降低特征维度，使其更直观</p>
-<h3 id="heading-13">浅谈算法的选择</h3>
+<h3 id="浅谈算法的选择">浅谈算法的选择</h3>
 <ul>
 <li>以目的为导向：根据要完成的任务，选择监督学习的或者是非监督学习的算法</li>
 <li>以数据来源为导向：需要分析或收集的数据是什么</li>
 </ul>
-<h3 id="heading-14">开发机器学习应用程序的大概步骤</h3>
+<h3 id="开发机器学习应用程序的大概步骤">开发机器学习应用程序的大概步骤</h3>
 <ol>
 <li>
 <p>收集数据</p>
@@ -201,6 +201,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">python 语法基础</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -333,7 +357,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

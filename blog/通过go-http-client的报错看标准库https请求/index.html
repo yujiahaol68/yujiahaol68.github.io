@@ -75,10 +75,10 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#-x509">关于 x509</a></li>
-        <li><a href="#https-">https 连接的建立</a></li>
-        <li><a href="#-tls-">关于 TLS 会话</a></li>
-        <li><a href="#heading">客户端握手过程</a></li>
+        <li><a href="#关于-x509">关于 x509</a></li>
+        <li><a href="#https-连接的建立">https 连接的建立</a></li>
+        <li><a href="#关于-tls-会话">关于 TLS 会话</a></li>
+        <li><a href="#客户端握手过程">客户端握手过程</a></li>
       </ul>
     </li>
   </ul>
@@ -91,7 +91,7 @@ if (!doNotTrack) {
 </code></pre></div><p>这个报错来自 <code>crypto/x509</code> 中关于证书签名的验证</p>
 <p>负责验证证书的方法签名</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>) <span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">opts</span> <span style="color:#a6e22e">VerifyOptions</span>) (<span style="color:#a6e22e">chains</span> [][]<span style="color:#f92672">*</span><span style="color:#a6e22e">Certificate</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>)
-</code></pre></div><h3 id="-x509">关于 x509</h3>
+</code></pre></div><h3 id="关于-x509">关于 x509</h3>
 <p>这是一种自签名证书，x509证书中包含着一个证书链 (Certificate Chain)，包含根证书，中间证书即CA证书，和用户证书。根证书因为需要预装在用户系统中，因此引入中间证书
 来更好地普及和扩展证书，因此当系统要验证一个证书是否为合法时的思路就是，先验证中间证书，根据中间证书得到颁发这个中间证书的根证书签名(有可能还是中间证书，因此要一直向上寻找到根证书)，然后再通过系统内置的根证书进行验证，如果通过，则由此CA证书颁发的用户证书为可信的有效证书，否则为无效</p>
 <p>继续阅读源码</p>
@@ -179,7 +179,7 @@ if (!doNotTrack) {
 <span style="color:#75715e">// server
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">chains</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">certs</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">opts</span>)
 </code></pre></div><p>这就不得不再次复习一下 <code>https</code> 连接建立的过程了</p>
-<h3 id="https-">https 连接的建立</h3>
+<h3 id="https-连接的建立">https 连接的建立</h3>
 <p>SSL或TLS握手示意图</p>
 <p><img src="/img/ssl-handshake.gif" alt="httpsHandshake"></p>
 <p>通过图我们可以直观地看到在步骤3和步骤6的时候，会发生证书的验证，在 Go 的 http client中，显然是使用 <code>handshake_client.go</code> 中的
@@ -217,14 +217,14 @@ if (!doNotTrack) {
 }
 </code></pre></div><p>从 <code>conn.go</code> 的源码中我们可以发现使用 <code>isClient</code> 属性来区分是客户端握手还是服务端的握手。在开发环境中，可能我们需要临时使用自己的自签名证书来进行 https 通信，
 如何跳过这个验证证书的过程呢？我们接着 <code>clientHandshake()</code> 往下看</p>
-<h3 id="-tls-">关于 TLS 会话</h3>
+<h3 id="关于-tls-会话">关于 TLS 会话</h3>
 <p>当然，我们不能每次建立 https 通信的时候都重新握一次手，因此通过为 <code>https</code> 引入状态将 <code>TLS</code> 握手状态在用会话记录下来，能够大大减少服务器的压力,
 早期的 <code>TLS</code> 会使用 <code>Session ID</code> 来记录，因为负载均衡的存在，事实上只有第一次握手时被分配到的物理机器上才有客户端 <code>Session ID</code> 的记录，当第二次访问的时候，
 我们并不能指望负载均衡算法能够再次将请求分配给同一台物理机器，其中一种解决方案是负责握手的服务器将 <code>Session ID</code> 存储到 <code>redis</code> 或者 <code>memcached</code> 集, 当第二次访问的时候
 统一去查询缓存，但让服务器在一段时间记住状态可能会暴露潜在的扩展性问题。于是，<code>TLS v1.2</code> 引入了会话凭证 (session ticket) ，将会话状态的存储交给客户端，第一次握手结束时，
 服务器会下发经过会话密钥 (Session key) 加密的会话凭证，之前会话的相关状态都会保存在会话凭证中并由客户端保存，当第二次进行握手的时候，客户端需要将本地缓存的会话凭证包含在客户端握手消息中，
 只要服务器能够共享同一会话密钥，那么这台服务器就能够解密得到之前的会话状态，因为会话密钥不具备向前安全性，因此需要定期轮换更新密钥</p>
-<h3 id="heading">客户端握手过程</h3>
+<h3 id="客户端握手过程">客户端握手过程</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span>) <span style="color:#a6e22e">clientHandshake</span>() <span style="color:#66d9ef">error</span> {
     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">config</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
         <span style="color:#75715e">// 没有传入自定义的client设置，则使用默认设置
@@ -425,7 +425,7 @@ if (!doNotTrack) {
 </code></pre></div><p>如果想要区分生产环境和开发环境，只需要简单用 <code>go build</code> 在编译时区分一下环境即可</p>
 <p>通过一个报错追根溯源，借机将 https 的请求过程在标准库源码的基础上又复习了一遍，可谓收获颇丰，
 如有疏忽，恳请各位大佬指正。</p>
-<h4 id="heading-1">参考资料</h4>
+<h4 id="参考资料">参考资料</h4>
 <ul>
 <li><a href="https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10660_.htm">An overview of the SSL or TLS handshake</a></li>
 <li><a href="https://blog.cloudflare.com/tls-session-resumption-full-speed-and-secure/">TLS Session Resumption</a></li>
@@ -468,6 +468,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/poj-1979-red-and-black/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">poj 1979 Red and Black</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -600,7 +624,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

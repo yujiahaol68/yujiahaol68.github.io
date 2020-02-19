@@ -75,16 +75,16 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#heading">常用函数：</a></li>
-        <li><a href="#heading-1">常见问题</a></li>
-        <li><a href="#heading-2">技巧提点</a></li>
-        <li><a href="#blade">关于Blade</a></li>
+        <li><a href="#常用函数">常用函数：</a></li>
+        <li><a href="#常见问题">常见问题</a></li>
+        <li><a href="#技巧提点">技巧提点</a></li>
+        <li><a href="#关于blade">关于Blade</a></li>
         <li><a href="#model">Model</a></li>
         <li><a href="#controller">Controller</a></li>
-        <li><a href="#session-">Session 会话</a></li>
-        <li><a href="#auth-">Auth 认证系统</a></li>
-        <li><a href="#heading-3">中间件的使用</a></li>
-        <li><a href="#heading-4">授权策略</a></li>
+        <li><a href="#session-会话">Session 会话</a></li>
+        <li><a href="#auth-认证系统">Auth 认证系统</a></li>
+        <li><a href="#中间件的使用">中间件的使用</a></li>
+        <li><a href="#授权策略">授权策略</a></li>
       </ul>
     </li>
   </ul>
@@ -92,7 +92,7 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h3 id="heading">常用函数：</h3>
+			<h3 id="常用函数">常用函数：</h3>
 <ul>
 <li>compact(&lsquo;变量1&rsquo;,&lsquo;变量2&rsquo;)</li>
 </ul>
@@ -116,13 +116,13 @@ if (!doNotTrack) {
 </ul>
 <p>获取所有的post数据</p>
 <p>只获取title和body</p>
-<h3 id="heading-1">常见问题</h3>
+<h3 id="常见问题">常见问题</h3>
 <ul>
 <li>删除文件
 删除完<code>migration</code>文件之后都要清除Composer中自动加载的记录，刷新自动加载记录</li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ composer dump-autoload
-</code></pre></div><h3 id="heading-2">技巧提点</h3>
+</code></pre></div><h3 id="技巧提点">技巧提点</h3>
 <ul>
 <li>进一步封装查询语句</li>
 </ul>
@@ -167,7 +167,7 @@ migration =&gt; create_posts_table</p>
 <li>重定向返回至上一次请求尝试访问的页面</li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">return redirect()-&gt;intended(route(&#39;users.show&#39;, [Auth::user()]));
-</code></pre></div><h3 id="blade">关于Blade</h3>
+</code></pre></div><h3 id="关于blade">关于Blade</h3>
 <p><code>@yield('title', 'Sample')</code></p>
 <p>声明title变量及其默认值</p>
 <pre><code>@yield('content')
@@ -193,7 +193,7 @@ migration =&gt; create_posts_table</p>
 <ul>
 <li>每一个controller中都有一个<code>validator</code>，可以用来验证字段</li>
 </ul>
-<h3 id="session-">Session 会话</h3>
+<h3 id="session-会话">Session 会话</h3>
 <ol>
 <li>创建会话实例</li>
 </ol>
@@ -203,14 +203,14 @@ migration =&gt; create_posts_table</p>
 <li>访问会话实例</li>
 </ol>
 <p><code>session()-&gt;get('success')</code></p>
-<h3 id="auth-">Auth 认证系统</h3>
+<h3 id="auth-认证系统">Auth 认证系统</h3>
 <p><code>Auth::attempt()</code>尝试登陆</p>
 <p><code>Auth::user()</code>当前登录实例</p>
 <p><code>Auth::check()</code> 是否已经登录</p>
 <p>API:</p>
 <p><code>bool attempt(array $credentials = array(), bool $remember = false)</code></p>
 <p>第二个参数用来开发记住密码</p>
-<h3 id="heading-3">中间件的使用</h3>
+<h3 id="中间件的使用">中间件的使用</h3>
 <ul>
 <li>在用户控制器构造方法中应用中间件</li>
 </ul>
@@ -235,7 +235,7 @@ migration =&gt; create_posts_table</p>
 
         return $next($request);
     }
-</code></pre></div><h3 id="heading-4">授权策略</h3>
+</code></pre></div><h3 id="授权策略">授权策略</h3>
 <p>已登录的用户之间的权限控制</p>
 <ul>
 <li>创建Policy文件并创建用户比对方法</li>
@@ -292,6 +292,30 @@ migration =&gt; create_posts_table</p>
 		<a class="post-nav__link" href="/blog/laravel-%E6%96%B0%E6%89%8B%E5%A1%AB%E5%9D%91%E6%8C%87%E5%8D%97/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">Laravel5 新手填坑指南</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -424,7 +448,7 @@ migration =&gt; create_posts_table</p>
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

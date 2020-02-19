@@ -75,8 +75,8 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#1app-">1.app() 用于快速生成对应命名空间下的类的实例</a></li>
-        <li><a href="#2str-random-">2.str_random() 用于快速生成限定范围内的随机字符串</a></li>
+        <li><a href="#1app-用于快速生成对应命名空间下的类的实例">1.app() 用于快速生成对应命名空间下的类的实例</a></li>
+        <li><a href="#2str_random-用于快速生成限定范围内的随机字符串">2.str_random() 用于快速生成限定范围内的随机字符串</a></li>
       </ul>
     </li>
   </ul>
@@ -84,10 +84,10 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h3 id="1app-">1.app() 用于快速生成对应命名空间下的类的实例</h3>
+			<h3 id="1app-用于快速生成对应命名空间下的类的实例">1.app() 用于快速生成对应命名空间下的类的实例</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$faker = app(Faker\Generator::class);
 //生成了一个Faker的生成器实例
-</code></pre></div><h3 id="2str-random-">2.str_random() 用于快速生成限定范围内的随机字符串</h3>
+</code></pre></div><h3 id="2str_random-用于快速生成限定范围内的随机字符串">2.str_random() 用于快速生成限定范围内的随机字符串</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$password = str_random(10);
 //生成10位随机密码
 </code></pre></div>
@@ -125,6 +125,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">vuex快速入门</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -257,7 +281,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

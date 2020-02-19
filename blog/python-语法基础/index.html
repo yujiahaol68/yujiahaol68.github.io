@@ -83,23 +83,23 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h4 id="python">其中记录了python跟别的语言不一样的一些基础知识点</h4>
-<h4 id="heading">布尔类型</h4>
+			<h4 id="其中记录了python跟别的语言不一样的一些基础知识点">其中记录了python跟别的语言不一样的一些基础知识点</h4>
+<h4 id="布尔类型">布尔类型</h4>
 <p><code>True</code></p>
 <p><code>False</code></p>
-<h4 id="heading-1">除法</h4>
+<h4 id="除法">除法</h4>
 <p><code>/</code> 默认的除法是精确除法</p>
 <p><code>//</code> 才是通常的取商的整数部分</p>
-<h4 id="cascii">字符(类似C的ASCII码)</h4>
+<h4 id="字符类似c的ascii码">字符(类似C的ASCII码)</h4>
 <p><code>ord()</code> 字符对应编码</p>
 <p><code>chr()</code> 编码转字符</p>
 <p><code>'aaa'.encode('utf-8')</code> 转成对应编码形式的<code>bytes</code></p>
 <p><code>'aaa'.decode('utf-8')</code> 从<code>bytes</code>转成<code>utf-8</code>编码</p>
-<h4 id="heading-2">格式化输出</h4>
+<h4 id="格式化输出">格式化输出</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">r <span style="color:#f92672">=</span> <span style="color:#ae81ff">18.0555</span>
 <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%.2f</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span>r
 <span style="color:#75715e"># &#39;18.06%&#39;</span>
-</code></pre></div><h4 id="list">数据类型之list(类比数组)</h4>
+</code></pre></div><h4 id="数据类型之list类比数组">数据类型之list(类比数组)</h4>
 <p>获取<code>list</code>元素个数<code>len(变量名)</code></p>
 <p>访问元素下标为负表示都是第几个元素</p>
 <p>末尾添加元素 <code>vary.append(...)</code></p>
@@ -107,18 +107,18 @@ if (!doNotTrack) {
 <p>末尾元素去除 <code>vary.pop()</code></p>
 <p>去除指定位置 <code>vary.pop(2)</code></p>
 <p>元素之间的数据类型可不同</p>
-<h4 id="tuple">数据类型之tuple元组</h4>
+<h4 id="数据类型之tuple元组">数据类型之tuple元组</h4>
 <p>与<code>list</code>相比这样定义出来的数组内的元素是不可直接变的，数据更加安全</p>
 <p>间接改变的原理：<code>tuple是保持元素的指向不变，指向的内容是可能可变的，例如元素是list</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t <span style="color:#f92672">=</span> (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">C</span><span style="color:#e6db74">&#39;</span>)
-</code></pre></div><h4 id="if">if语句</h4>
+</code></pre></div><h4 id="if语句">if语句</h4>
 <p><code>:</code> 替代花括号块</p>
 <p><code>elif</code> 等价于其他语言的 <code>else if</code></p>
-<h4 id="heading-3">循环</h4>
+<h4 id="循环">循环</h4>
 <p><code>for-in</code> 循环	<code>for x in ...:</code></p>
 <p><code>continue</code> 打破当前循环进入下一次循环</p>
 <p><code>break</code> 退出循环体</p>
-<h4 id="dict-">dict 键值对</h4>
+<h4 id="dict-键值对">dict 键值对</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> {<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">11</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">22</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">C</span><span style="color:#e6db74">&#39;</span>:<span style="color:#ae81ff">33</span>}
 d[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#39;</span>]
 <span style="color:#75715e"># 22</span>
@@ -127,38 +127,38 @@ d[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><sp
 <p><code>d.get('B', -1)</code> 第二个参数指定了找不到时返回的值</p>
 <p><code>dict</code> 中的<code>key</code>不可变</p>
 <p>删除 <code>d.pop(key)</code></p>
-<h4 id="set-key">set key的集合</h4>
+<h4 id="set-key的集合">set key的集合</h4>
 <p>初始化需传入一个<code>list</code>，传入的元素不能有重复的</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s <span style="color:#f92672">=</span> set([<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>])
 <span style="color:#75715e"># {5, 6, 7}</span>
 </code></pre></div><p>添加 <code>add(key)</code></p>
 <p>删除 <code>remove(key)</code></p>
-<h4 id="heading-4">字符串对象</h4>
+<h4 id="字符串对象">字符串对象</h4>
 <p><code>str.remove('a', 'A')</code>将<code>a</code>替换成<code>A</code>但是方法会返回一个新的串，原来的<code>str</code>不可变！</p>
-<h4 id="heading-5">基本函数</h4>
+<h4 id="基本函数">基本函数</h4>
 <p><code>abs()</code></p>
 <p><code>max()</code> 可以放任意个参数只返回最大</p>
 <p><code>a = abs</code> 给<code>abs</code>函数引用发给<code>a</code>，调用<code>a()</code>效果一样</p>
-<h4 id="heading-6">类型转换</h4>
+<h4 id="类型转换">类型转换</h4>
 <p><code>int(要转换的变量)</code></p>
 <p>其他类似</p>
-<h4 id="heading-7">定义函数</h4>
+<h4 id="定义函数">定义函数</h4>
 <p><code>def</code> 替代<code>function</code></p>
-<h4 id="heading-8">缩进体置空</h4>
+<h4 id="缩进体置空">缩进体置空</h4>
 <p><code>pass</code></p>
-<h4 id="heading-9">函数返回值</h4>
+<h4 id="函数返回值">函数返回值</h4>
 <p>居然可以有多个!! 我的三观&hellip;</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">goBack</span>(x,y)
 	<span style="color:#66d9ef">return</span> x,y
 
 a,b <span style="color:#f92672">=</span> goBack(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>) 
 </code></pre></div><p>原因：返回的是<code>tuple</code></p>
-<h4 id="heading-10">类型检查</h4>
+<h4 id="类型检查">类型检查</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">goBack</span>(x,y)
 	<span style="color:#66d9ef">if</span> isinstance(x, (int, float)):
 		<span style="color:#66d9ef">return</span> x,y
 <span style="color:#75715e"># 允许int和float类型</span>
-</code></pre></div><h4 id="heading-11">参数</h4>
+</code></pre></div><h4 id="参数">参数</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">power</span>(x, n<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>):
 <span style="color:#75715e"># n默认值为2</span>
 </code></pre></div><p><code>默认参数必须指向不变对象</code></p>
@@ -166,7 +166,7 @@ a,b <span style="color:#f92672">=</span> goBack(<span style="color:#ae81ff">1</s
 <p>可变参数 <code>def calc(*numbers):</code> 多参数自动组装成<code>tuple</code></p>
 <p>关键字参数 <code>def person(name, age, **kw):</code> 方便扩展函数的参数</p>
 <p><code>参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数</code></p>
-<h4 id="heading-12">尾递归优化递归函数</h4>
+<h4 id="尾递归优化递归函数">尾递归优化递归函数</h4>
 <p><code>指在函数返回的时候，调用自身本身，并且，return语句不能包含表达式</code></p>
 <p>注意：标准解释器并不支持这种用法</p>
 
@@ -203,6 +203,30 @@ a,b <span style="color:#f92672">=</span> goBack(<span style="color:#ae81ff">1</s
 		<a class="post-nav__link" href="/blog/%E6%9C%80%E7%B2%BE%E7%AE%80restful%E5%AE%9E%E7%8E%B0/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">最精简restful实现</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -335,7 +359,7 @@ a,b <span style="color:#f92672">=</span> goBack(<span style="color:#ae81ff">1</s
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

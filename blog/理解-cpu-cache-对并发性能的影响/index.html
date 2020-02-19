@@ -73,8 +73,8 @@ if (!doNotTrack) {
 	<div class="toc__menu">
 		<nav id="TableOfContents">
   <ul>
-    <li><a href="#-false-sharing">伪共享问题 false sharing</a></li>
-    <li><a href="#heading">解决伪共享问题</a></li>
+    <li><a href="#伪共享问题-false-sharing">伪共享问题 false sharing</a></li>
+    <li><a href="#解决伪共享问题">解决伪共享问题</a></li>
   </ul>
 </nav>
 	</div>
@@ -83,14 +83,14 @@ if (!doNotTrack) {
 			<p>一般来说每个 CPU 核有 L1 和 L2 缓存，L3是共享缓存
 以缓存行为单位存储，通常是 64 字节为一行</p>
 <p>这种利用局部性原理的缓存是数组访问比链表访问快的主要原因</p>
-<h2 id="-false-sharing">伪共享问题 false sharing</h2>
+<h2 id="伪共享问题-false-sharing">伪共享问题 false sharing</h2>
 <p>如果两个核都有同一个缓存行，但是它们操作的却是缓存行中的不同变量，这时就会出现伪共享问题，处理器会用标志标记缓存行的修改状态，需要通过 MESI 协议通信来传输被修改的缓存行。表面上看这两个变量是在不同的 L1 中被独立修改的，但事实上它们都共享 L3 上的同一个缓存行，其中会存在大量的数据同步的通信开销</p>
 <p>通信获取缓存的先决条件：</p>
 <ul>
 <li>线程的工作从一个核换到另一个核（联系GPM模型中的被绑定的M，这也是为什么最好是由原来绑定的M来运行G的重要原因，利用处理器局部缓存！）</li>
 <li>两个不同的核需要处理相同的缓存行</li>
 </ul>
-<h2 id="heading">解决伪共享问题</h2>
+<h2 id="解决伪共享问题">解决伪共享问题</h2>
 <p>案例：当多个线程需要处理多个相邻的数据项的时候？
 如：并发地修改数组，结构体里相邻的字段存在被并发读取修改的情况等</p>
 <p>其中一个可行的办法就是进行边界填充，在 Go 中通常情况下可以使用匿名下划线的 <code>[]byte</code> 进行填充，让这些受影响的数据项位于不同的 cache line 即可，这样就能够打破共享从而避免数据同步通信的开销</p>
@@ -125,6 +125,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="prev"><span class="post-nav__caption">«&thinsp;上一篇</span><p class="post-nav__post-title">Go中反序列化后的类型转换问题记录</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -257,7 +281,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

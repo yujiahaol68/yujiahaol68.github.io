@@ -77,7 +77,7 @@ if (!doNotTrack) {
 <div class="content post__content clearfix">
 			<p>学校有一个实验要做柑橘识别，因此想要用 tensorflow 用自己的训练集训练出一个只识别柑橘的模型出来，故有下文，别的物体识别也可以使用这种方式自己找数据去训练</p>
 <p><a href="https://github.com/yujiahaol68/tensorflow-tangerine-detection">完整代码</a></p>
-<h1 id="heading">环境准备</h1>
+<h1 id="环境准备">环境准备</h1>
 <ul>
 <li>Win10</li>
 <li>一张优秀的显卡（尤其显存要大，最低要求 2G）</li>
@@ -93,7 +93,7 @@ if (!doNotTrack) {
 <p>注意：如果还是提示找不到对应模块的话，需要在 对应环境的 <em>site-packages</em> 目录下加入一个 <code>tensorflow_model.pth</code> 文件，内容如下</p>
 <pre><code>第一行是 research 的路径
 第二行是 slim 的路径
-</code></pre><h1 id="heading-1">制作训练集</h1>
+</code></pre><h1 id="制作训练集">制作训练集</h1>
 <ul>
 <li>爬取柑橘的相关图片（其他物体类似）</li>
 </ul>
@@ -106,7 +106,7 @@ if (!doNotTrack) {
 <li>给图片打 Label</li>
 </ul>
 <p>win 环境下可以使用 <a href="https://github.com/tzutalin/labelImg">labelimg</a> 给图片的局部加上分类标签来制作我们的数据集，如果是用 mac 的话可以尝试一款名为 <a href="https://rectlabel.com/">rectlabel</a> 的付费 app ，能对图片的分类特征进行更精细的框选，效果应该更好，支持输出 PASCAL VOC 格式的图片标记</p>
-<h1 id="-tfrecord-">生成 TFRecord 文件</h1>
+<h1 id="生成-tfrecord-文件">生成 TFRecord 文件</h1>
 <p>我们的图片和 labelimg 生成的分类注解 xml 文件应该按如下方式放置</p>
 <pre><code>Project
 .
@@ -131,9 +131,9 @@ if (!doNotTrack) {
 <li>xml_modify.py 用于修改 xml 文件的部分内容使得 <code>create_tangerine_tf_record.py</code> 能够顺利通过里面提供的标识找到图片并生成 TFRecord</li>
 </ul>
 <p>使用详情请阅读代码注释</p>
-<h1 id="heading-2">选择模型及修改对应配置文件</h1>
+<h1 id="选择模型及修改对应配置文件">选择模型及修改对应配置文件</h1>
 <p>本文使用的模型为 coco数据集的 <code>faster_rcnn_resnet101</code> 模型，想要使用预训练的模型我们需要将模型的压缩包下载下来，将里面前缀为 <code>model.ckpt</code> 的文件解压到我们的 <code>Project/training</code> 目录下， <code>faster_rcnn_resnet101_coco.config</code> 是对应的模型文件，在里面把对应的 <code>PATH_TO_BE_CONFIGURED</code> 的部分自行进行修改，训练的时候 tensorflow 会通过读取配置文件的形式去读取对应的模型文件，训练集测试集和 label ，如果需要修改训练步数减少训练时间可以修改 <code>num_steps</code></p>
-<h1 id="heading-3">模型训练及效果查看</h1>
+<h1 id="模型训练及效果查看">模型训练及效果查看</h1>
 <p>训练命令</p>
 <pre><code># 在 research 目录下
 $ python object_detection/train.py --logtostderr --pipeline_config_path=E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --train_dir=E:/DL/tangerine-recognition/training
@@ -148,11 +148,11 @@ $ tensorboard --logdir=E:/DL/tangerine-recognition/eval --port=6006 --host=local
 
 # 访问 localhost:6006，右上角选择 image
 </code></pre><p><img src="/img/tensorboard.png" alt="tensorboard"></p>
-<h1 id="heading-4">导出训练好的模型</h1>
+<h1 id="导出训练好的模型">导出训练好的模型</h1>
 <pre><code># 在 research 目录下
 $ python object_detection/export_inference_graph.py --input_type image_tensor --pipeline_config_path E:/DL/tangerine-recognition/faster_rcnn_resnet101_coco.config --trained_checkpoint_prefix E:/DL/tangerine-recognition/training/model.ckpt-{设置的步数} --output_directory E:/DL/tangerine-recognition/training/result
 </code></pre><p>在 result 目录下就能看到我们的 <code>frozen_inference_graph.pb</code> 可用于生产部署的图模型了</p>
-<h1 id="-python-">使用 python 调用已训练的模型进行识别</h1>
+<h1 id="使用-python-调用已训练的模型进行识别">使用 python 调用已训练的模型进行识别</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># demo.py</span>
 <span style="color:#f92672">import</span> cv2
 <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
@@ -221,7 +221,7 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
     detecotr<span style="color:#f92672">.</span>detect(image)
 </code></pre></div><p>最终效果</p>
 <p><img src="/img/individualImage.png" alt="demo-result"></p>
-<h1 id="heading-5">参考资料</h1>
+<h1 id="参考资料">参考资料</h1>
 <ul>
 <li>
 <p><a href="https://towardsdatascience.com/building-a-toy-detector-with-tensorflow-object-detection-api-63c0fdf2ac95">building-a-toy-detector-with-tensorflow-object-detection-api</a></p>
@@ -269,6 +269,30 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
 		<a class="post-nav__link" href="/blog/go%E4%B8%8B%E8%A7%A3%E6%9E%90xml%E6%96%87%E6%A1%A3%E6%97%B6%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">Go下解析XML文档时的编码问题</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -401,7 +425,7 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

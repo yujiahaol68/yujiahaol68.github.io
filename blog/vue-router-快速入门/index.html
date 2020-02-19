@@ -75,12 +75,12 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#heading">配置路由</a></li>
-        <li><a href="#heading-1">\#号的含义</a></li>
-        <li><a href="#heading-2">路由参数动态绑定</a></li>
-        <li><a href="#heading-3">路由的数据传递</a></li>
-        <li><a href="#heading-4">命名视图</a></li>
-        <li><a href="#heading-5">组件懒加载</a></li>
+        <li><a href="#配置路由">配置路由</a></li>
+        <li><a href="#号的含义">\#号的含义</a></li>
+        <li><a href="#路由参数动态绑定">路由参数动态绑定</a></li>
+        <li><a href="#路由的数据传递">路由的数据传递</a></li>
+        <li><a href="#命名视图">命名视图</a></li>
+        <li><a href="#组件懒加载">组件懒加载</a></li>
       </ul>
     </li>
   </ul>
@@ -88,7 +88,7 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h3 id="heading">配置路由</h3>
+			<h3 id="配置路由">配置路由</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ npm install vue-router --save 
 </code></pre></div><!-- raw HTML omitted -->
 <p>routes.js</p>
@@ -129,9 +129,9 @@ if (!doNotTrack) {
 	&lt;/<span style="color:#f92672">div</span>&gt;
 &lt;/<span style="color:#f92672">template</span>&gt;
 </code></pre></div><p>在模板中标注出组件渲染的位置</p>
-<h3 id="heading-1">#号的含义</h3>
+<h3 id="号的含义">#号的含义</h3>
 <p>#号前表示的是发送给服务端的请求，要求返回html文件，而#号后表示的是发送给本地js的请求以寻求解决</p>
-<h3 id="heading-2">路由参数动态绑定</h3>
+<h3 id="路由参数动态绑定">路由参数动态绑定</h3>
 <p>使用watch</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">watch</span><span style="color:#f92672">:</span> {
 	<span style="color:#e6db74">&#39;$route&#39;</span>(<span style="color:#a6e22e">to</span>,<span style="color:#a6e22e">from</span>) {
@@ -140,13 +140,13 @@ if (!doNotTrack) {
 	}
 }
 
-</code></pre></div><h3 id="heading-3">路由的数据传递</h3>
+</code></pre></div><h3 id="路由的数据传递">路由的数据传递</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">router-link</span> <span style="color:#a6e22e">:to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{ name: &#39;userEdit&#39;, params: { id: $route.params.id }, query: { locale: &#39;en&#39;, list: 2 } }&#34;</span>&gt;&lt;/<span style="color:#f92672">router-link</span>&gt;
 </code></pre></div><p>传<code>query</code>参数可以达到地址栏出现<code>/?locale=en&amp;list=2</code>
 通过 <code>$route.query.键名</code> 来访问</p>
-<h3 id="heading-4">命名视图</h3>
+<h3 id="命名视图">命名视图</h3>
 <p><code>router-view</code> 可以通过配置名字 <code>name</code> 来指定组件渲染的位置，增加了组件的复用性，比如分成 <code>header</code> <code>main</code> <code>hero</code> <code>footer</code> 来分别在一个视图中的不同位置上加载不同的组件</p>
-<h3 id="heading-5">组件懒加载</h3>
+<h3 id="组件懒加载">组件懒加载</h3>
 <p>我们只需要加载我们需要的组件呈现给用户，而其他不需要第一时间加载的组件，可以使用 <code>webpack</code> 实现异步加载，只在需要的时候才会发出请求，请求加载另一个组件</p>
 <p>routes.js</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">resolve</span> =&gt; {
@@ -190,6 +190,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/centos-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">CentOS 7 升级最新版本git</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -322,7 +346,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

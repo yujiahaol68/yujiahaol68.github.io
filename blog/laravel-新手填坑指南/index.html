@@ -75,16 +75,16 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#heading">浏览器篇</a></li>
-        <li><a href="#heading-1">环境配置篇</a></li>
-        <li><a href="#heading-2">正确开发习惯养成</a></li>
-        <li><a href="#heading-3">数据库篇</a></li>
-        <li><a href="#heading-4">目录结构篇</a></li>
-        <li><a href="#heading-5">命名空间篇</a></li>
-        <li><a href="#heading-6">路由篇</a></li>
-        <li><a href="#-auth">用户登录篇 Auth</a></li>
-        <li><a href="#-restful">表单篇 RESTful</a></li>
-        <li><a href="#heading-7">数据绑定视图</a></li>
+        <li><a href="#浏览器篇">浏览器篇</a></li>
+        <li><a href="#环境配置篇">环境配置篇</a></li>
+        <li><a href="#正确开发习惯养成">正确开发习惯养成</a></li>
+        <li><a href="#数据库篇">数据库篇</a></li>
+        <li><a href="#目录结构篇">目录结构篇</a></li>
+        <li><a href="#命名空间篇">命名空间篇</a></li>
+        <li><a href="#路由篇">路由篇</a></li>
+        <li><a href="#用户登录篇-auth">用户登录篇 Auth</a></li>
+        <li><a href="#表单篇-restful">表单篇 RESTful</a></li>
+        <li><a href="#数据绑定视图">数据绑定视图</a></li>
       </ul>
     </li>
   </ul>
@@ -92,17 +92,17 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h3 id="heading">浏览器篇</h3>
+			<h3 id="浏览器篇">浏览器篇</h3>
 <p>开发浏览器: Chorme（不用解释）</p>
 <p>注意事项：</p>
 <p>一定要先清缓存！清缓存！清缓存！ 重要的说三遍。</p>
-<h3 id="heading-1">环境配置篇</h3>
+<h3 id="环境配置篇">环境配置篇</h3>
 <p>开发环境：</p>
 <p>Mac/Linux (少很多麻烦)</p>
 <p>首选: Laravel Homestead (Mac上配置很轻松)</p>
-<h3 id="heading-2">正确开发习惯养成</h3>
+<h3 id="正确开发习惯养成">正确开发习惯养成</h3>
 <p>千万注意每一个<code>function</code>的内容编写的时候先把<code>return</code>带上，返回的一般为数据或视图亦或是附上数据的视图，就算返回视图也要返回一个提示的局部视图闪现</p>
-<h3 id="heading-3">数据库篇</h3>
+<h3 id="数据库篇">数据库篇</h3>
 <ol>
 <li>
 <p>涉及数据库的命令除了<code>artisan</code>新建<code>Model</code>文件以外最好都在虚拟机中执行，包括用<code>php artisan migrate</code></p>
@@ -114,20 +114,20 @@ if (!doNotTrack) {
 <p>Eloquent 修改器在写的时候一定谨慎编写，尤其是用<code>bcrypt</code>加密密码存入数据库的时候</p>
 </li>
 </ol>
-<h5 id="migrationmigrationphp-artisan-migrate">注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5>
-<h3 id="heading-4">目录结构篇</h3>
+<h5 id="注意如果不是修改原来的migration而是新建migration的话直接php-artisan-migrate即可">注意：如果不是修改原来的migration而是新建migration的话直接<code>php artisan migrate</code>即可</h5>
+<h3 id="目录结构篇">目录结构篇</h3>
 <ol>
 <li>目录结构一旦更改，本身以及引用此类的命名空间也必须进行<code>全局替换</code>！！</li>
 </ol>
-<h3 id="heading-5">命名空间篇</h3>
+<h3 id="命名空间篇">命名空间篇</h3>
 <ol>
 <li>很多的<code>Class couldn't find</code>这类的错误都是没有写<code>use</code>进行引用就直接用了</li>
 </ol>
-<h3 id="heading-6">路由篇</h3>
+<h3 id="路由篇">路由篇</h3>
 <ol>
 <li>决定统一用REST过后最好用<code>resource</code>一次搞定</li>
 </ol>
-<h3 id="-auth">用户登录篇 Auth</h3>
+<h3 id="用户登录篇-auth">用户登录篇 Auth</h3>
 <ol>
 <li>
 <p>引用的时候必须写成</p>
@@ -138,16 +138,16 @@ if (!doNotTrack) {
 <p>所有路由都要加上<code>-&gt;name('_name_')</code>，不然<code>&amp;#123;&amp;#123; route('name) &amp;#125;&amp;#125;</code>用不了</p>
 </li>
 </ol>
-<h3 id="-restful">表单篇 RESTful</h3>
+<h3 id="表单篇-restful">表单篇 RESTful</h3>
 <ol>
 <li>用户的退出登录可以看成是提交一个DELETE表单</li>
 <li>表单要加上<code>{&amp;#123;&amp;#123; csrf_field() &amp;#125;&amp;#125;</code>生成令牌token</li>
 <li>需要伪装的协议必须加上<code>&amp;#123;&amp;#123; method_field('PATCH') &amp;#125;&amp;#125;</code>或<code>&amp;#123;&amp;#123; method_field('DELETE') &amp;#125;&amp;#125;</code></li>
 </ol>
-<h3 id="heading-7">数据绑定视图</h3>
+<h3 id="数据绑定视图">数据绑定视图</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">return view(&#39;users.edit&#39;, compact(&#39;user&#39;));
 //用compact将user实例数据与视图进行绑定
-</code></pre></div><h4 id="compact">注意compact的参数是字符串！！！</h4>
+</code></pre></div><h4 id="注意compact的参数是字符串">注意compact的参数是字符串！！！</h4>
 <p>用户数据与视图进行绑定后，便可以在视图上通过 <code>$user</code> 来访问用户对象</p>
 
 		</div>
@@ -184,6 +184,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/laravel-5-%E5%B8%B8%E7%94%A8%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">Laravel 5 常用帮助函数</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -316,7 +340,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

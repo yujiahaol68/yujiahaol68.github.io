@@ -75,11 +75,11 @@ if (!doNotTrack) {
   <ul>
     <li>
       <ul>
-        <li><a href="#heading">错误结果</a></li>
-        <li><a href="#heading-1">出现场景</a></li>
-        <li><a href="#heading-2">问题排查</a></li>
-        <li><a href="#heading-3">问题分析</a></li>
-        <li><a href="#all-in-all-">All in all 解决方案呢？</a></li>
+        <li><a href="#错误结果">错误结果</a></li>
+        <li><a href="#出现场景">出现场景</a></li>
+        <li><a href="#问题排查">问题排查</a></li>
+        <li><a href="#问题分析">问题分析</a></li>
+        <li><a href="#all-in-all-解决方案呢">All in all 解决方案呢？</a></li>
       </ul>
     </li>
   </ul>
@@ -87,18 +87,18 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h3 id="heading">错误结果</h3>
+			<h3 id="错误结果">错误结果</h3>
 <blockquote>
 <p>Error: Can't render headers after they are sent to the client.</p>
 </blockquote>
 <blockquote>
 <p>错误：当响应头被发回客户端时不能被正确渲染！</p>
 </blockquote>
-<h3 id="heading-1">出现场景</h3>
+<h3 id="出现场景">出现场景</h3>
 <blockquote>
 <p>Express环境下使用mongoose model 进行模糊查询时，需要用ORM进行至少一次至多两次的查询，查询用的都是Promise进行的异步操作</p>
 </blockquote>
-<h3 id="heading-2">问题排查</h3>
+<h3 id="问题排查">问题排查</h3>
 <ul>
 <li>
 <p><strong>响应头的设置出现了冲突</strong></p>
@@ -113,7 +113,7 @@ if (!doNotTrack) {
 <p>问题出在<code>Promise</code>上</p>
 </li>
 </ul>
-<h3 id="heading-3">问题分析</h3>
+<h3 id="问题分析">问题分析</h3>
 <p><strong>为什么连续的两个<code>Promise</code>回调会最终导致响应头渲染冲突?</strong></p>
 <p>渲染冲突出现在错误的顶部，跟错误抛出的顺序有关，这与<code>Express</code>自带的<code>res</code>对象有关，而<code>res</code>又继承自<code>node.js</code>原生的<code>http.ServerResponse</code> 类，在<code>res</code>调用<code>res.writeHead(statusCode)</code>写入响应头的状态码之前，我们可以尽情的写入响应头的头信息，在一个<code>res.send(docs)</code>中，应该包含着以下几步，有的是<code>exprerss</code>自己的，有的则是属于<code>node</code>原生<code>http</code>模块的</p>
 <p><strong>按以下顺序开始运行:</strong></p>
@@ -145,7 +145,7 @@ if (!doNotTrack) {
 <p>res.send([body]) (Express only)</p>
 </blockquote>
 <p>最后我们的查询数据是以响应内容中的<code>body</code>的形式返回给客户端的，当要进行<code>send</code>的时候，<code>node</code>自带的函数就会先运行，当然运行第一个<code>Promise</code>的时候是没有问题的，问题在于:<strong><code>send</code>本身并不能中断当前执行的任务</strong>，只要还没有<code>return</code>，代码仍然会继续运行，这也恰恰印证了<code>node</code>的异步非阻塞IO的特性，即便是第一个<code>Promise</code>执行时，并不会阻塞第二个<code>Promise</code>的继续执行，如果第一个<code>Promise</code>的<code>res.send</code>已经执行，当第二个<code>Promise</code>被执行时，执行至第三步，也就是设置响应头的时候原先的响应头信息依然存在，触犯了<strong><code>node</code></strong>中不能重复设置响应头信息的规定，所以<code>node</code>先抛错，这一切看起来也就顺其自然了</p>
-<h3 id="all-in-all-">All in all 解决方案呢？</h3>
+<h3 id="all-in-all-解决方案呢">All in all 解决方案呢？</h3>
 <ul>
 <li>避免使用多次<code>send</code>,多次设置响应头就会出现此错误</li>
 <li>谨慎使用异步<code>Promise</code>，可以考虑<code>Promise</code>嵌套**（推荐）**</li>
@@ -189,6 +189,30 @@ if (!doNotTrack) {
 		<a class="post-nav__link" href="/blog/linux-web%E5%9F%BA%E7%A1%80-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">Linux WEB基础 学习笔记</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -321,7 +345,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

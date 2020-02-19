@@ -76,9 +76,9 @@ if (!doNotTrack) {
     <li>
       <ul>
         <li></li>
-        <li><a href="#heading">需要用到的函数：</a></li>
-        <li><a href="#html">快速去除html字符</a></li>
-        <li><a href="#heading-1">正则匹配标签属性</a></li>
+        <li><a href="#需要用到的函数">需要用到的函数：</a></li>
+        <li><a href="#快速去除html字符">快速去除html字符</a></li>
+        <li><a href="#正则匹配标签属性">正则匹配标签属性</a></li>
       </ul>
     </li>
   </ul>
@@ -86,8 +86,8 @@ if (!doNotTrack) {
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h4 id="apphtmlphp">在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4>
-<h3 id="heading">需要用到的函数：</h3>
+			<h4 id="在开发app接口的时候我们经常需要将html富文本字符串进行处理php中自带了许多有用的函数来给我们进行使用">在开发APP接口的时候，我们经常需要将html富文本字符串进行处理，PHP中自带了许多有用的函数来给我们进行使用</h4>
+<h3 id="需要用到的函数">需要用到的函数：</h3>
 <ul>
 <li>str_replace() 字符串替换</li>
 <li>html_entity_decode() html字符串转html标签</li>
@@ -98,7 +98,7 @@ if (!doNotTrack) {
 <li>array_values() 返回只有键值无键名的数组</li>
 </ul>
 <!-- raw HTML omitted -->
-<h3 id="html">快速去除html字符</h3>
+<h3 id="快速去除html字符">快速去除html字符</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$bewrite = strip_tags(html_entity_decode($htmlStr),&#39;&lt;<span style="color:#f92672">br</span>&gt;&#39;);
 </code></pre></div><p>先转HTML标签再去除标签，但是注意保留换行标签，在APP中的文字依然需要简单地排版。
 接着我们再把br标签再转成本地APP的\n</p>
@@ -107,7 +107,7 @@ if (!doNotTrack) {
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$bewrite = str_replace(&#39;&amp;nbsp;&#39;,&#39; &#39;,$bewrite);
 $bewrite = str_replace(&#39;&amp;amp;&#39;,&#39;&#39;,$bewrite);
 </code></pre></div><p>但通常情况下，我们的HTML字符串中不仅有文本，还有图片，img中的src属性也必须要挑出来</p>
-<h3 id="heading-1">正则匹配标签属性</h3>
+<h3 id="正则匹配标签属性">正则匹配标签属性</h3>
 <p>下面我以img中匹配src图片地址为例子</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$unmatchedstr = html_entity_decode($data[&#39;secondgoods_bewrite&#39;]); //转html字符串
 preg_match_all(&#39;/\&lt;<span style="color:#f92672">img.</span><span style="color:#960050;background-color:#1e0010">*</span><span style="color:#960050;background-color:#1e0010">?</span><span style="color:#a6e22e">src</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#960050;background-color:#1e0010">=</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#960050;background-color:#1e0010">(</span><span style="color:#960050;background-color:#1e0010">.</span><span style="color:#960050;background-color:#1e0010">*</span><span style="color:#960050;background-color:#1e0010">?</span><span style="color:#960050;background-color:#1e0010">)</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#960050;background-color:#1e0010">[</span><span style="color:#960050;background-color:#1e0010">^</span>&gt;]*&gt;/i&#39;,$unmatchedstr,$match);//正则匹配图片src地址
@@ -153,6 +153,30 @@ $matchresult = array_values($matches);//取键值数组的值，去掉键名就�
 		<a class="post-nav__link" href="/blog/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">gulp.js简易入门指南</p></a>
 	</div>
 </nav>
+
+<section class="comments">
+	<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '78f4889c5b66543134f7',
+    clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
+    repo: 'yujiahaol68.github.io',
+    owner: 'yujiahaol68',
+    admin: ['yujiahaol68'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+</section>
 
 
 			</div>
@@ -285,7 +309,7 @@ $matchresult = array_values($matches);//取键值数组的值，去掉键名就�
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 Runtime: out of memory.
+			&copy; 2020 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

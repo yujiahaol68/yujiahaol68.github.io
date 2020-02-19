@@ -308,12 +308,12 @@
   </url>
   
   <url>
-    <loc>/tags/node/</loc>
+    <loc>/categories/node/</loc>
     <lastmod>2017-10-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/node/</loc>
+    <loc>/tags/node/</loc>
     <lastmod>2017-10-17T00:00:00+00:00</lastmod>
   </url>
   
@@ -328,12 +328,12 @@
   </url>
   
   <url>
-    <loc>/categories/typescript/</loc>
+    <loc>/tags/typescript/</loc>
     <lastmod>2017-10-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/typescript/</loc>
+    <loc>/categories/typescript/</loc>
     <lastmod>2017-10-15T00:00:00+00:00</lastmod>
   </url>
   
@@ -428,12 +428,12 @@
   </url>
   
   <url>
-    <loc>/categories/machine-learning/</loc>
+    <loc>/tags/machine-learning/</loc>
     <lastmod>2017-04-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/machine-learning/</loc>
+    <loc>/categories/machine-learning/</loc>
     <lastmod>2017-04-08T00:00:00+00:00</lastmod>
   </url>
   
@@ -483,12 +483,12 @@
   </url>
   
   <url>
-    <loc>/categories/vue/</loc>
+    <loc>/tags/vue/</loc>
     <lastmod>2017-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/vue/</loc>
+    <loc>/categories/vue/</loc>
     <lastmod>2017-03-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -528,12 +528,12 @@
   </url>
   
   <url>
-    <loc>/tags/php/</loc>
+    <loc>/categories/php/</loc>
     <lastmod>2017-02-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/php/</loc>
+    <loc>/tags/php/</loc>
     <lastmod>2017-02-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -543,12 +543,12 @@
   </url>
   
   <url>
-    <loc>/categories/css/</loc>
+    <loc>/tags/css/</loc>
     <lastmod>2016-12-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/css/</loc>
+    <loc>/categories/css/</loc>
     <lastmod>2016-12-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -618,12 +618,12 @@
   </url>
   
   <url>
-    <loc>/categories/java/</loc>
+    <loc>/tags/java/</loc>
     <lastmod>2016-11-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/java/</loc>
+    <loc>/categories/java/</loc>
     <lastmod>2016-11-04T00:00:00+00:00</lastmod>
   </url>
   
