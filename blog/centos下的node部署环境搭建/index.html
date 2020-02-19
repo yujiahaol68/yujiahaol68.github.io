@@ -343,7 +343,7 @@ sysctl -w net.core.somaxconn<span style="color:#f92672">=</span><span style="col
     repo: 'yujiahaol68.github.io',
     owner: 'yujiahaol68',
     admin: ['yujiahaol68'],
-    id: location.pathname, 
+    id: decodeURI(location.pathname), 
     distractionFreeMode: false 
   });
   (function() {
