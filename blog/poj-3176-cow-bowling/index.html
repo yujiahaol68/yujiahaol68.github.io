@@ -155,13 +155,17 @@ if (!doNotTrack) {
 <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
 <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 <script>
+  var page_url = decodeURI(location.pathname);
+  var page_uniqueid = "41b53fbc42f9d1a072fa9a2696e7a6d7";
+	var comment_id = (page_url.length >= 50 ? page_uniqueid : page_url);
+
   const gitalk = new Gitalk({
     clientID: '78f4889c5b66543134f7',
     clientSecret: 'aa0fc89b5ff19dfc1f31325c276cee8f3d632b6e',
     repo: 'yujiahaol68.github.io',
     owner: 'yujiahaol68',
     admin: ['yujiahaol68'],
-    id: decodeURI(location.pathname), 
+    id: comment_id, 
     distractionFreeMode: false 
   });
   (function() {
