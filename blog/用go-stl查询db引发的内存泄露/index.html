@@ -65,7 +65,7 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/go" rel="category">Go</a></span>
 </div>
 <span class="meta__text">
-总计 4011 字
+总计 4054 字
 </span></div>
 		</header>
 <div class="post__toc toc">
@@ -392,7 +392,10 @@ Showing top 10 nodes out of 118
 <span style="color:#75715e">// 这句必不可少！！
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">Close</span>()
 <span style="color:#75715e">// ...
-</span></code></pre></div><h2 id="总结">总结</h2>
+</span></code></pre></div><p>重新部署，并对内存使用情况进行采样，结果如下图所示：</p>
+<p><img src="/img/mem-opt-chart.png" alt="优化前后对比图"></p>
+<p>GC 能够正常地回收 stmt 对象，问题解决！</p>
+<h2 id="总结">总结</h2>
 <p>得到的教训：</p>
 <ul>
 <li>前期：做 load test，能在线下解决就别放到线上；善用 pprof；写好文档，避免他人踩坑</li>
