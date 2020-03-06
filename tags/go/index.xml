@@ -6,10 +6,19 @@
     <description>Recent content in Go on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 06 Nov 2019 09:20:41 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2020 13:54:12 +0800</lastBuildDate>
     
 	<atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>用Go STL查询DB引发的内存泄露</title>
+      <link>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</link>
+      <pubDate>Fri, 06 Mar 2020 13:54:12 +0800</pubDate>
+      
+      <guid>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</guid>
+      <description>问题起因 这几天有一个 Go API service 经过定时监控发现占用的内存不断上涨，内存从初始的 70M 一直上升到超过 1G 直到吃光内存退出，基本上就可以断定是存在内存泄露</description>
+    </item>
     
     <item>
       <title>Go中反序列化后的类型转换问题记录</title>

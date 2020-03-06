@@ -79,29 +79,29 @@ if (!doNotTrack) {
 <p>时间复杂度：O(N)</p>
 <p>空间复杂度：O(1)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// Author: Tecker
-</span><span style="color:#75715e"></span><span style="color:#75715e">// 176ms, 28.7MB; beat 96.40%, 100%
+</span><span style="color:#75715e">// 176ms, 28.7MB; beat 96.40%, 100%
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> sumEvenAfterQueries(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span><span style="color:#f92672">&amp;</span> A, vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span><span style="color:#f92672">&amp;</span> queries) {
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> sumEvenAfterQueries(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> A, vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;&amp;</span> queries) {
         vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> res(A.size(), <span style="color:#ae81ff">0</span>);
         <span style="color:#66d9ef">int</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
-        A[queries[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]]<span style="color:#f92672">+</span><span style="color:#f92672">=</span>queries[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>];
+        A[queries[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]]<span style="color:#f92672">+=</span>queries[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>];
         <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>num : A) {
-            <span style="color:#66d9ef">if</span> (num<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>num;
+            <span style="color:#66d9ef">if</span> (num<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span><span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) sum<span style="color:#f92672">+=</span>num;
         }
         res[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span>sum;
-        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span>queries.size();<span style="color:#f92672">+</span><span style="color:#f92672">+</span>i) {
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span>queries.size();<span style="color:#f92672">++</span>i) {
             <span style="color:#66d9ef">int</span> val<span style="color:#f92672">=</span>queries[i][<span style="color:#ae81ff">0</span>];
             <span style="color:#66d9ef">int</span> idx<span style="color:#f92672">=</span>queries[i][<span style="color:#ae81ff">1</span>];
             <span style="color:#66d9ef">int</span> tmp <span style="color:#f92672">=</span> A[idx];
-            A[idx]<span style="color:#f92672">+</span><span style="color:#f92672">=</span>val;
+            A[idx]<span style="color:#f92672">+=</span>val;
             <span style="color:#66d9ef">if</span> (isEven(tmp)) {
                 <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>isEven(A[idx]))
-                    sum<span style="color:#f92672">-</span><span style="color:#f92672">=</span>tmp;
+                    sum<span style="color:#f92672">-=</span>tmp;
                 <span style="color:#66d9ef">else</span>
-                    sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>val;
+                    sum<span style="color:#f92672">+=</span>val;
             } <span style="color:#66d9ef">else</span> {
-                <span style="color:#66d9ef">if</span> (isEven(A[idx])) sum<span style="color:#f92672">+</span><span style="color:#f92672">=</span>A[idx];
+                <span style="color:#66d9ef">if</span> (isEven(A[idx])) sum<span style="color:#f92672">+=</span>A[idx];
             }
             res[i]<span style="color:#f92672">=</span>sum;
         }
@@ -195,11 +195,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">用Go STL查询DB引发的内存泄露</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
 		</ul>
 	</div>
 </div>

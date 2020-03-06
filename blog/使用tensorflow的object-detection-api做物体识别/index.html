@@ -163,8 +163,8 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
 
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TOD</span>(object):
     <span style="color:#66d9ef">def</span> __init__(self):
-        self<span style="color:#f92672">.</span>PATH_TO_CKPT <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">E:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">DL</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine-recognition</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">training</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">result</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">frozen_inference_graph.pb</span><span style="color:#e6db74">&#39;</span>
-        self<span style="color:#f92672">.</span>PATH_TO_LABELS <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">E:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">DL</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine-recognition</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine_label_map.pbtxt</span><span style="color:#e6db74">&#39;</span>
+        self<span style="color:#f92672">.</span>PATH_TO_CKPT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;E:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">DL</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine-recognition</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">training</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">result</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">frozen_inference_graph.pb&#39;</span>
+        self<span style="color:#f92672">.</span>PATH_TO_LABELS <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;E:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">DL</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine-recognition</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">tangerine_label_map.pbtxt&#39;</span>
         self<span style="color:#f92672">.</span>NUM_CLASSES <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
         self<span style="color:#f92672">.</span>detection_graph <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_load_model()
         self<span style="color:#f92672">.</span>category_index <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_load_label_map()
@@ -173,10 +173,10 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
         detection_graph <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Graph()
         <span style="color:#66d9ef">with</span> detection_graph<span style="color:#f92672">.</span>as_default():
             od_graph_def <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>GraphDef()
-            <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>gfile<span style="color:#f92672">.</span>GFile(self<span style="color:#f92672">.</span>PATH_TO_CKPT, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">rb</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">as</span> fid:
+            <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>gfile<span style="color:#f92672">.</span>GFile(self<span style="color:#f92672">.</span>PATH_TO_CKPT, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> fid:
                 serialized_graph <span style="color:#f92672">=</span> fid<span style="color:#f92672">.</span>read()
                 od_graph_def<span style="color:#f92672">.</span>ParseFromString(serialized_graph)
-                tf<span style="color:#f92672">.</span>import_graph_def(od_graph_def, name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>)
+                tf<span style="color:#f92672">.</span>import_graph_def(od_graph_def, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>)
         <span style="color:#66d9ef">return</span> detection_graph
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_load_label_map</span>(self):
@@ -192,11 +192,11 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
             <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>Session(graph<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>detection_graph) <span style="color:#66d9ef">as</span> sess:
                 <span style="color:#75715e"># Expand dimensions since the model expects images to have shape: [1, None, None, 3]</span>
                 image_np_expanded <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>expand_dims(image, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-                image_tensor <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">image_tensor:0</span><span style="color:#e6db74">&#39;</span>)
-                boxes <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">detection_boxes:0</span><span style="color:#e6db74">&#39;</span>)
-                scores <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">detection_scores:0</span><span style="color:#e6db74">&#39;</span>)
-                classes <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">detection_classes:0</span><span style="color:#e6db74">&#39;</span>)
-                num_detections <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">num_detections:0</span><span style="color:#e6db74">&#39;</span>)
+                image_tensor <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74">&#39;image_tensor:0&#39;</span>)
+                boxes <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74">&#39;detection_boxes:0&#39;</span>)
+                scores <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74">&#39;detection_scores:0&#39;</span>)
+                classes <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74">&#39;detection_classes:0&#39;</span>)
+                num_detections <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>detection_graph<span style="color:#f92672">.</span>get_tensor_by_name(<span style="color:#e6db74">&#39;num_detections:0&#39;</span>)
                 <span style="color:#75715e"># Actual detection.</span>
                 (boxes, scores, classes, num_detections) <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run(
                     [boxes, scores, classes, num_detections],
@@ -211,12 +211,12 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
                     use_normalized_coordinates<span style="color:#f92672">=</span>True,
                     line_thickness<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>)
 
-        cv2<span style="color:#f92672">.</span>namedWindow(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">detection</span><span style="color:#e6db74">&#34;</span>, cv2<span style="color:#f92672">.</span>WINDOW_NORMAL)
-        cv2<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">detection</span><span style="color:#e6db74">&#34;</span>, image)
+        cv2<span style="color:#f92672">.</span>namedWindow(<span style="color:#e6db74">&#34;detection&#34;</span>, cv2<span style="color:#f92672">.</span>WINDOW_NORMAL)
+        cv2<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#34;detection&#34;</span>, image)
         cv2<span style="color:#f92672">.</span>waitKey(<span style="color:#ae81ff">0</span>)
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#39;</span>:
-    image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">image.jpg</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;image.jpg&#39;</span>)
     detecotr <span style="color:#f92672">=</span> TOD()
     detecotr<span style="color:#f92672">.</span>detect(image)
 </code></pre></div><p>最终效果</p>
@@ -312,11 +312,11 @@ $ python object_detection/export_inference_graph.py --input_type image_tensor --
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">用Go STL查询DB引发的内存泄露</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
 		</ul>
 	</div>
 </div>

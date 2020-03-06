@@ -195,7 +195,7 @@ if (!doNotTrack) {
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onerror</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">onerror</span>(<span style="color:#a6e22e">err</span>);
 </code></pre></div><p>这个巨大的 <code>ctx</code> 被创建出来的时候在一开始就立马挂载了错误监听器，但在 <code>createContext</code> 中并没有发现这个<code>onerror</code>方法，应该属于其中一个模块的原型方法，经过一番搜索，发现它位于 <code>context.js</code> 这个文件下，这个文件定义了所有的默认 <code>context</code> 对象具有的原型方法</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// application.js
-</span><span style="color:#75715e"></span><span style="color:#75715e">// handleRequest()
+</span><span style="color:#75715e">// handleRequest()
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onerror</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">err</span> =&gt; <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">onerror</span>(<span style="color:#a6e22e">err</span>);
 <span style="color:#a6e22e">onFinished</span>(<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">onerror</span>);
 <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>(<span style="color:#a6e22e">ctx</span>).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">handleResponse</span>).<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">onerror</span>);
@@ -205,10 +205,10 @@ if (!doNotTrack) {
 <p>到这里我们应该也不难解开本文开头时我们心中的一个疑问，那就是为什么要继承 <code>Events</code>，其实就是为了使用 <code>node</code> 自带的事件监听器来监听一些事件，例如目前所知的 <code>error</code> ，来解耦错误处理这一块的功能</p>
 <p>全局的错误处理函数</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// source code
-</span><span style="color:#75715e"></span><span style="color:#75715e">// application.js
+</span><span style="color:#75715e">// application.js
 </span><span style="color:#75715e"></span>
 <span style="color:#a6e22e">onerror</span>(<span style="color:#a6e22e">err</span>) {
-  <span style="color:#a6e22e">assert</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">instanceof</span> Error, <span style="color:#e6db74">`</span><span style="color:#e6db74">non-error thrown: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">err</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+  <span style="color:#a6e22e">assert</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">instanceof</span> Error, <span style="color:#e6db74">`non-error thrown: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">err</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
 
   <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">404</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">status</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">expose</span>) <span style="color:#66d9ef">return</span>;
   <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">silent</span>) <span style="color:#66d9ef">return</span>;
@@ -222,7 +222,7 @@ if (!doNotTrack) {
 <h2 id="request-模块">request 模块</h2>
 <p>大量的 <code>getter</code> <code>setter</code> 充分提取出 <code>node</code> <code>http</code> 所提供的有用的请求相关的属性，还有一些必要的 <code>helper</code> 函数这里不再赘述，API文档中几乎所有的 <code>ctx.req</code> 下的属性都在其下提供，值得一提的是其中的 <code>this</code> ，头疼的 <code>this</code> , 这一块的代码用了大量的 <code>this.req</code> 的方式来访问node原生提供的 http 请求信息(因为我们把 node 的<code>req</code>赋给了<code>context</code>)，当在 <code>koa</code> 外部进行使用时我们是通过 <code>ctx.req.propertyName</code> 的形式 &hellip; 没错，我想你也发现了，我们需要绑定我们的 <code>this</code> 使之指向的是 <code>ctx.req</code>，所以在 <code>context.js</code> 模块中使用了代理来将 <code>this</code> 进行正确的绑定，前文提到的使这些模块能够相互访问的赋值代码其实也一定程度减少了<code>this</code>的麻烦事</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 详见 delegates 包
-</span><span style="color:#75715e"></span><span style="color:#75715e">// https://github.com/tj/node-delegates
+</span><span style="color:#75715e">// https://github.com/tj/node-delegates
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// Koa context.js
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">delegate</span>(<span style="color:#a6e22e">proto</span>, <span style="color:#e6db74">&#39;request&#39;</span>)
@@ -335,11 +335,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">用Go STL查询DB引发的内存泄露</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
 		</ul>
 	</div>
 </div>

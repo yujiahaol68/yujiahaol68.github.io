@@ -6,10 +6,19 @@
     <description>Recent content in Blogs on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 30 Dec 2019 10:42:32 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2020 13:54:12 +0800</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>用Go STL查询DB引发的内存泄露</title>
+      <link>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</link>
+      <pubDate>Fri, 06 Mar 2020 13:54:12 +0800</pubDate>
+      
+      <guid>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</guid>
+      <description>问题起因 这几天有一个 Go API service 经过定时监控发现占用的内存不断上涨，内存从初始的 70M 一直上升到超过 1G 直到吃光内存退出，基本上就可以断定是存在内存泄露</description>
+    </item>
     
     <item>
       <title>理解 CPU Cache 对并发性能的影响</title>
@@ -332,7 +341,7 @@
       <pubDate>Thu, 23 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/express%E4%B8%8B%E5%A4%9A%E6%AC%A1callback%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
-      <description>错误结果 Error: Can&#39;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，</description>
+      <description>错误结果 Error: Can&amp;rsquo;t render headers after they are sent to the client. 错误：当响应头被发回客户端时不能被正确渲染！ 出现场景 Express环境下使用mongoose model 进行模糊查询时，</description>
     </item>
     
     <item>
@@ -476,7 +485,7 @@
       <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-01-wrapper-class/</guid>
-      <description>div内容居中 &amp;lt;!--DESKTOP NAVIGATION --&amp;gt; &amp;lt;nav class=&amp;#34;top-bar&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;wrap&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;top-bar-left&amp;#34;&amp;gt; &amp;lt;h3&amp;gt;site title&amp;lt;/h3&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;top-bar-right&amp;#34;&amp;gt; &amp;lt;ul class=&amp;#34;menu&amp;#34;&amp;gt; &amp;lt;li&amp;gt;&amp;lt;input type=&amp;#34;search&amp;#34; placeholder=&amp;#34;Search&amp;#34;&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;button&amp;#34;&amp;gt;Search&amp;lt;/button&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/nav&amp;gt; .wrap{ width: 90%; margin: 0 auto; max-width: 1000px; } 1.用百分号的好处就是能够实时计算 2.margin用于自</description>
+      <description>div内容居中 &amp;lt;!-- DESKTOP NAVIGATION --&amp;gt; &amp;lt;nav class=&amp;#34;top-bar&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;wrap&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;top-bar-left&amp;#34;&amp;gt; &amp;lt;h3&amp;gt;site title&amp;lt;/h3&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;top-bar-right&amp;#34;&amp;gt; &amp;lt;ul class=&amp;#34;menu&amp;#34;&amp;gt; &amp;lt;li&amp;gt;&amp;lt;input type=&amp;#34;search&amp;#34; placeholder=&amp;#34;Search&amp;#34;&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;button&amp;#34;&amp;gt;Search&amp;lt;/button&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/nav&amp;gt; .wrap{ width: 90%; margin: 0 auto; max-width: 1000px; } 1.用百分号的好处就是能够实时计算 2.margin用于</description>
     </item>
     
     <item>

@@ -83,10 +83,10 @@ if (!doNotTrack) {
 			<p><a href="http://poj.org/problem?id=3616">原题地址</a></p>
 <h2 id="知识点权值区间dp">知识点：权值区间DP</h2>
 <h2 id="解题报告">解题报告</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -103,26 +103,26 @@ if (!doNotTrack) {
 <span style="color:#66d9ef">int</span> dp[<span style="color:#ae81ff">1002</span>];
 
 <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
-  scanf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%d %d %d</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>N, <span style="color:#f92672">&amp;</span>M, <span style="color:#f92672">&amp;</span>R);
+  scanf(<span style="color:#e6db74">&#34;%d %d %d&#34;</span>, <span style="color:#f92672">&amp;</span>N, <span style="color:#f92672">&amp;</span>M, <span style="color:#f92672">&amp;</span>R);
   <span style="color:#66d9ef">int</span> i, j;
-  <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>M;i<span style="color:#f92672">+</span><span style="color:#f92672">+</span>) {
+  <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>M;i<span style="color:#f92672">++</span>) {
     <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">P</span> p;
-    scanf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%d %d %d</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>p.start, <span style="color:#f92672">&amp;</span>p.end, <span style="color:#f92672">&amp;</span>p.e);
+    scanf(<span style="color:#e6db74">&#34;%d %d %d&#34;</span>, <span style="color:#f92672">&amp;</span>p.start, <span style="color:#f92672">&amp;</span>p.end, <span style="color:#f92672">&amp;</span>p.e);
     <span style="color:#75715e">// 化成带权值的区间 DP
-</span><span style="color:#75715e"></span>    p.end <span style="color:#f92672">+</span><span style="color:#f92672">=</span> R;
+</span><span style="color:#75715e"></span>    p.end <span style="color:#f92672">+=</span> R;
     a[i] <span style="color:#f92672">=</span> p;
   }
 
   sort(a, a<span style="color:#f92672">+</span>M, cmp);
-  <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>M;<span style="color:#f92672">+</span><span style="color:#f92672">+</span>i) {
+  <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>M;<span style="color:#f92672">++</span>i) {
     dp[i] <span style="color:#f92672">=</span> a[i].e;
-    <span style="color:#66d9ef">for</span>(j<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;j<span style="color:#f92672">&lt;</span>i;<span style="color:#f92672">+</span><span style="color:#f92672">+</span>j) {
+    <span style="color:#66d9ef">for</span>(j<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;j<span style="color:#f92672">&lt;</span>i;<span style="color:#f92672">++</span>j) {
       <span style="color:#75715e">// 把当前时间段允许的之前的时间段都选一遍并取最大值
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (a[j].end <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> a[i].start) dp[i] <span style="color:#f92672">=</span> max(dp[i], dp[j]<span style="color:#f92672">+</span>a[i].e);
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (a[j].end <span style="color:#f92672">&lt;=</span> a[i].start) dp[i] <span style="color:#f92672">=</span> max(dp[i], dp[j]<span style="color:#f92672">+</span>a[i].e);
     }
   }
 
-  cout <span style="color:#f92672">&lt;</span><span style="color:#f92672">&lt;</span> <span style="color:#f92672">*</span>max_element(dp, dp<span style="color:#f92672">+</span>M) <span style="color:#f92672">&lt;</span><span style="color:#f92672">&lt;</span> endl;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">*</span>max_element(dp, dp<span style="color:#f92672">+</span>M) <span style="color:#f92672">&lt;&lt;</span> endl;
   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 
@@ -203,11 +203,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">用Go STL查询DB引发的内存泄露</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></li>
 		</ul>
 	</div>
 </div>
