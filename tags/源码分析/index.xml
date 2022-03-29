@@ -5,30 +5,8 @@
     <link>/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
     <description>Recent content in 源码分析 on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Fri, 06 Mar 2020 13:54:12 +0800</lastBuildDate>
-    
-	<atom:link href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>用Go STL查询DB引发的内存泄露</title>
-      <link>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</link>
-      <pubDate>Fri, 06 Mar 2020 13:54:12 +0800</pubDate>
-      
-      <guid>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</guid>
-      <description>问题起因 这几天有一个 Go API service 经过定时监控发现占用的内存不断上涨，内存从初始的 70M 一直上升到超过 1G 直到吃光内存退出，基本上就可以断定是存在内存泄露</description>
-    </item>
-    
-    <item>
-      <title>通过Go HTTP Client的报错看标准库https请求</title>
-      <link>/blog/%E9%80%9A%E8%BF%87go-http-client%E7%9A%84%E6%8A%A5%E9%94%99%E7%9C%8B%E6%A0%87%E5%87%86%E5%BA%93https%E8%AF%B7%E6%B1%82/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/%E9%80%9A%E8%BF%87go-http-client%E7%9A%84%E6%8A%A5%E9%94%99%E7%9C%8B%E6%A0%87%E5%87%86%E5%BA%93https%E8%AF%B7%E6%B1%82/</guid>
-      <description>在用 Go 自带的 http client 进行默认 Get 操作的时候，发现如下错误 x509: certificate signed by unknown authority 这个报错来自 crypto/x509 中关于证书签名的验证 负责验证证书的方法签名 func (c *Certificate) Verify(opts VerifyOptions) (chains [][]*Certificate, err error) 关于</description>
-    </item>
-    
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Oct 2017 00:00:00 +0000</lastBuildDate><atom:link href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一文讲透koa-源码剖析</title>
       <link>/blog/%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8Fkoa-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</link>

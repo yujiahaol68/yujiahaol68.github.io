@@ -5,12 +5,8 @@
     <link>/tags/dfs/</link>
     <description>Recent content in DFS on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Thu, 28 Jun 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/dfs/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="/tags/dfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>poj 1979 Red and Black</title>
       <link>/blog/poj-1979-red-and-black/</link>

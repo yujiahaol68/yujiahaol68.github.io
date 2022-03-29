@@ -5,12 +5,8 @@
     <link>/categories/ac%E4%B9%8B%E8%B7%AF/</link>
     <description>Recent content in AC之路 on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/ac%E4%B9%8B%E8%B7%AF/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="/categories/ac%E4%B9%8B%E8%B7%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Leetcode 989. Add to Array-Form of Integer</title>
       <link>/blog/leetcode-989.-add-to-array-form-of-integer/</link>

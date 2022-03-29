@@ -1,41 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on Runtime: out of memory</title>
+    <title>Blog on Runtime: out of memory</title>
     <link>/blog/</link>
-    <description>Recent content in Blogs on Runtime: out of memory</description>
+    <description>Recent content in Blog on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Fri, 06 Mar 2020 13:54:12 +0800</lastBuildDate>
-    
-	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Sun, 27 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>用Go STL查询DB引发的内存泄露</title>
-      <link>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</link>
-      <pubDate>Fri, 06 Mar 2020 13:54:12 +0800</pubDate>
+      <title>CGO封装CPP库的一些最佳实践</title>
+      <link>/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sun, 27 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/</guid>
-      <description>问题起因 这几天有一个 Go API service 经过定时监控发现占用的内存不断上涨，内存从初始的 70M 一直上升到超过 1G 直到吃光内存退出，基本上就可以断定是存在内存泄露</description>
-    </item>
-    
-    <item>
-      <title>理解 CPU Cache 对并发性能的影响</title>
-      <link>/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/</link>
-      <pubDate>Mon, 30 Dec 2019 10:42:32 +0800</pubDate>
-      
-      <guid>/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/</guid>
-      <description>一般来说每个 CPU 核有 L1 和 L2 缓存，L3是共享缓存 以缓存行为单位存储，通常是 64 字节为一行 这种利用局部性原理的缓存是数组访问比链表访问快的主要原因 伪</description>
-    </item>
-    
-    <item>
-      <title>Go中反序列化后的类型转换问题记录</title>
-      <link>/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
-      <pubDate>Wed, 06 Nov 2019 09:20:41 +0800</pubDate>
-      
-      <guid>/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</guid>
-      <description>在 Go 语言的世界中，类型转换基本上都是很显式的，但最近在编写 web 后台的时候需要进行 context 之间的共享传值，常常就会出现 interface{} 的转换， 最常见的做法就是进行 type</description>
+      <guid>/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>背景 最近业务上需要复用CPP编写的客户端SDK库，为了让团队主力语言Golang能够顺利接入SDK，因此使用了CGO桥接技术将C++11编写</description>
     </item>
     
     <item>

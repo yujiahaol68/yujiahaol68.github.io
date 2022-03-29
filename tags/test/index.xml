@@ -5,12 +5,8 @@
     <link>/tags/test/</link>
     <description>Recent content in test on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sun, 23 Apr 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/test/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Apr 2017 00:00:00 +0000</lastBuildDate><atom:link href="/tags/test/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用supertest进行API测试</title>
       <link>/blog/%E7%94%A8supertest%E8%BF%9B%E8%A1%8Capi%E6%B5%8B%E8%AF%95/</link>

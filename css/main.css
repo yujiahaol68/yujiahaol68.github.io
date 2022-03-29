@@ -61,7 +61,6 @@
 		letter-spacing: 0.25em;
 		line-height: 2.5;
 		margin: -1em 1em 0;
-		text-transform: uppercase;
 	}
 
 	table {
@@ -208,7 +207,6 @@
 		letter-spacing: 0.25em;
 		line-height: 1.65;
 		margin: 0 0 1em 0;
-		text-transform: uppercase;
 	}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -331,7 +329,6 @@
 		font-size: 0.6em;
 		font-weight: 400;
 		letter-spacing: 0.25em;
-		text-transform: uppercase;
 		white-space: nowrap;
 	}
 
@@ -403,7 +400,6 @@
 		padding: 0 2.5em;
 		text-align: center;
 		text-decoration: none;
-		text-transform: uppercase;
 		white-space: nowrap;
 	}
 
@@ -1127,7 +1123,6 @@
 						font-weight: 400;
 						letter-spacing: 0.25em;
 						margin: -0.625em 0 1.7em 0;
-						text-transform: uppercase;
 					}
 
 					ul.posts article header > :last-child {
@@ -1209,7 +1204,6 @@
 				font-weight: 400;
 				letter-spacing: 0.25em;
 				margin: -0.625em 0 1.7em 0;
-				text-transform: uppercase;
 			}
 
 			.mini-post header .author, .mini-post header .format {
@@ -1333,7 +1327,6 @@
 					font-weight: 800;
 					letter-spacing: 0.25em;
 					margin-top: 0.5em;
-					text-transform: uppercase;
 					white-space: nowrap;
 				}
 
@@ -1408,7 +1401,6 @@
 					line-height: 1;
 					margin: 0 0 0 2em;
 					padding: 0 0 0 2em;
-					text-transform: uppercase;
 				}
 
 					.post > footer .stats li:first-child {
@@ -1654,7 +1646,6 @@
 						font-weight: 800;
 						letter-spacing: 0.25em;
 						margin-top: 0.5em;
-						text-transform: uppercase;
 						white-space: nowrap;
 					}
 
@@ -1710,7 +1701,6 @@
 						line-height: 1;
 						margin: 0 0 0 2em;
 						padding: 0 0 0 2em;
-						text-transform: uppercase;
 					}
 
 						.itemized > footer .stats li:first-child {
@@ -2286,7 +2276,6 @@
 					font-size: 0.7em;
 					font-weight: 400;
 					letter-spacing: 0.25em;
-					text-transform: uppercase;
 				}
 
 		#header .main {
@@ -2755,7 +2744,6 @@
 						letter-spacing: 0.25em;
 						margin-bottom: 0;
 						text-decoration: none;
-						text-transform: uppercase;
 					}
 
 					#menu .links > li a:hover h3 {
@@ -2939,7 +2927,6 @@
 							letter-spacing: 0.25em;
 							margin-bottom: 0;
 							text-decoration: none;
-							text-transform: uppercase;
 						}
 
 						#share-menu .links > li a:hover h3 {

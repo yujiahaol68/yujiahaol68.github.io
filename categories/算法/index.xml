@@ -5,12 +5,8 @@
     <link>/categories/%E7%AE%97%E6%B3%95/</link>
     <description>Recent content in 算法 on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LeetCode题解:最长回文串之manacher算法</title>
       <link>/blog/leetcode%E9%A2%98%E8%A7%A3%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2%E4%B9%8Bmanacher%E7%AE%97%E6%B3%95/</link>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cpp on Runtime: out of memory</title>
+    <link>/tags/cpp/</link>
+    <description>Recent content in cpp on Runtime: out of memory</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 27 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/cpp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CGO封装CPP库的一些最佳实践</title>
+      <link>/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sun, 27 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>背景 最近业务上需要复用CPP编写的客户端SDK库，为了让团队主力语言Golang能够顺利接入SDK，因此使用了CGO桥接技术将C++11编写</description>
+    </item>
+    
+  </channel>
+</rss>

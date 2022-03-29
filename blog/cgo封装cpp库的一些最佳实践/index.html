@@ -1,0 +1,1292 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>CGO封装CPP库的一些最佳实践</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.96.0" />
+        
+
+
+        
+        <link rel="icon shortcut" type="image/ico" href="/img/main/favicon.png">
+        <link rel="icon" sizes="192x192" href="/img/main/favicon.png">
+        <link rel="apple-touch-icon" href="/img/main/favicon.png">
+
+        
+            <meta name="author" content="Tecker Yu">
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CGO封装CPP库的一些最佳实践"/>
+<meta name="twitter:description" content="背景 最近业务上需要复用CPP编写的客户端SDK库，为了让团队主力语言Golang能够顺利接入SDK，因此使用了CGO桥接技术将C&#43;&#43;11编写"/>
+
+        <meta property="og:title" content="CGO封装CPP库的一些最佳实践" />
+<meta property="og:description" content="背景 最近业务上需要复用CPP编写的客户端SDK库，为了让团队主力语言Golang能够顺利接入SDK，因此使用了CGO桥接技术将C&#43;&#43;11编写" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2022-03-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-27T00:00:00+00:00" />
+
+
+        <meta itemprop="name" content="CGO封装CPP库的一些最佳实践">
+<meta itemprop="description" content="背景 最近业务上需要复用CPP编写的客户端SDK库，为了让团队主力语言Golang能够顺利接入SDK，因此使用了CGO桥接技术将C&#43;&#43;11编写"><meta itemprop="datePublished" content="2022-03-27T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-03-27T00:00:00+00:00" />
+<meta itemprop="wordCount" content="4061">
+<meta itemprop="keywords" content="cgo,cpp," />
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-111736395-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+      <meta name="google-site-verification" content="w2Ni2ASrcf0CTgqj-14szx1sxa6ihPyi3ESfc1VYA4U" />
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4588052749336549",
+          enable_page_level_ads: true
+        });
+      </script>
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/itemized/">
+                            <i class="fa fa-list">&nbsp;</i>Itemized
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/reading/">
+                            <i class="fa fa-bookmark-o">&nbsp;</i>Reading
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/contact/">
+                            <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/itemized/">
+                            <h3>
+                                <i class="fa fa-list">&nbsp;</i>Itemized
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/reading/">
+                            <h3>
+                                <i class="fa fa-bookmark-o">&nbsp;</i>Reading
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/contact/">
+                            <h3>
+                                <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-03-27'>
+                                    March 27, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-02-14'>
+                                    February 14, 2019</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-02-13'>
+                                    February 13, 2019</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-07-29'>
+                                    July 29, 2018</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-07-14'>
+                                    July 14, 2018</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&text=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&title=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&title=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&title=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&description=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+  <header>
+    <div class="title">
+        
+            <h1><a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2022-03-27'>
+            March 27, 2022</time>
+        <span class="author">Tecker Yu</span>
+        
+            <p>9 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+  
+    <section id="social-share">
+      <ul class="icons">
+        
+
+
+<li>
+  <a href="//twitter.com/share?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&text=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5&via=" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//plus.google.com/share?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//reddit.com/submit?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&title=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&title=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn linkedin">
+      <i class="fa fa-linkedin"></i>
+      <p>LinkedIn</p>
+    </a>
+</li>
+
+
+<li>
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&title=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f&description=CGO%e5%b0%81%e8%a3%85CPP%e5%ba%93%e7%9a%84%e4%b8%80%e4%ba%9b%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" class="share-btn pinterest">
+    <i class="fa fa-pinterest-p"></i>
+    <p>Pinterest</p>
+  </a>
+</li>
+
+
+<li>
+  <a href="mailto:?subject=Check out this post by Tecker%20Yu&body=%2fblog%2fcgo%25E5%25B0%2581%25E8%25A3%2585cpp%25E5%25BA%2593%25E7%259A%2584%25E4%25B8%2580%25E4%25BA%259B%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+  </a>
+</li>
+
+      </ul>
+    </section>
+  
+
+  
+
+  <div id="content">
+    <h3 id="背景">背景</h3>
+<p>最近业务上需要复用CPP编写的客户端SDK库，为了让团队主力语言Golang能够顺利接入SDK，因此使用了CGO桥接技术将C++11编写的SDK库封装成生产环境可用的Golang SDK，在翻阅了网上大部分关于cgo的中英文资料后，发现其中尤其是实现Go调用CPP库还是有非常多需要注意的细节，大部分中文资料都是以简单的C++的STL库函数封装为例点到为止，本文在前人基础之上总结了一系列封装复杂CPP库时的最佳实践的tips，希望能填补相关资料的空白。</p>
+<h3 id="如非必要勿用cgo">如非必要，勿用CGO</h3>
+<p>将这一条列为第一条作为警示，因为许多cgo新手可能都会陷入执行效率上的误区，即：使用cgo调用而不是使用普通的Go函数会获得底层CPU单核执行性能上的大幅提升。这点其实需要具体情况具体分析，根据标准库中cgocall的源码来看，每个cgo的调用本质上都会有函数调用栈切换（传参，PC以及SP需要设置成外部的C程序）的过程，这些操作相比原生Go的调用来说都是额外的开销，在简单的计算函数调用上，cgo相比原生的运行效率单次调用的耗时可能相差能有上百倍。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Call from Go to C.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">cgocall</span>(<span style="color:#a6e22e">fn</span>, <span style="color:#a6e22e">arg</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>) <span style="color:#66d9ef">int32</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// Reset traceback.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">cgoCallers</span>[<span style="color:#ae81ff">0</span>] = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 进入系统调用，这时go会新起一个系统线程M来执行后面的操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">entersyscall</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">osPreemptExtEnter</span>(<span style="color:#a6e22e">mp</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">incgo</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">errno</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">asmcgocall</span>(<span style="color:#a6e22e">fn</span>, <span style="color:#a6e22e">arg</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">osPreemptExtExit</span>(<span style="color:#a6e22e">mp</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">exitsyscall</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 可能会有C到Go回调，相关的对象需要在GC上进行保活后再由GC决定是否能进行释放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">KeepAlive</span>(<span style="color:#a6e22e">fn</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">KeepAlive</span>(<span style="color:#a6e22e">arg</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">KeepAlive</span>(<span style="color:#a6e22e">mp</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errno</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>那么如何判断什么时候使用cgo呢？个人经验是看投入产出比，如果使用cgo能大大复用已有的C代码，降低后续的开发维护成本，亦或是CPU计算密集型的函数，使用C库对处理性能的提升能够很好地补偿cgo带来的副作用，那么cgo也是不错的选择。需要注意的是，如果一些第三方库已经使用纯Go和Plan9汇编达到到80～90%左右C库的运行性能时，也不推荐使用cgo的桥接库，尤其是当库的使用者需要在Go协程内大量并发调用库函数时，在用户态复用系统线程所带来的计算扩展性远比仅在C层执行略快的cgo调用进行内核上下文切换要有优势的多。</p>
+<h3 id="c-abi接口封装遵循最小化原则">C ABI接口封装遵循最小化原则</h3>
+<p>如果我们要手工封装一个CPP库，实际执行的调用链为 <code>Go runtime -&gt; cgocall -&gt; C ABI -&gt; CPP func</code>，ABI是应用二进制接口，只要符合这种二进制桥接接口的规范和约定，就能够很好的实现外部语言调用C接口。因此在实现桥接接口前建议先从Go层开始定义好符合Go语言语义的结构体和方法，再将Go对象映射到对应的C结构体或CPP对象，Go方法映射到对应的C函数和CPP方法，从而确定桥接的C库头文件，确定了中间桥接层的函数签名后，再着手使用C++语言实现头文件具体的逻辑，最终将CPP的实现和C的头文件编译链接在一起形成一个整体，这也是go能够调用cpp的底层逻辑。</p>
+<h3 id="不要使用swig生成c桥接代码">不要使用SWIG生成C桥接代码</h3>
+<p>不想手工维护C接口，因此会有人会想到在python调用C++ so库的常用套路，那就是使用SWIG自动生成CPP库的stub函数，在前期我们准备编写桥接代码时其实也有类似的想法，不过最终还是放弃了，一个很重要的原因是swig的Go生成器在社区维护的热度并不高且很多C++11语法特性都是不支持的，比如智能指针等。而且生成的大量桥接代码都是不可读的，反而增加了后期维护和问题排查的心智负担，还可能会有内存泄露的风险，因此在生产环境下还是建议手工进行封装。</p>
+<h3 id="batching-your-call">Batching your call</h3>
+<p>既然每次cgo调用都会有一定额外的开销，那么这种调用开销就会与调用次数成一个线性的关系，一种很自然的优化办法就是将多个cgo调用合并为一个，从而在处理同样多内容下减少降低cgo调用的额外开销，调用N次变为1次后，在一定周期内调用本身的额外的开销就近似变为原来的N分之一，在频繁调用的时候能够有效降低整体的调用时延。比如我封装的CPP调用内部涉及大量的大段字符串处理解析压缩序列化等操作，因此每次传递8M的大字符切片的处理时间通常来说就会比每次1M调用8次的整体处理时延要更低。</p>
+<h3 id="减少不必要的数据拷贝">减少不必要的数据拷贝</h3>
+<p>cgo默认提供了一些常见的帮助函数来将Go中的内置类型转换成C中相对应的数据类型，在内部保证传入参数只读的情况下往往能做一些zero copy的tricks</p>
+<p>例如传入只读的byte切片但是避免进行数据拷贝</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">Bytes</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">the_function</span>((<span style="color:#f92672">*</span><span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">char</span>)(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">b</span>[<span style="color:#ae81ff">0</span>]), <span style="color:#a6e22e">C</span>.int(<span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">Len</span>()))
+</span></span></code></pre></div><p>实际等效于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">str</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">String</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">CString</span>(<span style="color:#a6e22e">str</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">free</span>(<span style="color:#a6e22e">p</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rc</span> = <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">the_function</span>(<span style="color:#a6e22e">p</span>, <span style="color:#a6e22e">C</span>.int(len(<span style="color:#a6e22e">str</span>)))
+</span></span></code></pre></div><p>第一种方式显然在大切片下避免了拷贝带来的额外开销</p>
+<h3 id="小心内存泄露">小心内存泄露</h3>
+<p>跨语言调用时拷贝传参通常来说都是比较安全的做法。不过当带垃圾回收的Go语言和手动管理内存的C语言再加上RAII的CPP相互混用时，一定要注意防止C或CPP层的堆内存泄露，Go调用C接口一般遵循谁申请，谁就负责释放的原则。</p>
+<p>比如Go申请了一个C的堆内存给<code>char*</code>并将string变量的内容拷贝至C对应<code>char*</code>的内存空间中，那么就要由Go层来主动进行内存的释放。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include &lt;stdlib.h&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;unsafe&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HelloWorld</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">CString</span>(<span style="color:#e6db74">&#34;Hello World!&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">free</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">cs</span>)) <span style="color:#75715e">// 由Go层负责显式地调用C中的free进行释放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 安全地使用cs进行cgo调用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 桥接层内部无需关心参数的释放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">my_c_func</span>(<span style="color:#a6e22e">cs</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 不为空的C字符串返回值由接收者释放
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">free</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">err</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">GoString</span>(<span style="color:#a6e22e">err</span>))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>以此类推，在层层递进向下传参的时候，要保证接收者无需关心入参内存的释放，从而避免遗漏或者重复释放导致整个程序coredump。</p>
+<p>需要注意的是在向上返回结果时是相反的，调用的返回者负责申请内存，而接收者负责主动释放内存。</p>
+<h3 id="正确处理智能指针">正确处理智能指针</h3>
+<p>在许多的CPP库中，尤其是使用C++11编写的库，会使用大量的智能指针特性。很多的第三方库在创建对象的时候都会习惯性地将new出来的对象指针包一层<code>shared_ptr</code>用于自动引用计数，以便在对象脱离其作用域后能够正确的调用析构函数进行自动销毁并释放底层堆内存。但在cgo中智能指针的引用计数几乎毫无用武之地，因为在CPP层面无法感知Go层的引用情况，更别指望说能够正确地计数并自动销毁对象了。因此，如果想要在Go结构体持有CPP对象的情况下正确的释放对象资源，最好的办法就是将智能指针的引用计数在Go层中实现，最后由Go层来主动进行对象的释放。</p>
+<p>如果CPP对象与Go对象是一一映射的话，我们就能够在应用层优雅地实现上层无感知的CPP对象引用计数。因为持有CPP对象裸指针的Go对象的引用数就等于CPP对象的引用数，这时 <code>runtime.SetFinalizer</code> 就完美地派上用场了，它相当于是Go对象被GC时会进行回调的钩子函数，利用这个钩子我们能轻松实现Go对象释放的同时安全地释放其底层持有的CPP对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">myClient</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include &lt;stdlib.h&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">extern &#34;C&#34; {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">void* client_create(const char* a); // 在CPP层调用构造函数new出对象指针返回给上层
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">void client_release(void* obj); // 在CPP层调用delete释放对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;errors&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;unsafe&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Client</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_ptr</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">a</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Client</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_a</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">CString</span>(<span style="color:#a6e22e">a</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">free</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">_a</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_ptr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">client_create</span>(<span style="color:#a6e22e">_a</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">cli</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Client</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">_ptr</span>: <span style="color:#a6e22e">_ptr</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">SetFinalizer</span>(<span style="color:#a6e22e">cli</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Client</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 保证Client对象在GC时自动将CPP对象进行销毁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">free</span>()
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">cli</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Client</span>) <span style="color:#a6e22e">free</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">client_release</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">_ptr</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>需要注意的是C语言中是没有类和对象这种语义的，因此为了保证ABI的兼容性在桥接的时候需要统一使用<code>void*</code>这种万能指针定义头文件，只有在.cpp实现时才能将其强转为对应的C++对象指针并进一步使用。</p>
+<h3 id="善用异常提高代码鲁棒性">善用异常提高代码鲁棒性</h3>
+<p>底层实现是使用的C++语言，因此我们能在调用时使用try-catch语句包装一层将异常捕获并进行异常处理，无法处理也能将错误信息返回给上层调用方。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Client</span>) <span style="color:#a6e22e">DoSomething</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">do_something</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">_ptr</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">free</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#a6e22e">err</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">GoString</span>(<span style="color:#a6e22e">err</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define CAST_T(_T) reinterpret_cast&lt;_T&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">do_something</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> obj) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>		CAST_T(CppClient<span style="color:#f92672">*</span>)(obj)<span style="color:#f92672">-&gt;</span>Do();
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">catch</span>(MyException <span style="color:#f92672">&amp;</span>e)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// handle failure
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">catch</span>(<span style="color:#66d9ef">const</span> exception<span style="color:#f92672">&amp;</span> e)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> strdup(e.what());
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="cgo编译工程化">CGO编译工程化</h3>
+<p>通常我们CPP的SDK是在另外一个代码库进行维护的，因此cgo编译所依赖的静态库和动态库会在CPP库中的一个单独分支进行维护，这样保证了主库的升级不影响维护cgo的桥接cpp代码，同时也能轻松获取主库后续的更新。</p>
+<p>Go sdk包的大致目录结构如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>➜  myclient tree -h
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[]</span>  .
+</span></span><span style="display:flex;"><span>├── <span style="color:#f92672">[]</span>  lib
+</span></span><span style="display:flex;"><span>├── <span style="color:#f92672">[]</span>  client.go
+</span></span><span style="display:flex;"><span>├── <span style="color:#f92672">[]</span>  client_mock.go
+</span></span><span style="display:flex;"><span>└── <span style="color:#f92672">[]</span>  wrapper.h
+</span></span></code></pre></div><p>比如封装的go sdk包名为myclient，go层相关的对象和cgo调用的封装都会实现在 <code>client.go</code> 文件中，用于桥接的C ABI头文件定义一般会放在 <code>wrapper.h</code> 中，<code>lib</code> 目录用于存放编译链接 <code>wrapper.h</code> 头文件所需要的依赖，包括静态库以及相关的动态库。依赖由编译CPP库的特定分支得到并事先拷贝到目录中。整个工程目录也看起来会比较清晰自然，<code>wrapper.h</code> 的CPP实现我们选择在原始CPP库中的分支中维护，相当于通过C定义的接口彻底解耦服务调用方和服务提供方。</p>
+<p>而 <code>client_mock.go</code> 用于条件编译适配在本地mac环境的编译调试，因为引入cgo有可能会破坏跨平台编译调试的便利性，使用条件编译能一定程度上解决平台隔阂导致整个二进制程序无法编译的问题。</p>
+<h3 id="调试以及pprof调优">调试以及pprof调优</h3>
+<p>这点可能是许多使用cgo的人吐槽最多的点，目前也没有一个比较好用的debug cgo程序的办法，prof cpu的话使用 <code>perf</code> 生成火焰图还是能分析的，GCC编译时使用低优化等级是能够保留具体调用堆栈信息的。</p>
+<p>如果cgo调用内出现内存泄露，那就比较麻烦了。对于cgo程序debug或者是内存分析我自己是没有找到比较好的办法，也欢迎大家建言献策。</p>
+<h4 id="实际踩过的坑">实际踩过的坑</h4>
+<p>在使用封装好的go sdk在生产环境实际运行的时候，我们发现所有核的CPU有异常打满的情况，通过go的cpu pprof最终锁定到唯一一个重计算的cgo调用上，上层大约会有持续上百个协程在并发调用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">heavy_process_func</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>但是实际使用perf top命令分析进程cpu的时候，我们发现占用CPU时间最多的操作竟然是内核层的<code>_raw_spin_lock</code>，而在<code>heavy_process_func</code>的全过程中我们的业务逻辑中并没有任何使用自旋锁的痕迹，且调用上层的协程之间也毫无交集，何来的竞态抢互斥锁？</p>
+<p>最终通过主动输出CPP层的所有异常日志，真相才得以浮出水面：原来C++在多线程各自并发抛大量异常时，执行栈展开会在glibc中抢全局锁。因此，在将异常正确收敛后，问题才最终解决。新版本的glibc中已经修复了多线程抛异常抢全局锁的这个问题，详情可以见对应的issue和patch。</p>
+<p><a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=71744">Bug - Concurrently throwing exceptions is not scalable</a></p>
+<h4 id="参考资料">参考资料</h4>
+<ul>
+<li><a href="https://www.cockroachlabs.com/blog/the-cost-and-complexity-of-cgo/">the-cost-and-complexity-of-cgo</a></li>
+<li><a href="https://dave.cheney.net/2016/01/18/cgo-is-not-go">cgo-is-not-go</a></li>
+<li><a href="https://artem.krylysov.com/blog/2017/04/13/handling-cpp-exceptions-in-go/">handling-cpp-exceptions-in-go/</a></li>
+<li><a href="https://www.netlify.com/blog/2021/03/18/tracking-down-a-cgo-crash-in-production/">tracking-down-a-cgo-crash-in-production/</a></li>
+</ul>
+<p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
+<p>联系方式：tecker_<a href="mailto:yuknigh@163.com">yuknigh@163.com</a></p>
+
+
+    <img src="/img/main/rewardCode.png" alt="reward-code" style="max-height:280px;display:block;margin:0 auto">
+  </div>
+
+  <footer>
+    <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/go'>Go</a></li>
+    
+</ul>
+
+  </footer>
+
+</article>
+
+
+<ul class="actions pagination">
+    
+        <li><a href="/blog/leetcode-989.-add-to-array-form-of-integer/"
+                class="button big previous">Leetcode 989. Add to Array-Form of Integer</a></li>
+    
+
+    
+</ul>
+
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href='' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a>
+              </h3>
+              
+              <time class="published" datetime='2022-03-27'>
+                March 27, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a>
+              </h3>
+              
+              <time class="published" datetime='2019-02-14'>
+                February 14, 2019
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a>
+              </h3>
+              
+              <time class="published" datetime='2019-02-13'>
+                February 13, 2019
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a>
+              </h3>
+              
+              <time class="published" datetime='2018-07-29'>
+                July 29, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a>
+              </h3>
+              
+              <time class="published" datetime='2018-07-14'>
+                July 14, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">ac之路</a>
+                <span style="float:right;">11</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">linux</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/go/">go</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">node</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                <span style="float:right;">2</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">database</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/deep-learning/">deep-learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">machine-learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">typescript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href='' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2022
+        
+          Tecker Yu
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,240 +1,946 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>数据库 - Runtime: out of memory</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-	<meta property="og:title" content="数据库" />
-<meta property="og:description" content="一个纯粹的技术干货聚集地，里面包含着一个无聊人士的所思所想" />
+
+
+
+    
+
+
+
+
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            <title>数据库 - Runtime: out of memory</title>
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.96.0" />
+        
+
+
+        
+        <link rel="icon shortcut" type="image/ico" href="/img/main/favicon.png">
+        <link rel="icon" sizes="192x192" href="/img/main/favicon.png">
+        <link rel="apple-touch-icon" href="/img/main/favicon.png">
+
+        
+        
+            
+                <meta name="description" content="Tecker.Yu tech blog. Powered by Hugo">
+            
+        
+
+        <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据库"/>
+<meta name="twitter:description" content="Tecker.Yu tech blog. Powered by Hugo"/>
+
+        <meta property="og:title" content="数据库" />
+<meta property="og:description" content="Tecker.Yu tech blog. Powered by Hugo" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" />
-<meta property="og:updated_time" content="2017-11-04T00:00:00+00:00" />
 
-	
-	<link rel="dns-prefetch" href="//fonts.googleapis.com">
-	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="alternate" type="application/rss+xml" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" title="Runtime: out of memory">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"><link rel="stylesheet" href="/css/custom.css">
-	<link rel="shortcut icon" href="/favicon.ico">
-		
+
+        <meta itemprop="name" content="数据库">
+<meta itemprop="description" content="Tecker.Yu tech blog. Powered by Hugo">
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="/css/main.min.css">
+        
+
+        
+            
+                
+            
+        
+
+      
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 	ga('create', 'UA-111736395-1', 'auto');
 	
 	ga('send', 'pageview');
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+      <meta name="google-site-verification" content="w2Ni2ASrcf0CTgqj-14szx1sxa6ihPyi3ESfc1VYA4U" />
 
-</head>
-<body class="body">
-	<div class="container container--outer">
-		<header class="header">
-	<div class="container">
-		<div class="logo">
-			<a class="logo__link" href="/" title="Runtime: out of memory" rel="home">
-				<div class="logo__title">Runtime: out of memory</div>
-				<div class="logo__tagline">防止自身SHUTDOWN的碎碎念</div>
-			</a>
-		</div>
-		<div class="divider"></div>
-	</div>
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4588052749336549",
+          enable_page_level_ads: true
+        });
+      </script>
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+<header id="header">
+    
+      <h1><a href="/">tags</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/itemized/">
+                            <i class="fa fa-list">&nbsp;</i>Itemized
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/reading/">
+                            <i class="fa fa-bookmark-o">&nbsp;</i>Reading
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/contact/">
+                            <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
 </header>
-		<div class="wrapper flex">
-			<div class="primary">
-			
-<main class="main list" role="main">
-	<header class="main__header">
-		<h1 class="main__title">数据库</h1>
-	</header><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/" rel="bookmark">
-			SQL基础简明总结
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2017-11-04T00:00:00">November 04, 2017</time>
-</div>
 
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/database" rel="category">DataBase</a></span>
-</div>
-<span class="meta__text">
-总计 626 字
-</span></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Inner Join 只含有关联的行 SELECT field1, RTRIM(field2) AS f2 FROM table_one INNER JOIN table_two ON table_one.table_two_id = table_two.id GROUP BY field1, f2 AVING COUNT(table_two.credit) &gt; 2 WHERE condition1 AND condition2 AND field1 LIKE &#39;%@hotmail.com&#39; ORDER BY field3; Self Join 可用于替代子查询 SELECT c1.cust_id, c1.cust_name, c1.cust_contact FROM customers AS c1, customers AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact =
-	</div>
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/itemized/">
+                            <h3>
+                                <i class="fa fa-list">&nbsp;</i>Itemized
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/reading/">
+                            <h3>
+                                <i class="fa fa-bookmark-o">&nbsp;</i>Reading
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/contact/">
+                            <h3>
+                                <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-03-27'>
+                                    March 27, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-02-14'>
+                                    February 14, 2019</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-02-13'>
+                                    February 13, 2019</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-07-29'>
+                                    July 29, 2018</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-07-14'>
+                                    July 14, 2018</time>
+                            </header>
+                            
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    
+    <div id="main">
+        
+        
+            <article class="post">
+  <header>
+    <div class="title">
+        
+            <h2><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/">SQL基础简明总结</a></h2>
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2017-11-04'>
+            November 4, 2017</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>2 minute read</p>
+        
+        
+    </div>
+</header>
+
+  
+
+  
+  <p>只含有关联的行</p>
+  <footer>
+    <ul class="actions">
+      <li><a href="/blog/sql%E5%9F%BA%E7%A1%80%E7%AE%80%E6%98%8E%E6%80%BB%E7%BB%93/" class="button big">Continue Reading</a></li>
+    </ul>
+  <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/database'>DataBase</a></li>
+    
+</ul>
+
+  </footer>
 </article>
-</main>
+
+        
+
+        
+<ul class="actions pagination">
+    
+        <li><a href="#" class="disabled button big previous">Previous Page</a></li>
+    
+
+    
+        <li><a href="#" class="disabled button big next">Next Page</a></li>
+    
+</ul>
+
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/'><img src="/img/main/me.png" class="intro-circle" width="" alt="" /></a>
+      
+    
+    
+      <header>
+        <h2>Tecker.Yu</h2>
+        <p>Always Eager to write beautiful and neat code. Deeply attracted by Golang.</p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          <li>
+            <a href='/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
 
 
-			</div>
-			
-<aside class="sidebar"><div class="widget-search">
-<div class="aa-input-container" id="aa-input-container">
-    <input type="search" id="aa-search-input" class="aa-input-search" placeholder="搜索..." name="search" autocomplete="off" />
-    <svg class="aa-input-icon" viewBox="654 -372 1664 1664">
-        <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />
-    </svg>
-</div>
-</div>
-<div class="widget-recent widget">
-	<h4 class="widget__title">近期文章</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">用Go STL查询DB引发的内存泄露</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
-		</ul>
-	</div>
-</div>
-<div class="widget-categories widget">
-	<h4 class="widget__title">分类</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/categories/ac%e4%b9%8b%e8%b7%af">Ac之路</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/css">Css</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/database">Database</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/deep-learning">Deep learning</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/go">Go</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/java">Java</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/linux">Linux</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/machine-learning">Machine learning</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/node">Node</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/php">Php</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/python">Python</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/tools">Tools</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/typescript">Typescript</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/vue">Vue</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e5%88%86%e5%b8%83%e5%bc%8f">分布式</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/%e7%ae%97%e6%b3%95">算法</a></li>
-		</ul>
-	</div>
-</div>
-<div class="widget-taglist widget">
-	<h4 class="widget__title">标签</h4>
-	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/algorithms" title="Algorithms">Algorithms</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/api" title="Api">Api</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/centos" title="Centos">Centos</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cli" title="Cli">Cli</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/css" title="Css">Css</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/db" title="Db">Db</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/debug" title="Debug">Debug</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/deploy" title="Deploy">Deploy</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/design-pattern" title="Design pattern">Design pattern</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/devops" title="Devops">Devops</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/dfs" title="Dfs">Dfs</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/dp" title="Dp">Dp</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/express" title="Express">Express</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/front-end-dev" title="Front end dev">Front end dev</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/function" title="Function">Function</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/git" title="Git">Git</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/go" title="Go">Go</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/google" title="Google">Google</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/java" title="Java">Java</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/koa" title="Koa">Koa</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/laravel" title="Laravel">Laravel</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/linux" title="Linux">Linux</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/machine-learning" title="Machine learning">Machine learning</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/mongoose" title="Mongoose">Mongoose</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/native" title="Native">Native</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/node" title="Node">Node</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/npm" title="Npm">Npm</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/php" title="Php">Php</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/promise" title="Promise">Promise</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/python" title="Python">Python</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/restful" title="Restful">Restful</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/router" title="Router">Router</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sass" title="Sass">Sass</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/shell" title="Shell">Shell</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="Sql">Sql</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow" title="Tensorflow">Tensorflow</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/test" title="Test">Test</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/thinkphp" title="Thinkphp">Thinkphp</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/typescript" title="Typescript">Typescript</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vue" title="Vue">Vue</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/vuex" title="Vuex">Vuex</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/web" title="Web">Web</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/xml" title="Xml">Xml</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%88%86%e5%b8%83%e5%bc%8f" title="分布式">分布式</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b" title="并发编程">并发编程</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bc%82%e6%ad%a5" title="异步">异步</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%bf%83%e5%be%97" title="心得">心得</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库">数据库</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" title="最佳实践">最佳实践</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%a1%86%e6%9e%b6" title="框架">框架</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%b5%8b%e8%af%95" title="测试">测试</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e6%ba%90%e7%a0%81%e5%88%86%e6%9e%90" title="源码分析">源码分析</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ac%94%e8%af%95" title="笔试">笔试</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e7%ae%97%e6%b3%95" title="算法">算法</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b4%aa%e5%bf%83" title="贪心">贪心</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e8%b8%a9%e5%9d%91" title="踩坑">踩坑</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/%e9%97%ae%e9%a2%98%e6%80%bb%e7%bb%93" title="问题总结">问题总结</a>
-	</div>
-</div>
-<div class="widget-social widget">
-	<h4 class="widget-social__title widget__title">社交</h4>
-	<div class="widget-social__content widget__content">
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/yujiahaol68" target="_blank">
-				<svg class="widget-social__link-icon icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
-				<span>GitHub</span>
-			</a>
-		</div>
-		<div class="widget-social__item widget__item">
-			<a class="widget-social__link widget__link btn" title="Email" href="mailto:tecker_yuknigh@163.com">
-				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
-				<span>tecker_yuknigh@163.com</span>
-			</a>
-		</div>
-	</div>
-</div>
-</aside>
-		</div>
-		<footer class="footer">
-	<div class="container footer__container flex">
-		
-		<div class="footer__copyright">
-			&copy; 2020 Runtime: out of memory.
-			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
-		</div>
-	</div>
-</footer>
-	</div>
-<script async defer src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@3.35.1/dist/algoliasearch.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.0/dist/autocomplete.min.js"></script><script>hljs.initHighlightingOnLoad();</script>
-<script>
-	var client = algoliasearch("YEKQ3C8IG8", "ee04610807d354a8660b4a8c3ce88354");
-	var index = client.initIndex('tecker-blog');
-	autocomplete('#aa-search-input',
-	{ hint: false}, {
-		source: autocomplete.sources.hits(index, {hitsPerPage: 8}),
-		displayKey: 'name',
-		templates: {
-			suggestion: function(suggestion) {
-				
-				return '<span>' + '<a href="' + suggestion.permalink + '">' +
-				suggestion._highlightResult.title.value + '</a></span>';
-			}
-		}
-	});
-</script>
-</body>
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section id="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a>
+              </h3>
+              
+              <time class="published" datetime='2022-03-27'>
+                March 27, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a>
+              </h3>
+              
+              <time class="published" datetime='2019-02-14'>
+                February 14, 2019
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a>
+              </h3>
+              
+              <time class="published" datetime='2019-02-13'>
+                February 13, 2019
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/poj-3616-milking-time/">poj 3616 Milking Time</a>
+              </h3>
+              
+              <time class="published" datetime='2018-07-29'>
+                July 29, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/poj-2385-apple-catching/">poj 2385 Apple Catching 0ms</a>
+              </h3>
+              
+              <time class="published" datetime='2018-07-14'>
+                July 14, 2018
+              </time>
+            </header>
+            
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">ac之路</a>
+                <span style="float:right;">11</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/css/">css</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/linux/">linux</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/php/">php</a>
+                <span style="float:right;">7</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/go/">go</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/node/">node</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/vue/">vue</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                <span style="float:right;">2</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/database/">database</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/deep-learning/">deep-learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/java/">java</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/machine-learning/">machine-learning</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">typescript</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h1>
+      <p>A gopher in college who love Programming and Open-Source</p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          <li>
+            <a href='/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+          </li>
+        
+        
+  <li><a href="//github.com/yujiahaol68" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+  <li><a href="//stackoverflow.com/users/7231260" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+  <li><a href="//bitbucket.com/tecknight" target="_blank" title="Bitbucket" class="fa fa-bitbucket"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//wpa.qq.com/msgrd?v=3&uin=767954505&site=qq&menu=yes" target="_blank" title="QQ" class="fa fa-qq"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:tecker_yuknigh@163.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2022
+        
+          Tecker Yu
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+    
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
+      <script src="https://cdn.bootcss.com/skel/3.0.1/skel.min.js"></script>
+      <script src="/js/main.min.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
 </html>
+

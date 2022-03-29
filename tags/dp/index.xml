@@ -5,12 +5,8 @@
     <link>/tags/dp/</link>
     <description>Recent content in DP on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/dp/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate><atom:link href="/tags/dp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>poj 3616 Milking Time</title>
       <link>/blog/poj-3616-milking-time/</link>

@@ -5,12 +5,8 @@
     <link>/tags/git/</link>
     <description>Recent content in git on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sat, 11 Mar 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Sat, 11 Mar 2017 00:00:00 +0000</lastBuildDate><atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CentOS 7 升级最新版本git</title>
       <link>/blog/centos-7-%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACgit/</link>

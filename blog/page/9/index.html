@@ -16,7 +16,7 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="generator" content="Hugo 0.54.0" />
+        <meta name="generator" content="Hugo 0.96.0" />
         
 
 
@@ -41,13 +41,9 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/blog/" />
 
-<meta property="og:updated_time" content="2017-01-25T00:00:00&#43;00:00"/>
 
-        
-<meta itemprop="name" content="Blog">
+        <meta itemprop="name" content="Blog">
 <meta itemprop="description" content="Tecker.Yu tech blog. Powered by Hugo">
-
-
         
 
         
@@ -81,7 +77,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
       <meta name="google-site-verification" content="w2Ni2ASrcf0CTgqj-14szx1sxa6ihPyi3ESfc1VYA4U" />
 
       <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -256,6 +251,18 @@ if (!doNotTrack) {
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-03-27'>
+                                    March 27, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></h3>
                                 
                                 <time class="published" datetime=
@@ -302,18 +309,6 @@ if (!doNotTrack) {
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/poj-2229-sumsets/">poj 2229 Sumsets</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2018-07-12'>
-                                    July 12, 2018</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -332,6 +327,71 @@ if (!doNotTrack) {
     
     <div id="main">
         
+        
+            <article class="post">
+  <header>
+    <div class="title">
+        
+            <h2><a href="/blog/laravel-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Laravel学习笔记</a></h2>
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2017-02-03'>
+            February 3, 2017</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>2 minute read</p>
+        
+        
+    </div>
+</header>
+
+  
+
+  
+  <p>类似于es6 的简写，会生成类似于<code>['name' =&gt; $name]</code>的键值对</p>
+  <footer>
+    <ul class="actions">
+      <li><a href="/blog/laravel-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="button big">Continue Reading</a></li>
+    </ul>
+  <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/php'>php</a></li>
+    
+</ul>
+
+  </footer>
+</article>
+
         
             <article class="post">
   <header>
@@ -553,35 +613,31 @@ if (!doNotTrack) {
   
 
   
-  <pre><code class="language-php">class Post
-{
-	public $title;
-	public $published;
-	public $auth;
-
-	function __construct($title,$auth,$published)
-	{
-		$this-&gt;title = $title;
-		$this-&gt;published = $published;
-		$this-&gt;auth = $auth;
-	}
-}
-
-$posts = [
-	new Post('first','jm',true),
-	new Post('second','vm',true),
-	new Post('third','cm',true),
-	new Post('fourth','em',false)
-
-];
-</code></pre>
-
-<ol>
+  <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Post</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> $title;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> $published;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> $auth;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">function</span> __construct($title,$auth,$published)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> $title;
+</span></span><span style="display:flex;"><span>		$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">published</span> <span style="color:#f92672">=</span> $published;
+</span></span><span style="display:flex;"><span>		$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">auth</span> <span style="color:#f92672">=</span> $auth;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$posts <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Post</span>(<span style="color:#e6db74">&#39;first&#39;</span>,<span style="color:#e6db74">&#39;jm&#39;</span>,<span style="color:#66d9ef">true</span>),
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Post</span>(<span style="color:#e6db74">&#39;second&#39;</span>,<span style="color:#e6db74">&#39;vm&#39;</span>,<span style="color:#66d9ef">true</span>),
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Post</span>(<span style="color:#e6db74">&#39;third&#39;</span>,<span style="color:#e6db74">&#39;cm&#39;</span>,<span style="color:#66d9ef">true</span>),
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Post</span>(<span style="color:#e6db74">&#39;fourth&#39;</span>,<span style="color:#e6db74">&#39;em&#39;</span>,<span style="color:#66d9ef">false</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>];
+</span></span></code></pre></div><ol>
 <li><code>array_filter</code> 数组过滤器</li>
 </ol>
-
-<p>可以写成闭包的形式，那样当数组被遍历的时候每一个元素就会执行该方法，将符合条件的元素return回来，然后就组成了新的数组,如果键的值为空，那么这个键将不会被保存在
-新的数组里</p>
+<p>可以写成闭包的形式，那样当数组被遍历的时候每一个元素就会执行该方法，将符合条件的元素return回来，然后就组成了新的数组,如果键的值&hellip;</p>
   <footer>
     <ul class="actions">
       <li><a href="/blog/php%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/" class="button big">Continue Reading</a></li>
@@ -614,76 +670,6 @@ $posts = [
     
     
         <li><a href='/categories/php'>php</a></li>
-    
-</ul>
-
-  </footer>
-</article>
-
-        
-            <article class="post">
-  <header>
-    <div class="title">
-        
-            <h2><a href="/blog/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/">gulp.js简易入门指南</a></h2>
-        
-        
-    </div>
-    <div class="meta">
-        
-
-        <time class="published"
-            datetime='2016-11-20'>
-            November 20, 2016</time>
-        <span class="author">Tecker.Yu</span>
-        
-            <p>2 minute read</p>
-        
-        
-    </div>
-</header>
-
-  
-
-  
-  <p>为什么需要gulp?
-* 模块化我们的html,css,js文件，使得项目的结构更加的清晰
-* 转译我们的模块文件（例如：js es6-&gt;es5 , panini-&gt;html ,Sass-&gt;css,）
-* 图片及css文件的压缩处理极大的提高网页性能
-* 解决各种浏览器兼容性问题
-* 基于管道思想的pipe多重处理，你可以自定义你想要的处理任务，一切交给gulp自动完成</p>
-  <footer>
-    <ul class="actions">
-      <li><a href="/blog/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" class="button big">Continue Reading</a></li>
-    </ul>
-  <ul class="stats">
-    
-        
-
-        
-        
-            <li>
-                
-                
-                    
-
-                    
-
-                    
-                        <i class="fa fa-sitemap">&nbsp;</i>
-                    
-
-                    
-                        Category
-                    
-                
-            </li>
-        
-    
-
-    
-    
-        <li><a href='/categories/tools'>Tools</a></li>
     
 </ul>
 
@@ -727,7 +713,7 @@ $posts = [
       <ul class="icons">
         
           <li>
-            <a href="/blog/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href='/blog/index.xml' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
@@ -831,6 +817,20 @@ $posts = [
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a>
+              </h3>
+              
+              <time class="published" datetime='2022-03-27'>
+                March 27, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a>
               </h3>
               
@@ -884,20 +884,6 @@ $posts = [
 
           </article>
         
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/poj-2229-sumsets/">poj 2229 Sumsets</a>
-              </h3>
-              
-              <time class="published" datetime='2018-07-12'>
-                July 12, 2018
-              </time>
-            </header>
-            
-
-          </article>
-        
       </div>
 
       
@@ -929,7 +915,7 @@ $posts = [
           <article>
             <header>
               
-                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">AC之路</a>
+                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">ac之路</a>
                 <span style="float:right;">11</span>
               
             </header>
@@ -973,6 +959,17 @@ $posts = [
           <article>
             <header>
               
+                <a href="/categories/go/">go</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
                 <a href="/categories/node/">node</a>
                 <span style="float:right;">5</span>
               
@@ -984,29 +981,7 @@ $posts = [
           <article>
             <header>
               
-                Uncategorized
-                <span style="float:right;">4</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/go/">Go</a>
-                <span style="float:right;">4</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/vue/">Vue</a>
+                <a href="/categories/vue/">vue</a>
                 <span style="float:right;">3</span>
               
             </header>
@@ -1028,7 +1003,7 @@ $posts = [
           <article>
             <header>
               
-                <a href="/categories/database/">DataBase</a>
+                <a href="/categories/database/">database</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1039,7 +1014,7 @@ $posts = [
           <article>
             <header>
               
-                <a href="/categories/deep-learning/">Deep Learning</a>
+                <a href="/categories/deep-learning/">deep-learning</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1050,7 +1025,7 @@ $posts = [
           <article>
             <header>
               
-                <a href="/categories/java/">Java</a>
+                <a href="/categories/java/">java</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1061,29 +1036,7 @@ $posts = [
           <article>
             <header>
               
-                <a href="/categories/machine-learning/">Machine Learning</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/tools/">Tools</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/typescript/">TypeScript</a>
+                <a href="/categories/machine-learning/">machine-learning</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1095,6 +1048,28 @@ $posts = [
             <header>
               
                 <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">typescript</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1130,7 +1105,7 @@ $posts = [
       <ul class="icons">
         
           <li>
-            <a href="/blog/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href='/blog/index.xml' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
@@ -1217,7 +1192,7 @@ $posts = [
     
     <p class="copyright">
       
-        &copy; 2019
+        &copy; 2022
         
           Tecker Yu
         

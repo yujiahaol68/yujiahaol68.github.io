@@ -5,12 +5,8 @@
     <link>/categories/python/</link>
     <description>Recent content in python on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Tue, 11 Apr 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Apr 2017 00:00:00 +0000</lastBuildDate><atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>python 语法基础</title>
       <link>/blog/python-%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80/</link>

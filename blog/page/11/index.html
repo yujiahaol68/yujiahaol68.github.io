@@ -16,7 +16,7 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="generator" content="Hugo 0.54.0" />
+        <meta name="generator" content="Hugo 0.96.0" />
         
 
 
@@ -41,13 +41,9 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/blog/" />
 
-<meta property="og:updated_time" content="2016-11-01T00:00:00&#43;00:00"/>
 
-        
-<meta itemprop="name" content="Blog">
+        <meta itemprop="name" content="Blog">
 <meta itemprop="description" content="Tecker.Yu tech blog. Powered by Hugo">
-
-
         
 
         
@@ -81,7 +77,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
       <meta name="google-site-verification" content="w2Ni2ASrcf0CTgqj-14szx1sxa6ihPyi3ESfc1VYA4U" />
 
       <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -256,6 +251,18 @@ if (!doNotTrack) {
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-03-27'>
+                                    March 27, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></h3>
                                 
                                 <time class="published" datetime=
@@ -302,18 +309,6 @@ if (!doNotTrack) {
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/poj-2229-sumsets/">poj 2229 Sumsets</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2018-07-12'>
-                                    July 12, 2018</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -332,6 +327,80 @@ if (!doNotTrack) {
     
     <div id="main">
         
+        
+            <article class="post">
+  <header>
+    <div class="title">
+        
+            <h2><a href="/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-01-wrapper-class/">CSS 学习笔记01 wrapper class实现居中</a></h2>
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2016-11-01'>
+            November 1, 2016</time>
+        <span class="author">Tecker.Yu</span>
+        
+            <p>1 minute read</p>
+        
+        
+    </div>
+</header>
+
+  
+
+  
+  <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- DESKTOP NAVIGATION  --&gt;</span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">nav</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;top-bar&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wrap&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;top-bar-left&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>          &lt;<span style="color:#f92672">h3</span>&gt;site title&lt;/<span style="color:#f92672">h3</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;top-bar-right&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>          &lt;<span style="color:#f92672">ul</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;menu&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;search&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Search&#34;</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;&hellip;</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+  <footer>
+    <ul class="actions">
+      <li><a href="/blog/css-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-01-wrapper-class/" class="button big">Continue Reading</a></li>
+    </ul>
+  <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-sitemap">&nbsp;</i>
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/css'>css</a></li>
+    
+</ul>
+
+  </footer>
+</article>
+
         
             <article class="post">
   <header>
@@ -423,21 +492,19 @@ if (!doNotTrack) {
   
 
   
-  <pre><code class="language-css">.nav-desktop{
-	background-color: #e83a37;
-	font-size: 18px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	height: 60px;
-}
-
-.menu-text {
-	line-height: 60px;
-	padding: 0px;
-}
-</code></pre>
-
-<p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
+  <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">nav-desktop</span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#e83a37</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">18</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">padding-top</span>: <span style="color:#ae81ff">0</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">padding-bottom</span>: <span style="color:#ae81ff">0</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">60</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">menu-text</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">line-height</span>: <span style="color:#ae81ff">60</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">0</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>只需要调整line-height与nav导航栏的高度一致，将padding设置为0，就能够轻松实现上下居中</p>
   <footer>
     <ul class="actions">
       <li><a href="/blog/css%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-02-nav%E4%B8%8A%E4%B8%8B%E5%B1%85%E4%B8%AD/" class="button big">Continue Reading</a></li>
@@ -642,7 +709,7 @@ if (!doNotTrack) {
       <ul class="icons">
         
           <li>
-            <a href="/blog/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href='/blog/index.xml' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
@@ -746,6 +813,20 @@ if (!doNotTrack) {
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a>
+              </h3>
+              
+              <time class="published" datetime='2022-03-27'>
+                March 27, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a>
               </h3>
               
@@ -799,20 +880,6 @@ if (!doNotTrack) {
 
           </article>
         
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/poj-2229-sumsets/">poj 2229 Sumsets</a>
-              </h3>
-              
-              <time class="published" datetime='2018-07-12'>
-                July 12, 2018
-              </time>
-            </header>
-            
-
-          </article>
-        
       </div>
 
       
@@ -844,7 +911,7 @@ if (!doNotTrack) {
           <article>
             <header>
               
-                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">AC之路</a>
+                <a href="/categories/ac%E4%B9%8B%E8%B7%AF/">ac之路</a>
                 <span style="float:right;">11</span>
               
             </header>
@@ -888,6 +955,17 @@ if (!doNotTrack) {
           <article>
             <header>
               
+                <a href="/categories/go/">go</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
                 <a href="/categories/node/">node</a>
                 <span style="float:right;">5</span>
               
@@ -899,29 +977,7 @@ if (!doNotTrack) {
           <article>
             <header>
               
-                Uncategorized
-                <span style="float:right;">4</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/go/">Go</a>
-                <span style="float:right;">4</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/vue/">Vue</a>
+                <a href="/categories/vue/">vue</a>
                 <span style="float:right;">3</span>
               
             </header>
@@ -943,7 +999,7 @@ if (!doNotTrack) {
           <article>
             <header>
               
-                <a href="/categories/database/">DataBase</a>
+                <a href="/categories/database/">database</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -954,7 +1010,7 @@ if (!doNotTrack) {
           <article>
             <header>
               
-                <a href="/categories/deep-learning/">Deep Learning</a>
+                <a href="/categories/deep-learning/">deep-learning</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -965,7 +1021,7 @@ if (!doNotTrack) {
           <article>
             <header>
               
-                <a href="/categories/java/">Java</a>
+                <a href="/categories/java/">java</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -976,29 +1032,7 @@ if (!doNotTrack) {
           <article>
             <header>
               
-                <a href="/categories/machine-learning/">Machine Learning</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/tools/">Tools</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/typescript/">TypeScript</a>
+                <a href="/categories/machine-learning/">machine-learning</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1010,6 +1044,28 @@ if (!doNotTrack) {
             <header>
               
                 <a href="/categories/python/">python</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/tools/">tools</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/typescript/">typescript</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -1045,7 +1101,7 @@ if (!doNotTrack) {
       <ul class="icons">
         
           <li>
-            <a href="/blog/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
+            <a href='/blog/index.xml' type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a>
           </li>
         
         
@@ -1132,7 +1188,7 @@ if (!doNotTrack) {
     
     <p class="copyright">
       
-        &copy; 2019
+        &copy; 2022
         
           Tecker Yu
         

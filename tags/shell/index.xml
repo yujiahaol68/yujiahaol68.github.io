@@ -5,12 +5,8 @@
     <link>/tags/shell/</link>
     <description>Recent content in shell on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Tue, 31 Oct 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/shell/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Oct 2017 00:00:00 +0000</lastBuildDate><atom:link href="/tags/shell/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux必知之网络基础篇</title>
       <link>/blog/linux%E5%BF%85%E7%9F%A5%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87/</link>

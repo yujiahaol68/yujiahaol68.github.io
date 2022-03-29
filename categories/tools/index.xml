@@ -5,12 +5,8 @@
     <link>/categories/tools/</link>
     <description>Recent content in Tools on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sun, 20 Nov 2016 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/tools/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language>
+    <lastBuildDate>Sun, 20 Nov 2016 00:00:00 +0000</lastBuildDate><atom:link href="/categories/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>gulp.js简易入门指南</title>
       <link>/blog/gulp-js%E7%AE%80%E6%98%93%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/</link>
