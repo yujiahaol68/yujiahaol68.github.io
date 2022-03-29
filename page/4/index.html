@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zh-cn">
 <head>
-	<meta name="generator" content="Hugo 0.65.2" />
+	<meta name="generator" content="Hugo 0.96.0" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,7 @@
 <meta property="og:description" content="一个纯粹的技术干货聚集地，里面包含着一个无聊人士的所思所想" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2020-03-06T13:54:12+08:00" />
+
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -53,6 +53,30 @@ if (!doNotTrack) {
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/blog/centos%E4%B8%8B%E7%9A%84node%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="bookmark">
+			centOS下的node部署环境搭建
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2017-06-08T00:00:00">June 08, 2017</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/linux" rel="category">linux</a></span>
+</div>
+<span class="meta__text">
+总计 648 字
+</span></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		本文实践的是单机搭建 nginx+node+mongodb+redis 流行组合的具体过程 node的安装过程详情 其他的直接上亲自实践过的安装命令以及需要注意的地方，习惯用英文注释，部分重点已
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/blog/mongoose%E4%B8%8B%E7%9A%84promise%E6%8A%80%E5%B7%A7/" rel="bookmark">
@@ -214,7 +238,7 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/node" rel="category">node</a></span>
 </div>
 <span class="meta__text">
-总计 896 字
+总计 900 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
@@ -268,30 +292,6 @@ if (!doNotTrack) {
 	<div class="content list__excerpt post__content clearfix">
 		配置路由 $ npm install vue-router --save routes.js import Home from &#39;./pages/Home.vue&#39; import Gifs from &#39;./pages/Gifs.vue&#39; import User from &#39;./pages/User.vue&#39; export const routes = [ { path: &#39;&#39;, component: Home }, { path: &#39;/gifs&#39;, component: Gifs }, { path: &#39;/user/:id&#39;, component: User } //指定路由和对应要渲染的组件 //404的path
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/blog/vuex%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" rel="bookmark">
-			vuex快速入门
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2017-02-08T00:00:00">February 08, 2017</time>
-</div>
-
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/vue" rel="category">Vue</a></span>
-</div>
-<span class="meta__text">
-总计 801 字
-</span></div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		基本用途： 将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了props传值的链式响应的代码冗余 给状态配以公用方法，将状
-	</div>
 </article>
 </main>
 
@@ -315,11 +315,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">用Go STL查询DB引发的内存泄露</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 		</ul>
 	</div>
 </div>
@@ -350,9 +350,11 @@ if (!doNotTrack) {
 	<h4 class="widget__title">标签</h4>
 	<div class="widget__content">
 		<a class="widget-taglist__link widget__link btn" href="/tags/algorithms" title="Algorithms">Algorithms</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/api" title="Api">Api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api" title="API">API</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/centos" title="Centos">Centos</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cli" title="Cli">Cli</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cgo" title="Cgo">Cgo</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cli" title="CLI">CLI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cpp" title="Cpp">Cpp</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/css" title="Css">Css</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/db" title="Db">Db</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/debug" title="Debug">Debug</a>
@@ -367,7 +369,7 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/git" title="Git">Git</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/go" title="Go">Go</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/google" title="Google">Google</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="HTML">HTML</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/java" title="Java">Java</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/koa" title="Koa">Koa</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/laravel" title="Laravel">Laravel</a>
@@ -384,7 +386,7 @@ if (!doNotTrack) {
 		<a class="widget-taglist__link widget__link btn" href="/tags/router" title="Router">Router</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/sass" title="Sass">Sass</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/shell" title="Shell">Shell</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="Sql">Sql</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="SQL">SQL</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow" title="Tensorflow">Tensorflow</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/test" title="Test">Test</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/thinkphp" title="Thinkphp">Thinkphp</a>
@@ -432,7 +434,7 @@ if (!doNotTrack) {
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Runtime: out of memory.
+			&copy; 2022 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

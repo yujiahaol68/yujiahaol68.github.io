@@ -5,7 +5,7 @@
     <link>/tags/cgo/</link>
     <description>Recent content in cgo on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-cn</language>
     <lastBuildDate>Sun, 27 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/cgo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CGO封装CPP库的一些最佳实践</title>

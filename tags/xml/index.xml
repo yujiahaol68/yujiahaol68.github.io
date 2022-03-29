@@ -6,11 +6,7 @@
     <description>Recent content in xml on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 10 Mar 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/xml/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 10 Mar 2018 00:00:00 +0000</lastBuildDate><atom:link href="/tags/xml/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go下解析XML文档时的编码问题</title>
       <link>/blog/go%E4%B8%8B%E8%A7%A3%E6%9E%90xml%E6%96%87%E6%A1%A3%E6%97%B6%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</link>

@@ -10,9 +10,10 @@
 	<meta property="og:title" content="用Go STL查询DB引发的内存泄露" />
 <meta property="og:description" content="问题起因 这几天有一个 Go API service 经过定时监控发现占用的内存不断上涨，内存从初始的 70M 一直上升到超过 1G 直到吃光内存退出，基本上就可以断定是存在内存泄露" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/" />
+<meta property="og:url" content="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2020-03-06T13:54:12+08:00" />
 <meta property="article:modified_time" content="2020-03-06T13:54:12+08:00" />
+
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -99,46 +100,46 @@ if (!doNotTrack) {
 <h2 id="分析排查">分析排查</h2>
 <h3 id="goroutine泄露">goroutine泄露</h3>
 <p>之前就有听说过一句名言：Go 中的内存泄露十有八九都是 goroutine 协程泄露，是否真的如此呢？ 对 <code>runtime.NumGoroutine()</code> 的定时查询可以帮助我们进行判断，或者线上开启了 pprof 的话访问 <code>/debug/pprof</code> 就可以看到 goroutine 的数量，我使用了 expvar 来定时暴露协程的总数信息，在本地对线上数据定时进行抓取。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// server.go
-</span><span style="color:#75715e">// 将统计数据通过 expvar.Handler 暴露到 HTTP 服务中
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">mux</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewServeMux</span>()
-<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/debug/vars&#34;</span>, <span style="color:#a6e22e">expvar</span>.<span style="color:#a6e22e">Handler</span>())
-
-
-<span style="color:#75715e">// main.go
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sampleInterval</span>() <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{} {
-	<span style="color:#a6e22e">done</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
-	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-		<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-		<span style="color:#a6e22e">numG</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">expvar</span>.<span style="color:#a6e22e">NewInt</span>(<span style="color:#e6db74">&#34;runtime.goroutines&#34;</span>)
-		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">Stop</span>()
-
-		<span style="color:#66d9ef">for</span> {
-			<span style="color:#66d9ef">select</span> {
-			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
-				<span style="color:#a6e22e">numG</span>.<span style="color:#a6e22e">Set</span>(int64(<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>()))
-			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">done</span>:
-				<span style="color:#66d9ef">return</span>
-			}
-		}
-	}()
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">done</span>
-}
-
-<span style="color:#75715e">// 本地运行
-</span><span style="color:#75715e">// curl http://host:port/debug/vars
-</span><span style="color:#75715e"></span>{
-	<span style="color:#e6db74">&#34;runtime.goroutines&#34;</span>: <span style="color:#ae81ff">48</span>
-}
-</code></pre></div><p>done chan 会被返回，以便我们关闭系统时可以进行优雅退出。通过一段时间的抓取和图表分析，发现并不是 goroutine 的泄露，如果是，那么可以访问 <code>/debug/pprof/goroutine?debug=1</code> 在线上查看每个 G 的状态，然后再来做进一步的分析，但显然通过排除法，这不是这次事故的问题所在。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// server.go
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 将统计数据通过 expvar.Handler 暴露到 HTTP 服务中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">mux</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewServeMux</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/debug/vars&#34;</span>, <span style="color:#a6e22e">expvar</span>.<span style="color:#a6e22e">Handler</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// main.go
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sampleInterval</span>() <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{} {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">done</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">numG</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">expvar</span>.<span style="color:#a6e22e">NewInt</span>(<span style="color:#e6db74">&#34;runtime.goroutines&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">Stop</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">numG</span>.<span style="color:#a6e22e">Set</span>(int64(<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>()))
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">done</span>:
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">done</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 本地运行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// curl http://host:port/debug/vars
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;runtime.goroutines&#34;</span>: <span style="color:#ae81ff">48</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>done chan 会被返回，以便我们关闭系统时可以进行优雅退出。通过一段时间的抓取和图表分析，发现并不是 goroutine 的泄露，如果是，那么可以访问 <code>/debug/pprof/goroutine?debug=1</code> 在线上查看每个 G 的状态，然后再来做进一步的分析，但显然通过排除法，这不是这次事故的问题所在。</p>
 <h3 id="长期持有引用">长期持有引用</h3>
 <p>那么新的问题也就很自然地浮现出来：如果 G 的数量有上升然后总是能够自动回落，说明非常驻型的 G 都能够正常运行结束，G的阻塞等待导致迟迟无法退出造成的泄露是可以排除了，那么我们是否能够认为内存的泄露就完全与 G 无关了？答案是不能，因为我们不能确定 G 是否会导致我们的一些引用对象被一直持有，在标记 Mark 阶段的时候这些依然被持有的对象肯定是不能被垃圾回收的，但它因为某些原因一直被持有而且还伴随着新的内存分配，这是导致内存不断上涨的第二大元凶。</p>
 <p>所以，随着问题落到了对象或者是对象群的内存分配上了，这个问题可以是某个 大的 slice 一直不断添加元素却一直在对象的生命周期中被引用，也可以是某对象中持有其他对象的指针，类似链表状的引用关系，如果这个引用链不断增长，那么同样也会造成内存的泄露。</p>
 <h4 id="使用-pprof-采样分析堆内存">使用 pprof 采样分析堆内存</h4>
 <p>通过获取 pprof heap profile，我们能够在线上直接生成当前堆内存分配的快照文件并通过 .pb.gz 压缩包的形式持久化到本地供我们作进一步的离线分析。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go tool pprof http://<span style="color:#f92672">[</span>domain<span style="color:#f92672">]</span>/debug/pprof/heap
-</code></pre></div><p>使用命令行就能够将堆内存的快照以及各种统计数据都持久化到本地进行分析，进入到 pprof 交互式命令行。这边我直接在线上隔一段时间分别抓取了两次快照到本地来分析：</p>
-<pre><code>File: binary
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go tool pprof http://<span style="color:#f92672">[</span>domain<span style="color:#f92672">]</span>/debug/pprof/heap
+</span></span></code></pre></div><p>使用命令行就能够将堆内存的快照以及各种统计数据都持久化到本地进行分析，进入到 pprof 交互式命令行。这边我直接在线上隔一段时间分别抓取了两次快照到本地来分析：</p>
+<pre tabindex="0"><code>File: binary
 Type: inuse_space
 Time: Feb 27, 2020 at 12:06pm (CST)
 (pprof) top
@@ -155,7 +156,7 @@ Showing top 10 nodes out of 114
   516.76kB  1.09% 91.32%   516.76kB  1.09%  net/http.(*http2Framer).WriteDataPadded
   513.31kB  1.09% 92.41%   513.31kB  1.09%  regexp.onePassCopy
   512.69kB  1.09% 93.50%   512.69kB  1.09%  vendor/golang.org/x/net/http2/hpack.(*headerFieldTable).addEntry
-</code></pre><pre><code>File: binary
+</code></pre><pre tabindex="0"><code>File: binary
 Type: inuse_space
 Time: Feb 27, 2020 at 5:58pm (CST)
 (pprof) top
@@ -174,8 +175,8 @@ Showing top 10 nodes out of 145
 </code></pre><p>使用 top 可以查看持有内存最多的几个函数并进行排序，通过比对持有最多内存的函数，发现尽管 myfuncA 持有了很多内存，但是两个时间点的 myfuncA 产生的内存都没有变化，而总的内存占用从 47M 上升到了 96M，因此可以排除 myfuncA 泄露的嫌疑。但值得注意的是，这段时间多出来的 50M 也不全是因为内存的泄露，DB 查询时的反序列化也需要申请较多内存，根据 Go runtime 内存分配的策略，GC 并不会立即回收这些内存，即便回收也不会很快将闲置的内存归还给OS，在一段时间内这些内存依然会存在于内存分配器的多级内存池中。因此这其中依然存在着一些阻碍我们分析的干扰项。顺带提一下 <code>reflect.unsafe_NewArray</code> 这个函数，之前看到有人在怀疑它会导致内存泄露，事实上只要是 json 反序列化一个 slice 都会使用它来申请内存，它的上层是 <code>reflect.MakeSlice</code> ，可以根据反射得到的 type 类型信息来创建 slice ，可以理解为通用 slice 的构造函数。</p>
 <h4 id="对比两个快照之间的差异">对比两个快照之间的差异</h4>
 <p>仅仅是通过肉眼查看两个快照之间的差异还是存在蛮多的干扰的，如果能够以第一个时间点为基准看与第二个时间点 diff 过后的结果可能会更加清晰一些。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go tool pprof -base pprof.binary.alloc_objects.alloc_space.inuse_objects.inuse_space.001.pb.gz pprof.binary.alloc_objects.alloc_space.inuse_objects.inuse_space.002.pb.gz
-</code></pre></div><pre><code>File: binary
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go tool pprof -base pprof.binary.alloc_objects.alloc_space.inuse_objects.inuse_space.001.pb.gz pprof.binary.alloc_objects.alloc_space.inuse_objects.inuse_space.002.pb.gz
+</span></span></code></pre></div><pre tabindex="0"><code>File: binary
 Type: inuse_space
 Time: Feb 27, 2020 at 12:06pm (CST)
 (pprof) top
@@ -195,204 +196,204 @@ Showing top 10 nodes out of 118
     1.50MB  3.04% 76.19%    39.10MB 79.12%  ctrlfuncA
 </code></pre><p>通过 <code>-base</code> 指定基准，再次使用 top 可以准确地列出这多出来的 50M 究竟是何人所为。把这些列出来的方法进行简单的分类：funcA是控制器函数，而 funcB 是 M 层的方法，被A调用并与 postgresql 直接打交道获取数据，其余的有反序列化含有 json 数据字段的标准库函数，最后还有一些与数据库连接相关的函数。初步可以确定的是，内存泄露一定存在于这个方法调用链中的某一步。</p>
 <p>在交互式命令行通过 <code>list 方法名</code>  可以一步步深入分析方法调用链上具体的占用情况，排除掉反序列化对象分配内存的干扰，并结合快照2的占用情况。定位到 <code>*DB</code> 和 <code>*conn</code> 这两个对象上，方法调用定位到 sqlx 提供的 <code>Preparex</code> 方法以及 <code>Preparex</code> 产生的 <code>Stmt</code> 对象的 <code>Get</code> 方法。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">repoXXX</span>) <span style="color:#a6e22e">FindByID</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>, <span style="color:#a6e22e">err</span>) {
-	<span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Preparex</span>(<span style="color:#e6db74">`MY SQL QUERY`</span>) <span style="color:#75715e">// ???
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">T</span>)
-	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">id</span>) <span style="color:#75715e">// ???
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">ErrNoRows</span> {
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">errno</span>.<span style="color:#a6e22e">TorNotFound</span>
-		}
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>, <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><h2 id="找到元凶">找到元凶</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">repoXXX</span>) <span style="color:#a6e22e">FindByID</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>, <span style="color:#a6e22e">err</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Preparex</span>(<span style="color:#e6db74">`MY SQL QUERY`</span>) <span style="color:#75715e">// ???
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">T</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">id</span>) <span style="color:#75715e">// ???
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">ErrNoRows</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">errno</span>.<span style="color:#a6e22e">TorNotFound</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="找到元凶">找到元凶</h2>
 <p>sqlx 只是 <code>database/sql</code> 的简单包装库，要想知道找到的这两个方法究竟做了些什么，还得从 <code>database/sql</code> 开始说起。</p>
 <h3 id="db-创建">DB 创建</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">driverName</span>, <span style="color:#a6e22e">dataSourceName</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#75715e">// 检查数据库驱动是否已经初始化
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">driversMu</span>.<span style="color:#a6e22e">RLock</span>()
-	<span style="color:#a6e22e">driveri</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">drivers</span>[<span style="color:#a6e22e">driverName</span>]
-	<span style="color:#a6e22e">driversMu</span>.<span style="color:#a6e22e">RUnlock</span>()
-	<span style="color:#75715e">// 没有初始化，报错
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;sql: unknown driver %q (forgotten import?)&#34;</span>, <span style="color:#a6e22e">driverName</span>)
-	}
-
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">driverCtx</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">driveri</span>.(<span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">DriverContext</span>); <span style="color:#a6e22e">ok</span> {
-		<span style="color:#75715e">// 通过URI传入连接数据库的配置信息
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">connector</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">driverCtx</span>.<span style="color:#a6e22e">OpenConnector</span>(<span style="color:#a6e22e">dataSourceName</span>)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-		}
-		<span style="color:#75715e">// 初始化 DB 对象并返回
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">OpenDB</span>(<span style="color:#a6e22e">connector</span>), <span style="color:#66d9ef">nil</span>
-	}
-
-	<span style="color:#75715e">// 默认 connector
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">OpenDB</span>(<span style="color:#a6e22e">dsnConnector</span>{<span style="color:#a6e22e">dsn</span>: <span style="color:#a6e22e">dataSourceName</span>, <span style="color:#a6e22e">driver</span>: <span style="color:#a6e22e">driveri</span>}), <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>OpenDB() 显然是 DB 的构造函数，继续往下看</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">OpenDB</span>(<span style="color:#a6e22e">c</span> <span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">Connector</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span> {
-	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
-	<span style="color:#a6e22e">db</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">DB</span>{
-		<span style="color:#a6e22e">connector</span>:    <span style="color:#a6e22e">c</span>,
-		<span style="color:#a6e22e">openerCh</span>:     make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#a6e22e">connectionRequestQueueSize</span>),
-		<span style="color:#a6e22e">resetterCh</span>:   make(<span style="color:#66d9ef">chan</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>, <span style="color:#ae81ff">50</span>),
-		<span style="color:#a6e22e">lastPut</span>:      make(<span style="color:#66d9ef">map</span>[<span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>]<span style="color:#66d9ef">string</span>),
-		<span style="color:#a6e22e">connRequests</span>: make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">connRequest</span>),
-		<span style="color:#a6e22e">stop</span>:         <span style="color:#a6e22e">cancel</span>,
-	}
-
-	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connectionOpener</span>(<span style="color:#a6e22e">ctx</span>)
-	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connectionResetter</span>(<span style="color:#a6e22e">ctx</span>)
-
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>
-}
-</code></pre></div><p>几个关键的组成部分：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">driverName</span>, <span style="color:#a6e22e">dataSourceName</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 检查数据库驱动是否已经初始化
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">driversMu</span>.<span style="color:#a6e22e">RLock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">driveri</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">drivers</span>[<span style="color:#a6e22e">driverName</span>]
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">driversMu</span>.<span style="color:#a6e22e">RUnlock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 没有初始化，报错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;sql: unknown driver %q (forgotten import?)&#34;</span>, <span style="color:#a6e22e">driverName</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">driverCtx</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">driveri</span>.(<span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">DriverContext</span>); <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 通过URI传入连接数据库的配置信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">connector</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">driverCtx</span>.<span style="color:#a6e22e">OpenConnector</span>(<span style="color:#a6e22e">dataSourceName</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 初始化 DB 对象并返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">OpenDB</span>(<span style="color:#a6e22e">connector</span>), <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 默认 connector
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">OpenDB</span>(<span style="color:#a6e22e">dsnConnector</span>{<span style="color:#a6e22e">dsn</span>: <span style="color:#a6e22e">dataSourceName</span>, <span style="color:#a6e22e">driver</span>: <span style="color:#a6e22e">driveri</span>}), <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>OpenDB() 显然是 DB 的构造函数，继续往下看</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">OpenDB</span>(<span style="color:#a6e22e">c</span> <span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">Connector</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">db</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">DB</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">connector</span>:    <span style="color:#a6e22e">c</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">openerCh</span>:     make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#a6e22e">connectionRequestQueueSize</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">resetterCh</span>:   make(<span style="color:#66d9ef">chan</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>, <span style="color:#ae81ff">50</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">lastPut</span>:      make(<span style="color:#66d9ef">map</span>[<span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>]<span style="color:#66d9ef">string</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">connRequests</span>: make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">connRequest</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">stop</span>:         <span style="color:#a6e22e">cancel</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connectionOpener</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connectionResetter</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>几个关键的组成部分：
 <code>openerCh</code> 用于缓存创建新连接的请求，表意单一并且符合先进先出的逻辑，定义成<code>chan struct</code> 再好不过了</p>
 <p><code>resetterCh</code> 用于异步重置连接的 context 并返回当前连接执行 query 的 error</p>
 <p>使用了两个 G 异步执行上述的两个操作</p>
 <p><code>lastPut</code> 用于 debug ，跳过</p>
 <p><code>connRequests</code> 用于无闲置数据库连接且无法再创建新连接时的异步请求排队，key是递增的，value 使用 chan 防止读取阻塞，len可以非常方便地计数</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">putConnDBLocked</span>(<span style="color:#a6e22e">dc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) <span style="color:#66d9ef">bool</span> {
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 发现有请求在排队
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connRequests</span>); <span style="color:#a6e22e">c</span> &gt; <span style="color:#ae81ff">0</span> {
-		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">connRequest</span>
-		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">reqKey</span> <span style="color:#66d9ef">uint64</span>
-		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">reqKey</span>, <span style="color:#a6e22e">req</span> = <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connRequests</span> {
-			<span style="color:#66d9ef">break</span>
-		}
-		delete(<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connRequests</span>, <span style="color:#a6e22e">reqKey</span>) <span style="color:#75715e">// 排队队列中取出=
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">inUse</span> = <span style="color:#66d9ef">true</span>
-		}
-		<span style="color:#75715e">// 为这个请求分配连接
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">req</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">connRequest</span>{
-			<span style="color:#a6e22e">conn</span>: <span style="color:#a6e22e">dc</span>, <span style="color:#75715e">// *driverConn 即数据库连接
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">err</span>:  <span style="color:#a6e22e">err</span>,
-		}
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
-	}
-
-}
-</code></pre></div><p>目前我们可以得知， <code>connRequest</code> 代表创建新连接的请求，<code>connRequests</code> 用于全局的请求排队，每当有创建新连接的请求时，DB 会尝试重用可用的 <code>driverConn</code>以满足这些请求，注意这些请求不是 query 请求，而是创建连接的请求</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">putConnDBLocked</span>(<span style="color:#a6e22e">dc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 发现有请求在排队
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connRequests</span>); <span style="color:#a6e22e">c</span> &gt; <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">connRequest</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">reqKey</span> <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">reqKey</span>, <span style="color:#a6e22e">req</span> = <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connRequests</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		delete(<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">connRequests</span>, <span style="color:#a6e22e">reqKey</span>) <span style="color:#75715e">// 排队队列中取出=
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">inUse</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 为这个请求分配连接
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">req</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">connRequest</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">conn</span>: <span style="color:#a6e22e">dc</span>, <span style="color:#75715e">// *driverConn 即数据库连接
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">err</span>:  <span style="color:#a6e22e">err</span>,
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>目前我们可以得知， <code>connRequest</code> 代表创建新连接的请求，<code>connRequests</code> 用于全局的请求排队，每当有创建新连接的请求时，DB 会尝试重用可用的 <code>driverConn</code>以满足这些请求，注意这些请求不是 query 请求，而是创建连接的请求</p>
 <h3 id="记录资源的依赖引用">记录资源的依赖引用</h3>
 <p>DB对象的 conn 方法负责获取连接，有连接了，才能将我们的语句发送到数据库，以 SELECT 语句的查询为例</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> []<span style="color:#66d9ef">interface</span>{}, <span style="color:#a6e22e">strategy</span> <span style="color:#a6e22e">connReuseStrategy</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Rows</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#75715e">// 获取连接或者失败返回错误
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">conn</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">strategy</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#75715e">// 熟悉的 stmt, Rows 对象是从这里创建，绑定driverConn执行然后被返回的
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">queryDC</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">releaseConn</span>, <span style="color:#a6e22e">query</span>, <span style="color:#a6e22e">args</span>)
-}
-</code></pre></div><p>先不要跑太远，毕竟我们并不是使用这种方法访问数据库，但是上面的调用可以帮助理清标准库是如何组织这些底层对象的。现在回到 sqlx 的 preparex 方法，这里是我们问题的开始，最终调用的还是标准库 DB 的 PrepareContext 方法</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">PrepareContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">stmt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
-	<span style="color:#75715e">// 约定一个失败重试次数，使用标志位控制获取连接的策略（优先使用缓存的连接）
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">maxBadConnRetries</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-		<span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">prepare</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">query</span>, <span style="color:#a6e22e">cachedOrNewConn</span>)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">ErrBadConn</span> {
-			<span style="color:#66d9ef">break</span>
-		}
-	}
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">ErrBadConn</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">prepare</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">query</span>, <span style="color:#a6e22e">alwaysNewConn</span>)
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">err</span>
-}
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">prepare</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">strategy</span> <span style="color:#a6e22e">connReuseStrategy</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#75715e">// 同样尝试获取连接或者失败返回
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">conn</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">strategy</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">prepareDC</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">releaseConn</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">query</span>)
-}
-</code></pre></div><p>这里的 prepare 和前面提到的 query 方法非常相似，后面我们再详谈它们的区别，这里我们接着 prepareDC 这条线索继续往下探索。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// cg 为 nil 表示启用连接池！（手动画重点）
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">prepareDC</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">dc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>, <span style="color:#a6e22e">release</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">error</span>), <span style="color:#a6e22e">cg</span> <span style="color:#a6e22e">stmtConnGrabber</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ds</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverStmt</span>
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
-	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
-		<span style="color:#a6e22e">release</span>(<span style="color:#a6e22e">err</span>)
-	}()
-	<span style="color:#a6e22e">withLock</span>(<span style="color:#a6e22e">dc</span>, <span style="color:#66d9ef">func</span>() {
-		<span style="color:#a6e22e">ds</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">prepareLocked</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cg</span>, <span style="color:#a6e22e">query</span>)
-	})
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#a6e22e">stmt</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Stmt</span>{
-		<span style="color:#a6e22e">db</span>:    <span style="color:#a6e22e">db</span>,
-		<span style="color:#a6e22e">query</span>: <span style="color:#a6e22e">query</span>,
-		<span style="color:#a6e22e">cg</span>:    <span style="color:#a6e22e">cg</span>,
-		<span style="color:#a6e22e">cgds</span>:  <span style="color:#a6e22e">ds</span>,
-	}
-
-	<span style="color:#75715e">// 这部分才是 preparex 的真实目的，使用连接池
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">cg</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#75715e">// prepare 事先将得到的连接和语句保存起来
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">css</span> = []<span style="color:#a6e22e">connStmt</span>{{<span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">ds</span>}}
-		<span style="color:#75715e">// 记录当前已关闭连接的总数，清理已关闭的连接时会用到
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">lastNumClosed</span> = <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">LoadUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">numClosed</span>)
-		<span style="color:#75715e">// 添加依赖引用计数（目前来看不太清楚是干什么用），但是stmt肯定被持有
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">addDep</span>(<span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">stmt</span>)
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">stmt</span>, <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>其中返回的 stmt 就是 Preparex 的所得产物，然后执行了 Get，经过 sqlx 的包装，最终调用的还是标准库中的<code>func (s *Stmt) QueryContext</code>，和 sqlx 中的 <code>func (r *Row) scanAny</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">args</span> []<span style="color:#66d9ef">interface</span>{}, <span style="color:#a6e22e">strategy</span> <span style="color:#a6e22e">connReuseStrategy</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Rows</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 获取连接或者失败返回错误
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">conn</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">strategy</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 熟悉的 stmt, Rows 对象是从这里创建，绑定driverConn执行然后被返回的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">queryDC</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">releaseConn</span>, <span style="color:#a6e22e">query</span>, <span style="color:#a6e22e">args</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>先不要跑太远，毕竟我们并不是使用这种方法访问数据库，但是上面的调用可以帮助理清标准库是如何组织这些底层对象的。现在回到 sqlx 的 preparex 方法，这里是我们问题的开始，最终调用的还是标准库 DB 的 PrepareContext 方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">PrepareContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">stmt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 约定一个失败重试次数，使用标志位控制获取连接的策略（优先使用缓存的连接）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">maxBadConnRetries</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">prepare</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">query</span>, <span style="color:#a6e22e">cachedOrNewConn</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">ErrBadConn</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">driver</span>.<span style="color:#a6e22e">ErrBadConn</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">prepare</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">query</span>, <span style="color:#a6e22e">alwaysNewConn</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">prepare</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">strategy</span> <span style="color:#a6e22e">connReuseStrategy</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 同样尝试获取连接或者失败返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">conn</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">strategy</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">prepareDC</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">releaseConn</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">query</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里的 prepare 和前面提到的 query 方法非常相似，后面我们再详谈它们的区别，这里我们接着 prepareDC 这条线索继续往下探索。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// cg 为 nil 表示启用连接池！（手动画重点）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DB</span>) <span style="color:#a6e22e">prepareDC</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">dc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverConn</span>, <span style="color:#a6e22e">release</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">error</span>), <span style="color:#a6e22e">cg</span> <span style="color:#a6e22e">stmtConnGrabber</span>, <span style="color:#a6e22e">query</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ds</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">driverStmt</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">release</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">withLock</span>(<span style="color:#a6e22e">dc</span>, <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ds</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">prepareLocked</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cg</span>, <span style="color:#a6e22e">query</span>)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">stmt</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Stmt</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">db</span>:    <span style="color:#a6e22e">db</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">query</span>: <span style="color:#a6e22e">query</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">cg</span>:    <span style="color:#a6e22e">cg</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">cgds</span>:  <span style="color:#a6e22e">ds</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 这部分才是 preparex 的真实目的，使用连接池
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">cg</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// prepare 事先将得到的连接和语句保存起来
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">css</span> = []<span style="color:#a6e22e">connStmt</span>{{<span style="color:#a6e22e">dc</span>, <span style="color:#a6e22e">ds</span>}}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 记录当前已关闭连接的总数，清理已关闭的连接时会用到
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">lastNumClosed</span> = <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">LoadUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">numClosed</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 添加依赖引用计数（目前来看不太清楚是干什么用），但是stmt肯定被持有
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">addDep</span>(<span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">stmt</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">stmt</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其中返回的 stmt 就是 Preparex 的所得产物，然后执行了 Get，经过 sqlx 的包装，最终调用的还是标准库中的<code>func (s *Stmt) QueryContext</code>，和 sqlx 中的 <code>func (r *Row) scanAny</code></p>
 <p>可以肯定的是，在调用 Preparex 后，stmt 引用已经被 db 持有，只要 db 对象一直存在，stmt 想要被释放，就必须有对应的代码手动解除 stmt 的引用，简要的看看 QueryContext，是否有我们想要的类似 removeDep 的操作</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>) <span style="color:#a6e22e">QueryContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{}) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Rows</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">rowsi</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">rowsiFromStatement</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">ci</span>, <span style="color:#a6e22e">ds</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">rows</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Rows</span>{
-			<span style="color:#a6e22e">dc</span>:    <span style="color:#a6e22e">dc</span>,
-			<span style="color:#a6e22e">rowsi</span>: <span style="color:#a6e22e">rowsi</span>,
-		}
-		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">addDep</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">rows</span>) <span style="color:#75715e">// HERE
-</span><span style="color:#75715e"></span>
-		<span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">releaseConn</span> = <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
-			<span style="color:#a6e22e">releaseConn</span>(<span style="color:#a6e22e">err</span>)
-			<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">removeDep</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">rows</span>) <span style="color:#75715e">// HERE
-</span><span style="color:#75715e"></span>		}
-		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">txctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">cg</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#a6e22e">txctx</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">cg</span>.<span style="color:#a6e22e">txCtx</span>()
-		}
-		<span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">initContextClose</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">txctx</span>)
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rows</span>, <span style="color:#66d9ef">nil</span>
-	}
-
-	<span style="color:#a6e22e">releaseConn</span>(<span style="color:#a6e22e">err</span>)
-}
-</code></pre></div><p>有，但这些是关于 rows 的引用记录以及数据库连接的重用的代码，并没有看到 stmt 对象的释放，同样翻看 sqlx 的 scanAny，主要是将数据库返回的数据通过调用 Scan 序列化到传入 Get 的结构体具体字段中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>) <span style="color:#a6e22e">QueryContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{}) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Rows</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">rowsi</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">rowsiFromStatement</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">dc</span>.<span style="color:#a6e22e">ci</span>, <span style="color:#a6e22e">ds</span>, <span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">rows</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Rows</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">dc</span>:    <span style="color:#a6e22e">dc</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">rowsi</span>: <span style="color:#a6e22e">rowsi</span>,
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">addDep</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">rows</span>) <span style="color:#75715e">// HERE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">releaseConn</span> = <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">releaseConn</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">removeDep</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">rows</span>) <span style="color:#75715e">// HERE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">txctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">cg</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">txctx</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">cg</span>.<span style="color:#a6e22e">txCtx</span>()
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">initContextClose</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">txctx</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rows</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">releaseConn</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>有，但这些是关于 rows 的引用记录以及数据库连接的重用的代码，并没有看到 stmt 对象的释放，同样翻看 sqlx 的 scanAny，主要是将数据库返回的数据通过调用 Scan 序列化到传入 Get 的结构体具体字段中。</p>
 <p>上述发现证实了本次内存泄露的元凶：db.dep，即用于引用计数从而保证依赖先行释放的字典，这个字典保证了只有元素的依赖被释放后当前元素才能释放，调用当前元素的 finalClose 方法自行释放当前元素持有的资源。</p>
 <h2 id="解决泄露">解决泄露</h2>
 <p>因此想要解决这次的内存泄露，就必须让 dep 放弃对 stmt 的引用。通过对 sql.go 文件的简单搜索，stmt 对象的释放就藏在它的 close 方法中。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>) <span style="color:#a6e22e">Close</span>() <span style="color:#66d9ef">error</span> {
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">cg</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">removeDep</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">s</span>) <span style="color:#75715e">// 真正释放了stmt，不再持有其引用
-</span><span style="color:#75715e"></span>	}
-}
-</code></pre></div><p>一行代码就能解决了</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Preparex</span>(<span style="color:#e6db74">`MY SQL QUERY`</span>)
-<span style="color:#75715e">// 这句必不可少！！
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">Close</span>()
-<span style="color:#75715e">// ...
-</span></code></pre></div><p>重新部署，并对内存使用情况进行采样，结果如下图所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Stmt</span>) <span style="color:#a6e22e">Close</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">cg</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">removeDep</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">s</span>) <span style="color:#75715e">// 真正释放了stmt，不再持有其引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>一行代码就能解决了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">stmt</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Preparex</span>(<span style="color:#e6db74">`MY SQL QUERY`</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 这句必不可少！！
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stmt</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// ...
+</span></span></span></code></pre></div><p>重新部署，并对内存使用情况进行采样，结果如下图所示：</p>
 <p><img src="/img/mem-opt-chart.png" alt="优化前后对比图"></p>
 <p>GC 能够正常地回收 stmt 对象，问题解决！</p>
 <h2 id="总结">总结</h2>
@@ -429,7 +430,7 @@ Showing top 10 nodes out of 118
 		<img alt="Tecker Yu avatar" src="/img/me.png" class="avatar" height="90" width="90">
 	</figure>
 	<div class="authorbox__header">
-		<span class="authorbox__name">关于 Tecker Yu</span>
+		<span class="authorbox__name"></span>
 	</div>
 	<div class="authorbox__description">
 		Always Eager to write beautiful and neat code.
@@ -439,6 +440,9 @@ Showing top 10 nodes out of 118
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
 		<a class="post-nav__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/" rel="prev"><span class="post-nav__caption">«&thinsp;上一篇</span><p class="post-nav__post-title">理解 CPU Cache 对并发性能的影响</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="next"><span class="post-nav__caption">下一篇&thinsp;»</span><p class="post-nav__post-title">CGO封装CPP库的一些最佳实践</p></a>
 	</div>
 </nav>
 
@@ -484,11 +488,11 @@ Showing top 10 nodes out of 118
 	<h4 class="widget__title">近期文章</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/cgo%E5%B0%81%E8%A3%85cpp%E5%BA%93%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">CGO封装CPP库的一些最佳实践</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%94%A8go-stl%E6%9F%A5%E8%AF%A2db%E5%BC%95%E5%8F%91%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">用Go STL查询DB引发的内存泄露</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/%E7%90%86%E8%A7%A3-cpu-cache-%E5%AF%B9%E5%B9%B6%E5%8F%91%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D/">理解 CPU Cache 对并发性能的影响</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/go%E4%B8%AD%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8E%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">Go中反序列化后的类型转换问题记录</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-989.-add-to-array-form-of-integer/">Leetcode 989. Add to Array-Form of Integer</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/leetcode-985.-sum-of-even-numbers-after-queries/">Leetcode 985. Sum of Even Numbers After Queries</a></li>
 		</ul>
 	</div>
 </div>
@@ -519,9 +523,11 @@ Showing top 10 nodes out of 118
 	<h4 class="widget__title">标签</h4>
 	<div class="widget__content">
 		<a class="widget-taglist__link widget__link btn" href="/tags/algorithms" title="Algorithms">Algorithms</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/api" title="Api">Api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api" title="API">API</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/centos" title="Centos">Centos</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/cli" title="Cli">Cli</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cgo" title="Cgo">Cgo</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cli" title="CLI">CLI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cpp" title="Cpp">Cpp</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/css" title="Css">Css</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/db" title="Db">Db</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/debug" title="Debug">Debug</a>
@@ -536,7 +542,7 @@ Showing top 10 nodes out of 118
 		<a class="widget-taglist__link widget__link btn" href="/tags/git" title="Git">Git</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/go" title="Go">Go</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/google" title="Google">Google</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="HTML">HTML</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/java" title="Java">Java</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/koa" title="Koa">Koa</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/laravel" title="Laravel">Laravel</a>
@@ -553,7 +559,7 @@ Showing top 10 nodes out of 118
 		<a class="widget-taglist__link widget__link btn" href="/tags/router" title="Router">Router</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/sass" title="Sass">Sass</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/shell" title="Shell">Shell</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="Sql">Sql</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/sql" title="SQL">SQL</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow" title="Tensorflow">Tensorflow</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/test" title="Test">Test</a>
 		<a class="widget-taglist__link widget__link btn" href="/tags/thinkphp" title="Thinkphp">Thinkphp</a>
@@ -601,7 +607,7 @@ Showing top 10 nodes out of 118
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2020 Runtime: out of memory.
+			&copy; 2022 Runtime: out of memory.
 			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a>主題</span>
 		</div>
 	</div>

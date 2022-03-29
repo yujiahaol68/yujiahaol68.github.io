@@ -6,11 +6,7 @@
     <description>Recent content in 算法 on Runtime: out of memory</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Leetcode 989. Add to Array-Form of Integer</title>
       <link>/blog/leetcode-989.-add-to-array-form-of-integer/</link>
