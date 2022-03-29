@@ -66,7 +66,7 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/go" rel="category">Go</a></span>
 </div>
 <span class="meta__text">
-总计 4061 字
+总计 4052 字
 </span></div>
 		</header>
 <div class="post__toc toc">
@@ -254,14 +254,14 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h3 id="cgo编译工程化">CGO编译工程化</h3>
 <p>通常我们CPP的SDK是在另外一个代码库进行维护的，因此cgo编译所依赖的静态库和动态库会在CPP库中的一个单独分支进行维护，这样保证了主库的升级不影响维护cgo的桥接cpp代码，同时也能轻松获取主库后续的更新。</p>
-<p>Go sdk包的大致目录结构如下</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>➜  myclient tree -h
+<p>Go sdk包的大致目录结构如下，假设包名称为myclient</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>➜  myclient
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[]</span>  .
 </span></span><span style="display:flex;"><span>├── <span style="color:#f92672">[]</span>  lib
 </span></span><span style="display:flex;"><span>├── <span style="color:#f92672">[]</span>  client.go
 </span></span><span style="display:flex;"><span>├── <span style="color:#f92672">[]</span>  client_mock.go
 </span></span><span style="display:flex;"><span>└── <span style="color:#f92672">[]</span>  wrapper.h
-</span></span></code></pre></div><p>比如封装的go sdk包名为myclient，go层相关的对象和cgo调用的封装都会实现在 <code>client.go</code> 文件中，用于桥接的C ABI头文件定义一般会放在 <code>wrapper.h</code> 中，<code>lib</code> 目录用于存放编译链接 <code>wrapper.h</code> 头文件所需要的依赖，包括静态库以及相关的动态库。依赖由编译CPP库的特定分支得到并事先拷贝到目录中。整个工程目录也看起来会比较清晰自然，<code>wrapper.h</code> 的CPP实现我们选择在原始CPP库中的分支中维护，相当于通过C定义的接口彻底解耦服务调用方和服务提供方。</p>
+</span></span></code></pre></div><p>go层相关的对象和cgo调用的封装都会实现在 <code>client.go</code> 文件中，用于桥接的C ABI头文件定义一般会放在 <code>wrapper.h</code> 中，<code>lib</code> 目录用于存放编译链接 <code>wrapper.h</code> 头文件所需要的依赖，包括静态库以及相关的动态库。依赖由编译CPP库的特定分支得到并事先拷贝到目录中。整个工程目录也看起来会比较清晰自然，<code>wrapper.h</code> 的CPP实现我们选择在原始CPP库中的分支中维护，相当于通过C定义的接口彻底解耦服务调用方和服务提供方。</p>
 <p>而 <code>client_mock.go</code> 用于条件编译适配在本地mac环境的编译调试，因为引入cgo有可能会破坏跨平台编译调试的便利性，使用条件编译能一定程度上解决平台隔阂导致整个二进制程序无法编译的问题。</p>
 <h3 id="调试以及pprof调优">调试以及pprof调优</h3>
 <p>这点可能是许多使用cgo的人吐槽最多的点，目前也没有一个比较好用的debug cgo程序的办法，prof cpu的话使用 <code>perf</code> 生成火焰图还是能分析的，GCC编译时使用低优化等级是能够保留具体调用堆栈信息的。</p>
@@ -282,7 +282,7 @@ if (!doNotTrack) {
 <li><a href="https://www.netlify.com/blog/2021/03/18/tracking-down-a-cgo-crash-in-production/">tracking-down-a-cgo-crash-in-production/</a></li>
 </ul>
 <p><strong>商业转载请联系作者获得授权，非商业转载请注明出处，谢谢合作！</strong></p>
-<p>联系方式：tecker_<a href="mailto:yuknigh@163.com">yuknigh@163.com</a></p>
+<p>联系方式：<a href="mailto:tecker_yuknigh@163.com">tecker_yuknigh@163.com</a></p>
 
 		</div>
 		<footer class="post__footer">
