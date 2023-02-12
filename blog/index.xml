@@ -67,7 +67,7 @@
       <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-3616-milking-time/</guid>
-      <description>原题地址 知识点：权值区间DP 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt; using namespace std; struct P { int start, end, e; }; bool cmp(const P &amp;amp;a, const P &amp;amp;b) { return a.start &amp;lt; b.start; } int N, M, R; struct P a[1002]; int dp[1002]; int main() { scanf(&amp;#34;%d %d %d&amp;#34;, &amp;amp;N, &amp;amp;M, &amp;amp;R); int i, j; for(i=0;i&amp;lt;M;i++) {</description>
+      <description>原题地址 知识点：权值区间DP 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; using namespace std; struct P { int start, end, e; }; bool cmp(const P &amp;amp;a, const P &amp;amp;b) { return a.start &amp;lt; b.start; } int N, M, R; struct P a[1002]; int dp[1002]; int main() { scanf(&amp;#34;%d %d %d&amp;#34;, &amp;amp;N, &amp;amp;M, &amp;amp;R); int i,</description>
     </item>
     
     <item>
@@ -76,7 +76,7 @@
       <pubDate>Sat, 14 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-2385-apple-catching/</guid>
-      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;iostream&amp;gt; using namespace std; // j部分定义成 31 时不行？ 向前计算的时候有移动 0，..., 30次，共 31 个状态，因此要定义成 32 // d[第</description>
+      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;iostream&amp;gt; using namespace std; // j部分定义成 31 时不行？ 向前计算的时候有移动 0，..., 30次，共 31 个状态，因此要定义成 32 // d</description>
     </item>
     
     <item>
@@ -85,7 +85,7 @@
       <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-2229-sumsets/</guid>
-      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;string.h&amp;gt; int sum; int d[1000001]; int main() { scanf(&amp;#34;%d&amp;#34;, &amp;amp;sum); int i; // 初始化唯一确定方案数，d[1] 为 1 表示 1 的分解方案只有 1 种 d[1] = 1; for(i=2;i&amp;lt;=sum;++i) { // 找规律，当 i</description>
+      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;string.h&amp;gt; int sum; int d[1000001]; int main() { scanf(&amp;#34;%d&amp;#34;, &amp;amp;sum); int i; // 初始化唯一确定方案数，d[1] 为 1 表示 1 的分解方案只有 1 种 d[1] = 1; for(i=2;i&amp;lt;=sum;++i) { // 找规律，当</description>
     </item>
     
     <item>
@@ -94,7 +94,7 @@
       <pubDate>Wed, 11 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-3176-cow-bowling/</guid>
-      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;iostream&amp;gt; using namespace std; int a[350][350]; int d[350][350]; int N; int main() { scanf(&amp;#34;%d&amp;#34;, &amp;amp;N); int i, j; for(i=0;i&amp;lt;N;++i) { for(j=0;j&amp;lt;i+1;++j) { scanf(&amp;#34;%d&amp;#34;, &amp;amp;a[i][j]); } } d[0][0] = a[0][0]; for(i=0;i&amp;lt;N-1;++i) { for(j=0;j&amp;lt;=i;++j) { // 注意这里记忆计算让重叠路径的值最大的技</description>
+      <description>原题地址 知识点：DP 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;iostream&amp;gt; using namespace std; int a[350][350]; int d[350][350]; int N; int main() { scanf(&amp;#34;%d&amp;#34;, &amp;amp;N); int i, j; for(i=0;i&amp;lt;N;++i) { for(j=0;j&amp;lt;i+1;++j) { scanf(&amp;#34;%d&amp;#34;, &amp;amp;a[i][j]); } } d[0][0] = a[0][0]; for(i=0;i&amp;lt;N-1;++i) { for(j=0;j&amp;lt;=i;++j) { // 注意这里记忆计算让重叠路径的值最大</description>
     </item>
     
     <item>
@@ -103,7 +103,7 @@
       <pubDate>Wed, 11 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-3262-protecting-the-flowers/</guid>
-      <description>原题地址 知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;vector&amp;gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成 D / T</description>
+      <description>原题地址 知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;vector&amp;gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成</description>
     </item>
     
     <item>
@@ -112,7 +112,7 @@
       <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-1017-packets/</guid>
-      <description>知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;algorithm&amp;gt; int square[7]; // 解法：每次都先放最大 int solve() { int res = 0; // 6x6 直接成一块 res += square[6]; // 5x5 先成一块，再补 1x1 res += square[5]; square[1] -= 11 * square[5]; // 4x4 先成一块，然后</description>
+      <description>知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;algorithm&amp;gt; int square[7]; // 解法：每次都先放最大 int solve() { int res = 0; // 6x6 直接成一块 res += square[6]; // 5x5 先成一块，再补 1x1 res += square[5]; square[1] -= 11 * square[5]; // 4x4 先成一块，然</description>
     </item>
     
     <item>
@@ -121,7 +121,7 @@
       <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-3040-allowance/</guid>
-      <description>知识点： 贪心 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;vector&amp;gt;#include &amp;lt;string.h&amp;gt;#include &amp;lt;limits&amp;gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;amp;a, const Coin &amp;amp;b) { return a.d &amp;gt; b.d; } vector&amp;lt;Coin&amp;gt; v; int N, C; int need_count[20]; int main() { scanf(&amp;#34;%d %d&amp;#34;, &amp;amp;N, &amp;amp;C); int res = 0; for(int i=0;i&amp;lt;N;i++) { struct Coin c; scanf(&amp;#34;%d %d&amp;#34;, &amp;amp;c.d, &amp;amp;c.b); if</description>
+      <description>知识点： 贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;limits&amp;gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;amp;a, const Coin &amp;amp;b) { return a.d &amp;gt; b.d; } vector&amp;lt;Coin&amp;gt; v; int N, C; int need_count[20]; int main() { scanf(&amp;#34;%d %d&amp;#34;, &amp;amp;N, &amp;amp;C); int res = 0; for(int i=0;i&amp;lt;N;i++) { struct Coin c;</description>
     </item>
     
     <item>
@@ -413,21 +413,21 @@
     </item>
     
     <item>
-      <title>Sass之CSS模块化</title>
-      <link>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</link>
-      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</guid>
-      <description>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C</description>
-    </item>
-    
-    <item>
       <title>Sass语法点总结</title>
       <link>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</link>
       <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>/blog/sass%E8%AF%AD%E6%B3%95%E7%82%B9%E6%80%BB%E7%BB%93/</guid>
       <description>类似PHP，Sass提供了一种类似PHP的感觉，声明变量的方式与PHP相同，赋值方式则与CSS类似$变量名：值; 常用关键词 @import 引入sass模块</description>
+    </item>
+    
+    <item>
+      <title>Sass之CSS模块化</title>
+      <link>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</link>
+      <pubDate>Sat, 03 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/sass%E4%B9%8Bcss%E6%A8%A1%E5%9D%97%E5%8C%96/</guid>
+      <description>一般在项目目录中我们会建一个sass文件夹，内容一般为partials文件夹还有一个app.scss文件，partials文件夹存放我们的C</description>
     </item>
     
     <item>

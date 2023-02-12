@@ -13,7 +13,6 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/blog/" />
 
-
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -72,11 +71,11 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/ac%e4%b9%8b%e8%b7%af" rel="category">AC之路</a></span>
 </div>
 <span class="meta__text">
-总计 150 字
+总计 153 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		原题地址 知识点：贪心 解题报告 #include &lt;cstdio&gt;#include &lt;iostream&gt;#include &lt;algorithm&gt;#include &lt;vector&gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成 D / T
+		原题地址 知识点：贪心 解题报告 #include &lt;cstdio&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;vector&gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -96,11 +95,11 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/ac%e4%b9%8b%e8%b7%af" rel="category">AC之路</a></span>
 </div>
 <span class="meta__text">
-总计 316 字
+总计 317 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		知识点：贪心 解题报告 #include &lt;cstdio&gt;#include &lt;algorithm&gt; int square[7]; // 解法：每次都先放最大 int solve() { int res = 0; // 6x6 直接成一块 res += square[6]; // 5x5 先成一块，再补 1x1 res += square[5]; square[1] -= 11 * square[5]; // 4x4 先成一块，然后
+		知识点：贪心 解题报告 #include &lt;cstdio&gt; #include &lt;algorithm&gt; int square[7]; // 解法：每次都先放最大 int solve() { int res = 0; // 6x6 直接成一块 res += square[6]; // 5x5 先成一块，再补 1x1 res += square[5]; square[1] -= 11 * square[5]; // 4x4 先成一块，然
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -120,11 +119,11 @@ if (!doNotTrack) {
 	<span class="meta__text"><a class="meta__link" href="/categories/ac%e4%b9%8b%e8%b7%af" rel="category">AC之路</a></span>
 </div>
 <span class="meta__text">
-总计 298 字
+总计 303 字
 </span></div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		知识点： 贪心 解题报告 #include &lt;cstdio&gt;#include &lt;iostream&gt;#include &lt;algorithm&gt;#include &lt;vector&gt;#include &lt;string.h&gt;#include &lt;limits&gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;a, const Coin &amp;b) { return a.d &gt; b.d; } vector&lt;Coin&gt; v; int N, C; int need_count[20]; int main() { scanf(&#34;%d %d&#34;, &amp;N, &amp;C); int res = 0; for(int i=0;i&lt;N;i++) { struct Coin c; scanf(&#34;%d %d&#34;, &amp;c.d, &amp;c.b); if
+		知识点： 贪心 解题报告 #include &lt;cstdio&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;vector&gt; #include &lt;string.h&gt; #include &lt;limits&gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;a, const Coin &amp;b) { return a.d &gt; b.d; } vector&lt;Coin&gt; v; int N, C; int need_count[20]; int main() { scanf(&#34;%d %d&#34;, &amp;N, &amp;C); int res = 0; for(int i=0;i&lt;N;i++) { struct Coin c;
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">

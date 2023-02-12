@@ -13,7 +13,7 @@
       <pubDate>Wed, 11 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-3262-protecting-the-flowers/</guid>
-      <description>原题地址 知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;vector&amp;gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成 D / T</description>
+      <description>原题地址 知识点：贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;vector&amp;gt; using namespace std; struct P { int t, d; }; // 贪心使得代价最小 // cost = 2 * T * (total - D) // 因此 D越大，T越小越好 // 重点：转换成</description>
     </item>
     
     <item>
@@ -22,7 +22,7 @@
       <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/poj-3040-allowance/</guid>
-      <description>知识点： 贪心 解题报告 #include &amp;lt;cstdio&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;vector&amp;gt;#include &amp;lt;string.h&amp;gt;#include &amp;lt;limits&amp;gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;amp;a, const Coin &amp;amp;b) { return a.d &amp;gt; b.d; } vector&amp;lt;Coin&amp;gt; v; int N, C; int need_count[20]; int main() { scanf(&amp;#34;%d %d&amp;#34;, &amp;amp;N, &amp;amp;C); int res = 0; for(int i=0;i&amp;lt;N;i++) { struct Coin c; scanf(&amp;#34;%d %d&amp;#34;, &amp;amp;c.d, &amp;amp;c.b); if</description>
+      <description>知识点： 贪心 解题报告 #include &amp;lt;cstdio&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;limits&amp;gt; using namespace std; struct Coin { int d; int b; }; bool cmp(const Coin &amp;amp;a, const Coin &amp;amp;b) { return a.d &amp;gt; b.d; } vector&amp;lt;Coin&amp;gt; v; int N, C; int need_count[20]; int main() { scanf(&amp;#34;%d %d&amp;#34;, &amp;amp;N, &amp;amp;C); int res = 0; for(int i=0;i&amp;lt;N;i++) { struct Coin c;</description>
     </item>
     
   </channel>
